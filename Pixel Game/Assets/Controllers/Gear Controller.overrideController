@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Gear Controller
+  m_Controller: {fileID: 9100000, guid: 5bcdc8e8a1079784bb20c1931b0729fc, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 4526efd42dce7d84b9bd6be0e7c43789, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d82baa86035d55e449509c080de5a46b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: db9b5f4aa31676d4d8f0a760d68d2e51, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 31b7dbed2b6b1c740bbbc583a22b655f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f0bfb43f48ead6a4eaa0992eeb75e666, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2aaa87fdffe370943bfc83f3cd202ef1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 95ef78ce250a796428e34a5f74eea129, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: eaa05f0a634268b4c9704ce1e901fd5a, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 90058ffd71f9bde46866bf7ac42c6ee6, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8657061f521285d46bbf225f8102c452, type: 2}
