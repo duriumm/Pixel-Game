@@ -7,32 +7,33 @@ public class PlayerInput : MonoBehaviour
     public GameObject playerAttackColliderObject;
     //public GameObject plantBaseObject;            // Use plant object later on in the game, not like this. Make code in its collision
     private GameObject inventoryManager;
-    private GameObject mainCamera;
+    //private GameObject mainCamera;
+    private GameObject playerAttack;
 
 
     //public GameObject feetSocket;   // Do all this when equipment is added to the character
-    private Animator playerAnimator;
+    //private Animator playerAnimator;
 
     // Test dragging on the boots here and see if it works? =)
     //public Equipment equippedBoots;   // Do all this when equipment is added to the character
 
-    private GameObject playerGameobject;
+    private GameObject playerGameObject;
 
     private GameObject torchGameObject;
 
-    public AudioClip attackSound; // TO-DO , move this to attackscript
+    //public AudioClip attackSound; // TO-DO , move this to attackscript
 
     
 
     void Start()
     {
-        playerGameobject = this.gameObject;
+        playerGameObject = this.gameObject;
         inventoryManager = GameObject.FindWithTag("InventoryManager");
-        mainCamera = GameObject.FindWithTag("MainCamera");
-        playerAnimator = playerGameobject.GetComponent<Animator>();
+        //mainCamera = GameObject.FindWithTag("MainCamera");
+        //playerAnimator = playerGameObject.GetComponent<Animator>();
         //feetSocket.SetActive(false);  // Do all this when equipment is added to the character
 
-        torchGameObject = playerGameobject.transform.GetChild(2).gameObject; // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
+        torchGameObject = playerGameObject.transform.GetChild(2).gameObject; // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
 
 
     }
@@ -54,17 +55,16 @@ public class PlayerInput : MonoBehaviour
 
         }
         // checks if space is pressed AND if the collider in question is not currently active
-        if (Input.GetMouseButtonDown(0)/* && playerAttackColliderObject.activeSelf == false*/) // We activate the collider in animation so might not need false check
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true/* && playerAttackColliderObject.activeSelf == false*/) // We activate the collider in animation so might not need false check
         {
-
-
+           playerGameObject.GetComponent<PlayerAttack>().getAttackCoroutine();
             // We activate the collider in animation so might not need this function
             //StartCoroutine(EnableAttackColliderAndWaitForSeconds(0.1f));
             //if (!inventoryManagerTest.GetComponent<PlayerInventory>().isInventoryOpen){
-            if (!inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen){ // Dont attack if inventory is open
-                StartCoroutine(AttackCoroutine());
-            }
-           // }
+            // if (!inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen){ // Dont attack if inventory is open
+            //     StartCoroutine(AttackCoroutine());
+            //}
+            // }
         }
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C))
@@ -93,10 +93,12 @@ public class PlayerInput : MonoBehaviour
             // TO-DO
             if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false)
             {
+                playerGameObject.GetComponent<PlayerAttack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
             else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
             {
+                playerGameObject.GetComponent<PlayerAttack>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
             }
 
@@ -120,7 +122,7 @@ public class PlayerInput : MonoBehaviour
 
         }
     }
-
+    /*
     private IEnumerator AttackCoroutine()
     {
         AudioSource.PlayClipAtPoint(attackSound, mainCamera.transform.position);
@@ -129,13 +131,13 @@ public class PlayerInput : MonoBehaviour
         yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
         playerAnimator.SetBool("isAttacking", false);
 
-        playerGameobject.GetComponent<PlayerMovement>().enabled = false;
+        playerGameObject.GetComponent<PlayerMovement>().enabled = false;
         
         yield return new WaitForSeconds(0.5f); // Wait for 1 seconds which is the animation (DIDNT NEED THIS??? MIGHT BE IF WE WANT TO SWITCH STATE LATER)
-        playerGameobject.GetComponent<PlayerMovement>().enabled = true;
+        playerGameObject.GetComponent<PlayerMovement>().enabled = true;
 
     }
-
+    */
 
     public void EquipArmorTest(Equipment equipment)
     {
