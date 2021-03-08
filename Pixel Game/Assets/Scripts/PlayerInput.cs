@@ -22,7 +22,7 @@ public class PlayerInput : MonoBehaviour
 
     public AudioClip attackSound; // TO-DO , move this to attackscript
 
-
+    
 
     void Start()
     {
@@ -33,9 +33,6 @@ public class PlayerInput : MonoBehaviour
         //feetSocket.SetActive(false);  // Do all this when equipment is added to the character
 
         torchGameObject = playerGameobject.transform.GetChild(2).gameObject; // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
-
-
-
 
 
     }
@@ -63,9 +60,11 @@ public class PlayerInput : MonoBehaviour
 
             // We activate the collider in animation so might not need this function
             //StartCoroutine(EnableAttackColliderAndWaitForSeconds(0.1f));
-
-
-            StartCoroutine(AttackCoroutine());
+            //if (!inventoryManagerTest.GetComponent<PlayerInventory>().isInventoryOpen){
+            if (!inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen){ // Dont attack if inventory is open
+                StartCoroutine(AttackCoroutine());
+            }
+           // }
         }
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C))
