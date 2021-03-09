@@ -32,7 +32,7 @@ public class SceneTransition : MonoBehaviour
             dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealth = testMyPlayerObject.GetComponent<PlayerHealth>().playerHealth;
  
             // This should save list of stuff to the same dontDestroyOnLoad
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots = invManager.GetComponent<PlayerInventory>().slots;
+           // dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots = invManager.GetComponent<PlayerInventory>().slots;
 
             // Look at the first object in saved datapass array
            // Debug.Log("First index of saved dataPass array BEFORE LOADING NEW SCENE: " + dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots[0].customItemInSlot.itemName);
@@ -42,6 +42,11 @@ public class SceneTransition : MonoBehaviour
            Debug.Log("dataPass slots after copy but before scene change: "+ dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots.Length);
 
 
+            
+            //for (int i = 0; i < invManager.GetComponent<PlayerInventory>().slots.Length+1; i++)
+            //{
+                dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots = (InventorySlot[])invManager.GetComponent<PlayerInventory>().slots.Clone();
+            //}
 
            DontDestroyOnLoad(dataToPassBetweenScenesGameObject);
             SceneManager.LoadScene(sceneToLoad);

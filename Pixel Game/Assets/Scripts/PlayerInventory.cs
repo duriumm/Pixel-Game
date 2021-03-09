@@ -7,7 +7,6 @@ public class PlayerInventory : MonoBehaviour
     //public List<CustomItem> inventoryList = new List<CustomItem>();
     public InventorySlot[] slots;
 
-
     //public Transform parentObjectOfInventorySlots;
     private GameObject inventoryScreenGameObject;
 
@@ -30,6 +29,7 @@ public class PlayerInventory : MonoBehaviour
     }
     void Start()
     {
+
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
         slots = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots;
 

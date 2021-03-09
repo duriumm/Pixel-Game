@@ -11,28 +11,13 @@ public class PlayerCollision : MonoBehaviour
         myPlayer = this.gameObject;       
     }
 
-
+    // Moved the whole damage player part to ParticleAttackScript instead of here in trigggerEnter
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // PROBLEM
-        // This acts as a collider for the whole player object
-        // When i am activating the attackCollider it blends in with this collider
-        // and thereby making the player get damaged by the enemy
 
-        // this seems to have fixed it with checking for attackCollider to be false :)
-        if (collision.gameObject.tag == "Enemy") // && player.enumstate != attacking.state - TODO
+        if (collision.gameObject.tag == "LootableItem")
         {
-            myPlayer.GetComponent<PlayerHealth>().TakeDamage(20);
-            //Debug.Log("Taken damage");
-            Debug.Log("Current hp: " + myPlayer.GetComponent<PlayerHealth>().playerHealth);
-        }
-        else if(collision.gameObject.tag == "LootableItem")
-        {
-            //if ()
-            //{
-            //    Debug.Log("collided with lootable plant");
-            //}
-            
+
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)

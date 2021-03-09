@@ -11,5 +11,4 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public GameObject[] playerGameobjects;
 
-
 }

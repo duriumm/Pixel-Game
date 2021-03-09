@@ -69,6 +69,7 @@ public class PlayerInput : MonoBehaviour
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C))
         {
+
             //plantBaseObject.GetComponent<PlantScript>().IncrementPlantStage();    // Use plant object later on in the game, not like this. Make code in its collision
         }
 
@@ -86,12 +87,11 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Pressed E");
 
             // TO-DO
             // Fix get compnent here below so its faster with created object variable, no fucking get component!!!
             // TO-DO
-            if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false)
+            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false)
             {
                 playerGameObject.GetComponent<PlayerAttack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
@@ -108,7 +108,6 @@ public class PlayerInput : MonoBehaviour
         // TEST
         if (Input.GetKeyDown(KeyCode.F))
         {
-            inventoryManager.GetComponent<PlayerInventory>().LookThruArray();
             //// If boots are not equipped we DO equip them.        // Do all this when equipment is added to the character
             //if(feetSocket.activeSelf == false)
             //{

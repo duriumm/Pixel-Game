@@ -11,9 +11,9 @@ TagManager:
   - LootableItem
   - InventoryManager
   - Enemy
-  - myPlayerTakeDamageCollider
   - Canvas
   - PassData
+  - damageCollider
   layers:
   - Default
   - TransparentFX
