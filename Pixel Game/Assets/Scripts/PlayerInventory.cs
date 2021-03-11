@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -19,9 +20,11 @@ public class PlayerInventory : MonoBehaviour
 
 
     public GameObject dataToPassGameObject;
+
+    public bool isNewScene = false;
     private void Awake()
     {
-        if(GameObject.FindGameObjectWithTag("PassData") == null) 
+        if (GameObject.FindGameObjectWithTag("PassData") == null && SceneManager.GetActiveScene().name != "Indoors") // Testing with static variables instead
         {
             Instantiate(dataToPassGameObject);
         }
@@ -29,13 +32,17 @@ public class PlayerInventory : MonoBehaviour
     }
     void Start()
     {
+        isNewScene = true;
+        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  // Testing with static variables instead
+        //slots = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots;
 
-        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
-        slots = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots;
 
         inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
         inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
+        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().PrintAllSavedInventoryObjsInDataToPass(false); // printing all saved items on startup (isExiting scene = false)
+
+        LoadInvGameObjectOnStartScene();
         ClosingUI();
     }
 
@@ -62,18 +69,22 @@ public class PlayerInventory : MonoBehaviour
     public void addItemToSlot(/*CustomItem customItem*/GameObject lootedGameObject)
     {
         lootedCustomItem = lootedGameObject.GetComponent<CustomItem>();
-
+        //DontDestroyOnLoad(lootedGameObject);    // If we dont do this, we cant bring the items over to next scene
         for (int i = 0; i < slots.Length; i++)
         {
+
             // Check each slots Image.sprite component if the sprite is empty == nothing is in that slot.
-            if(slots[i].slotIcon.sprite == null)
+            if(slots[i].customItemGameObject == null)
             {
-                Debug.Log(i + " sprite is null!");
+                Debug.Log("index "+ i + " sloticon.sprite is null! therefor we can add item there");
                 slots[i].AddItem(lootedGameObject);
                 
                 break;
+                //if(slots[i].slotIcon.sprite == null)
+                //{
+                //}
+                //else { Debug.Log(i + " sprite ISNT null!"); }        
             }
-            else { Debug.Log(i + " sprite ISNT null!"); }        
         }
 
         // Destroying the gameobject you pick up makes it so the inventory 
@@ -84,17 +95,39 @@ public class PlayerInventory : MonoBehaviour
         lootedGameObject.SetActive(false);
     }
 
-
-    public void LookThruArray()
+    // Here we take each CustomitemGameobject from each slot in our inventory and add 
+    // its NAME to our stringDatabase 
+    public void SaveInvGameObjectsOnSceneChange()
     {
-        int counter = 0;
+        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
         for (int i = 0; i < slots.Length; i++)
         {
             if(slots[i].customItemGameObject != null)
             {
-                counter++;
+                dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Add(slots[i].customItemGameObject.name); 
+                Debug.Log("This is what we added"+slots[i].customItemGameObject.ToString());
             }
         }
-        Debug.Log("We found " + counter + " gameObjects inside INV slots array");
     }
+
+    // here we check our itemDatabase for names matching our savedStringItems
+    public void LoadInvGameObjectOnStartScene()
+    {
+        foreach (string savedItemStringName in dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase)
+        {
+            for (int i = 0; i < dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase.Length; i++)
+            {
+                if(savedItemStringName == dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i].name)
+                {
+                    string originalItemName = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i].name; // Get the original name of the gameobject
+                    GameObject instantiatedGameObject = Instantiate(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
+                    instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
+                    Debug.Log("item we are about to add to slots is: " + instantiatedGameObject.name);
+                    addItemToSlot(instantiatedGameObject);
+                }
+            }
+        }
+
+    }
+
 }

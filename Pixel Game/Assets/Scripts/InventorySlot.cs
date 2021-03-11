@@ -37,16 +37,15 @@ public class InventorySlot : MonoBehaviour
         customItemInSlot = gameObjectToAdd.GetComponent<CustomItem>();
         customItemGameObject = gameObjectToAdd;
         slotIcon.sprite = customItemInSlot.itemIcon;       
-        Debug.Log("Added inventory item to GUI");
+        Debug.Log("Added inventory item successfully to GUI");
     }
 
     public void RemoveItem()
     {
-        Debug.Log("Test 1");
-        Debug.Log(customItemInSlot.name);
+        Debug.Log("You pressed button");
         if(customItemInSlot != null)
         {
-            Debug.Log("Test 2");
+
             // TO-DO
             // Set spawning of item position further away from player so loot 
             // doesnt get picked up instantly again by the player. 
@@ -56,8 +55,13 @@ public class InventorySlot : MonoBehaviour
             // make a NEW item and not a clone of a clone of a clone... it wont work later on..
             // For now we only make clones of the item we first picked up.
             // TO-DO
+
+            string realItemName = customItemInSlot.name; // Get the original name of the gameobject
             GameObject instantiatedGameObject = Instantiate(customItemGameObject) as GameObject;
+            instantiatedGameObject.name = realItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
+
             // Set spawn position of item to where the player is standing currently
+            // TO-DO - Spawn the item in a cricle around the player of random numbers
             itemDropPosition.x = playerCharacter.transform.position.x + 1f;
             itemDropPosition.y = playerCharacter.transform.position.y + 1f;
             instantiatedGameObject.transform.position = itemDropPosition;
@@ -70,7 +74,6 @@ public class InventorySlot : MonoBehaviour
             slotIcon.sprite = null;       
             Debug.Log("Removed inventory item from GUI");
         }
-        Debug.Log("Test 3");
     }
 
     public void SetAlphaOfColor(float alphaColorValue)
