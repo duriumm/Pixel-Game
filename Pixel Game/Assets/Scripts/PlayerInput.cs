@@ -23,7 +23,7 @@ public class PlayerInput : MonoBehaviour
 
     //public AudioClip attackSound; // TO-DO , move this to attackscript
 
-    
+    public GameObject dataToPassGameObject;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour
         //feetSocket.SetActive(false);  // Do all this when equipment is added to the character
 
         torchGameObject = playerGameObject.transform.GetChild(2).gameObject; // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
-
+        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
 
     }
 
@@ -69,6 +69,13 @@ public class PlayerInput : MonoBehaviour
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C))
         {
+            //playerGameObject.GetComponent<PlayerHealth>().myTestNumbers[0] = 8;
+            for (int i = 0; i < dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().invGameObjectArray.Length; i++)
+            {
+                    Debug.Log("gameobject in DataToPass gameObj array: "+ dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().invGameObjectArray[i]);
+
+            }
+            
             //plantBaseObject.GetComponent<PlantScript>().IncrementPlantStage();    // Use plant object later on in the game, not like this. Make code in its collision
         }
 
@@ -86,12 +93,11 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("Pressed E");
 
             // TO-DO
             // Fix get compnent here below so its faster with created object variable, no fucking get component!!!
             // TO-DO
-            if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false)
+            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false)
             {
                 playerGameObject.GetComponent<PlayerAttack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
@@ -108,7 +114,6 @@ public class PlayerInput : MonoBehaviour
         // TEST
         if (Input.GetKeyDown(KeyCode.F))
         {
-            inventoryManager.GetComponent<PlayerInventory>().LookThruArray();
             //// If boots are not equipped we DO equip them.        // Do all this when equipment is added to the character
             //if(feetSocket.activeSelf == false)
             //{

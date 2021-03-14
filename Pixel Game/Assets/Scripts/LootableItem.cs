@@ -22,11 +22,11 @@ public class LootableItem : MonoBehaviour
         {
             if(inventoryManager == null)
             {
-                Debug.Log("IT WAS NULL");
+                //Debug.Log("IT WAS NULL");
             }
             inventoryManager.GetComponent<PlayerInventory>().addItemToSlot(this.gameObject/*.GetComponent<CustomItem>()*/);
 
-            Debug.Log("Picked up something");
+            //Debug.Log("Picked up something");
         }
     }
 }

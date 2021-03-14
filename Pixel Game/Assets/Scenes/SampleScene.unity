@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &9544221 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6347809778066991728, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
+  m_PrefabInstance: {fileID: 4277138930107555899}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &114597733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9125179677300675803, guid: c84c4eeed64680e43b3f4746d69e1491, type: 3}
@@ -677,6 +682,10 @@ PrefabInstance:
     - target: {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
       propertyPath: m_Name
       value: BadFruit2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
@@ -39799,7 +39808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1843213773409756832, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_Alpha
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1843213773606315788, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_Value
@@ -40092,6 +40101,22 @@ PrefabInstance:
       propertyPath: itemList.Array.data[2]
       value: 
       objectReference: {fileID: -7399929306435189911, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: itemGameObjectList.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: itemGameObjectList.Array.data[0]
+      value: 
+      objectReference: {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
+    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: itemGameObjectList.Array.data[1]
+      value: 
+      objectReference: {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: itemGameObjectList.Array.data[2]
+      value: 
+      objectReference: {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
     - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_Name
       value: GhastEnemy
@@ -40659,6 +40684,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4156444366393989866, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5770594186704195721, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
+      propertyPath: transition
+      value: 
+      objectReference: {fileID: 9544221}
     - target: {fileID: 5770594186704195721, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
       propertyPath: testMyPlayerObject
       value: 
@@ -40715,7 +40748,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6484694773054121049, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d1fe0ea0aeaef3149b90df4505c63ea5, type: 3}
 --- !u!1001 &6318454888861663418
 PrefabInstance:
