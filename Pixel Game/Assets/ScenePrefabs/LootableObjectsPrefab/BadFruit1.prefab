@@ -103,6 +103,7 @@ MonoBehaviour:
   defense: 0
   durability: 0
   itemIcon: {fileID: 21300000, guid: 34f55dc9327920746b362b755f50818f, type: 3}
+  itemIdString: BadFruit1
   itemType: 3
 --- !u!114 &289846561769043844
 MonoBehaviour:

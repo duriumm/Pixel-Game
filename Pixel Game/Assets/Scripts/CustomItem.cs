@@ -11,6 +11,7 @@ public class CustomItem : MonoBehaviour
     public int defense;
     public int durability;
     public Sprite itemIcon;
+    public string itemIdString;
     public enum ITEMTYPE
     {
         WOOD,
@@ -20,12 +21,14 @@ public class CustomItem : MonoBehaviour
     }
     public ITEMTYPE itemType;
 
-    public CustomItem(string itemName, string description, int damage, int defense, int durability)
+    public CustomItem(string itemName, string description, int damage, int defense, int durability, Sprite itemIcon, string itemIdString)
     {
         this.itemName = itemName;
         this.description = description;
         this.damage = damage;
         this.defense = defense;
         this.durability = durability;
-    }
+        this.itemIcon = itemIcon;
+        this.itemIdString = itemIdString;
+}
 }

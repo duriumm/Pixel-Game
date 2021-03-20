@@ -41,7 +41,11 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)){
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+        }
+            if (Input.GetKeyDown(KeyCode.R)){
             // TODO, make this fucking get component stuff easier. no get component ffs!!
             if(torchGameObject.GetComponent<Torch>().isTorchActive == false) { 
                 torchGameObject.GetComponent<Torch>().isTorchActive = true;
@@ -67,14 +71,8 @@ public class PlayerInput : MonoBehaviour
             // }
         }
         // Primary test to see if the plant "growth" works. IT DOES!
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            //playerGameObject.GetComponent<PlayerHealth>().myTestNumbers[0] = 8;
-            for (int i = 0; i < dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().invGameObjectArray.Length; i++)
-            {
-                    Debug.Log("gameobject in DataToPass gameObj array: "+ dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().invGameObjectArray[i]);
+        if (Input.GetKeyDown(KeyCode.C)) { 
 
-            }
             
             //plantBaseObject.GetComponent<PlantScript>().IncrementPlantStage();    // Use plant object later on in the game, not like this. Make code in its collision
         }
@@ -91,7 +89,7 @@ public class PlayerInput : MonoBehaviour
         //    plantBaseObject.GetComponent<PlantScript>().PickUpPlant();
         //}
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.I))
         {
 
             // TO-DO

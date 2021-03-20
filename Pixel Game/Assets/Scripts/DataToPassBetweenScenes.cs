@@ -20,39 +20,12 @@ public class DataToPassBetweenScenes : MonoBehaviour
     //        DontDestroyOnLoad(gameObject);
     //    }
     //}
+
     public int playerHealth;
-    //public CustomItem[] playerInventoryCustomItems;
 
-    //public InventorySlot[] playerSlots = { };
 
-    //public int[] testIntArray = {1, 2, 3 };
+    public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change.
 
-    public GameObject[] invGameObjectArray = new GameObject[20];
-
-    public GameObject[] lootDatabase = { }; // populated in inspector       // THIS IS WHAT WE USE
-
-   // public string[] savedItemStringArray = new string[20];
-
-    public List<string> mySavedStringListDatabase = new List<string>();      // THIS IS WHAT WE USE
-
-    public void PrintAllSavedInventoryObjsInDataToPass(bool isExitScene)
-    {
-        foreach (GameObject gameObj in invGameObjectArray)
-        {
-            if(gameObj != null)
-            {
-                if(isExitScene == true)
-                {
-                    Debug.Log("DataToPass gameobjlist exiting scene: " + gameObj.name);
-                }
-                else
-                {
-                    Debug.Log("DataToPass gameobjlist entering new scene: " + gameObj.name);
-
-                }
-
-            }
-            //Debug.Log("Its null =(");
-        }
-    }
+    public List<string> mySavedStringListDatabase = new List<string>(); 
+    // String List with names of all our gameobjects, all player inventory items names are saved here on entering new scene.
 }

@@ -14,6 +14,7 @@ TagManager:
   - Canvas
   - PassData
   - damageCollider
+  - Npc
   layers:
   - Default
   - TransparentFX
