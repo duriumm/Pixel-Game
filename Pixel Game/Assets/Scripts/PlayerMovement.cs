@@ -25,32 +25,32 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // input
+        // Input for movement on both axis
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-
+        // Animate character based on movement
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
 
+        // Save the last move position of the character so we can load the Idle animation correctly based on last move position
         if(Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             animator.SetFloat("LastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("LastMoveY", Input.GetAxisRaw("Vertical"));
         }
 
+        // Dont delete this, it will be used for equipment later on
         //bootsAnimator.SetFloat("Horizontal", movement.x);             // Use when equipment is being added
         //bootsAnimator.SetFloat("Vertical", movement.y);               // Use when equipment is being added
 
         animator.SetFloat("Speed", movement.sqrMagnitude);
         //bootsAnimator.SetFloat("Speed", movement.sqrMagnitude/* * bootsSpeedGang*/);      // Use when equipment is being added
-
-
     }
 
     private void FixedUpdate()
     {
-        // movement
+        // The Actual movement of the character
         myPlayerRB.MovePosition(myPlayerRB.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 }

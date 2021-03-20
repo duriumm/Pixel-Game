@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8159923538760270473}
   - component: {fileID: 8159923538760270472}
+  - component: {fileID: 2785664742062480089}
   m_Layer: 0
   m_Name: PassDataBetweenScenesObject
   m_TagString: PassData
@@ -44,8 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 0
-  playerSlots: []
-  testIntArray: 010000000200000003000000
   invGameObjectArray:
   - {fileID: 0}
   - {fileID: 0}
@@ -72,3 +71,17 @@ MonoBehaviour:
   - {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
   - {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
   - {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
+  mySavedStringListDatabase: []
+--- !u!114 &2785664742062480089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8159923538760270455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f65ddd46c923a47449019d005ccc36c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dataToPassBetweenScenesGameObject: {fileID: 0}

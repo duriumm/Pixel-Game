@@ -17,21 +17,16 @@ public class SceneTransition : MonoBehaviour
         dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
         myPlayerObject = GameObject.FindGameObjectWithTag("MyPlayer");
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
-
+        
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "MyPlayer")
         {
-            // This saves current health to the Datapass class with static variables (which carries over scenes)
             dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealth = myPlayerObject.GetComponent<PlayerHealth>().playerHealth;
-            //dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerSlots = invManager.GetComponent<PlayerInventory>().slots;
 
-            invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();// saves inventory gameobjects to dataToPass static class arrayt
-
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().PrintAllSavedInventoryObjsInDataToPass(true); // printing all saved items before sceneload
-            DontDestroyOnLoad(dataToPassBetweenScenesGameObject); 
+            invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();        
             StartCoroutine(LoadLevel(sceneToLoad));
         }
     }
