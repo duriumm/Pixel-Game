@@ -17,6 +17,7 @@ public class EnemyAttack : MonoBehaviour
     private Vector3 movementVector = Vector3.zero;
 
 	bool InRange => Vector2.Distance(playerGameObject.transform.position, gameObject.transform.position) < AttackRange;
+	bool UpdatingParticleAttackObject => particleAttackObject != null;
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,16 +26,26 @@ public class EnemyAttack : MonoBehaviour
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
+		StartCoroutine(SpawnNewAttacks());
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+	//Repeatedly check if a new attack should start
+	//Do the check at a fixed slow interval to save cpu cycles
+	IEnumerator SpawnNewAttacks()
+	{
+		while (true)
+		{
+			if (InRange && !UpdatingParticleAttackObject)
+				SpawnParticleAttackObject();
+			yield return new WaitForSeconds(0.2f);
+		}
+	}
+
+	void FixedUpdate()
     {
-		if (particleAttackObject != null)
+		if (UpdatingParticleAttackObject)
 			UpdateParticleAttackObject();
-		else if (InRange)
-			SpawnParticleAttackObject();
-    }
+	}
 
     private void SpawnParticleAttackObject()
     {
