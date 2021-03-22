@@ -28,7 +28,7 @@ public class EnemyAttack : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 		if (particleAttackObject != null)
 			UpdateParticleAttackObject();
@@ -63,9 +63,9 @@ public class EnemyAttack : MonoBehaviour
 
 	private void UpdateParticleAttackObject()
     {
-        // Moves the particle attack towards the player by adding movementVector * deltatime
+        // Moves the particle attack towards the player by adding movementVector * fixedDeltatime
         // to the partiucle attack object. This makes it so particle keeps flying past the player
-		particleAttackObject.transform.position += movementVector * Time.deltaTime;
+		particleAttackObject.transform.position += movementVector * Time.fixedDeltaTime;
     }
 
     IEnumerator WaitForNextAttack()
