@@ -4,31 +4,23 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-
-    public GameObject particleAttackPrefab;
+	public const float AttackRange = 3;
+	public GameObject particleAttackPrefab;
     public GameObject mainCamera;
     public float particleMovementSpeed = 2f;
+	// Implement this next !!
+	//public AudioClip preAttackSound;
+	public AudioClip attackSound;
 
-
-    private GameObject playerGameObject;
+	private GameObject playerGameObject;
     private GameObject particleAttackObject;
-    private Vector2 enemyPosition;
-    private Vector3 playerPositionWhenAttacking;
-
-    
     private Vector3 movementVector = Vector3.zero;
 
-    private bool isEnemyAttacking = false;
+	bool InRange => Vector2.Distance(playerGameObject.transform.position, gameObject.transform.position) < AttackRange;
 
-    // Implement this next !!
-    //public AudioClip preAttackSound;
-    public AudioClip attackSound;
-
-
-    // Start is called before the first frame update
-    void Start()
+	// Start is called before the first frame update
+	void Start()
     {
-        enemyPosition = gameObject.transform.position;
         // TO-DO
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
@@ -38,70 +30,56 @@ public class EnemyAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isEnemyAttacking == false)
-        {
-            SpawnParticleAttack();
-            StartCoroutine(WaitForNextAttack());
-        }
-        else if(isEnemyAttacking == true)
-        {
-            ShootParticleAttack();
-        }
-        
+		if (particleAttackObject != null)
+			UpdateParticleAttackObject();
+		else if (InRange)
+			SpawnParticleAttackObject();
     }
 
-    private void SpawnParticleAttack()
+    private void SpawnParticleAttackObject()
     {
-        if(particleAttackObject != null)
-        {
-            // TO-DO
-            // Here i would like to have object pooling to use the same 1 ,2 or 3 attack objects over and over
-            // TO-DO
-            Destroy(particleAttackObject);
-        }
-        // Spawn the particle effect gameobject from a prefab on top of the ghast enemy
-        particleAttackObject = Instantiate(particleAttackPrefab) as GameObject;
-        // Get the CURRENT updated enemy position and then set our particle attack object to enemys position
-        enemyPosition = gameObject.transform.position;
-        particleAttackObject.transform.position = enemyPosition;
+		// Spawn the particle effect gameobject from a prefab on top of the ghast enemy
+		// TO-DO
+		// Here i would like to have object pooling to use the same 1 ,2 or 3 attack objects over and over
+		// TO-DO
+		particleAttackObject = Instantiate(particleAttackPrefab) as GameObject;
+
+		//Set particle attack object to enemys position
+		particleAttackObject.transform.position = gameObject.transform.position;
         // we change the Z axis since otherwise the particle effect doesnt play correctly 
         particleAttackObject.transform.position = new Vector3(particleAttackObject.transform.position.x, particleAttackObject.transform.position.y, -1);
 
-        // Get where the player was standing at this exact moment and then
-        // set the z value to -1 otherwise we use vector2 which automatically 
-        // sets z value to 0 which will cause flickering of particle object
-        playerPositionWhenAttacking = playerGameObject.transform.position;
-        playerPositionWhenAttacking.z = -1;
-
-        // Calculation of positions to make the particle attack object move PAST the player object when shooting
-        movementVector = (playerPositionWhenAttacking - particleAttackObject.transform.position).normalized * particleMovementSpeed;
+       	// Calculation movement vector
+		movementVector = playerGameObject.transform.position - particleAttackObject.transform.position;
+		movementVector.z = 0;
+		movementVector = movementVector.normalized * particleMovementSpeed;
 
         // Play the attack sound at the player position
         AudioSource.PlayClipAtPoint(attackSound, mainCamera.transform.position);
-        isEnemyAttacking = true;
+        
+		//Wait a predetermined amount of time before destroying attack particle and allowing a new attack to begin
+		StartCoroutine(WaitForNextAttack());
+	}
 
-
-    }
-    
-    private void ShootParticleAttack()
+	private void UpdateParticleAttackObject()
     {
-        // Shoots away the particle attack towards the player by adding movementVector * deltatime
+        // Moves the particle attack towards the player by adding movementVector * deltatime
         // to the partiucle attack object. This makes it so particle keeps flying past the player
-        particleAttackObject.transform.position += movementVector * Time.deltaTime;
+		particleAttackObject.transform.position += movementVector * Time.deltaTime;
     }
 
     IEnumerator WaitForNextAttack()
     {
-        
         yield return new WaitForSeconds(2);
-        
-        isEnemyAttacking = false;
-    }
+		DestroyParticleAttackObject();
+	}
 
     public void DestroyParticleAttackObject()
     {
-        Destroy(particleAttackObject);
-    }
+		//Todo: use pooling, see todo in SpawnParticleAttack
+		Destroy(particleAttackObject);
+		particleAttackObject = null;
+	}
     // Implement this next to make a pre attack sound
     //IEnumerator GeneralWaitForSeconds(int secondsToWait)
     //{
