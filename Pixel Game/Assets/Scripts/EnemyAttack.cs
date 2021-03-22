@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-	public const float AttackRange = 3;
+	public float AttackRange = 3;
 	public GameObject particleAttackPrefab;
     public GameObject mainCamera;
     public float particleMovementSpeed = 2f;
@@ -16,8 +16,9 @@ public class EnemyAttack : MonoBehaviour
     private GameObject particleAttackObject;
     private Vector3 movementVector = Vector3.zero;
 
-	bool InRange => Vector2.Distance(playerGameObject.transform.position, gameObject.transform.position) < AttackRange;
+	bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	bool UpdatingParticleAttackObject => particleAttackObject != null;
+	float SqrAttackRange => AttackRange * AttackRange; //Avoid square root calculation in exchange for an extra multiplication
 
 	// Start is called before the first frame update
 	void Start()
@@ -87,7 +88,7 @@ public class EnemyAttack : MonoBehaviour
 
     public void DestroyParticleAttackObject()
     {
-		//Todo: use pooling, see todo in SpawnParticleAttack
+		//Todo: use pooling, see todo in SpawnParticleAttackObject
 		Destroy(particleAttackObject);
 		particleAttackObject = null;
 	}
