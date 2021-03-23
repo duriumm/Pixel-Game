@@ -80,7 +80,7 @@ public class EnemyHealth : MonoBehaviour
         enemyObject.GetComponent<EnemyMovement>().enabled = false;
 
         // Destroy the particle attack obejct so it doesnt get stuck in mid air on ghost death
-        enemyObject.GetComponent<EnemyAttack>().DestroyParticleAttackObject();
+        enemyObject.GetComponent<EnemyAttack>().DestroyAttackParticle();
 
         // This fade last for 2 sek and turns ghost from 1 in alpha (max) to 
         // 0 in alpha (lowest)

@@ -4,104 +4,110 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-
-    public GameObject particleAttackPrefab;
+	public float AttackRange = 3;
+	public GameObject AttackParticleTemplate;
     public GameObject mainCamera;
     public float particleMovementSpeed = 2f;
+	// Implement this next !!
+	//public AudioClip preAttackSound;
+	public AudioClip attackSound;
 
-
-    private GameObject playerGameObject;
-    private GameObject particleAttackObject;
-    private Vector2 enemyPosition;
-    private Vector3 playerPositionWhenAttacking;
-
-    
+	private GameObject playerGameObject;
+    private GameObject attackParticle;
     private Vector3 movementVector = Vector3.zero;
+	private static ObjectPool attackParticlePool;
 
-    private bool isEnemyAttacking = false;
+	private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
+	private bool UpdatingAttackParticle => attackParticle != null;
+	private float SqrAttackRange => AttackRange * AttackRange; //Avoid square root calculation in exchange for an extra multiplication
 
-    // Implement this next !!
-    //public AudioClip preAttackSound;
-    public AudioClip attackSound;
-
-
-    // Start is called before the first frame update
-    void Start()
+	void Awake()
+	{
+		if (attackParticlePool == null)
+		{
+			attackParticlePool = new ObjectPool(AttackParticleTemplate, 10);
+		}
+	}
+	// Start is called before the first frame update
+	void Start()
     {
-        enemyPosition = gameObject.transform.position;
         // TO-DO
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
+		StartCoroutine(StartNewAttacks());
     }
 
-    // Update is called once per frame
-    void Update()
+	//Repeatedly check if a new attack should start
+	//Do the check at a fixed slow interval to save cpu cycles
+	IEnumerator StartNewAttacks()
+	{
+		while (true)
+		{
+			if (InRange && !UpdatingAttackParticle)
+				yield return StartAttack();
+			yield return new WaitForSeconds(0.2f);
+		}
+	}
+
+	IEnumerator StartAttack()
+	{
+		//Blinking to indicate attack will start
+		var material = gameObject.GetComponent<SpriteRenderer>().material;
+		var originalColor = material.color;
+		for (int i = 0; i < 4; i++)
+		{
+			material.color = Color.white;
+			yield return new WaitForSeconds(0.1f);
+			material.color = Color.red;
+			yield return new WaitForSeconds(0.1f);
+		}
+		material.color = originalColor;
+		SpawnAttackParticle();
+	}
+
+	void FixedUpdate()
     {
-        if (isEnemyAttacking == false)
-        {
-            SpawnParticleAttack();
-            StartCoroutine(WaitForNextAttack());
-        }
-        else if(isEnemyAttacking == true)
-        {
-            ShootParticleAttack();
-        }
+		if (UpdatingAttackParticle)
+			UpdateAttackParticle();
+	}
+
+	private void SpawnAttackParticle()
+    {
+		// Spawn the particle effect gameobject from pool on top of the ghast enemy
+		var particlePos = gameObject.transform.position;
+		particlePos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
+		attackParticle = attackParticlePool.Spawn(particlePos);
         
-    }
-
-    private void SpawnParticleAttack()
-    {
-        if(particleAttackObject != null)
-        {
-            // TO-DO
-            // Here i would like to have object pooling to use the same 1 ,2 or 3 attack objects over and over
-            // TO-DO
-            Destroy(particleAttackObject);
-        }
-        // Spawn the particle effect gameobject from a prefab on top of the ghast enemy
-        particleAttackObject = Instantiate(particleAttackPrefab) as GameObject;
-        // Get the CURRENT updated enemy position and then set our particle attack object to enemys position
-        enemyPosition = gameObject.transform.position;
-        particleAttackObject.transform.position = enemyPosition;
-        // we change the Z axis since otherwise the particle effect doesnt play correctly 
-        particleAttackObject.transform.position = new Vector3(particleAttackObject.transform.position.x, particleAttackObject.transform.position.y, -1);
-
-        // Get where the player was standing at this exact moment and then
-        // set the z value to -1 otherwise we use vector2 which automatically 
-        // sets z value to 0 which will cause flickering of particle object
-        playerPositionWhenAttacking = playerGameObject.transform.position;
-        playerPositionWhenAttacking.z = -1;
-
-        // Calculation of positions to make the particle attack object move PAST the player object when shooting
-        movementVector = (playerPositionWhenAttacking - particleAttackObject.transform.position).normalized * particleMovementSpeed;
+       	// Calculate movement vector
+		movementVector = playerGameObject.transform.position - gameObject.transform.position;
+		movementVector = movementVector.normalized * particleMovementSpeed;
 
         // Play the attack sound at the player position
         AudioSource.PlayClipAtPoint(attackSound, mainCamera.transform.position);
-        isEnemyAttacking = true;
+        
+		//Wait a predetermined amount of time before destroying attack particle and allowing a new attack to begin
+		StartCoroutine(WaitForNextAttack());
+	}
 
-
-    }
-    
-    private void ShootParticleAttack()
+	private void UpdateAttackParticle()
     {
-        // Shoots away the particle attack towards the player by adding movementVector * deltatime
+        // Moves the particle attack towards the player by adding movementVector * fixedDeltatime
         // to the partiucle attack object. This makes it so particle keeps flying past the player
-        particleAttackObject.transform.position += movementVector * Time.deltaTime;
+		attackParticle.transform.position += movementVector * Time.fixedDeltaTime;
     }
 
     IEnumerator WaitForNextAttack()
     {
-        
         yield return new WaitForSeconds(2);
-        
-        isEnemyAttacking = false;
-    }
+		DestroyAttackParticle();
+	}
 
-    public void DestroyParticleAttackObject()
+    public void DestroyAttackParticle()
     {
-        Destroy(particleAttackObject);
-    }
+		attackParticlePool.Destroy(attackParticle);
+		attackParticle = null;
+	}
     // Implement this next to make a pre attack sound
     //IEnumerator GeneralWaitForSeconds(int secondsToWait)
     //{
