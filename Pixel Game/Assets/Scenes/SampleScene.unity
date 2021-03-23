@@ -40527,6 +40527,10 @@ PrefabInstance:
       propertyPath: particleMovementSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5998919477085805491, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: AttackParticleTemplate
+      value: 
+      objectReference: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
     - target: {fileID: 7697818602051044011, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: attackSound
       value: 
