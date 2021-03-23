@@ -35,19 +35,35 @@ public class EnemyAttack : MonoBehaviour
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
-		StartCoroutine(SpawnNewAttacks());
+		StartCoroutine(StartNewAttacks());
     }
 
 	//Repeatedly check if a new attack should start
 	//Do the check at a fixed slow interval to save cpu cycles
-	IEnumerator SpawnNewAttacks()
+	IEnumerator StartNewAttacks()
 	{
 		while (true)
 		{
 			if (InRange && !UpdatingAttackParticle)
-				SpawnAttackParticle();
+				yield return StartAttack();
 			yield return new WaitForSeconds(0.2f);
 		}
+	}
+
+	IEnumerator StartAttack()
+	{
+		//Blinking to indicate attack will start
+		var material = gameObject.GetComponent<SpriteRenderer>().material;
+		var originalColor = material.color;
+		for (int i = 0; i < 4; i++)
+		{
+			material.color = Color.white;
+			yield return new WaitForSeconds(0.1f);
+			material.color = Color.red;
+			yield return new WaitForSeconds(0.1f);
+		}
+		material.color = originalColor;
+		SpawnAttackParticle();
 	}
 
 	void FixedUpdate()
