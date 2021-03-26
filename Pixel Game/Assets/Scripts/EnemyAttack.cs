@@ -12,7 +12,9 @@ public class EnemyAttack : MonoBehaviour
 	//public AudioClip preAttackSound;
 	public AudioClip attackSound;
 
-	private GameObject playerGameObject;
+    private EnemyHealth enemyHealthObject;
+    private float EnemyHealth => enemyHealthObject.enemyHealth;
+    private GameObject playerGameObject;
     private GameObject attackParticle;
     private Vector3 movementVector = Vector3.zero;
 	private static ObjectPool attackParticlePool;
@@ -35,7 +37,8 @@ public class EnemyAttack : MonoBehaviour
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
-		StartCoroutine(StartNewAttacks());
+        enemyHealthObject = this.gameObject.GetComponent<EnemyHealth>();
+        StartCoroutine(StartNewAttacks());
     }
 
 	//Repeatedly check if a new attack should start
@@ -44,7 +47,7 @@ public class EnemyAttack : MonoBehaviour
 	{
 		while (true)
 		{
-			if (InRange && !UpdatingAttackParticle)
+			if (InRange && !UpdatingAttackParticle && EnemyHealth > 0)
 				yield return StartAttack();
 			yield return new WaitForSeconds(0.2f);
 		}
