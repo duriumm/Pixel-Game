@@ -88,7 +88,7 @@ public class PlantScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
 
     {
-        if(collision.gameObject.tag == "MyPlayerInterractionCollider")
+        if(collision.gameObject.tag == "InterractCollider")
         {
             // TO-DO
             // Fix that the plants edges highlight here to see easier pickup
@@ -99,7 +99,7 @@ public class PlantScript : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "MyPlayerInterractionCollider")
+        if (collision.gameObject.tag == "InterractCollider")
         {
             // TO-DO
             // Fix that the plants edges STOP THE highlight 

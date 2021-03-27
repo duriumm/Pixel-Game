@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 9115208725788499396}
   - component: {fileID: -4759392353146039957}
   - component: {fileID: 3633316663772964055}
+  - component: {fileID: 5507317166602747368}
   m_Layer: 0
   m_Name: FatNpc
   m_TagString: Npc
@@ -262,7 +263,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381fb0670cc5f8e4096febdf58e647e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shopItems: []
+  isPlayerInRange: 0
   interractSound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
+  traderID: 
 --- !u!58 &3633316663772964055
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -279,3 +283,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.15069032}
   serializedVersion: 2
   m_Radius: 1.32
+--- !u!95 &5507317166602747368
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977666638280157480}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6833a26f574e9604fab5d4cc036eb0c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
