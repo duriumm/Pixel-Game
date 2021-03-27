@@ -6,22 +6,22 @@ public class EnemyMovement : MonoBehaviour
 {
     public GameObject playerObject;
     public float speed = 0.5f;
-
     public Animator enemyAnimator;
     public GameObject mainCamera;
+    public AudioClip ghastAmbientSound;
 
     private Transform playerTransform;
     private Transform ghastTransform;
-
-    Vector2 ghastPositionDifferenceToPlayer;
-
-    float ghast_X_ValueForAnimator;
-    float ghast_Y_ValueForAnimator;
-
-    public AudioClip ghastAmbientSound;
-
     private bool isPlayingAmbientGhastSound = false;
+    private float roamStartTime;
+    private float roamDuration;
+    private Vector3 movementVector;
 
+    private const float MinRoamDuration = 2;
+    private const float MaxRoamDuration = 5;
+    private const float ChaseUpperDistance = 4;
+	private float retreatUpperDistance;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,48 +30,54 @@ public class EnemyMovement : MonoBehaviour
         // TO-DO
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
         ghastTransform = gameObject.transform;
-    }
+		float attackRange = gameObject.GetComponent<EnemyAttack>().AttackRange;
+		retreatUpperDistance = attackRange * 0.7f;
+	}
 
-    void Update()
+    void FixedUpdate()
     {
-        // TO-DO
-        // Make a state machine for the ghast for 1 roaming around,
-        // 2 chasing player, 3 dying etc etc
-        // TO-DO
-
-        // If ghast is close to player he starts moving towards the player and 
-        // ghast position difference to the player is saved to use it in 
-        // animator controller easier
-        if (Vector2.Distance(ghastTransform.position, playerTransform.position) > 1.5f)
+        float playerDistance = Vector3.Distance(playerTransform.position, ghastTransform.position);
+		
+        // If player is far away, roam around
+        // If close, chase to get well within attack range
+        // Back away if too close
+        Vector3 faceDirection = Vector3.zero;
+        if (playerDistance < retreatUpperDistance) //Back away
         {
-            // Plays ambient sound of ghast movement and waits 9 seconds to play it again
-            // TO-DO
-            // Play ambient when player is in range of 4 - 1.6f only
-            // TO-DO
-            if(isPlayingAmbientGhastSound == false)
-            {
-                StartCoroutine(waitForAmbientSoundToPlay());
-            }
-
-
-
-            ghastTransform.position = Vector2.MoveTowards(ghastTransform.position, playerTransform.position, speed * Time.deltaTime);
-            
-            ghastPositionDifferenceToPlayer = ghastTransform.position - playerTransform.position;
-            //Debug.Log("Distance difference ghast and player: " + ghastPositionDifferenceToPlayer);
+            movementVector = ghastTransform.position - playerTransform.position;
+            faceDirection = -movementVector; //Enemy should face player when backing away
         }
+        else if (playerDistance < ChaseUpperDistance) //Chase
+        {
+            movementVector = playerTransform.position - ghastTransform.position;
+            //Sound acts as indication that the enemy started chasing
+            //Helps the player to differentiate between roaming movement and chasing movement
+            if (!isPlayingAmbientGhastSound)
+                StartCoroutine(playAmbientSoundAndWait());
+        }
+        else if (Time.time - roamStartTime > roamDuration) //Update roaming objective
+        {
+            //If moving, stop moving. If not moving, start moving in random direction
+            roamDuration = Random.Range(MinRoamDuration, MaxRoamDuration);
+            roamStartTime = Time.time;
+            if (movementVector == Vector3.zero)
+                movementVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
+            else
+                movementVector = Vector3.zero;
+        }
+        if (faceDirection == Vector3.zero)
+            faceDirection = movementVector;
 
-        // Why we make this small calculation is because otherwise the ghast will look in the wrong direction
-        // when chasing the player, looking right when the player is left of the ghast.
-        ghast_X_ValueForAnimator = ghastPositionDifferenceToPlayer.x - (ghastPositionDifferenceToPlayer.x * 2);
-        ghast_Y_ValueForAnimator = ghastPositionDifferenceToPlayer.y - (ghastPositionDifferenceToPlayer.y * 2);
-
-        enemyAnimator.SetFloat("Horizontal", ghast_X_ValueForAnimator);
-        enemyAnimator.SetFloat("Vertical", ghast_Y_ValueForAnimator);
-
-        enemyAnimator.SetFloat("Speed", speed);       
+        if (movementVector != Vector3.zero)
+        { 
+            ghastTransform.position += movementVector.normalized * speed * Time.fixedDeltaTime;
+            enemyAnimator.SetFloat("Horizontal", faceDirection.x);
+            enemyAnimator.SetFloat("Vertical", faceDirection.y);
+            enemyAnimator.SetFloat("Speed", speed);
+        }
     }
-    private IEnumerator waitForAmbientSoundToPlay()
+
+    private IEnumerator playAmbientSoundAndWait()
     {
         isPlayingAmbientGhastSound = true;
         AudioSource.PlayClipAtPoint(ghastAmbientSound, mainCamera.transform.position);        
