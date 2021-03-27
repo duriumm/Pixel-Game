@@ -45,32 +45,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: 0
-  invGameObjectArray:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  playerMoney: 0
+  currentActiveTrader: 
+  NpcDatabase:
+  - FatNpc
+  - Pawi
   lootDatabase:
   - {fileID: 8776739252053834925, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
   - {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
   - {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
   - {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
+  - {fileID: 6662477887734707362, guid: be1cbf8d7bd3050419cefde91103de40, type: 3}
+  - {fileID: 4069441921147659030, guid: 5a4a81d6cb0c2634db631cc9bdf80df4, type: 3}
   mySavedStringListDatabase: []
 --- !u!114 &2785664742062480089
 MonoBehaviour:
@@ -84,4 +70,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f65ddd46c923a47449019d005ccc36c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataToPassBetweenScenesGameObject: {fileID: 0}

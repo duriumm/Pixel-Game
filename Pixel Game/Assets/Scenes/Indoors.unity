@@ -274,6 +274,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1081269854}
     - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
+      propertyPath: CoinAmountText
+      value: 
+      objectReference: {fileID: 1770566402}
+    - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
       propertyPath: dataToPassGameObject
       value: 
       objectReference: {fileID: 8159923538760270455, guid: 2b4a83fea96e7204b88446f73b4514eb, type: 3}
@@ -882,6 +886,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+--- !u!114 &1770566402 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6331735293764940088, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+  m_PrefabInstance: {fileID: 1770566401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1773883686
 GameObject:
   m_ObjectHideFlags: 0

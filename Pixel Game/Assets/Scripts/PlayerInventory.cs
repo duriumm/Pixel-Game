@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,6 +14,12 @@ public class PlayerInventory : MonoBehaviour
     public bool isInventoryOpen = false;
     private CustomItem lootedCustomItem;
     public GameObject dataToPassGameObject;
+    public AudioClip buyAndSellSound;
+    private GameObject mainCamera;
+
+    // TO-DO - Move playerMoney to some other place.. not sure where yet
+    public int playerInvMoney;
+    public TextMeshProUGUI CoinAmountText;
 
     private void Awake()
     {
@@ -31,11 +38,14 @@ public class PlayerInventory : MonoBehaviour
         inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
         inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
+        
     }
     void Start()
-    {        
+    {
+        mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
         ClosingUI();
+        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoney);
     }
 
     // Update is called once per frame
@@ -58,30 +68,58 @@ public class PlayerInventory : MonoBehaviour
     // if it is, we can add our new item in there!
     public void addItemToSlot(/*CustomItem customItem*/GameObject lootedGameObject)
     {
-        // lootedCustomItem = lootedGameObject.GetComponent<CustomItem>(); // Never use this :(
-        for (int i = 0; i < slots.Length; i++)
+        if(lootedGameObject.GetComponent<CustomItem>().itemType != CustomItem.ITEMTYPE.MONEY)
         {
-
-            // Check each slots customGameobject if its empty == nothing is in that slot.
-            if(slots[i].customItemGameObject == null)
+            // lootedCustomItem = lootedGameObject.GetComponent<CustomItem>(); // Never use this :(
+            for (int i = 0; i < slots.Length; i++)
             {
-                //Debug.Log("index "+ i + " sloticon.sprite is null! therefor we can add item there");
-                slots[i].AddItem(lootedGameObject);
+
+                // Check each slots customGameobject if its empty == nothing is in that slot.
+                if(slots[i].customItemGameObject == null)
+                {
+                    //Debug.Log("index "+ i + " sloticon.sprite is null! therefor we can add item there");
+                    slots[i].AddItem(lootedGameObject);
                 
-                break;
-                //if(slots[i].slotIcon.sprite == null)
-                //{
-                //}
-                //else { Debug.Log(i + " sprite ISNT null!"); }        
+                    break;
+                    //if(slots[i].slotIcon.sprite == null)
+                    //{
+                    //}
+                    //else { Debug.Log(i + " sprite ISNT null!"); }        
+                }
             }
+
+            // Destroying the gameobject you pick up makes it so the inventory 
+            // cannot reference it for future deletes or usage. Disable it for now
+            // but fix a List later so we can access these objects to instantiate etc etc
+
+            //Destroy(lootedGameObject);
+            lootedGameObject.SetActive(false);
         }
-
-        // Destroying the gameobject you pick up makes it so the inventory 
-        // cannot reference it for future deletes or usage. Disable it for now
-        // but fix a List later so we can access these objects to instantiate etc etc
-
-        //Destroy(lootedGameObject);
-        lootedGameObject.SetActive(false);
+        else if(lootedGameObject.GetComponent<CustomItem>().itemType == CustomItem.ITEMTYPE.MONEY)
+        {
+            playerInvMoney+= lootedGameObject.GetComponent<CustomItem>().value;
+            SetCoinAmount(playerInvMoney);
+            Destroy(lootedGameObject);
+        }
+    }
+    public void BuyAndSellItemSound()
+    {
+        AudioSource.PlayClipAtPoint(buyAndSellSound, mainCamera.transform.position);
+    }
+    public void AddCoinAmount(int coinAmountToAdd)
+    {
+        playerInvMoney = playerInvMoney + coinAmountToAdd;
+        CoinAmountText.text = playerInvMoney.ToString();
+    }
+    public void RemoveCoinAmount(int coinAmountToRemove)
+    {
+        playerInvMoney = playerInvMoney - coinAmountToRemove;
+        CoinAmountText.text = playerInvMoney.ToString();
+    }
+    public void SetCoinAmount(int coinAmount)
+    {
+        playerInvMoney = coinAmount;
+        CoinAmountText.text = coinAmount.ToString();
     }
 
     // Here we take each CustomitemGameobject from each slot in our inventory and add 

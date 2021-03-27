@@ -102,6 +102,7 @@ MonoBehaviour:
   damage: 0
   defense: 0
   durability: 0
+  value: 2
   itemIcon: {fileID: 21300000, guid: 24c42bc8f42245c43b2b1085b1d3df02, type: 3}
   itemIdString: BadFruit2
   itemType: 3
