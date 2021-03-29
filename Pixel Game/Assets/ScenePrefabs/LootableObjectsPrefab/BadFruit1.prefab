@@ -98,13 +98,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Prent fruit
-  description: Regular Prent fruit, can be eaten raw.
+  description: A sour fruit that can be eaten raw
   damage: 0
   defense: 0
   durability: 0
   value: 2
   itemIcon: {fileID: 21300000, guid: 34f55dc9327920746b362b755f50818f, type: 3}
   itemIdString: BadFruit1
+  healingCapability: 10
   itemType: 3
 --- !u!114 &289846561769043844
 MonoBehaviour:

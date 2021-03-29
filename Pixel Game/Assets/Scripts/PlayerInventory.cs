@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerInventory : MonoBehaviour
     public GameObject prefabCanvas;
     private Transform inventorySlotsTransform;
     public bool isInventoryOpen = false;
-    private CustomItem lootedCustomItem;
+    private ItemData lootedItemData;
     public GameObject dataToPassGameObject;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
@@ -57,25 +58,34 @@ public class PlayerInventory : MonoBehaviour
     {
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
+        foreach (var item in slots)
+        {
+            //Debug.Log(item.name);
+            item.GetComponent<EventTrigger>().enabled = false;
+        }
     }
     public void OpeningGUI()
     {
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
+        foreach (var item in slots)
+        {
+            item.GetComponent<EventTrigger>().enabled = true;
+        }
     }
 
     // Loop through our slots list and check if any of the slots sprite icon is null
     // if it is, we can add our new item in there!
-    public void addItemToSlot(/*CustomItem customItem*/GameObject lootedGameObject)
+    public void addItemToSlot(/*ItemData ItemData*/GameObject lootedGameObject)
     {
-        if(lootedGameObject.GetComponent<CustomItem>().itemType != CustomItem.ITEMTYPE.MONEY)
+        if(lootedGameObject.GetComponent<ItemData>().itemType != ItemData.ITEMTYPE.MONEY)
         {
-            // lootedCustomItem = lootedGameObject.GetComponent<CustomItem>(); // Never use this :(
+            // lootedItemData = lootedGameObject.GetComponent<ItemData>(); // Never use this :(
             for (int i = 0; i < slots.Length; i++)
             {
 
                 // Check each slots customGameobject if its empty == nothing is in that slot.
-                if(slots[i].customItemGameObject == null)
+                if(slots[i].ItemDataGameObject == null)
                 {
                     //Debug.Log("index "+ i + " sloticon.sprite is null! therefor we can add item there");
                     slots[i].AddItem(lootedGameObject);
@@ -95,9 +105,9 @@ public class PlayerInventory : MonoBehaviour
             //Destroy(lootedGameObject);
             lootedGameObject.SetActive(false);
         }
-        else if(lootedGameObject.GetComponent<CustomItem>().itemType == CustomItem.ITEMTYPE.MONEY)
+        else if(lootedGameObject.GetComponent<ItemData>().itemType == ItemData.ITEMTYPE.MONEY)
         {
-            playerInvMoney+= lootedGameObject.GetComponent<CustomItem>().value;
+            playerInvMoney+= lootedGameObject.GetComponent<ItemData>().value;
             SetCoinAmount(playerInvMoney);
             Destroy(lootedGameObject);
         }
@@ -122,7 +132,7 @@ public class PlayerInventory : MonoBehaviour
         CoinAmountText.text = coinAmount.ToString();
     }
 
-    // Here we take each CustomitemGameobject from each slot in our inventory and add 
+    // Here we take each ItemDataGameobject from each slot in our inventory and add 
     // its NAME to our stringDatabase 
     public void SaveInvGameObjectsOnSceneChange()
     {
@@ -130,10 +140,10 @@ public class PlayerInventory : MonoBehaviour
         dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
         for (int i = 0; i < slots.Length; i++)
         {
-            if(slots[i].customItemGameObject != null)
+            if(slots[i].ItemDataGameObject != null)
             {
-                dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Add(slots[i].customItemGameObject.GetComponent<CustomItem>().itemIdString); 
-                Debug.Log("This is what we saved before scene change: "+slots[i].customItemGameObject.ToString());
+                dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Add(slots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
+                Debug.Log("This is what we saved before scene change: "+slots[i].ItemDataGameObject.ToString());
             }
             saveCounter++;
         }

@@ -6,7 +6,7 @@ public class ShopScreen : MonoBehaviour
 {
     public bool isShopScreenOpen = false;
     private GameObject inventoryManager;
-    private InventorySlot[] shopSlots;
+    public InventorySlot[] shopSlots;
     private GameObject inventoryScreenGameObject;
     public GameObject sceneCanvas;
     private Transform shopSlotsTransform;
@@ -48,21 +48,12 @@ public class ShopScreen : MonoBehaviour
     }
     public void OpenShopScreen()
     {
-        //// TO-DO - Loop through the selected npc and his itemlist and populate the shop with his items.
-        //GameObject currentTraderNpc = GameObject.Find(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader);
-        //foreach (var item in currentTraderNpc.GetComponent<TraderNpc>().shopItems)
-        //{
-        //    // TO-DO - Here we want to populate the shop instead of just showing all items
-        //    Debug.Log(item.name);
-        //}
-        //foreach (var item in shopScreenItemList)
-        //{
-        //    // TO-DO - Add each item from the shopScreenItemList into the shopSlots[i]
-        //    Debug.Log(item);
-        //}
 
-        Debug.Log(shopScreenItemList.Count);
-
+        // Clear all data flor shop slots so we can add new data!
+        for (int i = 0; i < shopSlots.Length; i++)
+        {
+            shopSlots[i].ClearAllDataFromSlot();
+        }
 
         // Populate shop screens slots with copies of prefab items
         for (int i = 0; i < shopScreenItemList.Count; i++)

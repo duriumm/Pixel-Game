@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[System.Serializable]
-public class CustomItem : MonoBehaviour
+public class ItemData : MonoBehaviour
 {
     public string itemName;
     public string description;
@@ -13,6 +13,7 @@ public class CustomItem : MonoBehaviour
     public int value;
     public Sprite itemIcon;
     public string itemIdString;
+    public int healingCapability;
     public enum ITEMTYPE
     {
         WOOD,
@@ -20,11 +21,13 @@ public class CustomItem : MonoBehaviour
         SPECTRAL,
         EDIBLE,
         MONEY,
-        WEAPON
+        WEAPON,
+        ARMOR
     }
     public ITEMTYPE itemType;
 
-    public CustomItem(string itemName, string description, int damage, int defense, int durability, int value, Sprite itemIcon, string itemIdString)
+    public ItemData(string itemName, string description, int damage, int defense,
+        int durability, int value, Sprite itemIcon, string itemIdString, int healingCapability)
     {
         this.itemName = itemName;
         this.description = description;
@@ -34,5 +37,6 @@ public class CustomItem : MonoBehaviour
         this.value = value;
         this.itemIcon = itemIcon;
         this.itemIdString = itemIdString;
+        this.healingCapability = healingCapability;
 }
 }

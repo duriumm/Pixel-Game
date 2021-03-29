@@ -41,13 +41,15 @@ public class TraderNpc : MonoBehaviour
 
             // Assign current active trader to be this trader.
             dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader = traderID;
-            Debug.Log(this.gameObject.name + " is ready fpr shopping");
+
             // Clear the shopScreen list so we only put in the NPC list of items in a empty list
             shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Clear();
+            Debug.Log("Shop screen list before adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
             foreach (var item in shopItems)
             {
                 shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Add(item);
             }
+            Debug.Log("Shop screen list AFTER adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
         }
     }
 

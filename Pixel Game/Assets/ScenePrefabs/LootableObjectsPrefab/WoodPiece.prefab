@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Wooden log
-  description: Wooden log, can be used as a weapon
+  description: Can be used as a weapon or firewood
   damage: 0
   defense: 0
   durability: 0
