@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Iron Sword
-  description: Regular iron sword, used by all adventurers
+  description: Standard sword used by all over [insert land name]
   damage: 5
   defense: 0
   durability: 0

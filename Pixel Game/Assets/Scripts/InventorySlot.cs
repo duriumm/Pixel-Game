@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
 
 /* Inventory slot script is used on each inventory slot of the player AND on each shop screens slot.
@@ -17,14 +19,17 @@ public class InventorySlot : MonoBehaviour
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
 
-    public CustomItem customItemInSlot;
-    public GameObject customItemGameObject;
+    public ItemData ItemDataInSlot;
+    public GameObject ItemDataGameObject;
     private GameObject invManager;
     private GameObject shopScreen;
+
+    private EventTrigger eventTrigger;
     
 
     private void Awake()
     {
+        eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
         slotIcon = this.gameObject.GetComponent<Image>();
@@ -35,6 +40,18 @@ public class InventorySlot : MonoBehaviour
     {
 
     }
+
+    public void ClearAllDataFromSlot()
+    {
+        ItemDataInSlot = null;
+        slotIcon.sprite = null;
+        ItemDataGameObject = null;
+        SetAlphaOfColor(0f);
+    }
+    public void AddHelmetSlotToInventory()
+    {
+        invManager.GetComponent<PlayerInventory>().addItemToSlot(ItemDataGameObject);
+    }
     public void AddItem(GameObject gameObjectToAdd)
     {
         // BUG
@@ -43,29 +60,29 @@ public class InventorySlot : MonoBehaviour
         // and the original doesnt get destroyed...
         // BUG
 
-        customItemInSlot = gameObjectToAdd.GetComponent<CustomItem>();
-        customItemGameObject = gameObjectToAdd;
-        slotIcon.sprite = customItemInSlot.itemIcon; 
+        ItemDataInSlot = gameObjectToAdd.GetComponent<ItemData>();
+        ItemDataGameObject = gameObjectToAdd;
+        slotIcon.sprite = ItemDataInSlot.itemIcon; 
         
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
-        //customItemGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
+        //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
     }
     public void BuyItemFromShop()
     {
         // If there is an actual item in current slot and inventory is actually open
-        if (customItemInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        if (ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
-            if(invManager.GetComponent<PlayerInventory>().playerInvMoney >= customItemInSlot.value)
+            if(invManager.GetComponent<PlayerInventory>().playerInvMoney >= ItemDataInSlot.value)
             {
                 invManager.GetComponent<PlayerInventory>().BuyAndSellItemSound();
-                string originalItemName = customItemGameObject.name;
-                GameObject instantiatedGameObject = Instantiate(customItemGameObject) as GameObject; // Create a new gameObject
+                string originalItemName = ItemDataGameObject.name;
+                GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
                 instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
 
                 invManager.GetComponent<PlayerInventory>().addItemToSlot(instantiatedGameObject);
 
-                invManager.GetComponent<PlayerInventory>().RemoveCoinAmount(customItemInSlot.value);
+                invManager.GetComponent<PlayerInventory>().RemoveCoinAmount(ItemDataInSlot.value);
                 Debug.Log("trying to buy");
             }
             else
@@ -82,7 +99,7 @@ public class InventorySlot : MonoBehaviour
 
         Debug.Log("Is shot screen open: " + shopScreen.GetComponent<ShopScreen>().isShopScreenOpen);
         // If there is an actual item in current slot and inventory is actually open
-        if (customItemInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
+        if (ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
         {
             if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
@@ -91,8 +108,8 @@ public class InventorySlot : MonoBehaviour
                 // doesnt get picked up instantly again by the player. 
                 // TO-DO
 
-                string realItemName = customItemInSlot.name; // Get the original name of the gameobject
-                GameObject instantiatedGameObject = Instantiate(customItemGameObject) as GameObject; // Create a new gameObject
+                string realItemName = ItemDataInSlot.name; // Get the original name of the gameobject
+                GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
                 instantiatedGameObject.name = realItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
 
                 // Set spawn position of item to where the player is standing currently
@@ -101,11 +118,11 @@ public class InventorySlot : MonoBehaviour
                 itemDropPosition.y = playerCharacter.transform.position.y + 1f;
                 instantiatedGameObject.transform.position = itemDropPosition;
                 instantiatedGameObject.SetActive(true);
-                Destroy(customItemGameObject);
+                Destroy(ItemDataGameObject);
 
                 // Set alpha of slot to 0 and assign the items to the slot.
                 SetAlphaOfColor(0f);
-                customItemInSlot = null;
+                ItemDataInSlot = null;
                 slotIcon.sprite = null; 
                 Debug.Log("Removed inventory item from GUI");
                 instantiatedGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
@@ -114,10 +131,10 @@ public class InventorySlot : MonoBehaviour
             else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
             {
                 invManager.GetComponent<PlayerInventory>().BuyAndSellItemSound();
-                invManager.GetComponent<PlayerInventory>().AddCoinAmount(customItemGameObject.GetComponent<CustomItem>().value);
-                Destroy(customItemGameObject);
+                invManager.GetComponent<PlayerInventory>().AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
+                Destroy(ItemDataGameObject);
                 SetAlphaOfColor(0f);
-                customItemInSlot = null;
+                ItemDataInSlot = null;
                 slotIcon.sprite = null;
             }
         }
@@ -129,5 +146,45 @@ public class InventorySlot : MonoBehaviour
         ColorOfSlot.a = alphaColorValue;
         slotIcon.color = ColorOfSlot;
     }
+
+    public void ShowDataOnHover()
+    {
+        if(ItemDataGameObject != null)
+        {
+
+            // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
+            TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
+            itemNameText.text = ItemDataInSlot.itemName;
+            TextMeshProUGUI ItemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
+            ItemDescriptionText.text = ItemDataInSlot.description;
+            TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
+            if (ItemDataInSlot.itemType != ItemData.ITEMTYPE.EDIBLE)
+            {
+                ItemStatsText.text = "Damage: "+ItemDataInSlot.damage+"\n"+"Defense: "+ItemDataInSlot.defense+"\n"+"Value: "+ItemDataInSlot.value;
+            }
+            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
+            {   // Show the text in green to indicate hp gain on eating item
+                ItemStatsText.text = "Effect on eating: " + "<color=green>+" + ItemDataInSlot.healingCapability + " hp</color>";
+            }
+
+
+
+
+            this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
+        }
+        else
+        {
+            Debug.Log("no item in slot :(");
+
+        }
+
+        // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
+    }
+    public void RemoveDataShowingOnExit()
+    {
+        this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 0f;
+    }
+
+    
 
 }

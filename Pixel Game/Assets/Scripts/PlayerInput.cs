@@ -49,18 +49,13 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // TO-DO           
-            // 1. Try to find the closest npc with vector2 distance script here
-            // 2. Check in npc script if isPlayerInRange == true
-            // 3. Open merchant shop window
+            // We try to get the closest NPC from the last saved "current active trader" 
+            // and then we check if player is in range so we can open his/her shop!
             closestNPC = GameObject.Find(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader);
+            Debug.Log("Closest NPC is: " + closestNPC);
             if(closestNPC.GetComponent<TraderNpc>().isPlayerInRange == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
                 shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
-                Debug.Log("We are in range");
-                // TO-DO 
-                // Create function to open the merchant shop
-                //OpenMerchantShop();
             }
             else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
             {

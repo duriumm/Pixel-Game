@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Iron Axe
-  description: Big heavy iron axe, perfect for decapitating thieves with
+  description: Unweildy heavy axe that can easily cleave trees (or skulls) in half
   damage: 10
   defense: 0
   durability: 100
