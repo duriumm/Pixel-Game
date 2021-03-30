@@ -24,6 +24,8 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public int playerHealth;
     public int playerMoney;
     public string currentActiveTrader;
+    public int playerDamage;
+    public int playerArmor;
 
     public string[] NpcDatabase = { "FatNpc", "Pawi" }; // A list of all the NPCs in our game. This list wont change
     public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change.

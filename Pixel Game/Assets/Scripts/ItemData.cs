@@ -22,7 +22,8 @@ public class ItemData : MonoBehaviour
         EDIBLE,
         MONEY,
         WEAPON,
-        ARMOR
+        ARMOR,
+        HELMET
     }
     public ITEMTYPE itemType;
 
