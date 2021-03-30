@@ -71,6 +71,7 @@ public class PlayerInventory : MonoBehaviour
         foreach (var item in slots)
         {
             item.GetComponent<EventTrigger>().enabled = true;
+
         }
     }
 

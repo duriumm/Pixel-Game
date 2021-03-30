@@ -25,10 +25,21 @@ public class InventorySlot : MonoBehaviour
     private GameObject shopScreen;
 
     private EventTrigger eventTrigger;
+
+    private GameObject dropItemButton;
+    // Enable this bool in inspector for all inventory slots but disable for all shop slots
+    public bool isInventoryPanel;
     
 
     private void Awake()
     {
+        if(isInventoryPanel)
+        {
+            // Find the DropButton inside the slotpanel only if its inventory panel slot
+            dropItemButton = gameObject.transform.GetChild(1).gameObject;
+            dropItemButton.SetActive(false);
+        }
+        Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
@@ -41,19 +52,60 @@ public class InventorySlot : MonoBehaviour
 
     }
 
+    public void UseItem()
+    {
+        if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false && 
+            ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
+        {
+            if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET)
+            {
+                Debug.Log("Equipped Helmet");
+                // TO-DO - Make a function that actually equips the helmet visually in the equipment panel
+                // EquipHelmet(ItemDataGameObject);
+            }
+            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
+            {
+                Debug.Log("Ate food, we gained: "+ItemDataInSlot.healingCapability+" health");
+                playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
+
+                Destroy(ItemDataGameObject);
+                ClearAllDataFromSlot();
+            }
+            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+            {
+                Debug.Log("Equipped Weapon");
+            }
+            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
+            {
+                Debug.Log("Equipped Armor");
+            }
+        }
+        else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        {
+            RemoveItem();
+        }
+    }
     public void ClearAllDataFromSlot()
     {
         ItemDataInSlot = null;
         slotIcon.sprite = null;
         ItemDataGameObject = null;
         SetAlphaOfColor(0f);
+        // Here we check if dropItemButton is null or not, since we use same invSlot script for shops slots
+        // Since it should only apply for the inventory slots, we only enter if statement if this slot is an inventory slot
+        if (dropItemButton != null)
+        {
+            dropItemButton.SetActive(false);
+        }
     }
-    public void AddHelmetSlotToInventory()
-    {
-        invManager.GetComponent<PlayerInventory>().addItemToSlot(ItemDataGameObject);
-    }
+
     public void AddItem(GameObject gameObjectToAdd)
-    {
+
+    {   // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
+        if (isInventoryPanel)
+        {
+            dropItemButton.SetActive(true);
+        }
         // BUG
         // Sometimes when picking up item, the item get duplicated. 
         // This is probably because the picked up item gets instantiated
@@ -66,6 +118,7 @@ public class InventorySlot : MonoBehaviour
         
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
+        
         //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
     }
     public void BuyItemFromShop()
@@ -95,6 +148,12 @@ public class InventorySlot : MonoBehaviour
 
     public void RemoveItem()
     {
+        // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
+        if (isInventoryPanel)
+        {
+            dropItemButton.SetActive(false);
+        }
+
         Debug.Log("You pressed button");
 
         Debug.Log("Is shot screen open: " + shopScreen.GetComponent<ShopScreen>().isShopScreenOpen);
@@ -158,9 +217,13 @@ public class InventorySlot : MonoBehaviour
             TextMeshProUGUI ItemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
             ItemDescriptionText.text = ItemDataInSlot.description;
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
-            if (ItemDataInSlot.itemType != ItemData.ITEMTYPE.EDIBLE)
+            if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                ItemStatsText.text = "Damage: "+ItemDataInSlot.damage+"\n"+"Defense: "+ItemDataInSlot.defense+"\n"+"Value: "+ItemDataInSlot.value;
+                ItemStatsText.text = "Damage: "+ItemDataInSlot.damage+"\n"+ "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+            }
+            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
+            {
+                ItemStatsText.text = "Armor: " + ItemDataInSlot.defense + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {   // Show the text in green to indicate hp gain on eating item
