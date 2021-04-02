@@ -1634,6 +1634,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8973467112481931545, guid: 9d833f1f6326030439f083e346cee915, type: 3}
   m_PrefabInstance: {fileID: 1263310394}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1125439973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4483081238741481981, guid: 9d833f1f6326030439f083e346cee915, type: 3}
+  m_PrefabInstance: {fileID: 1263310394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125439970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2027467d12cd1c648a1eabdc38b1323c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1193529268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40746,10 +40757,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1843213772959514312, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_RaycastTarget
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 1843213772825017901, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1125439973}
     - target: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -40838,6 +40849,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1125439973}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
 --- !u!1 &1450150072
@@ -42172,6 +42191,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: far clip plane
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: near clip plane
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: orthographic size
+      value: 4.21875
+      objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669127, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_Name
       value: Main Camera
