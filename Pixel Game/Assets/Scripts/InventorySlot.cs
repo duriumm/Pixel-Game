@@ -30,11 +30,16 @@ public class InventorySlot : MonoBehaviour
     private GameObject dropItemButton;
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
     public bool isInventoryPanel;
-    
+    private static PlayerInventory inventory;
 
-    private void Awake()
+    protected void Awake()
     {
-        if(isInventoryPanel)
+        if (inventory == null)
+        {
+            var inventoryManager = GameObject.FindWithTag("InventoryManager");
+            inventory = inventoryManager.GetComponent<PlayerInventory>();
+        }
+        if (isInventoryPanel)
         {
             // Find the DropButton inside the slotpanel only if its inventory panel slot
             dropItemButton = gameObject.transform.GetChild(1).gameObject;
@@ -90,12 +95,17 @@ public class InventorySlot : MonoBehaviour
         //Add item to equipment slot
         var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
-        var equipmentSlotMono = equipmentSlotGameObject.GetComponent<EquipmentSlot>();
+        var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
         equipmentSlotMono.AddItem(ItemDataInSlot.gameObject);
-
-        //Remove item from inventory slot
-        RemoveItem();
+        ClearAllDataFromSlot();
     }
+
+    public void UnequipItem()
+    {
+        inventory.addItemToSlot(ItemDataInSlot.gameObject);
+        ClearAllDataFromSlot();
+    }
+
 
     public void ClearAllDataFromSlot()
     {
