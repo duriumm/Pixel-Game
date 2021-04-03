@@ -93,6 +93,8 @@ public class InventorySlot : MonoBehaviour
 
     public void UnequipItem()
     {
+        if (ItemDataInSlot == null)
+            return;
         inventory.addItemToSlot(ItemDataInSlot.gameObject);
         ClearSlot();
     }
