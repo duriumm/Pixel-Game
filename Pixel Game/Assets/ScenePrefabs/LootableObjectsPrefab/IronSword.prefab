@@ -105,7 +105,9 @@ MonoBehaviour:
   value: 10
   itemIcon: {fileID: 21300000, guid: 0f2004a2caacc034aaef5b1fa2ec6278, type: 3}
   itemIdString: IronSword
+  healingCapability: 0
   itemType: 5
+  isEquippable: 1
 --- !u!61 &221562371710303449
 BoxCollider2D:
   m_ObjectHideFlags: 0

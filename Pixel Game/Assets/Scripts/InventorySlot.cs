@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 
 /* Inventory slot script is used on each inventory slot of the player AND on each shop screens slot.
@@ -57,11 +58,9 @@ public class InventorySlot : MonoBehaviour
         if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false && 
             ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
         {
-            if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET)
+            if(ItemDataInSlot.isEquippable)
             {
-                Debug.Log("Equipped Helmet");
-                // TO-DO - Make a function that actually equips the helmet visually in the equipment panel
-                // EquipHelmet(ItemDataGameObject);
+                EquipItem();
             }
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
@@ -85,6 +84,19 @@ public class InventorySlot : MonoBehaviour
             RemoveItem();
         }
     }
+
+    void EquipItem()
+    {
+        //Add item to equipment slot
+        var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
+        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
+        var equipmentSlotMono = equipmentSlotGameObject.GetComponent<EquipmentSlot>();
+        equipmentSlotMono.AddItem(ItemDataInSlot.gameObject);
+
+        //Remove item from inventory slot
+        RemoveItem();
+    }
+
     public void ClearAllDataFromSlot()
     {
         ItemDataInSlot = null;
