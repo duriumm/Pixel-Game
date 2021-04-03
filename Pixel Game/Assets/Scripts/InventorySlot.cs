@@ -15,14 +15,12 @@ using System;
 public class InventorySlot : MonoBehaviour
 {
     public Image slotIcon;
-    public Button itemSlotButton;
     private GameObject playerCharacter;
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
 
-    public ItemData ItemDataInSlot;
-    public GameObject ItemDataGameObject;
-    private GameObject invManager;
+    private ItemData ItemDataInSlot;
+    public GameObject ItemDataGameObject => ItemDataInSlot?.gameObject;
     private GameObject shopScreen;
 
     private EventTrigger eventTrigger;
@@ -47,10 +45,8 @@ public class InventorySlot : MonoBehaviour
         }
         Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
-        invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
         slotIcon = this.gameObject.GetComponent<Image>();
-        itemSlotButton = this.gameObject.GetComponent<Button>();
         shopScreen = GameObject.Find("ShopScreen");
     }
     public void Start()
@@ -61,7 +57,7 @@ public class InventorySlot : MonoBehaviour
     public void UseItem()
     {
         if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false && 
-            ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
+            ItemDataInSlot != null && inventory.isInventoryOpen == true)
         {
             if(ItemDataInSlot.isEquippable)
             {
@@ -106,12 +102,10 @@ public class InventorySlot : MonoBehaviour
         ClearAllDataFromSlot();
     }
 
-
     public void ClearAllDataFromSlot()
     {
         ItemDataInSlot = null;
         slotIcon.sprite = null;
-        ItemDataGameObject = null;
         SetAlphaOfColor(0f);
         // Here we check if dropItemButton is null or not, since we use same invSlot script for shops slots
         // Since it should only apply for the inventory slots, we only enter if statement if this slot is an inventory slot
@@ -135,7 +129,6 @@ public class InventorySlot : MonoBehaviour
         // BUG
 
         ItemDataInSlot = gameObjectToAdd.GetComponent<ItemData>();
-        ItemDataGameObject = gameObjectToAdd;
         slotIcon.sprite = ItemDataInSlot.itemIcon; 
         
         // Set alpha of slot to 1 so we can see the item sprite
@@ -146,18 +139,18 @@ public class InventorySlot : MonoBehaviour
     public void BuyItemFromShop()
     {
         // If there is an actual item in current slot and inventory is actually open
-        if (ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        if (ItemDataInSlot != null && inventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
-            if(invManager.GetComponent<PlayerInventory>().playerInvMoney >= ItemDataInSlot.value)
+            if(inventory.playerInvMoney >= ItemDataInSlot.value)
             {
-                invManager.GetComponent<PlayerInventory>().BuyAndSellItemSound();
+                inventory.BuyAndSellItemSound();
                 string originalItemName = ItemDataGameObject.name;
                 GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
                 instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
 
-                invManager.GetComponent<PlayerInventory>().addItemToSlot(instantiatedGameObject);
+                inventory.addItemToSlot(instantiatedGameObject);
 
-                invManager.GetComponent<PlayerInventory>().RemoveCoinAmount(ItemDataInSlot.value);
+                inventory.RemoveCoinAmount(ItemDataInSlot.value);
                 Debug.Log("trying to buy");
             }
             else
@@ -180,7 +173,7 @@ public class InventorySlot : MonoBehaviour
 
         Debug.Log("Is shot screen open: " + shopScreen.GetComponent<ShopScreen>().isShopScreenOpen);
         // If there is an actual item in current slot and inventory is actually open
-        if (ItemDataInSlot != null && invManager.GetComponent<PlayerInventory>().isInventoryOpen == true)
+        if (ItemDataInSlot != null && inventory.isInventoryOpen == true)
         {
             if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
@@ -211,8 +204,8 @@ public class InventorySlot : MonoBehaviour
             // If the shops item screen is open, we will sell our inventory slot item instead of dropping it on the ground
             else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
             {
-                invManager.GetComponent<PlayerInventory>().BuyAndSellItemSound();
-                invManager.GetComponent<PlayerInventory>().AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
+                inventory.BuyAndSellItemSound();
+                inventory.AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
                 Destroy(ItemDataGameObject);
                 SetAlphaOfColor(0f);
                 ItemDataInSlot = null;

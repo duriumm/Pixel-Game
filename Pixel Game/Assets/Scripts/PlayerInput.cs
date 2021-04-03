@@ -160,8 +160,4 @@ public class PlayerInput : MonoBehaviour
     }
     */
 
-    public void EquipArmorTest(Equipment equipment)
-    {
-        Debug.Log("Equipping " + equipment.name);
-    }
 }
