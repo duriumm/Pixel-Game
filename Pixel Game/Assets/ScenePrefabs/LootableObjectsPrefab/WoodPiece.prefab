@@ -125,13 +125,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Wooden log
   description: Can be used as a weapon or firewood
-  damage: 0
+  damage: 1
   defense: 0
   durability: 0
   value: 2
   itemIcon: {fileID: 21300000, guid: 5c8cf22ca45965b47829008bfaa104ad, type: 3}
   itemIdString: WoodPiece
-  itemType: 0
+  healingCapability: 0
+  itemType: 5
+  isEquippable: 1
 --- !u!114 &6283380197544540388
 MonoBehaviour:
   m_ObjectHideFlags: 0
