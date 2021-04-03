@@ -14,7 +14,7 @@ using System;
 
 public class InventorySlot : MonoBehaviour
 {
-    public Image slotIcon;
+    public Image slotIcon { get; private set; }
     private GameObject playerCharacter;
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
@@ -30,7 +30,7 @@ public class InventorySlot : MonoBehaviour
     public bool isInventoryPanel;
     private static PlayerInventory inventory;
 
-    protected void Awake()
+    void Awake()
     {
         if (inventory == null)
         {
@@ -49,10 +49,6 @@ public class InventorySlot : MonoBehaviour
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
     }
-    public void Start()
-    {
-
-    }
 
     public void UseItem()
     {
@@ -67,9 +63,8 @@ public class InventorySlot : MonoBehaviour
             {
                 Debug.Log("Ate food, we gained: "+ItemDataInSlot.healingCapability+" health");
                 playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
-
                 Destroy(ItemDataGameObject);
-                ClearAllDataFromSlot();
+                ClearSlot();
             }
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
@@ -82,7 +77,7 @@ public class InventorySlot : MonoBehaviour
         }
         else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
-            RemoveItem();
+            DropItem();
         }
     }
 
@@ -93,16 +88,16 @@ public class InventorySlot : MonoBehaviour
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
         var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
         equipmentSlotMono.AddItem(ItemDataInSlot.gameObject);
-        ClearAllDataFromSlot();
+        ClearSlot();
     }
 
     public void UnequipItem()
     {
         inventory.addItemToSlot(ItemDataInSlot.gameObject);
-        ClearAllDataFromSlot();
+        ClearSlot();
     }
 
-    public void ClearAllDataFromSlot()
+    public void ClearSlot()
     {
         ItemDataInSlot = null;
         slotIcon.sprite = null;
@@ -122,18 +117,12 @@ public class InventorySlot : MonoBehaviour
         {
             dropItemButton.SetActive(true);
         }
-        // BUG
-        // Sometimes when picking up item, the item get duplicated. 
-        // This is probably because the picked up item gets instantiated
-        // and the original doesnt get destroyed...
-        // BUG
 
         ItemDataInSlot = gameObjectToAdd.GetComponent<ItemData>();
         slotIcon.sprite = ItemDataInSlot.itemIcon; 
-        
+      
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
-        
         //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
     }
     public void BuyItemFromShop()
@@ -161,7 +150,7 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    public void RemoveItem()
+    public void DropItem()
     {
         // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)
@@ -177,29 +166,15 @@ public class InventorySlot : MonoBehaviour
         {
             if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                // TO-DO
-                // Set spawning of item position further away from player so loot 
-                // doesnt get picked up instantly again by the player. 
-                // TO-DO
-
-                string realItemName = ItemDataInSlot.name; // Get the original name of the gameobject
-                GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
-                instantiatedGameObject.name = realItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
-
                 // Set spawn position of item to where the player is standing currently
                 // TO-DO - Spawn the item in a cricle around the player of random numbers
                 itemDropPosition.x = playerCharacter.transform.position.x + 1f;
                 itemDropPosition.y = playerCharacter.transform.position.y + 1f;
-                instantiatedGameObject.transform.position = itemDropPosition;
-                instantiatedGameObject.SetActive(true);
-                Destroy(ItemDataGameObject);
-
-                // Set alpha of slot to 0 and assign the items to the slot.
-                SetAlphaOfColor(0f);
-                ItemDataInSlot = null;
-                slotIcon.sprite = null; 
+                ItemDataGameObject.transform.position = itemDropPosition;
+                ItemDataGameObject.SetActive(true);
+                ClearSlot();
                 Debug.Log("Removed inventory item from GUI");
-                instantiatedGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
+                //instantiatedGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
             }
             // If the shops item screen is open, we will sell our inventory slot item instead of dropping it on the ground
             else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
@@ -207,9 +182,7 @@ public class InventorySlot : MonoBehaviour
                 inventory.BuyAndSellItemSound();
                 inventory.AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
                 Destroy(ItemDataGameObject);
-                SetAlphaOfColor(0f);
-                ItemDataInSlot = null;
-                slotIcon.sprite = null;
+                ClearSlot();
             }
         }
     }

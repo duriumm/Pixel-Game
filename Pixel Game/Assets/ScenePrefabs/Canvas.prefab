@@ -147,9 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &4455765138080779438
 MonoBehaviour:
@@ -343,9 +340,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &3248577657702436111
 MonoBehaviour:
@@ -539,9 +533,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &2590992562467914882
 MonoBehaviour:
@@ -735,9 +726,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &5240589584991336324
 MonoBehaviour:
@@ -931,9 +919,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &1567408386198389471
 MonoBehaviour:
@@ -1127,9 +1112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &5752003126652398891
 MonoBehaviour:
@@ -1323,9 +1305,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &8292187774831850537
 MonoBehaviour:
@@ -1519,9 +1498,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &6610291157964687421
 MonoBehaviour:
@@ -1715,9 +1691,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &3005190559627667053
 MonoBehaviour:
@@ -1911,9 +1884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &794455762706914535
 MonoBehaviour:
@@ -2107,9 +2077,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &6543086634963295953
 MonoBehaviour:
@@ -2303,9 +2270,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &1932419763053961733
 MonoBehaviour:
@@ -2499,9 +2463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &9017165408576877876
 MonoBehaviour:
@@ -2695,9 +2656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &853033452688609980
 MonoBehaviour:
@@ -2891,9 +2849,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &1798881332014133751
 MonoBehaviour:
@@ -3087,9 +3042,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &884923443398574184
 MonoBehaviour:
@@ -3283,9 +3235,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &3524985016981279549
 MonoBehaviour:
@@ -3479,9 +3428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &6221745472345759583
 MonoBehaviour:
@@ -3675,9 +3621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotIcon: {fileID: 0}
-  itemSlotButton: {fileID: 0}
-  ItemDataInSlot: {fileID: 0}
-  ItemDataGameObject: {fileID: 0}
   isInventoryPanel: 0
 --- !u!114 &190017516823022653
 MonoBehaviour:
@@ -4287,7 +4230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8729320763790353488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7419,7 +7362,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 89
+  m_Value: 84
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
