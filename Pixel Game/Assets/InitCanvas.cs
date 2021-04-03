@@ -14,7 +14,6 @@ public class InitCanvas : MonoBehaviour
         float marginX = 0.9f;
         float marginY = 0.5f;
         var equipmentSlotsContainer = GameObject.Find("EquipmentSlots");
-
         int stride = 3;
 
         //Loop through slots and place them in a grid
@@ -29,14 +28,8 @@ public class InitCanvas : MonoBehaviour
             float x = (rectTransform.rect.width + marginX) * column;
             float y = -(rectTransform.rect.height + marginY) * row;
 
-            //Here we can adjust individual slots as needed
-            switch (i)
-            {
-                case 9:  //Center last slot
-                    x = 0;
-                    break;
-            }
-
+            if (i == 9)  //Center last slot
+                x = 0;
             rectTransform.anchoredPosition = new Vector2(x, y);
         }
     }
