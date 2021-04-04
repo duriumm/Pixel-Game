@@ -219,11 +219,11 @@ public class InventorySlot : MonoBehaviour
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
             if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                ItemStatsText.text = "Damage: "+ItemDataInSlot.damage+"\n"+ "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+                ItemStatsText.text = "Damage: " + ItemDataInSlot.damage + "\n" + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
             {
-                ItemStatsText.text = "Armor: " + ItemDataInSlot.defense + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+                ItemStatsText.text = "Armor: " + ItemDataInSlot.defense + "\n" + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {   // Show the text in green to indicate hp gain on eating item
