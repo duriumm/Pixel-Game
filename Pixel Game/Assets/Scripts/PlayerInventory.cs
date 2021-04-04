@@ -17,6 +17,8 @@ public class PlayerInventory : MonoBehaviour
     public GameObject dataToPassGameObject;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
+    private GameObject screenTabs;
+    private GameObject shopScreen;
 
     // TO-DO - Move playerMoney to some other place.. not sure where yet
     public int playerInvMoney;
@@ -37,16 +39,19 @@ public class PlayerInventory : MonoBehaviour
         }
 
         inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
-        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
+        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(0).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
-        
+        screenTabs = prefabCanvas.transform.Find("GuiTabsButtons").gameObject;
+        shopScreen = GameObject.Find("ShopScreen");
+
+
     }
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
         ClosingUI();
-        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoney);
+        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB);
     }
 
     // Update is called once per frame
@@ -58,6 +63,7 @@ public class PlayerInventory : MonoBehaviour
     {
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
+        screenTabs.SetActive(false);
         foreach (var item in slots)
         {
             //Debug.Log(item.name);
@@ -68,10 +74,17 @@ public class PlayerInventory : MonoBehaviour
     {
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
+        
         foreach (var item in slots)
         {
             item.GetComponent<EventTrigger>().enabled = true;
 
+        }
+        // We should only show the tabs for each screen when opening the inventory 
+        // if the shop is closed. Otherwise they will render on top of shop window and look weird
+        if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+        {
+            screenTabs.SetActive(true);
         }
     }
 
