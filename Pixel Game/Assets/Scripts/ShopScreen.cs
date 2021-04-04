@@ -52,7 +52,7 @@ public class ShopScreen : MonoBehaviour
         // Clear all data flor shop slots so we can add new data!
         for (int i = 0; i < shopSlots.Length; i++)
         {
-            shopSlots[i].ClearAllDataFromSlot();
+            shopSlots[i].ClearSlot();
         }
 
         // Populate shop screens slots with copies of prefab items

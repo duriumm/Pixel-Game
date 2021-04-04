@@ -133,6 +133,7 @@ MonoBehaviour:
   itemIdString: IronAxe
   healingCapability: 0
   itemType: 5
+  isEquippable: 1
 --- !u!114 &7548094927607393147
 MonoBehaviour:
   m_ObjectHideFlags: 0

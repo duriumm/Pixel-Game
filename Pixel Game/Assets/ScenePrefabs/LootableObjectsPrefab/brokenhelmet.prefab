@@ -107,6 +107,7 @@ MonoBehaviour:
   itemIdString: BrokenHelmet
   healingCapability: 0
   itemType: 7
+  isEquippable: 1
 --- !u!114 &734902800046470439
 MonoBehaviour:
   m_ObjectHideFlags: 0
