@@ -45,6 +45,7 @@ public class ShopScreen : MonoBehaviour
         isShopScreenOpen = false;
         inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
         this.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OpenShopScreen()
     {
@@ -65,6 +66,7 @@ public class ShopScreen : MonoBehaviour
         isShopScreenOpen = true;
         inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
         this.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
 
