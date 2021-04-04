@@ -27,8 +27,9 @@ public class ObjectPool
 		AvailableItems = size;
 		for (int i = 0; i < size; i++)
 		{
-			var obj = Object.Instantiate(templateObject) as GameObject;
+			var obj = GameObject.Instantiate(templateObject);
 			obj.SetActive(false);
+            GameObject.DontDestroyOnLoad(obj);
 			pool.Add(obj);
 		}
 	}
