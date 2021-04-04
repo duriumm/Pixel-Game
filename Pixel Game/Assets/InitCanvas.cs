@@ -11,8 +11,8 @@ public class InitCanvas : MonoBehaviour
 
     private void PlaceEquipmentSlots()
     {
-        float marginX = 0.9f;
-        float marginY = 0.5f;
+        float marginX = 1.4f;
+        float marginY = 0.9f;
         var equipmentSlotsContainer = GameObject.Find("EquipmentSlots");
         int stride = 3;
 
