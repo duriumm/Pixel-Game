@@ -24,7 +24,7 @@ public class LootableItem : MonoBehaviour
             {
                 //Debug.Log("IT WAS NULL");
             }
-            inventoryManager.GetComponent<PlayerInventory>().addItemToSlot(this.gameObject/*.GetComponent<ItemData>()*/);
+            inventoryManager.GetComponent<PlayerInventory>().AddItemToEmptySlot(this.gameObject/*.GetComponent<ItemData>()*/);
 
             //Debug.Log("Picked up something");
         }
