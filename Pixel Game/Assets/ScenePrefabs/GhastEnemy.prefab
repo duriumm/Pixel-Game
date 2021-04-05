@@ -439,7 +439,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 287376279811315351, guid: 6f8824b1c0f18a649a1328ec31326d1e, type: 3}
+  m_Sprite: {fileID: 2163541205738106202, guid: 525762a4ac768704f86136b43c1e5fb1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -556,7 +556,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 1.64
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -648,14 +648,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8702507365765926596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59c4cd209ecb0944a9ab302518aa62d, type: 3}
+  m_Script: {fileID: 11500000, guid: bad931fe6e0c5444991138a475099aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleAttackPrefab: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-  mainCamera: {fileID: 0}
-  particleMovementSpeed: 2
-  preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
-  attackSound: {fileID: 0}
+  preAttackSound: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
+  AttackRange: 3
+  particleSpeed: 2
+  AttackParticleTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
 --- !u!114 &8697375598101216402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416ba64f303f20a4da54d24cbd2ce7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 5052115612252738427, guid: a79cd5846f119f74588746253bac24ad, type: 3}
-  - {fileID: 5677376778761430650, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
-  - {fileID: -7399929306435189911, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+  itemGameObjectList:
+  - {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
+  - {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+  - {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
