@@ -14,7 +14,7 @@ public abstract class EnemyAttack : MonoBehaviour
     [SerializeField]
     private AudioClip attackSound;
     [SerializeField]
-    private float attackRange = 3;
+    private float attackRange = 1;
     public float AttackRange => attackRange;
     private GameObject mainCamera;
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;

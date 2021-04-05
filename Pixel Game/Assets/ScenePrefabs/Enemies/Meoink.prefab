@@ -439,7 +439,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 2163541205738106202, guid: 525762a4ac768704f86136b43c1e5fb1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9e2b8b0177dd1942b57e5a54718e2be, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -458,7 +458,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 06342f298cac9a642a0ebf4f7a62b73f, type: 2}
   m_CullingMode: 0
@@ -481,10 +481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
   speed: 0.5
   enemyAnimator: {fileID: 2238159970977591414}
-  mainCamera: {fileID: 0}
   ghastAmbientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
@@ -534,7 +532,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
+    oldSize: {x: 8.26, y: 7.84}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -667,3 +665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc796dd0931a00f4fa1e80195e266c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  preAttackSound: {fileID: 0}
+  attackSound: {fileID: 0}
+  attackRange: 1
