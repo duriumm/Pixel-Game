@@ -87,8 +87,7 @@ public class InventorySlot : MonoBehaviour
         var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
         var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
-        equipmentSlotMono.AddItem(ItemDataInSlot.gameObject);
-        ClearSlot();
+        equipmentSlotMono.AddItem(ItemDataInSlot.gameObject, this);
     }
 
     public void UnequipItem()
@@ -112,17 +111,28 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    public void AddItem(GameObject gameObjectToAdd)
-
-    {   // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
+    public void AddItem(GameObject itemToAdd, InventorySlot sourceSlot = null)
+    {
+        if (itemToAdd == null)
+            throw new ArgumentNullException("itemToAdd");
+        // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)
         {
             dropItemButton.SetActive(true);
         }
 
-        ItemDataInSlot = gameObjectToAdd.GetComponent<ItemData>();
-        slotIcon.sprite = ItemDataInSlot.itemIcon; 
-      
+        var tempItem = ItemDataGameObject;
+        ItemDataInSlot = itemToAdd.GetComponent<ItemData>();
+        slotIcon.sprite = ItemDataInSlot.itemIcon;
+
+        //If sourceSlot is not null it will be cleared or get the item of this slot if not null
+        if (sourceSlot != null)
+        {
+            if (tempItem != null)
+                sourceSlot.AddItem(tempItem.gameObject);
+            else
+                sourceSlot.ClearSlot();
+        }
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
         //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
