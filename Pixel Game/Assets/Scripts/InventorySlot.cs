@@ -18,13 +18,11 @@ public class InventorySlot : MonoBehaviour
     private GameObject playerCharacter;
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
-
     private ItemData ItemDataInSlot;
     public GameObject ItemDataGameObject => ItemDataInSlot?.gameObject;
+    public bool IsEmpty => ItemDataInSlot == null;
     private GameObject shopScreen;
-
     private EventTrigger eventTrigger;
-
     private GameObject dropItemButton;
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
     public bool isInventoryPanel;
@@ -87,15 +85,15 @@ public class InventorySlot : MonoBehaviour
         var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
         var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
-        equipmentSlotMono.AddItem(ItemDataInSlot.gameObject, this);
+        equipmentSlotMono.AddItem(ItemDataGameObject, this);
     }
 
     public void UnequipItem()
     {
         if (ItemDataInSlot == null)
             return;
-        inventory.addItemToSlot(ItemDataInSlot.gameObject);
-        ClearSlot();
+        if (inventory.AddItemToEmptySlot(ItemDataGameObject))
+            ClearSlot();
     }
 
     public void ClearSlot()
@@ -149,7 +147,7 @@ public class InventorySlot : MonoBehaviour
                 GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
                 instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
 
-                inventory.addItemToSlot(instantiatedGameObject);
+                inventory.AddItemToEmptySlot(instantiatedGameObject);
 
                 inventory.RemoveCoinAmount(ItemDataInSlot.value);
                 Debug.Log("trying to buy");
