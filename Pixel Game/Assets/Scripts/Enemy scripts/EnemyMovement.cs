@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public GameObject playerObject;
-    public float speed = 0.5f;
-    public Animator enemyAnimator;
-    public GameObject mainCamera;
-    public AudioClip ghastAmbientSound;
+    private GameObject playerObject;
+    [SerializeField]
+    private float speed = 0.5f;
+    [SerializeField]
+    private Animator enemyAnimator;
+    private GameObject mainCamera;
+    [SerializeField]
+    private AudioClip ghastAmbientSound;
 
     private Transform playerTransform;
     private Transform ghastTransform;
@@ -37,19 +40,22 @@ public class EnemyMovement : MonoBehaviour
     void FixedUpdate()
     {
         float playerDistance = Vector3.Distance(playerTransform.position, ghastTransform.position);
-		
+
         // If player is far away, roam around
         // If close, chase to get well within attack range
         // Back away if too close
         Vector3 faceDirection = Vector3.zero;
-        if (playerDistance < retreatUpperDistance) //Back away
+        if (playerDistance < retreatUpperDistance * 0.99f) //Back away
         {
             movementVector = ghastTransform.position - playerTransform.position;
             faceDirection = -movementVector; //Enemy should face player when backing away
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
-            movementVector = playerTransform.position - ghastTransform.position;
+            if (playerDistance < retreatUpperDistance)
+                movementVector = Vector3.zero;
+            else
+                movementVector = playerTransform.position - ghastTransform.position;
             //Sound acts as indication that the enemy started chasing
             //Helps the player to differentiate between roaming movement and chasing movement
             if (!isPlayingAmbientGhastSound)
