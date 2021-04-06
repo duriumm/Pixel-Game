@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,40 +7,43 @@ public class EnemyRangedAttack : EnemyAttack
 {
     [SerializeField]
     private float particleSpeed = 2f;
-    private GameObject attackParticle;
-    private Vector3 particleVelocity = Vector3.zero;
-    private static ObjectPool attackParticlePool;
+    private ObjectPool attackParticlePool;
     [SerializeField]
-    private GameObject AttackParticleTemplate;
-    private bool UpdatingAttackParticle => attackParticle != null;
+    private GameObject attackParticleTemplate;
+    [SerializeField]
+    private float attackParticleTimeToLive = 2f;
+    
+    private List<Particle> attackParticles = new List<Particle>();
 
-    void Awake()
+    protected override void Start()
     {
-        if (attackParticlePool == null)
-        {
-            attackParticlePool = new ObjectPool(AttackParticleTemplate, 10);
-        }
+        base.Start();
+        attackParticlePool = new ObjectPool(attackParticleTemplate, 20);
     }
 
     void FixedUpdate()
     {
-        if (UpdatingAttackParticle)
-            UpdateAttackParticle();
+        foreach (var particle in attackParticles)
+            particle.Update(Time.fixedDeltaTime);
+        attackParticles.RemoveAll((particle) => !particle.IsActive);
     }
 
     private void SpawnAttackParticle()
     {
-        // Spawn the particle effect gameobject from pool on top of the enemy
-        var particlePos = gameObject.transform.position;
-        particlePos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
-        attackParticle = attackParticlePool.Spawn(particlePos);
+        var pos = gameObject.transform.position;
+        pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
 
-        // Calculate movement vector
-        particleVelocity = playerGameObject.transform.position - gameObject.transform.position;
-        particleVelocity = particleVelocity.normalized * particleSpeed;
+        var velocity = playerGameObject.transform.position - gameObject.transform.position;
+        velocity = velocity.normalized * particleSpeed;
 
-        //Wait a predetermined amount of time before destroying attack particle and allowing a new attack to begin
-        StartCoroutine(WaitForNextAttack(() => DestroyAttackParticle()));
+        attackParticles.Add(
+            new Particle(
+                attackParticleTimeToLive,
+                attackParticlePool,
+                pos,
+                velocity
+                )
+            );
     }
 
     protected override void Attack()
@@ -47,16 +51,47 @@ public class EnemyRangedAttack : EnemyAttack
         SpawnAttackParticle();
     }
 
-    private void UpdateAttackParticle()
+    public void DestroyAttackParticles()
     {
-        // Moves the particle attack towards the player by adding movementVector * fixedDeltatime
-        // to the partiucle attack object. This makes it so particle keeps flying past the player
-        attackParticle.transform.position += particleVelocity * Time.fixedDeltaTime;
+        foreach (var particle in attackParticles)
+            particle.Destroy();
+        attackParticles.Clear();        
     }
 
-    public void DestroyAttackParticle()
+    private void OnDestroy()
     {
-        attackParticlePool.Destroy(attackParticle);
-        attackParticle = null;
+        DestroyAttackParticles();
+    }
+}
+
+class Particle
+{
+    private float timeToLive;
+    private GameObject gameObject;
+    private Vector3 velocity;
+    private ObjectPool pool;
+    private Vector3 pos;
+
+    public bool IsActive => timeToLive > 0;
+
+    public Particle(float timeToLive, ObjectPool pool, Vector3 pos, Vector3 velocity)
+    {
+        this.timeToLive = timeToLive;
+        this.pool = pool;
+        this.gameObject = pool.Spawn(pos);
+        this.velocity = velocity;
+    }
+
+    public void Update(float deltaTime)
+    {
+        timeToLive -= deltaTime;
+        this.gameObject.transform.position += velocity * deltaTime;
+        if (timeToLive < 0)
+            pool.Destroy(gameObject);
+    }
+
+    internal void Destroy()
+    {
+        this.pool.Destroy(this.gameObject);
     }
 }

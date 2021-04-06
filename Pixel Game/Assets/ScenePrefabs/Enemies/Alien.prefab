@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 5951913585203376942}
   m_Layer: 0
-  m_Name: Meoink
+  m_Name: Alien
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,9 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 1
   enemyAnimator: {fileID: 2238159970977591414}
-  ghastAmbientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
+  ambientSound: {fileID: 0}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   enemyHealthSlider: {fileID: 6133221291524073454}
   ghastDeathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   mainCamera: {fileID: 0}
-  enemyType: 0
+  enemyType: 2
 --- !u!114 &7697818602051044011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +527,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0.024892807, y: -0.111368656}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -668,3 +668,4 @@ MonoBehaviour:
   preAttackSound: {fileID: 0}
   attackSound: {fileID: 0}
   attackRange: 1
+  timeBetweenAttacks: 2

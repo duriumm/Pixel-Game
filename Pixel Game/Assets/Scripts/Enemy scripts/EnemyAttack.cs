@@ -5,22 +5,25 @@ using UnityEngine;
 
 public abstract class EnemyAttack : MonoBehaviour
 {
-    private EnemyHealth enemyHealthObject;
-    private float EnemyHealth => enemyHealthObject.enemyHealth;
-    protected GameObject playerGameObject;
-    private bool readyToAttack = true;
     [SerializeField]
     private AudioClip preAttackSound;
     [SerializeField]
     private AudioClip attackSound;
     [SerializeField]
     private float attackRange = 1;
+    [SerializeField]
+    private float timeBetweenAttacks = 2;
+
+    private EnemyHealth enemyHealthObject;
+    private float EnemyHealth => enemyHealthObject.enemyHealth;
+    protected GameObject playerGameObject;
+    private bool readyToAttack = true;
     public float AttackRange => attackRange;
-    private GameObject mainCamera;
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	private float SqrAttackRange => attackRange * attackRange; //Avoid square root calculation in exchange for an extra multiplication
-    	
-	void Start()
+    
+
+    protected virtual void Start()
     {
         // TO-DO
         // Fix a nicer way of getting the player gameobject?
@@ -36,13 +39,17 @@ public abstract class EnemyAttack : MonoBehaviour
 	{
 		while (true)
 		{
-			if (InRange && readyToAttack && EnemyHealth > 0)
-				yield return StartAttack();
+            if (InRange && readyToAttack && EnemyHealth > 0)
+            {
+                yield return BeginAttack();
+                Attack();
+                yield return WaitForNextAttack();
+            }
 			yield return new WaitForSeconds(0.2f);
 		}
 	}
 
-	IEnumerator StartAttack()
+	IEnumerator BeginAttack()
 	{
         //Play pre-attack sound
         if (preAttackSound != null)
@@ -51,28 +58,28 @@ public abstract class EnemyAttack : MonoBehaviour
         //Play pre-attack animation (blinking)
         var material = gameObject.GetComponent<SpriteRenderer>().material;
 		var originalColor = material.color;
-		for (int i = 0; i < 4; i++)
+        var darkColor = originalColor * 0.9f;
+        for (int i = 0; i < 4; i++)
 		{
-			material.color = Color.white;
-			yield return new WaitForSeconds(0.1f);
-			material.color = Color.red;
-			yield return new WaitForSeconds(0.1f);
+            material.color = originalColor;
+			yield return new WaitForSeconds(0.05f);
+            material.color = darkColor;
+            yield return new WaitForSeconds(0.05f);
 		}
 		material.color = originalColor;
 
         // Play the attack sound
-        AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
+        if (attackSound != null)
+            AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
 
-        Attack();
-        readyToAttack = false;
+        readyToAttack = false;  //This will be set to true after <timeBetweenAttack> seconds have passed
 	}
 
     protected abstract void Attack();
 
-	protected IEnumerator WaitForNextAttack(Action onReady)
+	protected IEnumerator WaitForNextAttack()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(timeBetweenAttacks);
         readyToAttack = true;
-        onReady?.Invoke();
 	}
 }

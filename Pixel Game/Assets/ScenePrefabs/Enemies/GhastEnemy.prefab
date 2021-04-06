@@ -481,11 +481,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
   speed: 0.5
   enemyAnimator: {fileID: 2238159970977591414}
-  mainCamera: {fileID: 0}
-  ghastAmbientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
+  ambientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,8 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 0
   enemyHealthSlider: {fileID: 6133221291524073454}
-  ghastDeathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
-  mainCamera: {fileID: 0}
+  enemyDeathSound: {fileID: 0}
   enemyType: 0
 --- !u!114 &7697818602051044011
 MonoBehaviour:
@@ -653,9 +650,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preAttackSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
-  AttackRange: 3
+  attackRange: 3
+  timeBetweenAttacks: 1
   particleSpeed: 2
-  AttackParticleTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+  attackParticleTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+  attackParticleTimeToLive: 2
 --- !u!114 &8697375598101216402
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,8 @@ public class EnemyHealth : MonoBehaviour
     private GameObject enemyObject;
     private Vector2 enemySpawnPoint;
     private SpriteRenderer spriteRenderer;
-    public AudioClip ghastDeathSound;
-    public GameObject mainCamera;
-
+    public AudioClip enemyDeathSound;
+    
     public enum ENEMYTYPE
     {
         GHOST,
@@ -59,30 +58,37 @@ public class EnemyHealth : MonoBehaviour
     // TO-DO
     private void respawnEnemy()
     {
-        // TO-DO
-        // This should be fixed, now its checking for every enemy type
-        // TO-DO
-        if (enemyType == ENEMYTYPE.GHOST)
+        switch (enemyType)
         {
-
-            StartCoroutine(FadeOutGhost());
+            case ENEMYTYPE.GHOST:
+                StartCoroutine(FadeOutEnemy());
+                break;
+            case ENEMYTYPE.BEAST:
+                //Todo: implement beast death animation
+                StartCoroutine(FadeOutEnemy());
+                break;
+            case ENEMYTYPE.HUMAN:
+                //Todo: implement human death animation
+                StartCoroutine(FadeOutEnemy());
+                break;
         }
     }
 
-    private IEnumerator FadeOutGhost()
+    private IEnumerator FadeOutEnemy()
     {
-        AudioSource.PlayClipAtPoint(ghastDeathSound, mainCamera.transform.position);
-
-        // Disable ghost is attackable to not get hit by player and also
+        if (enemyDeathSound != null)
+            AudioSource.PlayClipAtPoint(enemyDeathSound, this.gameObject.transform.position);
+        
+        // Disable enemy is attackable to not get hit by player and also
         // make the whole movementscript disabled so he cant move OR attack
         enemyObject.GetComponent<EnemyAttack>().enabled = false;
         enemyObject.GetComponent<EnemyCollision>().isEnemyAttackable = false;
         enemyObject.GetComponent<EnemyMovement>().enabled = false;
 
         // If enemy with ranged attack, destroy the particle attack obejct so it doesnt get stuck in mid air on enemy death
-        enemyObject.GetComponent<EnemyRangedAttack>()?.DestroyAttackParticle();
+        enemyObject.GetComponent<EnemyRangedAttack>()?.DestroyAttackParticles();
 
-        // This fade last for 2 sek and turns ghost from 1 in alpha (max) to 
+        // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
         //Debug.Log("start fade");
         for (float f = 1f; f >= -0.05f; f-= 0.05f)
@@ -94,17 +100,17 @@ public class EnemyHealth : MonoBehaviour
         }
         //Debug.Log("END fade");
 
-        // Set back ghast alpha color to 1 again which is normal max color
+        // Set back enemy alpha color to 1 again which is normal max color
         Color clr = spriteRenderer.material.color;
         clr.a = 1f;
         spriteRenderer.material.color = clr;        
 
-        // Enable ghost movement and being attackable again aswell as attack enabling
+        // Enable enemy movement and being attackable again aswell as attack enabling
         enemyObject.GetComponent<EnemyCollision>().isEnemyAttackable = true;
         enemyObject.GetComponent<EnemyMovement>().enabled = true;
         enemyObject.GetComponent<EnemyAttack>().enabled = true;
 
-        // Respawn ghost at startpoint and set his hp and slider to max
+        // Respawn enemy at startpoint and set his hp and slider to max
         enemyObject.transform.position = enemySpawnPoint;
         enemyHealth = 100;
         enemyHealthSlider.value = enemyHealth;

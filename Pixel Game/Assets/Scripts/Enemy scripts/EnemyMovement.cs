@@ -11,11 +11,11 @@ public class EnemyMovement : MonoBehaviour
     private Animator enemyAnimator;
     private GameObject mainCamera;
     [SerializeField]
-    private AudioClip ghastAmbientSound;
+    private AudioClip ambientSound;
 
     private Transform playerTransform;
-    private Transform ghastTransform;
-    private bool isPlayingAmbientGhastSound = false;
+    private Transform enemyTransform;
+    private bool isPlayingAmbientSound = false;
     private float roamStartTime;
     private float roamDuration;
     private Vector3 movementVector;
@@ -32,14 +32,14 @@ public class EnemyMovement : MonoBehaviour
         // Fix a nicer way of getting the player transform position
         // TO-DO
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
-        ghastTransform = gameObject.transform;
+        enemyTransform = gameObject.transform;
 		float attackRange = gameObject.GetComponent<EnemyAttack>().AttackRange;
 		retreatUpperDistance = attackRange * 0.7f;
 	}
 
     void FixedUpdate()
     {
-        float playerDistance = Vector3.Distance(playerTransform.position, ghastTransform.position);
+        float playerDistance = Vector3.Distance(playerTransform.position, enemyTransform.position);
 
         // If player is far away, roam around
         // If close, chase to get well within attack range
@@ -47,7 +47,7 @@ public class EnemyMovement : MonoBehaviour
         Vector3 faceDirection = Vector3.zero;
         if (playerDistance < retreatUpperDistance * 0.99f) //Back away
         {
-            movementVector = ghastTransform.position - playerTransform.position;
+            movementVector = enemyTransform.position - playerTransform.position;
             faceDirection = -movementVector; //Enemy should face player when backing away
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
@@ -55,10 +55,10 @@ public class EnemyMovement : MonoBehaviour
             if (playerDistance < retreatUpperDistance)
                 movementVector = Vector3.zero;
             else
-                movementVector = playerTransform.position - ghastTransform.position;
+                movementVector = playerTransform.position - enemyTransform.position;
             //Sound acts as indication that the enemy started chasing
             //Helps the player to differentiate between roaming movement and chasing movement
-            if (!isPlayingAmbientGhastSound)
+            if (!isPlayingAmbientSound && ambientSound != null)
                 StartCoroutine(playAmbientSoundAndWait());
         }
         else if (Time.time - roamStartTime > roamDuration) //Update roaming objective
@@ -76,7 +76,7 @@ public class EnemyMovement : MonoBehaviour
 
         if (movementVector != Vector3.zero)
         { 
-            ghastTransform.position += movementVector.normalized * speed * Time.fixedDeltaTime;
+            enemyTransform.position += movementVector.normalized * speed * Time.fixedDeltaTime;
             enemyAnimator.SetFloat("Horizontal", faceDirection.x);
             enemyAnimator.SetFloat("Vertical", faceDirection.y);
             enemyAnimator.SetFloat("Speed", speed);
@@ -85,9 +85,9 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator playAmbientSoundAndWait()
     {
-        isPlayingAmbientGhastSound = true;
-        AudioSource.PlayClipAtPoint(ghastAmbientSound, mainCamera.transform.position);        
+        isPlayingAmbientSound = true;
+        AudioSource.PlayClipAtPoint(ambientSound, this.gameObject.transform.position);        
         yield return new WaitForSeconds(9);
-        isPlayingAmbientGhastSound = false;
+        isPlayingAmbientSound = false;
     }
 }
