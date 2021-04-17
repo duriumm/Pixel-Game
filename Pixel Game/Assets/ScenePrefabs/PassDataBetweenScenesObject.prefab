@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46fba418f755b4408db892981ead504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHealth: 0
-  playerMoney: 0
+  playerHealthDB: 0
+  playerArmorDB: 0
+  playerAttackDB: 0
+  playerMoneyDB: 0
   currentActiveTrader: 
   NpcDatabase:
   - FatNpc
@@ -57,6 +59,7 @@ MonoBehaviour:
   - {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
   - {fileID: 6662477887734707362, guid: be1cbf8d7bd3050419cefde91103de40, type: 3}
   - {fileID: 4069441921147659030, guid: 5a4a81d6cb0c2634db631cc9bdf80df4, type: 3}
+  - {fileID: 4665512650309784248, guid: a5a07e4e3ce620b4697036ca73c0e802, type: 3}
   mySavedStringListDatabase: []
 --- !u!114 &2785664742062480089
 MonoBehaviour:

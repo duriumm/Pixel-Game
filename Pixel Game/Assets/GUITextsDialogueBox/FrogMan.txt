@@ -1,0 +1,24 @@
+:: StoryTitle
+Test
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Start-Node[START]
+Double-click this passage to edit it.Mom comes to kitchen holding two cereals: cheerios & frosted flake, which do you choose?
+[[Cheerios]]
+[[Frosted flakes]]
+
+:: Cheerios
+The cheerios are not very delicious but quite healthy. NOT
+[[Cry]]
+
+:: Frosted flakes
+The Frosted flakes are very yummy but not healthy at all
+[[Cry]]
+
+:: Cry[END]
+You cry baby boi
