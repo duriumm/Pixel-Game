@@ -3,43 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRangedAttack : EnemyAttack
+public class EnemyShotAttack : EnemyAttack
 {
     [SerializeField]
-    private float particleSpeed = 2f;
-    private ObjectPool attackParticlePool;
+    private float shotSpeed = 2f;
+    private ObjectPool shotPool;
     [SerializeField]
-    private GameObject attackParticleTemplate;
+    private GameObject shotTemplate;
     [SerializeField]
-    private float attackParticleTimeToLive = 2f;
+    private float shotTimeToLive = 2f;
     
-    private List<Particle> attackParticles = new List<Particle>();
+    private List<Shot> shots = new List<Shot>();
 
     protected override void Start()
     {
         base.Start();
-        attackParticlePool = new ObjectPool(attackParticleTemplate, 20);
+        shotPool = new ObjectPool(shotTemplate, 20);
     }
 
     void FixedUpdate()
     {
-        foreach (var particle in attackParticles)
-            particle.Update(Time.fixedDeltaTime);
-        attackParticles.RemoveAll((particle) => !particle.IsActive);
+        foreach (var shot in shots)
+            shot.Update(Time.fixedDeltaTime);
+        shots.RemoveAll((shot) => !shot.IsActive);
     }
 
-    private void SpawnAttackParticle()
+    private void SpawnShot()
     {
         var pos = gameObject.transform.position;
         pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
 
         var velocity = playerGameObject.transform.position - gameObject.transform.position;
-        velocity = velocity.normalized * particleSpeed;
+        velocity = velocity.normalized * shotSpeed;
 
-        attackParticles.Add(
-            new Particle(
-                attackParticleTimeToLive,
-                attackParticlePool,
+        shots.Add(
+            new Shot(
+                shotTimeToLive,
+                shotPool,
                 pos,
                 velocity
                 )
@@ -48,23 +48,23 @@ public class EnemyRangedAttack : EnemyAttack
 
     protected override void Attack()
     {
-        SpawnAttackParticle();
+        SpawnShot();
     }
 
-    public void DestroyAttackParticles()
+    public void DestroyShots()
     {
-        foreach (var particle in attackParticles)
-            particle.Destroy();
-        attackParticles.Clear();        
+        foreach (var shot in shots)
+            shot.Destroy();
+        shots.Clear();        
     }
 
     private void OnDestroy()
     {
-        DestroyAttackParticles();
+        DestroyShots();
     }
 }
 
-class Particle
+class Shot
 {
     private float timeToLive;
     private GameObject gameObject;
@@ -74,7 +74,7 @@ class Particle
 
     public bool IsActive => timeToLive > 0;
 
-    public Particle(float timeToLive, ObjectPool pool, Vector3 pos, Vector3 velocity)
+    public Shot(float timeToLive, ObjectPool pool, Vector3 pos, Vector3 velocity)
     {
         this.timeToLive = timeToLive;
         this.pool = pool;

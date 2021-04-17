@@ -351,13 +351,12 @@ GameObject:
   - component: {fileID: 2238159970977591414}
   - component: {fileID: 2238159970977591417}
   - component: {fileID: -2862576637602397499}
-  - component: {fileID: 7697818602051044011}
   - component: {fileID: 1919312349314565125}
   - component: {fileID: 4792054444565996817}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 5951913585203376942}
   m_Layer: 0
-  m_Name: Alien
+  m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,12 +438,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: f9e2b8b0177dd1942b57e5a54718e2be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 37b6d25cfda14204a94bcfd17cc7fb23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.21}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -496,25 +495,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2137a68269ddefc409d5643c4cc39df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 0
-  enemyHealthSlider: {fileID: 6133221291524073454}
-  ghastDeathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
-  mainCamera: {fileID: 0}
+  isAttackable: 1
+  health: 0
+  slider: {fileID: 0}
+  deathSound: {fileID: 0}
+  hurtSound: {fileID: 0}
   enemyType: 2
---- !u!114 &7697818602051044011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14f5958bde78ad74d803a524a69671e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 4697616969040342004, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
-  isEnemyAttackable: 1
 --- !u!61 &1919312349314565125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -532,8 +518,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.26, y: 7.84}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1.28, y: 1.21}
+    newSize: {x: 1.28, y: 1.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -669,3 +655,4 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   attackRange: 1
   timeBetweenAttacks: 2
+  enablePreAttack: 0

@@ -82,11 +82,11 @@ public class EnemyHealth : MonoBehaviour
         // Disable enemy is attackable to not get hit by player and also
         // make the whole movementscript disabled so he cant move OR attack
         enemyObject.GetComponent<EnemyAttack>().enabled = false;
-        enemyObject.GetComponent<EnemyCollision>().isEnemyAttackable = false;
+        enemyObject.GetComponent<Attacked>().isAttackable = false;
         enemyObject.GetComponent<EnemyMovement>().enabled = false;
 
-        // If enemy with ranged attack, destroy the particle attack obejct so it doesnt get stuck in mid air on enemy death
-        enemyObject.GetComponent<EnemyRangedAttack>()?.DestroyAttackParticles();
+        // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
+        enemyObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
 
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
@@ -106,7 +106,7 @@ public class EnemyHealth : MonoBehaviour
         spriteRenderer.material.color = clr;        
 
         // Enable enemy movement and being attackable again aswell as attack enabling
-        enemyObject.GetComponent<EnemyCollision>().isEnemyAttackable = true;
+        enemyObject.GetComponent<Attacked>().isAttackable = true;
         enemyObject.GetComponent<EnemyMovement>().enabled = true;
         enemyObject.GetComponent<EnemyAttack>().enabled = true;
 

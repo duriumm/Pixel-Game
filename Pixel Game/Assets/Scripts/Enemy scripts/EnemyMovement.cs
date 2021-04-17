@@ -45,7 +45,7 @@ public class EnemyMovement : MonoBehaviour
         // If close, chase to get well within attack range
         // Back away if too close
         Vector3 faceDirection = Vector3.zero;
-        if (playerDistance < retreatUpperDistance * 0.99f) //Back away
+        if (playerDistance < retreatUpperDistance * 0.97f) //Back away
         {
             movementVector = enemyTransform.position - playerTransform.position;
             faceDirection = -movementVector; //Enemy should face player when backing away

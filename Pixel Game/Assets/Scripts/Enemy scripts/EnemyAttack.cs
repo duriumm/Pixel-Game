@@ -11,18 +11,20 @@ public abstract class EnemyAttack : MonoBehaviour
     private AudioClip attackSound;
     [SerializeField]
     private float attackRange = 1;
+    public float AttackRange => attackRange;
     [SerializeField]
     private float timeBetweenAttacks = 2;
+    [SerializeField]
+    private bool enablePreAttack;
 
     private EnemyHealth enemyHealthObject;
     private float EnemyHealth => enemyHealthObject.enemyHealth;
     protected GameObject playerGameObject;
     private bool readyToAttack = true;
-    public float AttackRange => attackRange;
+
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	private float SqrAttackRange => attackRange * attackRange; //Avoid square root calculation in exchange for an extra multiplication
-    
-
+  
     protected virtual void Start()
     {
         // TO-DO
@@ -41,7 +43,12 @@ public abstract class EnemyAttack : MonoBehaviour
 		{
             if (InRange && readyToAttack && EnemyHealth > 0)
             {
-                yield return BeginAttack();
+                if (enablePreAttack)
+                    yield return PreAttack();
+                // Play the attack sound
+                if (attackSound != null)
+                    AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
+                readyToAttack = false;  //This will be set to true after `timeBetweenAttack` seconds have passed
                 Attack();
                 yield return WaitForNextAttack();
             }
@@ -49,7 +56,7 @@ public abstract class EnemyAttack : MonoBehaviour
 		}
 	}
 
-	IEnumerator BeginAttack()
+	protected virtual IEnumerator PreAttack()
 	{
         //Play pre-attack sound
         if (preAttackSound != null)
@@ -67,15 +74,11 @@ public abstract class EnemyAttack : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
 		}
 		material.color = originalColor;
-
-        // Play the attack sound
-        if (attackSound != null)
-            AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
-
-        readyToAttack = false;  //This will be set to true after <timeBetweenAttack> seconds have passed
 	}
 
-    protected abstract void Attack();
+    protected virtual void Attack()
+    {
+    }
 
 	protected IEnumerator WaitForNextAttack()
     {

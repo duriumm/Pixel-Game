@@ -498,7 +498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 0
   enemyHealthSlider: {fileID: 6133221291524073454}
-  enemyDeathSound: {fileID: 0}
+  enemyDeathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   enemyType: 0
 --- !u!114 &7697818602051044011
 MonoBehaviour:
@@ -512,8 +512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14f5958bde78ad74d803a524a69671e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 4697616969040342004, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
-  isEnemyAttackable: 1
+  isAttackable: 1
 --- !u!61 &1919312349314565125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -645,16 +644,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 8702507365765926596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad931fe6e0c5444991138a475099aad, type: 3}
+  m_Script: {fileID: 11500000, guid: 46b71becb8f0e7d4387ddbb62261b13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   preAttackSound: {fileID: 0}
   attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
   attackRange: 3
-  timeBetweenAttacks: 1
-  particleSpeed: 2
-  attackParticleTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-  attackParticleTimeToLive: 2
+  timeBetweenAttacks: 2
+  enablePreAttack: 1
+  shotSpeed: 2
+  shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+  shotTimeToLive: 2
 --- !u!114 &8697375598101216402
 MonoBehaviour:
   m_ObjectHideFlags: 0
