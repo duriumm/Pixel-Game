@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1784185914825525981}
   - component: {fileID: 1391972501}
   - component: {fileID: 1391972506}
+  - component: {fileID: 610015674}
   m_Layer: 0
   m_Name: OldMan
   m_TagString: Untagged
@@ -171,6 +172,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &610015674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3486916664281030590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663c339f67344904a9d6673f2343e3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentActiveConvo: {fileID: 4900000, guid: 95c4a28e6bbaa8743853f270ba65cbd8, type: 3}
+  convoList:
+  - {fileID: 4900000, guid: 95c4a28e6bbaa8743853f270ba65cbd8, type: 3}
+  - {fileID: 4900000, guid: c3aac4b858914af489f6d750010eac07, type: 3}
 --- !u!1 &4212733957229248313
 GameObject:
   m_ObjectHideFlags: 0

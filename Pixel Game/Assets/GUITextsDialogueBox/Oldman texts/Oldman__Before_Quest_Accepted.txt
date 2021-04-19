@@ -1,0 +1,22 @@
+:: StoryTitle
+Oldman__Before_Quest_Accepted
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Untitled Passage[START]
+Hey there kiddo! I need your help to slay three ghosts! What do you say?
+
+Sure thing![[Accept Quest]]
+Nope, bye![[End conversation]]
+
+:: Accept Quest[ACCEPT_QUEST]
+Perfect!! Get back to me when you have finished your task!!
+
+Okay![[End conversation]]
+
+:: End conversation[END]
+

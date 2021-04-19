@@ -20,7 +20,6 @@ public class DialogueViewer : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void openPage(string url);
 
-    private const string questText = "QUEST";
 
     private void Start()
     {
@@ -67,21 +66,52 @@ public class DialogueViewer : MonoBehaviour
             responceButton.onClick.AddListener(delegate { OnNodeSelected(currentChoiceIndex); });
         }
 
+        // TO-DO - Implement this part and put all node tag if statements inside this if statement
+        //if(newNode.tags != null)
+        //{
+        //    string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
+        //    GameObject npcGameobject = GameObject.Find(currentActiveNpc);
+        //}
+
         if (newNode.tags.Contains("END"))
         {
             // To-Do
             // Here we can close the window or something :) since the talk is finished
             Debug.Log("End!");
+            dialogueCanvas.SetActive(false);
         }
-        if (newNode.tags.Contains(questText))
+        else if (newNode.tags.Contains("ACCEPT_QUEST"))
         {
-            // If the current node has a "QUEST" tag on it, we will take the current active npc from our database
+            // If the current node has a "ACCEPT_QUEST" tag on it, we will take the current active npc from our database
             // then find the GameObject with the same name in the scene and run ActivateQuest() on that NpcData script
-            Debug.Log("DE VA EN KVEEEST");
 
             string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
             npcGameobject.GetComponent<NpcData>().ActivateQuest();
+        }
+        else if (newNode.tags.Contains("CHECK_QUEST"))
+        {
+            string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
+            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
+
+            // If the function returns false, the textNodeDisplay prints "you are not done, and the option to
+            // go back appears with a button
+            if(npcGameobject.GetComponent<NpcData>().CheckIfQuestIsDone() == false)
+            {
+                txtNodeDisplay.text = "You are not done...";
+            }
+        }
+        else if (newNode.tags.Contains("QUEST_DONE"))
+        {
+            // Here we can enter the actual reward with a function GetReward() from a future 
+            // questclass or just enter what the quest reward actually is
+            txtNodeDisplay.text = "You got 10 gold and a bag of shit!!!";
+
+            string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
+            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
+            // Load the last conversation that COMPLETELY ends the quest, and makes the npc just say something along
+            // the lines of "You did a good job before, thanks" 
+            npcGameobject.GetComponent<NpcData>().EndTheQuest();         
         }
     }
 
@@ -90,8 +120,24 @@ public class DialogueViewer : MonoBehaviour
     // For turning the dialogue canvas on/off
     public void SwitchDialogueCanvasOnOff()
     {
-        if (dialogueCanvas.activeSelf == true) { dialogueCanvas.SetActive(false); }
-        else if (dialogueCanvas.activeSelf == false) { dialogueCanvas.SetActive(true); }
+        if (dialogueCanvas.activeSelf == true) 
+        { 
+            dialogueCanvas.SetActive(false);
+
+        }
+        // Each time we turn the dialogue canvas ON, we want to also initialize the dialogue
+        // that is the current active convo of the databases current active npc
+        // With this fix, we can load up the correct convo even if we exit out of the convo
+        else if (dialogueCanvas.activeSelf == false) {
+            // Turn dialogue canvas off
+            dialogueCanvas.SetActive(true);
+            // Get the current active npc from database and Find that gameobject on the scene
+            string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
+            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
+            // Set our twinetext (dialogue text) to the Npcs current active convo and initialize the dialogue
+            controller.twineText = npcGameobject.GetComponent<NpcData>().currentActiveConvo;
+            controller.InitializeDialogue();
+        }
 
     }
 }

@@ -1,0 +1,16 @@
+:: StoryTitle
+Oldman__After_Quest_Finished
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Good job[START]
+Good job before!!
+
+Thanks, bye![[End Conversation]]
+
+:: End Conversation[END]
+
