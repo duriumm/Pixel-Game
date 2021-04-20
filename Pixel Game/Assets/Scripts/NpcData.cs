@@ -15,16 +15,16 @@ public class NpcData : MonoBehaviour
 
 
 
-    private GameObject dialogueController;
-    private GameObject dataToPassGameObject;
+    private DialogueController dialogueController;
+    private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
 
     public bool isQuestFinished = false;
 
     void Start()
     {
-        dialogueController = GameObject.Find("DialogueController");
-        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
+        dialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();
+        dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
         //Quest myQuest = new Quest("The first querre", "Kill three ghasts!!", 50);
         //questList.Add(myQuest);
@@ -36,14 +36,14 @@ public class NpcData : MonoBehaviour
     {
         if (collision.gameObject.tag == "MyPlayer")
         {
-            // Set this NPCs dialogue to be active in dialogueController gameobject 
-            dialogueController.GetComponent<DialogueController>().twineText = currentActiveConvo;
+            // Set this NPCs dialogue to be active in dialogueController
+            dialogueController.twineText = currentActiveConvo;
             // Initialize the NPCs dialogue so that when we open the dialogue window next time
             // we will see the NPCs dialogue instead of whatever was there before
-            dialogueController.GetComponent<DialogueController>().InitializeDialogue();
+            dialogueController.InitializeDialogue();
             // Set the currentActiveNpc to this NPC so that we can run the ActiveQuest() function for
             // only this specific NPC
-            dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc = this.gameObject.name;
+            dataToPass.currentActivateNpc = this.gameObject.name;
 
         }
     }
@@ -52,7 +52,7 @@ public class NpcData : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             // Remove this npc from current active npc and set the dialogueCanvas to false
-            dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc = "";
+            dataToPass.currentActivateNpc = "";
             dialogueCanvas.SetActive(false);
         }
     }
@@ -81,16 +81,16 @@ public class NpcData : MonoBehaviour
                 Debug.Log("Current active convo is: " + currentActiveConvo.name);
 
                 // Set this NPCs dialogue to be active in dialogueController gameobject 
-                dialogueController.GetComponent<DialogueController>().twineText = currentActiveConvo;
+                dialogueController.twineText = currentActiveConvo;
                 // Initialize the NPCs dialogue so that when we open the dialogue window next time
                 // we will see the NPCs dialogue instead of whatever was there before
-                dialogueController.GetComponent<DialogueController>().InitializeDialogue();
+                dialogueController.InitializeDialogue();
 
                 break;
 
             }
         }
-        //dialogueController.GetComponent<DialogueController>().twineText = questTwineConvo;
+        //dialogueController.twineText = questTwineConvo;
         
         // We turn dialogueCanvas off after the activation of the quest since otherwise 
         // the next conversation will be started immediately
@@ -113,8 +113,8 @@ public class NpcData : MonoBehaviour
             }
             // If the quest requirements are fullfilled, we want to start the next dialogue
             // immediately without closing dialogue canvas. So here below we start the next dialogue
-            dialogueController.GetComponent<DialogueController>().twineText = currentActiveConvo;
-            dialogueController.GetComponent<DialogueController>().InitializeDialogue();
+            dialogueController.twineText = currentActiveConvo;
+            dialogueController.InitializeDialogue();
 
             return isQuestFinished;
         }
