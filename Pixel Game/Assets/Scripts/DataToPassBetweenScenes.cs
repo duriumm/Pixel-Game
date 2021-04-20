@@ -50,6 +50,6 @@ public class DataToPassBetweenScenes : MonoBehaviour
     // straight to the DB
     public void UpdatePlayerHealthDB()
     {
-        playerHealthDB = player.GetComponent<PlayerHealth>().playerHealth;
+        playerHealthDB = player.GetComponent<PlayerHealth>().Health;
     }
 }

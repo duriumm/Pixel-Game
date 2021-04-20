@@ -3,15 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : HealthBehaviour
 {
-    public int enemyHealth;
-    public Slider enemyHealthSlider;
-    private GameObject enemyObject;
-    private Vector2 enemySpawnPoint;
     private SpriteRenderer spriteRenderer;
-    public AudioClip enemyDeathSound;
-    
+
     public enum ENEMYTYPE
     {
         GHOST,
@@ -20,44 +15,16 @@ public class EnemyHealth : MonoBehaviour
     }
     public ENEMYTYPE enemyType;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        enemyHealth = 20; // TEST TO 20
-        enemyHealthSlider.value = enemyHealth;
-        enemyObject = this.gameObject;
-        enemySpawnPoint = enemyObject.transform.position;
+        base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Kill()
     {
-        
-    }
-
-    public void TakeDamage(int damageToReceive)
-    {
-        enemyHealth -= damageToReceive;
-        enemyHealthSlider.value = enemyHealth;
-        if (enemyHealth <= 0)
-        {
-            respawnEnemy();
-            gameObject.GetComponent<EnemyLootDrops>().DropLoot();
-        }
-    }
-
-    public void GainHealth(int healthToGain)
-    {
-        enemyHealth += healthToGain;
-        enemyHealthSlider.value = enemyHealth;
-    }
-
-    // TO-DO
-    // Change respawnEnemy name to something else.. he is dying thats it.
-    // TO-DO
-    private void respawnEnemy()
-    {
+        base.Kill();
+        gameObject.GetComponent<EnemyLootDrops>().DropLoot();
         switch (enemyType)
         {
             case ENEMYTYPE.GHOST:
@@ -76,17 +43,14 @@ public class EnemyHealth : MonoBehaviour
 
     private IEnumerator FadeOutEnemy()
     {
-        if (enemyDeathSound != null)
-            AudioSource.PlayClipAtPoint(enemyDeathSound, this.gameObject.transform.position);
-        
         // Disable enemy is attackable to not get hit by player and also
         // make the whole movementscript disabled so he cant move OR attack
-        enemyObject.GetComponent<EnemyAttack>().enabled = false;
-        enemyObject.GetComponent<Attacked>().isAttackable = false;
-        enemyObject.GetComponent<EnemyMovement>().enabled = false;
+        gameObject.GetComponent<EnemyAttack>().enabled = false;
+        isAttackable = false;
+        gameObject.GetComponent<EnemyMovement>().enabled = false;
 
         // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
-        enemyObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
+        gameObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
 
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
@@ -106,14 +70,12 @@ public class EnemyHealth : MonoBehaviour
         spriteRenderer.material.color = clr;        
 
         // Enable enemy movement and being attackable again aswell as attack enabling
-        enemyObject.GetComponent<Attacked>().isAttackable = true;
-        enemyObject.GetComponent<EnemyMovement>().enabled = true;
-        enemyObject.GetComponent<EnemyAttack>().enabled = true;
+        isAttackable = true;
+        gameObject.GetComponent<EnemyMovement>().enabled = true;
+        gameObject.GetComponent<EnemyAttack>().enabled = true;
 
-        // Respawn enemy at startpoint and set his hp and slider to max
-        enemyObject.transform.position = enemySpawnPoint;
-        enemyHealth = 100;
-        enemyHealthSlider.value = enemyHealth;
-
+        Respawn();
     }
+
+
 }

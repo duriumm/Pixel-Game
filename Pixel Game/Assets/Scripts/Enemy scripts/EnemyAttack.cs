@@ -17,8 +17,8 @@ public abstract class EnemyAttack : MonoBehaviour
     [SerializeField]
     private bool enablePreAttack;
 
-    private EnemyHealth enemyHealthObject;
-    private float EnemyHealth => enemyHealthObject.enemyHealth;
+    private EnemyHealth enemyHealthBehaviour;
+    private float EnemyHealth => enemyHealthBehaviour.Health;
     protected GameObject playerGameObject;
     private bool readyToAttack = true;
 
@@ -31,7 +31,7 @@ public abstract class EnemyAttack : MonoBehaviour
         // Fix a nicer way of getting the player gameobject?
         // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
-        enemyHealthObject = this.gameObject.GetComponent<EnemyHealth>();
+        enemyHealthBehaviour = this.gameObject.GetComponent<EnemyHealth>();
         StartCoroutine(StartNewAttacks());
     }
 

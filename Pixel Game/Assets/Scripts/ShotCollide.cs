@@ -13,7 +13,7 @@ public class ShotCollide : MonoBehaviour
     {
         if (collision.gameObject.tag == "damageCollider")
         {
-            player.GetComponent<PlayerHealth>().TakeDamage(20);
+            //player.GetComponent<PlayerHealth>().TakeDamage(20);
         }
     }
 
