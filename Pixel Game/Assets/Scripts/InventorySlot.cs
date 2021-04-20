@@ -41,7 +41,7 @@ public class InventorySlot : MonoBehaviour
             dropItemButton = gameObject.transform.GetChild(1).gameObject;
             dropItemButton.SetActive(false);
         }
-        Debug.Log("object we foudn was: " + dropItemButton);
+        //Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
         slotIcon = this.gameObject.GetComponent<Image>();
