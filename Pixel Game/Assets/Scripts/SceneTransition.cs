@@ -25,7 +25,7 @@ public class SceneTransition : MonoBehaviour
         if(collision.gameObject.tag == "MyPlayer")
         {
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().playerHealth;
+            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
             invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();
             dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB = invManager.GetComponent<PlayerInventory>().playerInvMoney;
             StartCoroutine(LoadLevel(sceneToLoad));

@@ -351,13 +351,12 @@ GameObject:
   - component: {fileID: 2238159970977591414}
   - component: {fileID: 2238159970977591417}
   - component: {fileID: -2862576637602397499}
-  - component: {fileID: 7697818602051044011}
   - component: {fileID: 1919312349314565125}
-  - component: {fileID: 4792054444565996817}
-  - component: {fileID: 5998919477085805491}
   - component: {fileID: 8697375598101216402}
+  - component: {fileID: 5951913585203376942}
+  - component: {fileID: 884672663}
   m_Layer: 0
-  m_Name: GhastEnemy
+  m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,12 +438,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 287376279811315351, guid: 6f8824b1c0f18a649a1328ec31326d1e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 37b6d25cfda14204a94bcfd17cc7fb23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.21}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -458,7 +457,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 06342f298cac9a642a0ebf4f7a62b73f, type: 2}
   m_CullingMode: 0
@@ -481,11 +480,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
-  speed: 0.5
+  speed: 1
   enemyAnimator: {fileID: 2238159970977591414}
-  mainCamera: {fileID: 0}
-  ghastAmbientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
+  ambientSound: {fileID: 0}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,25 +495,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2137a68269ddefc409d5643c4cc39df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 0
-  enemyHealthSlider: {fileID: 6133221291524073454}
-  ghastDeathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
-  mainCamera: {fileID: 0}
-  enemyType: 0
---- !u!114 &7697818602051044011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14f5958bde78ad74d803a524a69671e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 4697616969040342004, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
-  isEnemyAttackable: 1
+  hp: 0
+  slider: {fileID: 6133221291524073454}
+  deathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
+  hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
+  enemyType: 2
 --- !u!61 &1919312349314565125
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -529,13 +512,13 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0.024892807, y: -0.111368656}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 1.28, y: 1.21}
+    newSize: {x: 1.28, y: 1.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -543,119 +526,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7069242, y: 0.66557026}
   m_EdgeRadius: 0
---- !u!82 &4792054444565996817
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &5998919477085805491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59c4cd209ecb0944a9ab302518aa62d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleAttackPrefab: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-  mainCamera: {fileID: 0}
-  particleMovementSpeed: 2
-  preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
-  attackSound: {fileID: 0}
 --- !u!114 &8697375598101216402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +538,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 416ba64f303f20a4da54d24cbd2ce7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 5052115612252738427, guid: a79cd5846f119f74588746253bac24ad, type: 3}
-  - {fileID: 5677376778761430650, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
-  - {fileID: -7399929306435189911, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+  itemGameObjectList:
+  - {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
+  - {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
+  - {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
+--- !u!114 &5951913585203376942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc796dd0931a00f4fa1e80195e266c42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preAttackSound: {fileID: 0}
+  attackSound: {fileID: 0}
+  attackRange: 1
+  timeBetweenAttacks: 2
+  enablePreAttack: 0
+--- !u!114 &884672663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPower: 20
+  canTakeDamage: 1
+  group: 1
+  damageReceiver: {fileID: 8702507365765926596}

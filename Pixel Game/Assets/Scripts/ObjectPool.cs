@@ -6,16 +6,15 @@ using UnityEngine;
 
 //public class EnemyAttack : MonoBehaviour
 //{
-//	public GameObject AttackParticleTemplate;
-//	private static ObjectPool attackParticlePool;
-//	void Awake()
+//	public GameObject shotTemplate;
+//	private static ObjectPool shotPool;
+//	void Start()
 //	{
-//		if (attackParticlePool == null)
-//			attackParticlePool = new ObjectPool(AttackParticleTemplate, 10);
+//		shotPool = new ObjectPool(shotTemplate, 10);
 //	}
 //	...
-//	spawnedObject = attackParticlePool.Spawn(pos);
-//	attackParticlePool.Destroy(spawnedObject);
+//	spawnedObject = shotPool.Spawn(pos);
+//	shotPool.Destroy(spawnedObject);
 
 public class ObjectPool
 {
@@ -29,6 +28,7 @@ public class ObjectPool
 		{
 			var obj = GameObject.Instantiate(templateObject);
 			obj.SetActive(false);
+            obj.hideFlags = HideFlags.HideInHierarchy;
             GameObject.DontDestroyOnLoad(obj);
 			pool.Add(obj);
 		}

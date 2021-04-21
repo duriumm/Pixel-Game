@@ -11,7 +11,7 @@ public class PlayerCollision : MonoBehaviour
         myPlayer = this.gameObject;       
     }
 
-    // Moved the whole damage player part to ParticleAttackScript instead of here in trigggerEnter
+    // Moved the whole damage player part to ShotCollide script instead of here in trigggerEnter
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
