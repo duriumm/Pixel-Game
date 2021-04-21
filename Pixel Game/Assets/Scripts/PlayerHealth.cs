@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
         canvasPrefab = GameObject.FindWithTag("Canvas");
         mySlider = canvasPrefab.transform.GetChild(0).gameObject.GetComponent<Slider>();
         // TODO, this loads players HP from the data script. :D
-        playerHealth = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>().playerHealth;
+        playerHealth = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>().playerHealthDB;
         mySlider.value = playerHealth;
         myPlayerObject = this.gameObject;
         playerSpawnPoint = myPlayerObject.transform.position;
@@ -31,6 +31,7 @@ public class PlayerHealth : MonoBehaviour
         {
             respawnPlayer();
         }
+
     }
 
     public void GainHealth(int healthToGain)
@@ -41,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
             playerHealth = 100;
         }
         mySlider.value = playerHealth;
+
     }
 
     private void respawnPlayer()

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 734902800046470439}
   - component: {fileID: 1176339550340347174}
   m_Layer: 0
-  m_Name: brokenhelmet
+  m_Name: BrokenHelmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
   itemIdString: BrokenHelmet
   healingCapability: 0
   itemType: 7
+  isEquippable: 1
 --- !u!114 &734902800046470439
 MonoBehaviour:
   m_ObjectHideFlags: 0

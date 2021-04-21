@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8973467112481931547}
   - component: {fileID: 8973467112481931544}
+  - component: {fileID: 4483081238741481981}
   m_Layer: 0
   m_Name: InvEntoryManager
   m_TagString: Untagged
@@ -43,7 +44,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc029ea859b0d64caf586d6b848b539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slots: []
-  parentObjectOfInventorySlots: {fileID: 0}
   prefabCanvas: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
   isInventoryOpen: 0
+  dataToPassGameObject: {fileID: 0}
+  buyAndSellSound: {fileID: 0}
+  playerInvMoney: 0
+  CoinAmountText: {fileID: 0}
+--- !u!114 &4483081238741481981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973467112481931545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2027467d12cd1c648a1eabdc38b1323c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

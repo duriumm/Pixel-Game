@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class PlayerInventory : MonoBehaviour
     public GameObject dataToPassGameObject;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
+    private GameObject screenTabs;
+    private GameObject shopScreen;
 
     // TO-DO - Move playerMoney to some other place.. not sure where yet
     public int playerInvMoney;
@@ -37,16 +40,19 @@ public class PlayerInventory : MonoBehaviour
         }
 
         inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
-        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
+        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(0).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
-        
+        screenTabs = prefabCanvas.transform.Find("GuiTabsButtons").gameObject;
+        shopScreen = GameObject.Find("ShopScreen");
+
+
     }
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
         ClosingUI();
-        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoney);
+        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB);
     }
 
     // Update is called once per frame
@@ -58,6 +64,7 @@ public class PlayerInventory : MonoBehaviour
     {
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
+        screenTabs.SetActive(false);
         foreach (var item in slots)
         {
             //Debug.Log(item.name);
@@ -68,51 +75,51 @@ public class PlayerInventory : MonoBehaviour
     {
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
+        
         foreach (var item in slots)
         {
             item.GetComponent<EventTrigger>().enabled = true;
 
         }
+        // We should only show the tabs for each screen when opening the inventory 
+        // if the shop is closed. Otherwise they will render on top of shop window and look weird
+        if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+        {
+            screenTabs.SetActive(true);
+        }
     }
 
-    // Loop through our slots list and check if any of the slots sprite icon is null
-    // if it is, we can add our new item in there!
-    public void addItemToSlot(/*ItemData ItemData*/GameObject lootedGameObject)
+    public void LootItem(GameObject lootedGameObject)
     {
-        if(lootedGameObject.GetComponent<ItemData>().itemType != ItemData.ITEMTYPE.MONEY)
+        bool isMoney = lootedGameObject.GetComponent<ItemData>().itemType == ItemData.ITEMTYPE.MONEY;
+        if (isMoney)
         {
-            // lootedItemData = lootedGameObject.GetComponent<ItemData>(); // Never use this :(
-            for (int i = 0; i < slots.Length; i++)
-            {
-
-                // Check each slots customGameobject if its empty == nothing is in that slot.
-                if(slots[i].ItemDataGameObject == null)
-                {
-                    //Debug.Log("index "+ i + " sloticon.sprite is null! therefor we can add item there");
-                    slots[i].AddItem(lootedGameObject);
-                
-                    break;
-                    //if(slots[i].slotIcon.sprite == null)
-                    //{
-                    //}
-                    //else { Debug.Log(i + " sprite ISNT null!"); }        
-                }
-            }
-
-            // Destroying the gameobject you pick up makes it so the inventory 
-            // cannot reference it for future deletes or usage. Disable it for now
-            // but fix a List later so we can access these objects to instantiate etc etc
-
-            //Destroy(lootedGameObject);
-            lootedGameObject.SetActive(false);
-        }
-        else if(lootedGameObject.GetComponent<ItemData>().itemType == ItemData.ITEMTYPE.MONEY)
-        {
-            playerInvMoney+= lootedGameObject.GetComponent<ItemData>().value;
+            playerInvMoney += lootedGameObject.GetComponent<ItemData>().value;
             SetCoinAmount(playerInvMoney);
             Destroy(lootedGameObject);
         }
+        else
+            AddItemToEmptySlot(lootedGameObject);
     }
+
+    public bool AddItemToEmptySlot(GameObject itemToAdd)
+    {
+        //Look for empty slot
+        foreach (var slot in slots)
+        {
+            if (slot.IsEmpty)
+            {
+                slot.AddItem(itemToAdd);
+                //If this was an equipped item being unequipped, it is already inactive but still visible in equipment slot
+                //It is the EquipmentSlot caller's responsibility to clear it from slot
+                itemToAdd.SetActive(false);
+                return true;
+            }
+        }
+        Debug.Log("Inventory was full");
+        return false;
+    }
+
     public void BuyAndSellItemSound()
     {
         AudioSource.PlayClipAtPoint(buyAndSellSound, mainCamera.transform.position);
@@ -165,7 +172,7 @@ public class PlayerInventory : MonoBehaviour
                     // TODO - Add to local list ??? dont know what i ment here         
                     GameObject instantiatedGameObject = Instantiate(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
                     instantiatedGameObject.name = savedItemStringName;  // Give the copied object the name of the original object so it doesnt get named (clone)
-                    addItemToSlot(instantiatedGameObject);               
+                    AddItemToEmptySlot(instantiatedGameObject);               
                 }  
                 counterGang++;
             }

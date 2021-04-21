@@ -1,0 +1,20 @@
+:: StoryTitle
+Oldman__Quest_Is_Accepted
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Is Quest Done[START]
+Have you finished the quest??
+
+Yeah![[Check If Quest Is Done]]
+Nope[[End Conversation]]
+
+:: Check If Quest Is Done[CHECK_QUEST]
+Ok i lied..[[Is Quest Done]] 
+
+:: End Conversation[END]
+

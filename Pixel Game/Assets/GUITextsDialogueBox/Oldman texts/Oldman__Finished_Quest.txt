@@ -1,0 +1,21 @@
+:: StoryTitle
+Oldman__Finished_Quest
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Good job lad[START]
+Great job lad! Here is your reward!
+
+Check reward[[Reward text]]
+
+:: Reward text[QUEST_DONE]
+Enter reward text here
+
+Sweet![[End Conversation]]
+
+:: End Conversation[END]
+

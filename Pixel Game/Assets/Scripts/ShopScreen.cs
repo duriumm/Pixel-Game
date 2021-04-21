@@ -45,6 +45,7 @@ public class ShopScreen : MonoBehaviour
         isShopScreenOpen = false;
         inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
         this.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
     public void OpenShopScreen()
     {
@@ -52,7 +53,7 @@ public class ShopScreen : MonoBehaviour
         // Clear all data flor shop slots so we can add new data!
         for (int i = 0; i < shopSlots.Length; i++)
         {
-            shopSlots[i].ClearAllDataFromSlot();
+            shopSlots[i].ClearSlot();
         }
 
         // Populate shop screens slots with copies of prefab items
@@ -65,6 +66,7 @@ public class ShopScreen : MonoBehaviour
         isShopScreenOpen = true;
         inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
         this.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
 
