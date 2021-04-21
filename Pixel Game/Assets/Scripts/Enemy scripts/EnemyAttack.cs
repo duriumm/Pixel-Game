@@ -18,7 +18,7 @@ public abstract class EnemyAttack : MonoBehaviour
     private bool enablePreAttack;
 
     private EnemyHealth enemyHealthBehaviour;
-    private float EnemyHealth => enemyHealthBehaviour.Health;
+    private float EnemyHealth => enemyHealthBehaviour.Hp;
     protected GameObject playerGameObject;
     private bool readyToAttack = true;
 

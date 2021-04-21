@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class HealthBehaviour : MonoBehaviour
+public class Health : MonoBehaviour
 {
-    public bool isAttackable = true;
+    protected bool isAttackable = true;
     
     [SerializeField]
-    private int health;
-    public int Health
+    private int hp;
+    public int Hp
     {
         protected set
         {
-            health = value;
-            slider.value = health;
+            hp = value;
+            slider.value = hp;
         }
-        get => health;
+        get => hp;
     }
     [SerializeField]
     protected Slider slider;
     private Vector2 spawnPoint;
-    public AudioClip deathSound;
-    public AudioClip hurtSound;
+    [SerializeField]
+    private AudioClip deathSound;
+    [SerializeField]
+    private AudioClip hurtSound;
 
     protected virtual void Start()
     {
@@ -38,7 +40,7 @@ public abstract class HealthBehaviour : MonoBehaviour
     protected void Respawn()
     {
         this.gameObject.transform.position = spawnPoint;
-        Health = 100;
+        Hp = 100;
     }
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
@@ -53,8 +55,8 @@ public abstract class HealthBehaviour : MonoBehaviour
 
         StartCoroutine(HurtEffect());
         Knockback(sourcePoint);
-        Health -= damage;
-        if (health > 0)
+        Hp -= damage;
+        if (hp > 0)
             StartCoroutine(waitForDamageCooldown());
         else
             Kill();
@@ -69,7 +71,7 @@ public abstract class HealthBehaviour : MonoBehaviour
 
     public void GainHealth(int value)
     {
-        Health += value;
+        Hp += value;
     }
 
     private IEnumerator HurtEffect()
@@ -80,7 +82,7 @@ public abstract class HealthBehaviour : MonoBehaviour
 
     private void Knockback(Vector3 sourcePoint)
     {
-        //Todo: Use coroutine perhaps to push rigid body backwards for a certain amount of time
+        //Todo: use rigid body
         Vector2 difference = transform.position - sourcePoint;
         transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
     }

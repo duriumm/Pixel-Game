@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : HealthBehaviour
+public class EnemyHealth : Health
 {
     private SpriteRenderer spriteRenderer;
 

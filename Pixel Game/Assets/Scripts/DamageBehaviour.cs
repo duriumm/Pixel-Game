@@ -17,8 +17,8 @@ public class DamageBehaviour : MonoBehaviour
     [SerializeField]
     private Group group;
     [SerializeField]
-    private GameObject owner;
-    public GameObject GameObject => owner;
+    private GameObject damageReceiver;
+    public GameObject GameObject => damageReceiver;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -30,7 +30,7 @@ public class DamageBehaviour : MonoBehaviour
 
         if (colliderDamageBehaviour.CanInflictDamage && canTakeDamage)
         {
-            var healthBehaviour = owner.GetComponent<HealthBehaviour>();
+            var healthBehaviour = damageReceiver.GetComponent<Health>();
             healthBehaviour.TakeDamage(colliderDamageBehaviour.attackPower, collider.transform.position);
         }
     }

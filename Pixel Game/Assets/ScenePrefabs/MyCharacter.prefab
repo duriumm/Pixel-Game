@@ -94,7 +94,7 @@ MonoBehaviour:
   attackPower: 20
   canTakeDamage: 0
   group: 0
-  owner: {fileID: 0}
+  damageReceiver: {fileID: 0}
 --- !u!1 &1552488466043715010
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   attackPower: 20
   canTakeDamage: 0
   group: 0
-  owner: {fileID: 0}
+  damageReceiver: {fileID: 0}
 --- !u!1 &2082437898047182415
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
   attackPower: 0
   canTakeDamage: 1
   group: 0
-  owner: {fileID: 4697616969040342004}
+  damageReceiver: {fileID: 4697616969040342004}
 --- !u!1 &3985200813970655103
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,7 +367,7 @@ MonoBehaviour:
   attackPower: 20
   canTakeDamage: 0
   group: 0
-  owner: {fileID: 0}
+  damageReceiver: {fileID: 0}
 --- !u!1 &4697616969040342004
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,8 +556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c7ea5bac9ef4546a149906da77567b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAttackable: 1
-  health: 100
+  hp: 0
   slider: {fileID: 0}
   deathSound: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
@@ -867,7 +866,7 @@ MonoBehaviour:
   attackPower: 20
   canTakeDamage: 0
   group: 0
-  owner: {fileID: 0}
+  damageReceiver: {fileID: 0}
 --- !u!1 &8225164959700241717
 GameObject:
   m_ObjectHideFlags: 0
