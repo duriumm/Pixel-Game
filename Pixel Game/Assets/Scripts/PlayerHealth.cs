@@ -36,6 +36,10 @@ public class PlayerHealth : MonoBehaviour
     public void GainHealth(int healthToGain)
     {
         playerHealth += healthToGain;
+        if(playerHealth > 100)
+        {
+            playerHealth = 100;
+        }
         mySlider.value = playerHealth;
     }
 
