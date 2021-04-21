@@ -59,10 +59,14 @@ public class InventorySlot : MonoBehaviour
             }
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
-                Debug.Log("Ate food, we gained: "+ItemDataInSlot.healingCapability+" health");
-                playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
-                Destroy(ItemDataGameObject);
-                ClearSlot();
+                if (playerCharacter.GetComponent<PlayerHealth>().playerHealth < 100)
+                {
+                    Debug.Log("Ate food, we gained: " + ItemDataInSlot.healingCapability + " health");
+                    playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
+
+                    Destroy(ItemDataGameObject);
+                    ClearSlot();
+                }
             }
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
