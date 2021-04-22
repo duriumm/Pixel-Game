@@ -7,9 +7,9 @@ public class PlayerHealth : Health
 {
     protected override void Start()
     {
-        base.Start();
         var canvasPrefab = GameObject.FindWithTag("Canvas");
         slider = canvasPrefab.transform.GetChild(0).gameObject.GetComponent<Slider>();
+        base.Start();
         // TODO, this loads players HP from the data script. :D
         Hp = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>().playerHealthDB;
     }

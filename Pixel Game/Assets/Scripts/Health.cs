@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,18 +7,19 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     protected bool isAttackable = true;
-    
     [SerializeField]
+    private int maxHp = 100;
     private int hp;
     public int Hp
     {
         protected set
         {
-            hp = value;
+            hp = Math.Min(maxHp, value);
             slider.value = hp;
         }
         get => hp;
     }
+    public bool HasFullHp => hp == maxHp;
     [SerializeField]
     protected Slider slider;
     private Vector2 spawnPoint;
@@ -29,6 +31,7 @@ public class Health : MonoBehaviour
     protected virtual void Start()
     {
         spawnPoint = this.gameObject.transform.position;
+        Hp = maxHp;
     }
 
     protected virtual void Kill()
@@ -40,7 +43,7 @@ public class Health : MonoBehaviour
     protected void Respawn()
     {
         this.gameObject.transform.position = spawnPoint;
-        Hp = 100;
+        Hp = maxHp;
     }
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
