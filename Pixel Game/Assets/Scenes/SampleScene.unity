@@ -50670,6 +50670,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: maxSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -50677,6 +50681,10 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420028}
+    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: acceleration
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: ghastAmbientSound
       value: 
@@ -50867,25 +50875,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 884672663, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: attackPower
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919312349314565125, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: m_Size.x
+    - target: {fileID: 2238159970977591417, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
+      propertyPath: maxSpeed
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1919312349314565125, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919312349314565125, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1919312349314565125, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: m_UsedByComposite
-      value: 0
+    - target: {fileID: 2238159970977591417, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
+      propertyPath: acceleration
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4144447419025406582, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_RootOrder
@@ -50938,14 +50934,6 @@ PrefabInstance:
     - target: {fileID: 5916018001020736454, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5951913585203376942, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5951913585203376942, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8702507365765926596, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_Name
@@ -51593,6 +51581,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    - target: {fileID: 812469754729729457, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_Simulated
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 984198089070423766, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: attackCooldown
       value: 0
@@ -51778,8 +51770,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: maxSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: moveSpeed
       value: 7.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: acceleration
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: bootsAnimator
@@ -51876,6 +51876,22 @@ PrefabInstance:
     - target: {fileID: 8620282104999495127, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: canvasPrefab
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106535165984355462, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106535165984355462, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106535165984355462, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106535165984355462, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9211724748546694894, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: m_Enabled
@@ -52229,6 +52245,14 @@ PrefabInstance:
     - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: orthographic size
       value: 4.21875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124833035510669125, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: m_UpdateMethod
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8124833035510669125, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
+      propertyPath: m_DefaultBlend.m_Style
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669127, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_Name

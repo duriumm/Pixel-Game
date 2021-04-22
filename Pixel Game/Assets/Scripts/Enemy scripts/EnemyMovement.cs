@@ -2,42 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : Movement
 {
     private GameObject playerObject;
-    [SerializeField]
-    private float speed = 0.5f;
     [SerializeField]
     private Animator enemyAnimator;
     private GameObject mainCamera;
     [SerializeField]
     private AudioClip ambientSound;
-
     private Transform playerTransform;
     private Transform enemyTransform;
     private bool isPlayingAmbientSound = false;
     private float roamStartTime;
     private float roamDuration;
-    private Vector3 movementVector;
+    //private Vector3 targetVelocity;
 
     private const float MinRoamDuration = 2;
     private const float MaxRoamDuration = 5;
     private const float ChaseUpperDistance = 4;
 	private float retreatUpperDistance;
     
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
-        // TO-DO
-        // Fix a nicer way of getting the player transform position
-        // TO-DO
+        base.Start();
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
         enemyTransform = gameObject.transform;
-		float attackRange = gameObject.GetComponent<EnemyAttack>().AttackRange;
+         var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        float attackRange = enemyAttack == null ? 0 : enemyAttack.AttackRange;
 		retreatUpperDistance = attackRange * 0.7f;
 	}
 
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
         float playerDistance = Vector3.Distance(playerTransform.position, enemyTransform.position);
 
@@ -47,15 +42,15 @@ public class EnemyMovement : MonoBehaviour
         Vector3 faceDirection = Vector3.zero;
         if (playerDistance < retreatUpperDistance * 0.97f) //Back away
         {
-            movementVector = enemyTransform.position - playerTransform.position;
-            faceDirection = -movementVector; //Enemy should face player when backing away
+            movementDir = enemyTransform.position - playerTransform.position;
+            faceDirection = -movementDir; //Enemy should face player when backing away
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
             if (playerDistance < retreatUpperDistance)
-                movementVector = Vector3.zero;
+                movementDir = Vector3.zero;
             else
-                movementVector = playerTransform.position - enemyTransform.position;
+                movementDir = playerTransform.position - enemyTransform.position;
             //Sound acts as indication that the enemy started chasing
             //Helps the player to differentiate between roaming movement and chasing movement
             if (!isPlayingAmbientSound && ambientSound != null)
@@ -66,21 +61,22 @@ public class EnemyMovement : MonoBehaviour
             //If moving, stop moving. If not moving, start moving in random direction
             roamDuration = Random.Range(MinRoamDuration, MaxRoamDuration);
             roamStartTime = Time.time;
-            if (movementVector == Vector3.zero)
-                movementVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
+            if (movementDir == Vector2.zero)
+                movementDir = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
             else
-                movementVector = Vector3.zero;
+                movementDir = Vector3.zero;
         }
         if (faceDirection == Vector3.zero)
-            faceDirection = movementVector;
+            faceDirection = movementDir;
 
-        if (movementVector != Vector3.zero)
+        if (movementDir != Vector2.zero)
         { 
-            enemyTransform.position += movementVector.normalized * speed * Time.fixedDeltaTime;
+            //targetVelocity = targetVelocity.normalized * maxSpeed;
             enemyAnimator.SetFloat("Horizontal", faceDirection.x);
             enemyAnimator.SetFloat("Vertical", faceDirection.y);
-            enemyAnimator.SetFloat("Speed", speed);
+            enemyAnimator.SetFloat("Speed", maxSpeed);
         }
+        base.FixedUpdate();
     }
 
     private IEnumerator playAmbientSoundAndWait()

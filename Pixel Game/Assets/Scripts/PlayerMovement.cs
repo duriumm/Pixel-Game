@@ -2,55 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Movement
 {
-    public float moveSpeed = 5f;
-    public Rigidbody2D myPlayerRB;
-    //public Animator bootsAnimator;        // Use when equipment is being added
-    public Animator animator;
-
-    //public float bootsSpeedGang;          // Use when equipment is being added
-
-    //public GameObject feetSocketTest;     // Use when equipment is being added
-
-    public Vector2 movement;
-
-    [SerializeField]
-   
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
         // Input for movement on both axis
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movementDir.x = Input.GetAxisRaw("Horizontal");
+        movementDir.y = Input.GetAxisRaw("Vertical");
 
         // Animate character based on movement
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Horizontal", movementDir.x);
+        animator.SetFloat("Vertical", movementDir.y);
 
         // Save the last move position of the character so we can load the Idle animation correctly based on last move position
-        if(Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        if (movementDir != Vector2.zero)
         {
-            animator.SetFloat("LastMoveX", Input.GetAxisRaw("Horizontal"));
-            animator.SetFloat("LastMoveY", Input.GetAxisRaw("Vertical"));
+            animator.SetFloat("LastMoveX", movementDir.x);
+            animator.SetFloat("LastMoveY", movementDir.y);
         }
 
         // Dont delete this, it will be used for equipment later on
-        //bootsAnimator.SetFloat("Horizontal", movement.x);             // Use when equipment is being added
-        //bootsAnimator.SetFloat("Vertical", movement.y);               // Use when equipment is being added
+        //bootsAnimator.SetFloat("Horizontal", targetVelocity.x);             // Use when equipment is being added
+        //bootsAnimator.SetFloat("Vertical", targetVelocity.y);               // Use when equipment is being added
 
-        animator.SetFloat("Speed", movement.sqrMagnitude);
-        //bootsAnimator.SetFloat("Speed", movement.sqrMagnitude/* * bootsSpeedGang*/);      // Use when equipment is being added
-    }
-
-    private void FixedUpdate()
-    {
-        // The Actual movement of the character
-        myPlayerRB.MovePosition(myPlayerRB.position + movement * moveSpeed * Time.fixedDeltaTime);
+        animator.SetFloat("Speed", movementDir.sqrMagnitude);
+        //bootsAnimator.SetFloat("Speed", targetVelocity.sqrMagnitude/* * bootsSpeedGang*/);      // Use when equipment is being added
     }
 }
