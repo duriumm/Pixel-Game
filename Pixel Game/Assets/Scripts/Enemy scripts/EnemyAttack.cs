@@ -27,9 +27,6 @@ public abstract class EnemyAttack : MonoBehaviour
   
     protected virtual void Start()
     {
-        // TO-DO
-        // Fix a nicer way of getting the player gameobject?
-        // TO-DO
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
         enemyHealth = this.gameObject.GetComponent<EnemyHealth>();
         StartCoroutine(StartNewAttacks());

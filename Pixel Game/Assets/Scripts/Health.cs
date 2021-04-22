@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Health : MonoBehaviour
 {
     protected bool isAttackable = true;
+    public bool IsAttackable => isAttackable;
     [SerializeField]
     private int maxHp = 100;
     private int hp;
@@ -48,9 +49,6 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
     {
-        if (!isAttackable)
-            return;
-        
         //Todo: reduce damage depending on armor
         
         if (hurtSound != null)
@@ -59,17 +57,8 @@ public class Health : MonoBehaviour
         StartCoroutine(HurtEffect());
         Knockback(sourcePoint);
         Hp -= damage;
-        if (hp > 0)
-            StartCoroutine(waitForDamageCooldown());
-        else
+        if (hp <= 0)
             Kill();
-    }
-
-    IEnumerator waitForDamageCooldown()
-    {
-        isAttackable = false;
-        yield return new WaitForSeconds(1);
-        isAttackable = true;
     }
 
     public void GainHealth(int value)
@@ -79,7 +68,6 @@ public class Health : MonoBehaviour
 
     private IEnumerator HurtEffect()
     {
-        
         yield return new WaitForSeconds(0.1f);
     }
 

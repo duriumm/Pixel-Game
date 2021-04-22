@@ -6,8 +6,6 @@ public class EnemyMeleeAttack : EnemyAttack
 {
     protected override void Attack()
     {
-        var playerHealth = playerGameObject.GetComponent<PlayerHealth>();
-        playerHealth.TakeDamage(20, transform.position);
-        playerGameObject.GetComponent<Rigidbody2D>().MovePosition(playerGameObject.transform.position * 2 - transform.position);
+        //Todo: play attack animation with attack collider
     }
 }
