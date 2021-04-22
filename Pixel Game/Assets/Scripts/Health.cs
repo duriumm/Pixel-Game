@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    private const float KnockbackDuration = 0.5f;
+    private const float KnockbackSpeed = 7;
     private Rigidbody2D rigidBody;
     protected bool isAttackable = true;
     public bool IsAttackable => isAttackable;
@@ -78,8 +80,7 @@ public class Health : MonoBehaviour
 
     private void Knockback(Vector3 sourcePoint)
     {
-        Vector2 velocity = (transform.position - sourcePoint).normalized * 10;
-        rigidBody.velocity += velocity;
+        rigidBody.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
         StartCoroutine(reduceAcceleration());
     }
 
@@ -88,7 +89,7 @@ public class Health : MonoBehaviour
         // Setting the KnockedBack property to true lets the Movement script lower acceleration during the knockback
         // to reduce the ability to counteract the knockback
         KnockedBack = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(KnockbackDuration);
         KnockedBack = false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    private const float KnockbackAcceleration = 0.5f;
     [SerializeField]
     protected float maxSpeed = 5;
     [SerializeField]
@@ -19,7 +20,7 @@ public class Movement : MonoBehaviour
     //Don't you just love properties and ternary operators? I do.
     private float EffectiveAcceleration =>
         health != null && health.KnockedBack ?
-        0.7f : acceleration;
+        KnockbackAcceleration : acceleration;
 
     //public float bootsSpeedGang;          // Use when equipment is being added
 
