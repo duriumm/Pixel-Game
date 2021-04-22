@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 {
     private const float KnockbackDuration = 0.5f;
     private const float KnockbackSpeed = 7;
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D body;
     protected bool isAttackable = true;
     public bool IsAttackable => isAttackable;
     [SerializeField]
@@ -37,13 +37,15 @@ public class Health : MonoBehaviour
 
     protected virtual void Start()
     {
-        rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        body = gameObject.GetComponent<Rigidbody2D>();
         spawnPoint = this.gameObject.transform.position;
         Hp = maxHp;
     }
 
     protected virtual void Kill()
     {
+        if (body != null)
+            body.velocity = Vector2.zero;
         if (deathSound != null)
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
     }
@@ -80,7 +82,7 @@ public class Health : MonoBehaviour
 
     private void Knockback(Vector3 sourcePoint)
     {
-        rigidBody.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
+        body.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
         StartCoroutine(reduceAcceleration());
     }
 
