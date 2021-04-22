@@ -45,9 +45,13 @@ public class EnemyHealth : Health
     {
         // Disable enemy is attackable to not get hit by player and also
         // make the whole movementscript disabled so he cant move OR attack
-        gameObject.GetComponent<EnemyAttack>().enabled = false;
         isAttackable = false;
-        gameObject.GetComponent<EnemyMovement>().enabled = false;
+        var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        if (enemyAttack != null)
+            enemyAttack.enabled = false;
+        var enemyMovement = gameObject.GetComponent<EnemyMovement>();
+        if (enemyMovement != null)
+            enemyMovement.enabled = false;
 
         // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
         gameObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
@@ -71,9 +75,11 @@ public class EnemyHealth : Health
 
         // Enable enemy movement and being attackable again aswell as attack enabling
         isAttackable = true;
-        gameObject.GetComponent<EnemyMovement>().enabled = true;
-        gameObject.GetComponent<EnemyAttack>().enabled = true;
-
+        if (enemyMovement != null)
+            enemyMovement.enabled = true;
+        if (enemyAttack != null)
+            enemyAttack.enabled = true;
+        
         Respawn();
     }
 

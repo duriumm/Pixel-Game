@@ -479,7 +479,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  maxSpeed: 1
+  acceleration: 0.1
+  animator: {fileID: 0}
   enemyAnimator: {fileID: 2238159970977591414}
   ambientSound: {fileID: 0}
 --- !u!114 &-2862576637602397499

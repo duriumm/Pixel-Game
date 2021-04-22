@@ -22,6 +22,7 @@ public class Health : MonoBehaviour
         get => hp;
     }
     public bool HasFullHp => hp == maxHp;
+
     [SerializeField]
     protected Slider slider;
     private Vector2 spawnPoint;
@@ -29,7 +30,9 @@ public class Health : MonoBehaviour
     private AudioClip deathSound;
     [SerializeField]
     private AudioClip hurtSound;
-    
+
+    public bool KnockedBack { get; private set; }
+
     protected virtual void Start()
     {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -82,11 +85,11 @@ public class Health : MonoBehaviour
 
     private IEnumerator reduceAcceleration()
     {
-        // Reduce acceleration to make it harder to counteract the knockback
-        var movement = gameObject.GetComponent<Movement>();
-        movement.AccScale = 0.1f;
+        // Setting the KnockedBack property to true lets the Movement script lower acceleration during the knockback
+        // to reduce the ability to counteract the knockback
+        KnockedBack = true;
         yield return new WaitForSeconds(0.5f);
-        movement.AccScale = 1;
+        KnockedBack = false;
     }
 }
     //}
