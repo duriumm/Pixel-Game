@@ -51595,10 +51595,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyCharacter
       objectReference: {fileID: 0}
-    - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
-      propertyPath: acceleration
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
 --- !u!1001 &4277138930107555899

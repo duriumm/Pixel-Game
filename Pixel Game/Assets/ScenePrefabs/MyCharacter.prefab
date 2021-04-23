@@ -383,7 +383,6 @@ GameObject:
   - component: {fileID: 5652045109571144995}
   - component: {fileID: 6220882671748775716}
   - component: {fileID: 8620282104999495127}
-  - component: {fileID: 3985200814381900838}
   - component: {fileID: 3985200814381900833}
   - component: {fileID: 8949481645335936932}
   m_Layer: 0
@@ -541,7 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 7
-  acceleration: 1
+  acceleration: 5
   animator: {fileID: 638322088875909781}
 --- !u!114 &8620282104999495127
 MonoBehaviour:
@@ -559,18 +558,6 @@ MonoBehaviour:
   slider: {fileID: 0}
   deathSound: {fileID: 0}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
---- !u!114 &3985200814381900838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4697616969040342004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7b5c1b39651884c88adf14c053e257, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3985200814381900833
 MonoBehaviour:
   m_ObjectHideFlags: 0
