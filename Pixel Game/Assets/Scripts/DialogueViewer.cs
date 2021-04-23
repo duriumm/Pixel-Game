@@ -138,6 +138,5 @@ public class DialogueViewer : MonoBehaviour
             controller.twineText = npcGameobject.GetComponent<NpcData>().currentActiveConvo;
             controller.InitializeDialogue();
         }
-
     }
 }

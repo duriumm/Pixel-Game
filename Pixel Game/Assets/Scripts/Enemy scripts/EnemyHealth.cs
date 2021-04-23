@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class EnemyHealth : Health
 {
     private SpriteRenderer spriteRenderer;
+    private DataToPassBetweenScenes dataToPassBetweenScenes;
 
     public enum ENEMYTYPE
     {
@@ -19,10 +20,17 @@ public class EnemyHealth : Health
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
     }
 
     protected override void Kill()
     {
+
+        if(dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES)
+        {
+            dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
+        }
+
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
         switch (enemyType)

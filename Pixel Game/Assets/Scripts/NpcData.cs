@@ -11,7 +11,16 @@ public class NpcData : MonoBehaviour
 
 
     public List<TextAsset> questConvoList = new List<TextAsset>();
+
+    // If npc only has one talking convo he does not need a convolist. Only a currentActiveConvo.
+    // if npc has questConvo and a regular convo after quest, then he might need a regularConvoList
+    //public List<TextAsset> regularConvoList = new List<TextAsset>();
+
+
+    // Do we really need a questList?? maybe just one quest
     //public List<Quest> questList = new List<Quest>();
+
+    public Quest currentNpcQuest;
 
 
 
@@ -26,9 +35,6 @@ public class NpcData : MonoBehaviour
         dialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
-        //Quest myQuest = new Quest("The first querre", "Kill three ghasts!!", 50);
-        //questList.Add(myQuest);
-
     }
 
 
@@ -95,12 +101,16 @@ public class NpcData : MonoBehaviour
         // We turn dialogueCanvas off after the activation of the quest since otherwise 
         // the next conversation will be started immediately
         dialogueCanvas.SetActive(false);
+
+
+        dataToPass.currentActivePlayerQuest = currentNpcQuest;
+        Debug.Log("Current active playerquest is: "+ dataToPass.currentActivePlayerQuest.questName);
     }
     public bool CheckIfQuestIsDone()
     {
         Debug.Log("Checking if the quest is finished!");
 
-        if (isQuestFinished == true)
+        if (dataToPass.currentActivePlayerQuest.isQuestFinished == true)
         {
             Debug.Log("quest is done!");
             foreach (var item in questConvoList)
@@ -116,11 +126,11 @@ public class NpcData : MonoBehaviour
             dialogueController.twineText = currentActiveConvo;
             dialogueController.InitializeDialogue();
 
-            return isQuestFinished;
+            return true;
         }
         else
         {
-            return isQuestFinished;
+            return false;
         }
     }
 
