@@ -50,7 +50,7 @@ public class Health : MonoBehaviour
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
     }
 
-    protected void Respawn()
+    protected virtual void Respawn()
     {
         this.gameObject.transform.position = spawnPoint;
         Hp = maxHp;
