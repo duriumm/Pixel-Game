@@ -388,11 +388,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
   m_PrefabInstance: {fileID: 1399312102}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &519420028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8124833035510669127, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-  m_PrefabInstance: {fileID: 8124833035059029819}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &531626138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6331735293764940088, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
@@ -50648,42 +50643,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -2862576637602397499, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: enemyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2862576637602397499, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 519420028}
-    - target: {fileID: 2238159970977591415, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 2163541205738106202, guid: 525762a4ac768704f86136b43c1e5fb1, type: 3}
-    - target: {fileID: 2238159970977591415, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: maxSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 519420028}
-    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: acceleration
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2238159970977591417, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: ghastAmbientSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
     - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -50728,14 +50687,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4792054444565996817, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_Pitch
-      value: 1.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 4792054444565996817, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_Volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -50744,65 +50695,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5998919477085805491, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 519420028}
-    - target: {fileID: 5998919477085805491, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: attackSound
-      value: 
-      objectReference: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
-    - target: {fileID: 5998919477085805491, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: particleMovementSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5998919477085805491, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: AttackParticleTemplate
-      value: 
-      objectReference: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-    - target: {fileID: 7697818602051044011, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: attackSound
-      value: 
-      objectReference: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemList.Array.data[0]
-      value: 
-      objectReference: {fileID: 5677376778761430650, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemList.Array.data[1]
-      value: 
-      objectReference: {fileID: 5052115612252738427, guid: a79cd5846f119f74588746253bac24ad, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemList.Array.data[2]
-      value: 
-      objectReference: {fileID: -7399929306435189911, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemGameObjectList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemGameObjectList.Array.data[0]
-      value: 
-      objectReference: {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemGameObjectList.Array.data[1]
-      value: 
-      objectReference: {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
-    - target: {fileID: 8697375598101216402, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: itemGameObjectList.Array.data[2]
-      value: 
-      objectReference: {fileID: 4463928489772090715, guid: 4a3a40b1d8c331d42970a7ec6429aded, type: 3}
     - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_Name
       value: GhastEnemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}

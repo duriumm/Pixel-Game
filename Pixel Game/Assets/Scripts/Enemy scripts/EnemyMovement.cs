@@ -5,8 +5,6 @@ using UnityEngine;
 public class EnemyMovement : Movement
 {
     private GameObject playerObject;
-    [SerializeField]
-    private Animator enemyAnimator;
     private GameObject mainCamera;
     [SerializeField]
     private AudioClip ambientSound;
@@ -15,8 +13,7 @@ public class EnemyMovement : Movement
     private bool isPlayingAmbientSound = false;
     private float roamStartTime;
     private float roamDuration;
-    //private Vector3 targetVelocity;
-
+    
     private const float MinRoamDuration = 2;
     private const float MaxRoamDuration = 5;
     private const float ChaseUpperDistance = 4;
@@ -39,16 +36,16 @@ public class EnemyMovement : Movement
         // If player is far away, roam around
         // If close, chase to get well within attack range
         // Back away if too close
-        Vector3 faceDirection = Vector3.zero;
+        faceDir = Vector2.zero;
         if (playerDistance < retreatUpperDistance * 0.97f) //Back away
         {
             movementDir = enemyTransform.position - playerTransform.position;
-            faceDirection = -movementDir; //Enemy should face player when backing away
+            faceDir = -movementDir; //Enemy should face player when backing away
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
             if (playerDistance < retreatUpperDistance)
-                movementDir = Vector3.zero;
+                movementDir = Vector2.zero;
             else
                 movementDir = playerTransform.position - enemyTransform.position;
             //Sound acts as indication that the enemy started chasing
@@ -62,20 +59,13 @@ public class EnemyMovement : Movement
             roamDuration = Random.Range(MinRoamDuration, MaxRoamDuration);
             roamStartTime = Time.time;
             if (movementDir == Vector2.zero)
-                movementDir = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
+                movementDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             else
-                movementDir = Vector3.zero;
+                movementDir = Vector2.zero;
         }
-        if (faceDirection == Vector3.zero)
-            faceDirection = movementDir;
+        if (faceDir == Vector2.zero)
+            faceDir = movementDir;
 
-        if (movementDir != Vector2.zero)
-        { 
-            //targetVelocity = targetVelocity.normalized * maxSpeed;
-            enemyAnimator.SetFloat("Horizontal", faceDirection.x);
-            enemyAnimator.SetFloat("Vertical", faceDirection.y);
-            enemyAnimator.SetFloat("Speed", maxSpeed);
-        }
         base.FixedUpdate();
     }
 

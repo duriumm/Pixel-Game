@@ -10,13 +10,14 @@ public class Movement : MonoBehaviour
     protected float maxSpeed = 5;
     [SerializeField]
     private float acceleration = 5;
+    [SerializeField]
+    protected Animator animator;
 
     private Health health;
     protected Vector2 movementDir;
+    protected Vector2 faceDir = Vector3.zero;
     private Rigidbody2D body;
-    //public Animator bootsAnimator;        // Use when equipment is being added
-    public Animator animator;
-
+    
     //Don't you just love properties and ternary operators? I do.
     private float EffectiveAcceleration =>
         health != null && health.KnockedBack ?
@@ -31,6 +32,22 @@ public class Movement : MonoBehaviour
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         health = gameObject.GetComponent<Health>();
+    }
+
+    protected virtual void Update()
+    {
+        if (animator != null)
+        {
+            if (faceDir != Vector2.zero)
+            {
+                // Save the last move position of the character so we can load the Idle animation correctly based on last move position
+                animator.SetFloat("LastMoveX", faceDir.x);
+                animator.SetFloat("LastMoveY", faceDir.y);
+            }
+            animator.SetFloat("Horizontal", faceDir.x);
+            animator.SetFloat("Vertical", faceDir.y);
+            animator.SetFloat("Speed", maxSpeed);
+        }
     }
 
     protected virtual void FixedUpdate()
