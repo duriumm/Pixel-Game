@@ -20,7 +20,7 @@ public class Damage : MonoBehaviour
     private Health health;
 
     private bool CanInflictDamage => attackPower > 0;
-    private bool CanTakeDamage => damageReceiver != null && health.IsAttackable;
+    private bool CanTakeDamage => damageReceiver != null;
 
     private void Start()
     {

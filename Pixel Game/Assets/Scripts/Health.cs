@@ -9,8 +9,6 @@ public class Health : MonoBehaviour
     private const float KnockbackDuration = 0.5f;
     private const float KnockbackSpeed = 7;
     private Rigidbody2D body;
-    protected bool isAttackable = true;
-    public bool IsAttackable => isAttackable;
     [SerializeField]
     private int maxHp = 100;
     private int hp;

@@ -30,6 +30,7 @@ public class EnemyHealth : Health
     {
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
+        
         switch (enemyType)
         {
             case ENEMYTYPE.GHOST:
@@ -58,7 +59,7 @@ public class EnemyHealth : Health
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
         //Debug.Log("start fade");
-        for (float f = 1f; f >= -0.05f; f-= 0.05f)
+        for (float f = 1f; f >= -0.05f; f -= 0.05f)
         {
             Color c = spriteRenderer.material.color;
             c.a = f;
@@ -71,6 +72,7 @@ public class EnemyHealth : Health
         Color clr = spriteRenderer.material.color;
         clr.a = 1f;
         spriteRenderer.material.color = clr;
+        
         Respawn();
     }
 
@@ -82,7 +84,6 @@ public class EnemyHealth : Health
 
     void toggleActive(bool active)
     {
-        //isAttackable = active;
         if (enemyMovement != null)
             enemyMovement.enabled = active;
         if (enemyAttack != null)
