@@ -3,25 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyAttack : MonoBehaviour
+public abstract class EnemyAttack : Attack
 {
     [SerializeField]
     private AudioClip preAttackSound;
     [SerializeField]
-    private AudioClip attackSound;
-    [SerializeField]
     private float attackRange = 1;
     public float AttackRange => attackRange;
-    [SerializeField]
-    private float timeBetweenAttacks = 2;
     [SerializeField]
     private bool enablePreAttack;
 
     private EnemyHealth enemyHealth;
     private float EnemyHp => enemyHealth.Hp;
     protected GameObject playerGameObject;
-    private bool readyToAttack = true;
-
+    
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	private float SqrAttackRange => attackRange * attackRange; //Avoid square root calculation in exchange for an extra multiplication
   
@@ -42,12 +37,7 @@ public abstract class EnemyAttack : MonoBehaviour
             {
                 if (enablePreAttack)
                     yield return PreAttack();
-                // Play the attack sound
-                if (attackSound != null)
-                    AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
-                readyToAttack = false;  //This will be set to true after `timeBetweenAttack` seconds have passed
                 Attack();
-                yield return WaitForNextAttack();
             }
 			yield return new WaitForSeconds(0.2f);
 		}
@@ -71,15 +61,5 @@ public abstract class EnemyAttack : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
 		}
 		material.color = originalColor;
-	}
-
-    protected virtual void Attack()
-    {
-    }
-
-	protected IEnumerator WaitForNextAttack()
-    {
-        yield return new WaitForSeconds(timeBetweenAttacks);
-        readyToAttack = true;
 	}
 }
