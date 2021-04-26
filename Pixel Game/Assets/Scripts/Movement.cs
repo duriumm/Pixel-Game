@@ -23,11 +23,6 @@ public class Movement : MonoBehaviour
         health != null && health.KnockedBack ?
         KnockbackAcceleration : acceleration;
 
-    //public float bootsSpeedGang;          // Use when equipment is being added
-
-    //public GameObject feetSocketTest;     // Use when equipment is being added
-
-
     protected virtual void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
