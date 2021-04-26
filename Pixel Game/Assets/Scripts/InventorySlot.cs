@@ -59,7 +59,7 @@ public class InventorySlot : MonoBehaviour
             }
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
-                if (playerCharacter.GetComponent<PlayerHealth>().Hp < 100)
+                if (!playerCharacter.GetComponent<PlayerHealth>().HasFullHp)
                 {
                     Debug.Log("Ate food, we gained: " + ItemDataInSlot.healingCapability + " health");
                     playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
