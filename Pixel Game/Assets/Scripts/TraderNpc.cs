@@ -39,7 +39,8 @@ public class TraderNpc : MonoBehaviour
             isPlayerInRange = true;
             AudioSource.PlayClipAtPoint(interractSound, mainCamera.transform.position);
 
-            // Assign current active trader to be this trader.
+            // Assign current active trader to be this trader. 
+            // TRADER ID HAS TO BE THE SAME AS GAMEOBJECTS NAME
             dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader = traderID;
 
             // Clear the shopScreen list so we only put in the NPC list of items in a empty list

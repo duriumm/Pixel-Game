@@ -11,13 +11,6 @@ public class PlayerInput : MonoBehaviour
     private GameObject playerAttack;
     private GameObject shopScreen;
 
-
-    //public GameObject feetSocket;   // Do all this when equipment is added to the character
-    //private Animator playerAnimator;
-
-    // Test dragging on the boots here and see if it works? =)
-    //public Equipment equippedBoots;   // Do all this when equipment is added to the character
-
     private GameObject playerGameObject;
 
     private GameObject torchGameObject;
