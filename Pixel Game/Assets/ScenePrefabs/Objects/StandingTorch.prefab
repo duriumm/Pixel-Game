@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1853455499943883953}
   - component: {fileID: 2130893583}
   - component: {fileID: 2130893584}
+  - component: {fileID: 558856975686014305}
   m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
@@ -60,8 +61,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 231
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0.78
-  m_PointLightOuterRadius: 3.17
+  m_PointLightInnerRadius: 1
+  m_PointLightOuterRadius: 5
   m_PointLightDistance: 3
   m_PointLightQuality: 1
   m_ShapeLightParametricSides: 5
@@ -4856,6 +4857,20 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &558856975686014305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078073584305634655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8758d705e8883ae4c94a751ed0a013ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minOuterRadius: 3.45
+  maxOuterRadius: 3.55
 --- !u!1 &3988932952514855843
 GameObject:
   m_ObjectHideFlags: 0
