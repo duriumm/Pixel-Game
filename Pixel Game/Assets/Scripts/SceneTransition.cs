@@ -12,18 +12,29 @@ public class SceneTransition : MonoBehaviour
 
     public Animator transition;
 
+    public Vector3 respawnSpot;
+
+
     private void Start()
     {
         dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
         myPlayerObject = GameObject.FindGameObjectWithTag("MyPlayer");
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
-        
+        respawnSpot = gameObject.transform.Find("RespawnSpot").gameObject.transform.position;
+        Debug.Log("Respawn spot on start: " + respawnSpot); // This respawn spot is correct
+
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "MyPlayer")
         {
+
+            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().currentHouseRespawnPosition = respawnSpot; // This works aswell
+  
+
+
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
             dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
             invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();
@@ -34,12 +45,16 @@ public class SceneTransition : MonoBehaviour
 
     IEnumerator LoadLevel(string sceneToLoad)
     {
+        // this actually works, turns the player pos to correct place (used as test)
+        myPlayerObject.transform.position = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().currentHouseRespawnPosition;
+
         transition.SetTrigger("Start");
         // TO-DO - Disable player movement, Make player invincible
 
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene(sceneToLoad);
+        
     }
 }
 

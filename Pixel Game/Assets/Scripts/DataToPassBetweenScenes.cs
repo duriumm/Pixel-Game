@@ -34,6 +34,8 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public string currentActivateNpc;
 
+    public Vector3 currentHouseRespawnPosition;
+
 
     public List<string> mySavedStringListDatabase = new List<string>();
     // String List with names of all our gameobjects, all player inventory items names are saved here on entering new scene.
@@ -55,4 +57,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     {
         playerHealthDB = player.GetComponent<PlayerHealth>().Hp;
     }
+
+
+    
 }
