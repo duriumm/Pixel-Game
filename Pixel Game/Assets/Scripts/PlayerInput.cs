@@ -54,7 +54,7 @@ public class PlayerInput : MonoBehaviour
         }
         // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true /*&& inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false*/) 
         {
            playerGameObject.GetComponent<PlayerAttack>().getAttackCoroutine();
             // We activate the collider in animation so might not need this function

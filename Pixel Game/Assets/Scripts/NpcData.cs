@@ -28,8 +28,6 @@ public class NpcData : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
 
-    public bool isQuestFinished = false;
-
     void Start()
     {
         dialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();

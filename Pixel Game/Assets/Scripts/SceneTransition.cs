@@ -14,15 +14,22 @@ public class SceneTransition : MonoBehaviour
 
     public Vector3 respawnSpot;
 
+    public bool isInside = false;
+
 
     private void Start()
     {
         dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
         myPlayerObject = GameObject.FindGameObjectWithTag("MyPlayer");
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
+
+        if(isInside == true)
+        {
+
+        }
         respawnSpot = gameObject.transform.Find("RespawnSpot").gameObject.transform.position;
         Debug.Log("Respawn spot on start: " + respawnSpot); // This respawn spot is correct
-
+        //myPlayerObject.transform.position = respawnSpot;
 
     }
 
@@ -56,6 +63,8 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
         
     }
+
+    
 }
 
 
