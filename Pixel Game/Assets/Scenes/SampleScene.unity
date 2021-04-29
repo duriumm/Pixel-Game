@@ -621,22 +621,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 216556314}
     m_Modifications:
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: traderID
-      value: SecondFatNPC
-      objectReference: {fileID: 0}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.data[0]
-      value: 
-      objectReference: {fileID: 4665512650309784248, guid: a5a07e4e3ce620b4697036ca73c0e802, type: 3}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.data[1]
-      value: 
-      objectReference: {fileID: 4665512650309784248, guid: a5a07e4e3ce620b4697036ca73c0e802, type: 3}
     - target: {fileID: 4252617600775834032, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -95661,6 +95645,14 @@ PrefabInstance:
     - target: {fileID: 6977666638280157480, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
       propertyPath: m_Name
       value: FatNpc
+      objectReference: {fileID: 0}
+    - target: {fileID: 9115208725788499396, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d889edbd222c3644b88365c127b08daf, type: 3}
+    - target: {fileID: 9115208725788499396, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}

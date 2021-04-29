@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: -4759392353146039957}
   - component: {fileID: 3633316663772964055}
   - component: {fileID: 5507317166602747368}
+  - component: {fileID: 60648878}
   m_Layer: 0
   m_Name: FatNpc
   m_TagString: Npc
@@ -240,7 +241,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: d44b10af7ce287442a77208b1afce77c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d889edbd222c3644b88365c127b08daf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -263,10 +264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 381fb0670cc5f8e4096febdf58e647e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopItems: []
+  shopItems:
+  - {fileID: 4665512650309784248, guid: a5a07e4e3ce620b4697036ca73c0e802, type: 3}
+  - {fileID: 4665512650309784248, guid: a5a07e4e3ce620b4697036ca73c0e802, type: 3}
   isPlayerInRange: 0
   interractSound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
-  traderID: 
+  traderID: SecondFatNPC
 --- !u!58 &3633316663772964055
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -302,3 +305,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &60648878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977666638280157480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4175582c9bc4664b8db9b52fa36b852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInRange: 0
+  interactKey: 101
+  interactAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -4759392353146039957}
+        m_TargetAssemblyTypeName: TraderNpc, Assembly-CSharp
+        m_MethodName: OpenNpcShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

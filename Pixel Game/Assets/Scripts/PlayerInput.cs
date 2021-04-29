@@ -40,22 +40,8 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per framef
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            // We try to get the closest NPC from the last saved "current active trader" 
-            // and then we check if player is in range so we can open his/her shop!
-            closestNPC = GameObject.Find(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader);
-            Debug.Log("Closest NPC is: " + closestNPC);
-            if(closestNPC.GetComponent<TraderNpc>().isPlayerInRange == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
-            }
-            else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
-            {
-                shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-            }
-        }
-            if (Input.GetKeyDown(KeyCode.R)){
+
+        if (Input.GetKeyDown(KeyCode.R)){
             // TODO, make this fucking get component stuff easier. no get component ffs!!
             if(torchGameObject.GetComponent<Torch>().isTorchActive == false) { 
                 torchGameObject.GetComponent<Torch>().isTorchActive = true;
@@ -65,10 +51,8 @@ public class PlayerInput : MonoBehaviour
                 torchGameObject.GetComponent<Torch>().isTorchActive = false;
                 torchGameObject.GetComponent<Torch>().toggleTorch();
             }
-
-
         }
-        // checks if space is pressed AND if the collider in question is not currently active
+        // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
         if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
         {
