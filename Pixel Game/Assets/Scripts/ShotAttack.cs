@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShotAttack : EnemyAttack
+public class ShotAttack : Attack
 {
     [SerializeField]
     private float shotSpeed = 2f;
@@ -28,12 +28,12 @@ public class EnemyShotAttack : EnemyAttack
         shots.RemoveAll((shot) => !shot.IsActive);
     }
 
-    private void SpawnShot()
+    private void SpawnShot(Vector2 aimAt)
     {
         var pos = gameObject.transform.position;
         pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
 
-        var velocity = playerGameObject.transform.position - gameObject.transform.position;
+        var velocity = aimAt - (Vector2)pos;
         velocity = velocity.normalized * shotSpeed;
 
         shots.Add(
@@ -46,9 +46,10 @@ public class EnemyShotAttack : EnemyAttack
             );
     }
 
-    protected override void Attack()
+    public void AttackAt(Vector2 aimAt)
     {
-        SpawnShot();
+        PerformAttack();
+        SpawnShot(aimAt);
     }
 
     public void DestroyShots()
@@ -70,11 +71,10 @@ class Shot
     private GameObject gameObject;
     private Vector3 velocity;
     private ObjectPool pool;
-    private Vector3 pos;
 
     public bool IsActive => timeToLive > 0;
 
-    public Shot(float timeToLive, ObjectPool pool, Vector3 pos, Vector3 velocity)
+    public Shot(float timeToLive, ObjectPool pool, Vector2 pos, Vector2 velocity)
     {
         this.timeToLive = timeToLive;
         this.pool = pool;

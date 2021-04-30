@@ -77,9 +77,9 @@ public class PlayerInput : MonoBehaviour
         }
         // checks if space is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<Attack>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
         {
-           playerGameObject.GetComponent<PlayerAttack>().getAttackCoroutine();
+           playerGameObject.GetComponent<Attack>().PerformAttack();
             // We activate the collider in animation so might not need this function
             //StartCoroutine(EnableAttackColliderAndWaitForSeconds(0.1f));
             //if (!inventoryManagerTest.GetComponent<PlayerInventory>().isInventoryOpen){
@@ -115,12 +115,12 @@ public class PlayerInput : MonoBehaviour
             // TO-DO
             if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = false;
+                playerGameObject.GetComponent<Attack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
             else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = true;
+                playerGameObject.GetComponent<Attack>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
             }
 

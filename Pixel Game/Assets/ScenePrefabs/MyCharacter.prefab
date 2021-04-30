@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 6220882671748775716}
   - component: {fileID: 8620282104999495127}
   - component: {fileID: 3985200814381900833}
-  - component: {fileID: 8949481645335936932}
+  - component: {fileID: 8538559603111980554}
   m_Layer: 0
   m_Name: MyCharacter
   m_TagString: MyPlayer
@@ -572,7 +572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAttackColliderObject: {fileID: 3985200813970655103}
   dataToPassGameObject: {fileID: 0}
---- !u!114 &8949481645335936932
+--- !u!114 &8538559603111980554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -581,9 +581,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4697616969040342004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 583b0145acc6b0943b39d8e3a16aa7cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldawn: 1
   attackSound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
 --- !u!1 &5810949078116800679
 GameObject:

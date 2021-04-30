@@ -18,8 +18,7 @@ public class Movement : MonoBehaviour
     protected Vector2 faceDir = Vector3.zero;
     private Rigidbody2D body;
     
-    //Don't you just love properties and ternary operators? I do.
-    private float EffectiveAcceleration =>
+    private float ActualAcceleration =>
         health != null && health.KnockedBack ?
         KnockbackAcceleration : acceleration;
 
@@ -53,7 +52,7 @@ public class Movement : MonoBehaviour
         var difference = velocityTarget - body.velocity;
         if (difference == Vector2.zero)
             return;
-        var velocityStep = difference.normalized * EffectiveAcceleration;
+        var velocityStep = difference.normalized * ActualAcceleration;
         velocityStep = Vector2.ClampMagnitude(velocityStep, difference.magnitude);
         body.velocity += velocityStep;
     }

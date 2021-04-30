@@ -54,7 +54,9 @@ public class EnemyHealth : Health
         toggleActive(false);
 
         // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
-        gameObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
+        var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        if (enemyAttack != null)
+            enemyAttack.DestroyShots();
 
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)

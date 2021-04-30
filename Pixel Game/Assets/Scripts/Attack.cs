@@ -3,23 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Attack : MonoBehaviour
+public class Attack : MonoBehaviour
 {
+    private Animator attackAnimator;
     [SerializeField]
     protected float cooldawn = 1;
     [SerializeField]
     private AudioClip attackSound;
-    [SerializeField]
-    private GameObject weapon;
-
+    
     protected bool readyToAttack = true;
     
-    protected virtual void Attack()
+    protected virtual void Start()
+    {
+        attackAnimator = this.gameObject.GetComponent<Animator>();
+    }
+
+    public void PerformAttack()
     {
         if (attackSound != null)
             AudioSource.PlayClipAtPoint(attackSound, this.transform.position);
         readyToAttack = false;  //This will be set to true after `timeBetweenAttack` seconds have passed
-        AttackImpl();
+        if (attackAnimator != null)
+            StartCoroutine(PlayAttackAnimation());
         StartCoroutine(waitForCooldown());
     }
 
@@ -29,6 +34,11 @@ public abstract class Attack : MonoBehaviour
         readyToAttack = true;
     }
 
-    // Implementation of the attack, different for different child classes
-    protected abstract void AttackImpl(); 
+    private IEnumerator PlayAttackAnimation()
+    {
+        // Play the attack animation
+        attackAnimator.SetBool("isAttacking", true);
+        yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
+        attackAnimator.SetBool("isAttacking", false);
+    }
 }

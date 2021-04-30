@@ -352,9 +352,9 @@ GameObject:
   - component: {fileID: 2238159970977591417}
   - component: {fileID: -2862576637602397499}
   - component: {fileID: 1919312349314565125}
-  - component: {fileID: 5998919477085805491}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 961303709}
+  - component: {fileID: 366886232}
   m_Layer: 0
   m_Name: GhastEnemy
   m_TagString: Untagged
@@ -527,26 +527,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.95}
   m_EdgeRadius: 0
---- !u!114 &5998919477085805491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46b71becb8f0e7d4387ddbb62261b13a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
-  attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
-  attackRange: 3
-  timeBetweenAttacks: 2
-  enablePreAttack: 1
-  shotSpeed: 2
-  shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-  shotTimeToLive: 2
 --- !u!114 &8697375598101216402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -579,3 +559,23 @@ MonoBehaviour:
   attackCooldown: 1
   group: 1
   damageReceiver: {fileID: 8702507365765926596}
+--- !u!114 &366886232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59c4cd209ecb0944a9ab302518aa62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldawn: 1
+  attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
+  shotSpeed: 2
+  shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+  shotTimeToLive: 2
+  preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
+  attackRange: 2
+  enablePreAttack: 1

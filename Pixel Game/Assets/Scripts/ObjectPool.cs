@@ -2,20 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//ObjectPool usage example:
-
-//public class EnemyAttack : MonoBehaviour
-//{
-//	public GameObject shotTemplate;
-//	private static ObjectPool shotPool;
-//	void Start()
-//	{
-//		shotPool = new ObjectPool(shotTemplate, 10);
-//	}
-//	...
-//	spawnedObject = shotPool.Spawn(pos);
-//	shotPool.Destroy(spawnedObject);
-
 public class ObjectPool
 {
 	public int AvailableItems { get; private set; }
@@ -34,14 +20,15 @@ public class ObjectPool
 		}
 	}
 
-	public GameObject Spawn(Vector3 pos)
+	public GameObject Spawn(Vector2 pos)
 	{
 		//Find an inactive object
 		foreach (var obj in pool)
 		{
 			if (!obj.activeInHierarchy)
 			{
-				obj.transform.position = pos;
+				//Z pos needs to be -1 for glitch-free animation (Why? Can we fix this?)
+                obj.transform.position = new Vector3(pos.x, pos.y, -1);
 				obj.SetActive(true);
 				AvailableItems--;
 				//Debug.Log("Spawn! " + AvailableItems);

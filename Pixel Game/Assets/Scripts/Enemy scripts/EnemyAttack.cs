@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyAttack : Attack
+public class EnemyAttack : ShotAttack
 {
     [SerializeField]
     private AudioClip preAttackSound;
@@ -20,8 +20,9 @@ public abstract class EnemyAttack : Attack
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	private float SqrAttackRange => attackRange * attackRange; //Avoid square root calculation in exchange for an extra multiplication
   
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
         enemyHealth = this.gameObject.GetComponent<EnemyHealth>();
         StartCoroutine(StartNewAttacks());
@@ -37,7 +38,9 @@ public abstract class EnemyAttack : Attack
             {
                 if (enablePreAttack)
                     yield return PreAttack();
-                Attack();
+                if (IsShotAttack)
+                    AttackAt(playerGameObject.transform.position);
+                
             }
 			yield return new WaitForSeconds(0.2f);
 		}
