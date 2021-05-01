@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : ShotAttack
+public class EnemyAttack : Attack
 {
     [SerializeField]
     private AudioClip preAttackSound;
@@ -38,9 +38,7 @@ public class EnemyAttack : ShotAttack
             {
                 if (enablePreAttack)
                     yield return PreAttack();
-                if (IsShotAttack)
-                    AttackAt(playerGameObject.transform.position);
-                
+                PerformAttack(playerGameObject.transform.position);
             }
 			yield return new WaitForSeconds(0.2f);
 		}

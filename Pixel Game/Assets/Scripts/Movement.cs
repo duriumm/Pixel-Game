@@ -15,7 +15,8 @@ public class Movement : MonoBehaviour
 
     private Health health;
     protected Vector2 movementDir;
-    protected Vector2 faceDir = Vector3.zero;
+    protected Vector2 faceDir = Vector2.zero;
+    public Vector2 FaceDir => faceDir;
     private Rigidbody2D body;
     
     private float ActualAcceleration =>

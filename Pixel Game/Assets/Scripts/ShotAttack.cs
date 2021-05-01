@@ -3,37 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShotAttack : Attack
+[Serializable]
+public class ShotAttack
 {
     [SerializeField]
     private float shotSpeed = 2f;
     private ObjectPool shotPool;
     [SerializeField]
     private GameObject shotTemplate;
+    public GameObject ShotTemplate => shotTemplate;
     [SerializeField]
     private float shotTimeToLive = 2f;
     
     private List<Shot> shots = new List<Shot>();
 
-    protected override void Start()
+    public void Init()
     {
-        base.Start();
-        shotPool = new ObjectPool(shotTemplate, 20);
+        Debug.Log("Shotspeed: " + shotSpeed);
+        if (shotTemplate != null)
+            shotPool = new ObjectPool(shotTemplate, 20);
     }
 
-    void FixedUpdate()
+    public void Update(float deltaTime)
     {
         foreach (var shot in shots)
-            shot.Update(Time.fixedDeltaTime);
+            shot.Update(deltaTime);
         shots.RemoveAll((shot) => !shot.IsActive);
     }
 
-    private void SpawnShot(Vector2 aimAt)
+    public void SpawnShot(GameObject owner, Vector2? target = null)
     {
-        var pos = gameObject.transform.position;
+        var pos = owner.transform.position;
         pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
 
-        var velocity = aimAt - (Vector2)pos;
+        var velocity = target != null ?
+            (Vector2)(target - pos) :
+            owner.GetComponent<Movement>().FaceDir;
         velocity = velocity.normalized * shotSpeed;
 
         shots.Add(
@@ -44,12 +49,6 @@ public class ShotAttack : Attack
                 velocity
                 )
             );
-    }
-
-    public void AttackAt(Vector2 aimAt)
-    {
-        PerformAttack();
-        SpawnShot(aimAt);
     }
 
     public void DestroyShots()
