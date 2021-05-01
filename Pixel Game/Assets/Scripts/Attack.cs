@@ -33,17 +33,19 @@ public class Attack : MonoBehaviour
 
     public void Execute(Vector2? target = null)
     {
-        if (CurrentWeapon.HasMeleeAttack && CurrentWeapon.ReadyToAttack)
+        if (CurrentWeapon == null)
+            return;
+        if (CurrentWeapon.ReadyToAttack)
         {
-            StartCoroutine(PlayMeleeAnimationCo());
-            CurrentWeapon.SpawnAttack(target);
+            if (CurrentWeapon.HasMeleeAttack)
+                StartCoroutine(PlayMeleeAnimationCo());
+            CurrentWeapon.Attack(target);
+            StartCoroutine(CurrentWeapon.WaitForCooldown());
         }
     }
 
     public void EquipWeapon(Weapon weapon)
     {
-        //weapon.animator = weapon.HasShotAttack ?
-          //  null : meleeAnimator;
         equippedWeapon = weapon;
     }
 

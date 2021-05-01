@@ -23,7 +23,7 @@ public class Weapon : MonoBehaviour
     public bool HasShotAttack => hasShotAttack;
 
     private bool readyToAttack = true;
-    public bool ReadyToAttack => ReadyToAttack;
+    public bool ReadyToAttack => readyToAttack;
 
     protected virtual void Start()
     {
@@ -35,7 +35,7 @@ public class Weapon : MonoBehaviour
         ShotAttack?.Update(Time.fixedDeltaTime);
     }
 
-    public void SpawnAttack(Vector2? target = null)
+    public void Attack(Vector2? target = null)
     {
         if (!readyToAttack)
             return;
@@ -44,10 +44,9 @@ public class Weapon : MonoBehaviour
         if (HasShotAttack)
             shotAttack.SpawnShot(gameObject, target);
         readyToAttack = false;  //This will be set to true after cooldown
-        StartCoroutine(waitForCooldown());
     }
 
-    protected IEnumerator waitForCooldown()
+    public IEnumerator WaitForCooldown()
     {
         yield return new WaitForSeconds(cooldawn);
         readyToAttack = true;

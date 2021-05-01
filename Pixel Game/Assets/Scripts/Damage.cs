@@ -11,7 +11,7 @@ public class Damage : MonoBehaviour
     private bool canBeAttacked;
     [SerializeField]
     private bool canAttack;
-    private int attackPower => attack.Power;
+    //private int attackPower => weapon.Power;
     [SerializeField]
     private float attackCooldown = 1;
     [SerializeField]
@@ -21,13 +21,10 @@ public class Damage : MonoBehaviour
             
     private DateTime lastAttackTime;
     private Health health;
-    private Weapon attack;
 
     private void Start()
     {
         health = owner.GetComponent<Health>();
-        if (canAttack)
-            attack = owner.GetComponent<Weapon>();
     }
 
     //Inflict damage on colliding object
@@ -47,9 +44,14 @@ public class Damage : MonoBehaviour
         //Check if we can inflict damage and if the colliding object can take damage
         if (colliderDamage.canBeAttacked && canAttack)
         {
-            Debug.Log(attack);
+            Weapon weapon;
+            var attack = owner.GetComponent<Attack>();
+            if (attack == null)
+                weapon = owner.GetComponent<Weapon>();
+            else
+                weapon = attack.CurrentWeapon;
             lastAttackTime = DateTime.Now;
-            colliderDamage.health.TakeDamage(attackPower, transform.position);
+            colliderDamage.health.TakeDamage(weapon.Power, transform.position);
         }
     }
 }

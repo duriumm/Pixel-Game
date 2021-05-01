@@ -160,10 +160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 20
-  animator: {fileID: 0}
   cooldawn: 0.5
   sound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
   shotAttack:
     shotSpeed: 2
     shotTemplate: {fileID: 0}
     shotTimeToLive: 2
+  hasMeleeAttack: 1
+  hasShotAttack: 0
