@@ -354,6 +354,7 @@ GameObject:
   - component: {fileID: 1919312349314565125}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 884672663}
+  - component: {fileID: 449024253}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -554,7 +555,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 1
+  canAttack: 1
   attackCooldown: 1
   group: 1
-  damageReceiver: {fileID: 8702507365765926596}
+  owner: {fileID: 8702507365765926596}
+--- !u!114 &449024253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 0
+  animator: {fileID: 0}
+  cooldawn: 1
+  sound: {fileID: 0}
+  shotAttack:
+    shotSpeed: 2
+    shotTemplate: {fileID: 0}
+    shotTimeToLive: 2

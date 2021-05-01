@@ -555,10 +555,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 0
+  canBeAttacked: 1
+  canAttack: 0
   attackCooldown: 1
   group: 1
-  damageReceiver: {fileID: 8702507365765926596}
+  owner: {fileID: 8702507365765926596}
 --- !u!114 &366886232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,9 +572,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59c4cd209ecb0944a9ab302518aa62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAnimator: {fileID: 0}
+  power: 20
+  animator: {fileID: 0}
   cooldawn: 1
-  attackSound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
+  sound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
   shotAttack:
     shotSpeed: 2
     shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}

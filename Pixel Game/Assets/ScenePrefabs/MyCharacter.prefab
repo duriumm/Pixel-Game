@@ -91,10 +91,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 0
+  canAttack: 0
   attackCooldown: 1
   group: 0
-  damageReceiver: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!1 &1552488466043715010
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,10 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 0
+  canAttack: 0
   attackCooldown: 1
   group: 0
-  damageReceiver: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!1 &2082437898047182415
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,10 +264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 0
+  canBeAttacked: 1
+  canAttack: 0
   attackCooldown: 1
   group: 0
-  damageReceiver: {fileID: 4697616969040342004}
+  owner: {fileID: 4697616969040342004}
 --- !u!1 &3985200813970655103
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,10 +367,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 0
+  canAttack: 0
   attackCooldown: 1
   group: 0
-  damageReceiver: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!1 &4697616969040342004
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,9 +588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAnimator: {fileID: 638322088875909781}
+  power: 20
+  animator: {fileID: 638322088875909781}
   cooldawn: 1
-  attackSound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
+  sound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
   shotAttack:
     shotSpeed: 2
     shotTemplate: {fileID: 0}
@@ -855,10 +860,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 0
+  canAttack: 0
   attackCooldown: 1
   group: 0
-  damageReceiver: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!1 &8225164959700241717
 GameObject:
   m_ObjectHideFlags: 0

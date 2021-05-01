@@ -17,11 +17,14 @@ public class ShotAttack
     
     private List<Shot> shots = new List<Shot>();
 
-    public void Init()
+    public void Init(GameObject owner)
     {
-        Debug.Log("Shotspeed: " + shotSpeed);
         if (shotTemplate != null)
+        {
+            var damage = shotTemplate.GetComponent<Damage>();
+            damage.owner = owner;
             shotPool = new ObjectPool(shotTemplate, 20);
+        }
     }
 
     public void Update(float deltaTime)
