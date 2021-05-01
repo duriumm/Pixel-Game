@@ -36,6 +36,8 @@ public class Attack : MonoBehaviour
 
     public void PerformAttack(Vector2? target = null)
     {
+        if (!readyToAttack)
+            return;
         if (sound != null)
             AudioSource.PlayClipAtPoint(sound, this.transform.position);
         readyToAttack = false;  //This will be set to true after cooldown
