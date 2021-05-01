@@ -27,7 +27,7 @@ public class InventorySlot : MonoBehaviour
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
     public bool isInventoryPanel;
     private static PlayerInventory inventory;
-    private PlayerAttack playerAttack;
+    private Attack playerAttack;
 
     void Awake()
     {
@@ -45,7 +45,7 @@ public class InventorySlot : MonoBehaviour
         //Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
-        playerAttack = playerCharacter.GetComponent<PlayerAttack>();
+        playerAttack = playerCharacter.GetComponent<Attack>();
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
     }
@@ -85,7 +85,7 @@ public class InventorySlot : MonoBehaviour
         var equipmentSlot = equipmentSlotGameObject.GetComponent<InventorySlot>();
 
         // If weapon, set as player's equipped weapon
-        var weapon = ItemDataGameObject.GetComponent<AttackSpawner>();
+        var weapon = ItemDataGameObject.GetComponent<Weapon>();
         if (weapon != null)
         {
             Debug.Log("oesintasonetasoent");

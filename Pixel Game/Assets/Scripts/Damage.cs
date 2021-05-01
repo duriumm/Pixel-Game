@@ -21,13 +21,13 @@ public class Damage : MonoBehaviour
             
     private DateTime lastAttackTime;
     private Health health;
-    private AttackSpawner attack;
+    private Weapon attack;
 
     private void Start()
     {
         health = owner.GetComponent<Health>();
         if (canAttack)
-            attack = owner.GetComponent<AttackSpawner>();
+            attack = owner.GetComponent<Weapon>();
     }
 
     //Inflict damage on colliding object

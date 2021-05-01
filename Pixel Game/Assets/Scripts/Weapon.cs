@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackSpawner : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     [SerializeField]
     private int power;
     public int Power => power;
-    [SerializeField]
-    public Animator animator;
     [SerializeField]
     protected float cooldawn = 1;
     [SerializeField]
@@ -17,16 +15,19 @@ public class AttackSpawner : MonoBehaviour
     [SerializeField]
     private ShotAttack shotAttack;
     public ShotAttack ShotAttack => shotAttack;
-    public bool HasShotAttack => shotAttack.ShotTemplate != null;
-    
-    protected bool readyToAttack = true;
-    private int paramId_isAttacking;
-    
+    [SerializeField]
+    private bool hasMeleeAttack;
+    public bool HasMeleeAttack => hasMeleeAttack;
+    [SerializeField]
+    private bool hasShotAttack;
+    public bool HasShotAttack => hasShotAttack;
+
+    private bool readyToAttack = true;
+    public bool ReadyToAttack => ReadyToAttack;
+
     protected virtual void Start()
     {
         ShotAttack.Init(gameObject);
-        if (animator != null)
-            paramId_isAttacking = animator.GetParamId("isAttacking");
     }
 
     private void FixedUpdate()
@@ -40,11 +41,9 @@ public class AttackSpawner : MonoBehaviour
             return;
         if (sound != null)
             AudioSource.PlayClipAtPoint(sound, this.transform.position);
-        readyToAttack = false;  //This will be set to true after cooldown
-        if (animator != null)
-            StartCoroutine(PlayAttackAnimation());
         if (HasShotAttack)
             shotAttack.SpawnShot(gameObject, target);
+        readyToAttack = false;  //This will be set to true after cooldown
         StartCoroutine(waitForCooldown());
     }
 
@@ -54,15 +53,8 @@ public class AttackSpawner : MonoBehaviour
         readyToAttack = true;
     }
 
-    private IEnumerator PlayAttackAnimation()
-    {
-        animator.TrySetBool(paramId_isAttacking, true);
-        yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
-        animator.TrySetBool(paramId_isAttacking, false);
-    }
-
-    internal void equip(AttackSpawner itemAttack)
-    {
-        itemAttack.animator.runtimeAnimatorController = gameObject.GetComponent<Animator>().runtimeAnimatorController;
-    }
+    //internal void equip(Weapon itemAttack)
+    //{
+    //    itemAttack.animator.runtimeAnimatorController = gameObject.GetComponent<Animator>().runtimeAnimatorController;
+    //}
 }

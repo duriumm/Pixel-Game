@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AiAttack : AttackSpawner
+public class AiAttack : Attack
 {
     [SerializeField]
     private AudioClip preAttackSound;
@@ -34,11 +34,11 @@ public class AiAttack : AttackSpawner
 	{
 		while (true)
 		{
-            if (InRange && readyToAttack && EnemyHp > 0)
+            if (InRange && CurrentWeapon.ReadyToAttack && EnemyHp > 0)
             {
                 if (enablePreAttack)
                     yield return PreAttack();
-                SpawnAttack(playerGameObject.transform.position);
+                Execute(playerGameObject.transform.position);
             }
 			yield return new WaitForSeconds(0.2f);
 		}

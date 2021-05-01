@@ -76,9 +76,9 @@ public class PlayerInput : MonoBehaviour
         }
         // checks if space is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<AttackSpawner>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<Weapon>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
         {
-            playerGameObject.GetComponent<PlayerAttack>().Attack();
+            playerGameObject.GetComponent<Attack>().Execute();
         }
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C)) { 
@@ -107,12 +107,12 @@ public class PlayerInput : MonoBehaviour
             // TO-DO
             if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<AttackSpawner>().enabled = false;
+                playerGameObject.GetComponent<Weapon>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
             else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<AttackSpawner>().enabled = true;
+                playerGameObject.GetComponent<Weapon>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
             }
 
