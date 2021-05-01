@@ -9,7 +9,7 @@ public class AttackSpawner : MonoBehaviour
     private int power;
     public int Power => power;
     [SerializeField]
-    private Animator animator;
+    public Animator animator;
     [SerializeField]
     protected float cooldawn = 1;
     [SerializeField]
@@ -59,5 +59,10 @@ public class AttackSpawner : MonoBehaviour
         animator.TrySetBool(paramId_isAttacking, true);
         yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
         animator.TrySetBool(paramId_isAttacking, false);
+    }
+
+    internal void equip(AttackSpawner itemAttack)
+    {
+        itemAttack.animator.runtimeAnimatorController = gameObject.GetComponent<Animator>().runtimeAnimatorController;
     }
 }

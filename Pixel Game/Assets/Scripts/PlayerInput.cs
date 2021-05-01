@@ -44,7 +44,6 @@ public class PlayerInput : MonoBehaviour
         closestNPC = GameObject.FindWithTag("Npc"); // This should be changed to distance calculation so we get closest npc
     }
 
-    // Update is called once per framef
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -79,14 +78,7 @@ public class PlayerInput : MonoBehaviour
         // Checking that the inventory is closed before attacking
         if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<AttackSpawner>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
         {
-           playerGameObject.GetComponent<AttackSpawner>().SpawnAttack();
-            // We activate the collider in animation so might not need this function
-            //StartCoroutine(EnableAttackColliderAndWaitForSeconds(0.1f));
-            //if (!inventoryManagerTest.GetComponent<PlayerInventory>().isInventoryOpen){
-            // if (!inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen){ // Dont attack if inventory is open
-            //     StartCoroutine(AttackCoroutine());
-            //}
-            // }
+            playerGameObject.GetComponent<PlayerAttack>().Attack();
         }
         // Primary test to see if the plant "growth" works. IT DOES!
         if (Input.GetKeyDown(KeyCode.C)) { 
@@ -125,39 +117,5 @@ public class PlayerInput : MonoBehaviour
             }
 
         }
-        // TEST 
-        // Testing to equip the boots and deEquip them
-        // TEST
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            //// If boots are not equipped we DO equip them.        // Do all this when equipment is added to the character
-            //if(feetSocket.activeSelf == false)
-            //{
-            //    feetSocket.SetActive(true);
-            //}
-            //// else if boots ARE equipped we DEequip them
-            //else if(feetSocket.activeSelf == true)
-            //{
-            //    feetSocket.SetActive(false);
-            //}
-
-        }
     }
-    /*
-    private IEnumerator AttackCoroutine()
-    {
-        AudioSource.PlayClipAtPoint(attackSound, mainCamera.transform.position);
-        // Play the attack animation
-        playerAnimator.SetBool("isAttacking", true);
-        yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
-        playerAnimator.SetBool("isAttacking", false);
-
-        playerGameObject.GetComponent<PlayerMovement>().enabled = false;
-        
-        yield return new WaitForSeconds(0.5f); // Wait for 1 seconds which is the animation (DIDNT NEED THIS??? MIGHT BE IF WE WANT TO SWITCH STATE LATER)
-        playerGameObject.GetComponent<PlayerMovement>().enabled = true;
-
-    }
-    */
-
 }

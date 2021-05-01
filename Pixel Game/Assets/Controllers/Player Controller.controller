@@ -306,7 +306,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MyCharacter
+  m_Name: Player Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Horizontal
@@ -409,7 +409,7 @@ AnimatorState:
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
-  m_TimeParameter: 
+  m_TimeParameter: Horizontal
 --- !u!1102 &2347494880057601524
 AnimatorState:
   serializedVersion: 5

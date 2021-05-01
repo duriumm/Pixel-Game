@@ -27,6 +27,7 @@ public class InventorySlot : MonoBehaviour
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
     public bool isInventoryPanel;
     private static PlayerInventory inventory;
+    private PlayerAttack playerAttack;
 
     void Awake()
     {
@@ -44,6 +45,7 @@ public class InventorySlot : MonoBehaviour
         //Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
+        playerAttack = playerCharacter.GetComponent<PlayerAttack>();
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
     }
@@ -68,14 +70,6 @@ public class InventorySlot : MonoBehaviour
                     ClearSlot();
                 }
             }
-            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
-            {
-                Debug.Log("Equipped Weapon");
-            }
-            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
-            {
-                Debug.Log("Equipped Armor");
-            }
         }
         else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
@@ -88,8 +82,17 @@ public class InventorySlot : MonoBehaviour
         //Add item to equipment slot
         var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
-        var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
-        equipmentSlotMono.AddItem(ItemDataGameObject, this);
+        var equipmentSlot = equipmentSlotGameObject.GetComponent<InventorySlot>();
+
+        // If weapon, set as player's equipped weapon
+        var weapon = ItemDataGameObject.GetComponent<AttackSpawner>();
+        if (weapon != null)
+        {
+            Debug.Log("oesintasonetasoent");
+            playerAttack.EquipWeapon(weapon);
+        }
+
+        equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
     public void UnequipItem()
@@ -137,7 +140,7 @@ public class InventorySlot : MonoBehaviour
         }
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
-        //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
+                
     }
     public void BuyItemFromShop()
     {
