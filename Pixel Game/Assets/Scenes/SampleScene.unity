@@ -50556,14 +50556,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 366886232, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: shotAttack.shotSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 366886232, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
-      propertyPath: shotAttack.shotTemplate
-      value: 
-      objectReference: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
     - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_RootOrder
       value: 14

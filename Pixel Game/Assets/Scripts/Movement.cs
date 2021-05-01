@@ -23,11 +23,26 @@ public class Movement : MonoBehaviour
         health != null && health.KnockedBack ?
         KnockbackAcceleration : acceleration;
 
+    private int paramId_LastMoveX;
+    private int paramId_LastMoveY;
+    private int paramId_Horizontal;
+    private int paramId_Vertical;
+    private int paramId_Speed;
+
     protected virtual void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         health = gameObject.GetComponent<Health>();
-    }
+
+        if (animator != null)
+        {
+            paramId_LastMoveX = animator.GetParamId("LastMoveX");
+            paramId_LastMoveY = animator.GetParamId("LastMoveY");
+            paramId_Horizontal = animator.GetParamId("Horizontal");
+            paramId_Vertical = animator.GetParamId("Vertical");
+            paramId_Speed = animator.GetParamId("Speed");
+        }
+}
 
     protected virtual void Update()
     {
@@ -36,12 +51,12 @@ public class Movement : MonoBehaviour
             if (faceDir != Vector2.zero)
             {
                 // Save the last move position of the character so we can load the Idle animation correctly based on last move position
-                animator.SetFloat("LastMoveX", faceDir.x);
-                animator.SetFloat("LastMoveY", faceDir.y);
+                animator.TrySetFloat(paramId_LastMoveX, faceDir.x);
+                animator.TrySetFloat(paramId_LastMoveY, faceDir.y);
             }
-            animator.SetFloat("Horizontal", faceDir.x);
-            animator.SetFloat("Vertical", faceDir.y);
-            animator.SetFloat("Speed", maxSpeed);
+            animator.TrySetFloat(paramId_Horizontal, faceDir.x);
+            animator.TrySetFloat(paramId_Vertical, faceDir.y);
+            animator.TrySetFloat(paramId_Speed, maxSpeed);
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
+    [SerializeField]
     private Animator attackAnimator;
     [SerializeField]
     protected float cooldawn = 1;
@@ -16,11 +17,13 @@ public class Attack : MonoBehaviour
     public bool HasShotAttack => shotAttack.ShotTemplate != null;
     
     protected bool readyToAttack = true;
+    private int paramId_isAttacking;
     
     protected virtual void Start()
     {
         ShotAttack.Init();
-        attackAnimator = this.gameObject.GetComponent<Animator>();
+        if (attackAnimator != null)
+            paramId_isAttacking = attackAnimator.GetParamId("isAttacking");
     }
 
     private void FixedUpdate()
@@ -48,9 +51,8 @@ public class Attack : MonoBehaviour
 
     private IEnumerator PlayAttackAnimation()
     {
-        // Play the attack animation
-        attackAnimator.SetBool("isAttacking", true);
+        attackAnimator.TrySetBool(paramId_isAttacking, true);
         yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
-        attackAnimator.SetBool("isAttacking", false);
+        attackAnimator.TrySetBool(paramId_isAttacking, false);
     }
 }
