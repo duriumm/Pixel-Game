@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : Movement
+public class AiMovement : Movement
 {
     private GameObject playerObject;
     private GameObject mainCamera;
@@ -24,7 +24,7 @@ public class EnemyMovement : Movement
         base.Start();
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
         enemyTransform = gameObject.transform;
-         var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+         var enemyAttack = gameObject.GetComponent<AiAttack>();
         float attackRange = enemyAttack == null ? 0 : enemyAttack.AttackRange;
 		retreatUpperDistance = attackRange * 0.7f;
 	}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttack : Attack
+public class AiAttack : Attack
 {
     [SerializeField]
     private AudioClip preAttackSound;

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class EnemyHealth : Health
 {
     private SpriteRenderer spriteRenderer;
-    private EnemyAttack enemyAttack;
-    private EnemyMovement enemyMovement;
+    private AiAttack enemyAttack;
+    private AiMovement enemyMovement;
     private Collider2D[] colliderList;
     public enum ENEMYTYPE
     {
@@ -21,8 +21,8 @@ public class EnemyHealth : Health
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        enemyAttack = gameObject.GetComponent<EnemyAttack>();
-        enemyMovement = gameObject.GetComponent<EnemyMovement>();
+        enemyAttack = gameObject.GetComponent<AiAttack>();
+        enemyMovement = gameObject.GetComponent<AiMovement>();
         colliderList = gameObject.GetComponentsInChildren<Collider2D>();
     }
 
@@ -54,7 +54,7 @@ public class EnemyHealth : Health
         toggleActive(false);
 
         // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
-        var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        var enemyAttack = gameObject.GetComponent<AiAttack>();
         if (enemyAttack != null && enemyAttack.HasShotAttack)
             enemyAttack.ShotAttack.DestroyShots();
 
