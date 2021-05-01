@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : MonoBehaviour
+public class AttackSpawner : MonoBehaviour
 {
     [SerializeField]
     private int power;
@@ -34,7 +34,7 @@ public class Attack : MonoBehaviour
         ShotAttack?.Update(Time.fixedDeltaTime);
     }
 
-    public void PerformAttack(Vector2? target = null)
+    public void SpawnAttack(Vector2? target = null)
     {
         if (!readyToAttack)
             return;
