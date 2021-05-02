@@ -20,7 +20,9 @@ public class PlayerInput : MonoBehaviour
     public GameObject dataToPassGameObject;
 
     private GameObject closestNPC;
-
+    private void Awake()
+    {
+    }
     void Start()
     {
         playerGameObject = this.gameObject;
@@ -35,6 +37,7 @@ public class PlayerInput : MonoBehaviour
 
         // TO-DO - Get the closestNPC by looping through a list of NPC to get the closest one
         closestNPC = GameObject.FindWithTag("Npc"); // This should be changed to distance calculation so we get closest npc
+        
     }
 
     // Update is called once per framef
@@ -87,18 +90,20 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
 
-            // TO-DO
-            // Fix get compnent here below so its faster with created object variable, no fucking get component!!!
-            // TO-DO
-            inventoryManager = inventoryManager = GameObject.FindWithTag("InventoryManager");
-            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false/* && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false*/)
+            // TO-DO - Make a onSceneLoaded for the objects that get carried over from one scene to another
+            // Otherwise they lose the assigned variable for example inv manager and shopscreen
+            if(inventoryManager == null || shopScreen == null)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = false;
+                inventoryManager = inventoryManager = GameObject.FindWithTag("InventoryManager");
+                shopScreen = GameObject.Find("ShopScreen");
+            }
+
+            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+            {
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
-            else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true/* && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false*/)
+            else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
             }
 

@@ -13,7 +13,7 @@ public class SceneTransition : MonoBehaviour
     public Animator transition;
 
     // NOT WORKING AS OF NOW, CONTINUE WHEN THERE IS TIME
-    public Vector3 spawnPosition;
+    //public Vector3 spawnPosition;
 
     public bool isInside = false;
     // NOT WORKING AS OF NOW, CONTINUE WHEN THERE IS TIME
