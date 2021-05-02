@@ -34,7 +34,11 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public string currentActivateNpc;
 
-    public Vector3 currentHouseRespawnPosition;
+    public Vector3 sceneTransitionSpawnPoint;
+
+    public string savedSceneTransitionId;
+
+    
 
 
     public List<string> mySavedStringListDatabase = new List<string>();
@@ -44,6 +48,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
+
     }
 
     // We only need to update the player health stat as playerHealth has its own script 

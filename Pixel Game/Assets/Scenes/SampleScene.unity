@@ -94494,7 +94494,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771153800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.87, y: -6.29, z: -10}
+  m_LocalPosition: {x: 132.25, y: -11.24, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 720203908}
@@ -95684,11 +95684,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2258667349212689472, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 130.87
+      value: 132.25
       objectReference: {fileID: 0}
     - target: {fileID: 2258667349212689472, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.29
+      value: -11.24
       objectReference: {fileID: 0}
     - target: {fileID: 2258667349212689472, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: m_LocalPosition.z
@@ -96195,6 +96195,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 216556314}
     m_Modifications:
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: id
+      value: test1
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: spawnPointId
+      value: house1_OUT
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: spawnPosition.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: spawnPosition.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: otherLinkedRespawnSpot.x
+      value: 45.474
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: otherLinkedRespawnSpot.y
+      value: 3.485
+      objectReference: {fileID: 0}
+    - target: {fileID: 138730267697635879, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: otherLinkedRespawnSpot.z
+      value: -9.7898035
+      objectReference: {fileID: 0}
+    - target: {fileID: 157001628522556228, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: m_Name
+      value: SceneTransition_1
+      objectReference: {fileID: 0}
     - target: {fileID: 1388811581384212167, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
       propertyPath: m_Name
       value: START_HOUSE-1.png_5
@@ -96260,6 +96292,10 @@ PrefabInstance:
       value: Indoors
       objectReference: {fileID: 0}
     - target: {fileID: 8374827400502281959, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8374827400502281959, guid: a676f55fe927e0042bce8da5e663ca24, type: 3}
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
@@ -96311,11 +96347,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669243, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 130.87
+      value: 132.25
       objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669243, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.29
+      value: -11.24
       objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669243, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_LocalPosition.z

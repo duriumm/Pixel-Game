@@ -362,4 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: Indoors
-  transition: {fileID: 0}
+  transition: {fileID: 6347809778066991728}
+  thisRespawnSpot: {x: 0, y: 0, z: 0}
+  otherLinkedRespawnSpot: {x: 0, y: 0, z: 0}
+  isInside: 0

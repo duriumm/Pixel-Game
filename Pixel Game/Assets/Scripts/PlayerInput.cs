@@ -90,12 +90,13 @@ public class PlayerInput : MonoBehaviour
             // TO-DO
             // Fix get compnent here below so its faster with created object variable, no fucking get component!!!
             // TO-DO
-            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+            inventoryManager = inventoryManager = GameObject.FindWithTag("InventoryManager");
+            if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false/* && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false*/)
             {
                 playerGameObject.GetComponent<PlayerAttack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
-            else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+            else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true/* && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false*/)
             {
                 playerGameObject.GetComponent<PlayerAttack>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
