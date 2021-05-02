@@ -35,7 +35,9 @@ public class ObjectPool
 				return obj;
 			}
 		}
-		return null;
+		// No available object found, pick one anyway
+        // Todo: return object which has been active the longest time
+        return pool[0];
 	}
 
 	public void Destroy(GameObject obj)

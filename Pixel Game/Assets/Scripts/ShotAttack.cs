@@ -17,12 +17,14 @@ public class ShotAttack
     
     private List<Shot> shots = new List<Shot>();
 
-    public void Init(GameObject owner)
+    private GameObject ownerOfFiringWeapon; //Needed for correct spawning pos
+
+    public void Init(GameObject firingWeapon)
     {
         if (shotTemplate != null)
         {
             var damage = shotTemplate.GetComponent<Damage>();
-            damage.owner = owner;
+            damage.owner = firingWeapon;
             shotPool = new ObjectPool(shotTemplate, 20);
         }
     }
@@ -34,24 +36,17 @@ public class ShotAttack
         shots.RemoveAll((shot) => !shot.IsActive);
     }
 
-    public void SpawnShot(GameObject owner, Vector2? target = null)
+    public void SpawnShot(Vector2 direction)
     {
-        var pos = owner.transform.position;
+        var pos = ownerOfFiringWeapon.transform.position;
         pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
+        var velocity = direction.normalized * shotSpeed;
+        shots.Add(new Shot(shotTimeToLive, shotPool, pos, velocity));
+    }
 
-        var velocity = target != null ?
-            (Vector2)(target - pos) :
-            owner.GetComponent<Movement>().FaceDir;
-        velocity = velocity.normalized * shotSpeed;
-
-        shots.Add(
-            new Shot(
-                shotTimeToLive,
-                shotPool,
-                pos,
-                velocity
-                )
-            );
+    public void SetOwnerOfFiringWeapon(GameObject ownerOfFiringWeapon)
+    {
+        this.ownerOfFiringWeapon = ownerOfFiringWeapon;
     }
 
     public void DestroyShots()
@@ -71,6 +66,7 @@ class Shot
 {
     private float timeToLive;
     private GameObject gameObject;
+    public GameObject GameObject => gameObject;
     private Vector3 velocity;
     private ObjectPool pool;
 

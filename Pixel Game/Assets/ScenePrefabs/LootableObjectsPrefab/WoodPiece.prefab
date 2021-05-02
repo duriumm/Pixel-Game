@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5371522974981631728}
   - component: {fileID: -2900236624606531730}
   - component: {fileID: 6283380197544540388}
+  - component: {fileID: 7631855403513499647}
   m_Layer: 0
   m_Name: WoodPiece
   m_TagString: Untagged
@@ -146,3 +147,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569092fa28ab4bf44a08a793e306173b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7631855403513499647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8776739252053834925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 10
+  cooldawn: 0.3
+  sound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
+  shotAttack:
+    shotSpeed: 2
+    shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+    shotTimeToLive: 2
+  hasMeleeAttack: 0
+  hasShotAttack: 1

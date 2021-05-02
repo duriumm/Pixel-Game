@@ -30,7 +30,6 @@ public class Damage : MonoBehaviour
     //Inflict damage on colliding object
     private void OnTriggerStay2D(Collider2D collider)
     {
-        Debug.Log("Damage OnCollision");
         //Check cooldown
         if ((DateTime.Now - lastAttackTime).TotalSeconds < attackCooldown)
             return;

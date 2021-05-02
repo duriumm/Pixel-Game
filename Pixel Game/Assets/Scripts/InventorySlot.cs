@@ -87,10 +87,7 @@ public class InventorySlot : MonoBehaviour
         // If weapon, set as player's equipped weapon
         var weapon = ItemDataGameObject.GetComponent<Weapon>();
         if (weapon != null)
-        {
-            Debug.Log("oesintasonetasoent");
             playerAttack.EquipWeapon(weapon);
-        }
 
         equipmentSlot.AddItem(ItemDataGameObject, this);
     }

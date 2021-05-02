@@ -27,7 +27,17 @@ public class Weapon : MonoBehaviour
 
     protected virtual void Start()
     {
+        // If attached to a character with an Attack script, make the character the owner of the weapon
+        // so that spawned shots appear at the character's positiion
+        // If instead attached to a lootable item, the owner will be set when equipping the item
+        if (GetComponent<Attack>() != null)
+            SetOwner(gameObject);
         ShotAttack.Init(gameObject);
+    }
+
+    public void SetOwner(GameObject owner)
+    {
+        shotAttack.SetOwnerOfFiringWeapon(owner);
     }
 
     private void FixedUpdate()
@@ -35,25 +45,20 @@ public class Weapon : MonoBehaviour
         ShotAttack?.Update(Time.fixedDeltaTime);
     }
 
-    public void Attack(Vector2? target = null)
+    public void Attack(Vector2? direction = null)
     {
         if (!readyToAttack)
             return;
         if (sound != null)
             AudioSource.PlayClipAtPoint(sound, this.transform.position);
         if (HasShotAttack)
-            shotAttack.SpawnShot(gameObject, target);
-        readyToAttack = false;  //This will be set to true after cooldown
+            shotAttack.SpawnShot((Vector2)direction);
     }
 
     public IEnumerator WaitForCooldown()
     {
+        readyToAttack = false;
         yield return new WaitForSeconds(cooldawn);
         readyToAttack = true;
     }
-
-    //internal void equip(Weapon itemAttack)
-    //{
-    //    itemAttack.animator.runtimeAnimatorController = gameObject.GetComponent<Animator>().runtimeAnimatorController;
-    //}
 }

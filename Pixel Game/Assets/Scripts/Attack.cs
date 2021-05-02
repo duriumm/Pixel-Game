@@ -39,13 +39,19 @@ public class Attack : MonoBehaviour
         {
             if (CurrentWeapon.HasMeleeAttack)
                 StartCoroutine(PlayMeleeAnimationCo());
-            CurrentWeapon.Attack(target);
+            Vector2 direction;
+            if (target != null)
+                direction = (Vector2)(target - transform.position);
+            else
+                direction = GetComponent<Movement>().FaceDir;
+            CurrentWeapon.Attack(direction);
             StartCoroutine(CurrentWeapon.WaitForCooldown());
         }
     }
 
     public void EquipWeapon(Weapon weapon)
     {
+        weapon.SetOwner(gameObject);
         equippedWeapon = weapon;
     }
 
