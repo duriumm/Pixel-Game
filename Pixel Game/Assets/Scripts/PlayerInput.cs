@@ -11,13 +11,6 @@ public class PlayerInput : MonoBehaviour
     private GameObject playerAttack;
     private GameObject shopScreen;
 
-
-    //public GameObject feetSocket;   // Do all this when equipment is added to the character
-    //private Animator playerAnimator;
-
-    // Test dragging on the boots here and see if it works? =)
-    //public Equipment equippedBoots;   // Do all this when equipment is added to the character
-
     private GameObject playerGameObject;
 
     private GameObject torchGameObject;
@@ -27,7 +20,9 @@ public class PlayerInput : MonoBehaviour
     public GameObject dataToPassGameObject;
 
     private GameObject closestNPC;
-
+    private void Awake()
+    {
+    }
     void Start()
     {
         playerGameObject = this.gameObject;
@@ -42,27 +37,14 @@ public class PlayerInput : MonoBehaviour
 
         // TO-DO - Get the closestNPC by looping through a list of NPC to get the closest one
         closestNPC = GameObject.FindWithTag("Npc"); // This should be changed to distance calculation so we get closest npc
+        
     }
 
     // Update is called once per framef
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            // We try to get the closest NPC from the last saved "current active trader" 
-            // and then we check if player is in range so we can open his/her shop!
-            closestNPC = GameObject.Find(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader);
-            Debug.Log("Closest NPC is: " + closestNPC);
-            if(closestNPC.GetComponent<TraderNpc>().isPlayerInRange == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
-            }
-            else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
-            {
-                shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-            }
-        }
-            if (Input.GetKeyDown(KeyCode.R)){
+
+        if (Input.GetKeyDown(KeyCode.R)){
             // TODO, make this fucking get component stuff easier. no get component ffs!!
             if(torchGameObject.GetComponent<Torch>().isTorchActive == false) { 
                 torchGameObject.GetComponent<Torch>().isTorchActive = true;
@@ -72,12 +54,10 @@ public class PlayerInput : MonoBehaviour
                 torchGameObject.GetComponent<Torch>().isTorchActive = false;
                 torchGameObject.GetComponent<Torch>().toggleTorch();
             }
-
-
         }
-        // checks if space is pressed AND if the collider in question is not currently active
+        // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true && inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false) 
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true) 
         {
            playerGameObject.GetComponent<PlayerAttack>().getAttackCoroutine();
             // We activate the collider in animation so might not need this function
@@ -110,36 +90,28 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
 
-            // TO-DO
-            // Fix get compnent here below so its faster with created object variable, no fucking get component!!!
-            // TO-DO
+            // TO-DO - Make a onSceneLoaded for the objects that get carried over from one scene to another
+            // Otherwise they lose the assigned variable for example inv manager and shopscreen
+            if(inventoryManager == null || shopScreen == null)
+            {
+                inventoryManager = inventoryManager = GameObject.FindWithTag("InventoryManager");
+                shopScreen = GameObject.Find("ShopScreen");
+            }
+
             if (inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = false;
                 inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
             }
             else if(inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
-                playerGameObject.GetComponent<PlayerAttack>().enabled = true;
                 inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
             }
 
         }
-        // TEST 
-        // Testing to equip the boots and deEquip them
-        // TEST
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //// If boots are not equipped we DO equip them.        // Do all this when equipment is added to the character
-            //if(feetSocket.activeSelf == false)
-            //{
-            //    feetSocket.SetActive(true);
-            //}
-            //// else if boots ARE equipped we DEequip them
-            //else if(feetSocket.activeSelf == true)
-            //{
-            //    feetSocket.SetActive(false);
-            //}
+
 
         }
     }

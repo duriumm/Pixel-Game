@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 8620282104999495127}
   - component: {fileID: 3985200814381900833}
   - component: {fileID: 8949481645335936932}
+  - component: {fileID: 8538559603111980554}
   m_Layer: 0
   m_Name: MyCharacter
   m_TagString: MyPlayer
@@ -449,7 +450,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 673617807275853805, guid: 1df110039030b1a4fb67b910877d5d04, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -585,6 +586,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
+--- !u!114 &8538559603111980554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697616969040342004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537abda95b2e03148849094fab27ab80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5810949078116800679
 GameObject:
   m_ObjectHideFlags: 0

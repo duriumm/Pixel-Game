@@ -27,11 +27,18 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public int playerMoneyDB;
     public string currentActiveTrader;
+    public Quest currentActivePlayerQuest;
 
-    public string[] NpcDatabase = { "FatNpc", "Pawi" }; // A list of all the NPCs in our game. This list wont change
+    public string[] NpcDatabase = { "FatNpc", "Pawi", "SecondFatNPC" }; // A list of all the NPCs in our game. This list wont change
     public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change.
 
     public string currentActivateNpc;
+
+    public Vector3 sceneTransitionSpawnPoint;
+
+    public string savedSceneTransitionId;
+
+    
 
 
     public List<string> mySavedStringListDatabase = new List<string>();
@@ -41,6 +48,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
+
     }
 
     // We only need to update the player health stat as playerHealth has its own script 
@@ -54,4 +62,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     {
         playerHealthDB = player.GetComponent<PlayerHealth>().Hp;
     }
+
+
+    
 }

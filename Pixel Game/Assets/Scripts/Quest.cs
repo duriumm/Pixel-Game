@@ -2,16 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Quest : MonoBehaviour
+[System.Serializable]
+public class Quest
 {
-    public string questName;
-    private string description;
-    private int moneyReward;
-    public Quest(string questName, string description, int moneyReward)
+    public enum QUESTTYPE
     {
-        this.questName = questName;
-        this.description = description;
-        this.moneyReward = moneyReward;
+        KILL_ENEMIES,
+        GATHER_ITEMS,
+        WAIT_TIME
     }
+    public QUESTTYPE questType;
+
+    public string questName;
+    [TextArea(2,5)]
+    public string description;
+    public int moneyReward;
+
+    public int amountToKill;
+
+    public int currentKilled;
+
+    public bool isQuestFinished = false;
+
+
+    public void IncrementKilledEnemies()
+    {
+        currentKilled++;
+        if(currentKilled >= amountToKill)
+        {
+            isQuestFinished = true;
+        }
+    }
+
+
+
 
 }
