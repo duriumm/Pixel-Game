@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class FlickerLamp : MonoBehaviour
 {
-    UnityEngine.Experimental.Rendering.Universal.Light2D torch2dLightComponent;
+    Light2D torch2dLightComponent;
 
     private float minOuterRadius;
     private float maxOuterRadius;
@@ -22,7 +23,7 @@ public class FlickerLamp : MonoBehaviour
     {
 
         //fireParticleEffect = this.gameObject.GetComponent<ParticleSystem>();
-        torch2dLightComponent = this.gameObject.GetComponent<UnityEngine.Experimental.Rendering.Universal.Light2D>();
+        torch2dLightComponent = this.gameObject.GetComponent<Light2D>();
         minOuterRadius = torch2dLightComponent.pointLightOuterRadius - 0.05f;
         maxOuterRadius = torch2dLightComponent.pointLightOuterRadius + 0.05f;
 

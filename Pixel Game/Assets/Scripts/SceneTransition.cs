@@ -14,7 +14,7 @@ public class SceneTransition : MonoBehaviour
 
     private string transitionId;
 
-    private Vector3 testSpawnPos;
+    private Vector3 spawnPos;
     private void Start()
     {
         dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
@@ -24,8 +24,8 @@ public class SceneTransition : MonoBehaviour
 
 
         string dbSceneTransId = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId;
-        testSpawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
-        myPlayerObject.transform.position = testSpawnPos;
+        spawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
+        myPlayerObject.transform.position = spawnPos;
 
     }
 

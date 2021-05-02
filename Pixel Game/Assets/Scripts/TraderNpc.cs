@@ -69,11 +69,14 @@ public class TraderNpc : MonoBehaviour
 
     public void OpenNpcShop()
     {
-        if (shopScreen.GetComponent<CanvasGroup>().alpha == 1) // If shopscreen is visible
+        float alpha = shopScreen.GetComponent<CanvasGroup>().alpha;
+
+
+        if (alpha == 1) // If shopscreen is visible
         {
             shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
         }
-        else if (shopScreen.GetComponent<CanvasGroup>().alpha == 0) // If shopscreen is NOT visible
+        else // If shopscreen is NOT visible
         { 
             shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
         }
