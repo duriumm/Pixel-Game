@@ -57,7 +57,7 @@ public class PlayerInput : MonoBehaviour
         }
         // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active
         // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true /*&& inventoryManager.GetComponent<PlayerInventory>().isInventoryOpen == false*/) 
+        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<PlayerAttack>().enabled == true) 
         {
            playerGameObject.GetComponent<PlayerAttack>().getAttackCoroutine();
             // We activate the collider in animation so might not need this function
@@ -108,21 +108,10 @@ public class PlayerInput : MonoBehaviour
             }
 
         }
-        // TEST 
-        // Testing to equip the boots and deEquip them
-        // TEST
+
         if (Input.GetKeyDown(KeyCode.F))
         {
-            //// If boots are not equipped we DO equip them.        // Do all this when equipment is added to the character
-            //if(feetSocket.activeSelf == false)
-            //{
-            //    feetSocket.SetActive(true);
-            //}
-            //// else if boots ARE equipped we DEequip them
-            //else if(feetSocket.activeSelf == true)
-            //{
-            //    feetSocket.SetActive(false);
-            //}
+
 
         }
     }
