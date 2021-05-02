@@ -27,11 +27,5 @@ public class PlayerAttack : MonoBehaviour {
         playerAnimator.SetBool("isAttacking", true);
         yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack
         playerAnimator.SetBool("isAttacking", false);
-
-        this.gameObject.GetComponent<PlayerMovement>().enabled = false;
-
-        yield return new WaitForSeconds(0.5f); // Wait for 1 seconds which is the animation (DIDNT NEED THIS??? MIGHT BE IF WE WANT TO SWITCH STATE LATER)
-        this.gameObject.GetComponent<PlayerMovement>().enabled = true;
-
     }
 }

@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class EnemyHealth : Health
 {
     private SpriteRenderer spriteRenderer;
-    private DataToPassBetweenScenes dataToPassBetweenScenes;
-
+    private EnemyAttack enemyAttack;
+    private EnemyMovement enemyMovement;
+    private Collider2D[] colliderList;
     public enum ENEMYTYPE
     {
         GHOST,
@@ -20,7 +21,9 @@ public class EnemyHealth : Health
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
+        enemyAttack = gameObject.GetComponent<EnemyAttack>();
+        enemyMovement = gameObject.GetComponent<EnemyMovement>();
+        colliderList = gameObject.GetComponentsInChildren<Collider2D>();
     }
 
     protected override void Kill()
@@ -33,6 +36,7 @@ public class EnemyHealth : Health
 
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
+        
         switch (enemyType)
         {
             case ENEMYTYPE.GHOST:
@@ -53,9 +57,7 @@ public class EnemyHealth : Health
     {
         // Disable enemy is attackable to not get hit by player and also
         // make the whole movementscript disabled so he cant move OR attack
-        gameObject.GetComponent<EnemyAttack>().enabled = false;
-        isAttackable = false;
-        gameObject.GetComponent<EnemyMovement>().enabled = false;
+        toggleActive(false);
 
         // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
         gameObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
@@ -63,7 +65,7 @@ public class EnemyHealth : Health
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
         //Debug.Log("start fade");
-        for (float f = 1f; f >= -0.05f; f-= 0.05f)
+        for (float f = 1f; f >= -0.05f; f -= 0.05f)
         {
             Color c = spriteRenderer.material.color;
             c.a = f;
@@ -75,15 +77,24 @@ public class EnemyHealth : Health
         // Set back enemy alpha color to 1 again which is normal max color
         Color clr = spriteRenderer.material.color;
         clr.a = 1f;
-        spriteRenderer.material.color = clr;        
-
-        // Enable enemy movement and being attackable again aswell as attack enabling
-        isAttackable = true;
-        gameObject.GetComponent<EnemyMovement>().enabled = true;
-        gameObject.GetComponent<EnemyAttack>().enabled = true;
-
+        spriteRenderer.material.color = clr;
+        
         Respawn();
     }
 
+    protected override void Respawn()
+    {
+        toggleActive(true);
+        base.Respawn();
+    }
 
+    void toggleActive(bool active)
+    {
+        if (enemyMovement != null)
+            enemyMovement.enabled = active;
+        if (enemyAttack != null)
+            enemyAttack.enabled = active;
+        foreach (var collider in colliderList)
+            collider.enabled = active;
+    }
 }
