@@ -1,0 +1,33 @@
+:: StoryTitle
+David__Invitea_då
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Startnode[START]
+Invitea mig då!!! VAFAN!!! Får panik!!!
+
+Ehm.. va?[[Invite me]]
+
+:: Invite me
+Jag VILL INTE vaaara trash!!!!
+
+Okej...??? Vad ska jag göra åt det?[[Help Trash]]
+Jag bryr mig inte, hejdå![[End Conversation]]
+
+:: Help Trash
+Invitea mig till gruppen igen då! :(
+
+Okej då, du blir trash![[Accept Invite]]
+Nej tack, hejdå![[End Conversation]]
+
+:: End Conversation[END]
+
+
+:: Accept Invite[ACCEPT_INV]
+TACK jag suger din snoppis!! :)
+
+Nej tack, hejdå![[End Conversation]]

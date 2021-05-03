@@ -9,6 +9,7 @@ public class EnemyHealth : Health
     private AiAttack enemyAttack;
     private AiMovement enemyMovement;
     private Collider2D[] colliderList;
+    private DataToPassBetweenScenes dataToPassBetweenScenes;
     public enum ENEMYTYPE
     {
         GHOST,
@@ -24,10 +25,17 @@ public class EnemyHealth : Health
         enemyAttack = gameObject.GetComponent<AiAttack>();
         enemyMovement = gameObject.GetComponent<AiMovement>();
         colliderList = gameObject.GetComponentsInChildren<Collider2D>();
+        dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
     }
 
     protected override void Kill()
     {
+
+        if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES)
+        {
+            dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
+        }
+
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
         

@@ -12,18 +12,29 @@ public class SceneTransition : MonoBehaviour
 
     public Animator transition;
 
+    private string transitionId;
+
+    private Vector3 spawnPos;
     private void Start()
     {
         dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
         myPlayerObject = GameObject.FindGameObjectWithTag("MyPlayer");
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
-        
+        transitionId = gameObject.name;
+
+
+        string dbSceneTransId = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId;
+        spawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
+        myPlayerObject.transform.position = spawnPos;
+
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "MyPlayer")
         {
+            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId = transitionId;
+
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
             dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
             invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();
@@ -40,7 +51,10 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         SceneManager.LoadScene(sceneToLoad);
+        
     }
+
+    
 }
 
 

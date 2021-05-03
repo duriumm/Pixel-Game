@@ -21,6 +21,8 @@ public class PlayerInventory : MonoBehaviour
     private GameObject screenTabs;
     private GameObject shopScreen;
 
+    private GameObject playerGameObject;
+
     // TO-DO - Move playerMoney to some other place.. not sure where yet
     public int playerInvMoney;
     public TextMeshProUGUI CoinAmountText;
@@ -44,6 +46,9 @@ public class PlayerInventory : MonoBehaviour
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
         screenTabs = prefabCanvas.transform.Find("GuiTabsButtons").gameObject;
         shopScreen = GameObject.Find("ShopScreen");
+        // Player is set in awake since it needs to be called before the start in shopscreen 
+        // since shopscreen uses shopscreen.close() 
+        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer"); 
 
 
     }
@@ -53,6 +58,7 @@ public class PlayerInventory : MonoBehaviour
         LoadInvGameObjectOnStartScene();
         ClosingUI();
         SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB);
+
     }
 
     // Update is called once per frame
@@ -62,6 +68,9 @@ public class PlayerInventory : MonoBehaviour
     }
     public void ClosingUI()
     {
+        // disable player attack
+        playerGameObject.GetComponent<Attack>().enabled = true;
+
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
         screenTabs.SetActive(false);
@@ -73,6 +82,8 @@ public class PlayerInventory : MonoBehaviour
     }
     public void OpeningGUI()
     {
+        // enable player attack
+        playerGameObject.GetComponent<Attack>().enabled = false;
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
         
