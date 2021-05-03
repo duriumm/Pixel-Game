@@ -4846,4 +4846,4 @@ MonoBehaviour:
   canAttack: 1
   attackCooldown: 1
   group: 1
-  owner: {fileID: 0}
+  owner: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
