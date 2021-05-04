@@ -80,9 +80,8 @@ public class InventorySlot : MonoBehaviour
     void EquipItem()
     {
         //Add item to equipment slot
-        var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
-        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
-        var equipmentSlot = equipmentSlotGameObject.GetComponent<InventorySlot>();
+        
+        var equipmentSlot = GetEquipmentSlotForItem();
 
         // If weapon, set as player's equipped weapon
         var weapon = ItemDataGameObject.GetComponent<Weapon>();
@@ -90,6 +89,18 @@ public class InventorySlot : MonoBehaviour
             playerAttack.EquipWeapon(weapon);
 
         equipmentSlot.AddItem(ItemDataGameObject, this);
+    }
+
+    InventorySlot GetEquipmentSlotForItem()
+    {
+        string equipmentSlotName = GetEquipmentSlotNameForItem();
+        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
+        return equipmentSlotGameObject.GetComponent<InventorySlot>();
+    }
+
+    string GetEquipmentSlotNameForItem()
+    {
+        return Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
     }
 
     public void MoveEquippedItemToInventory()
@@ -236,12 +247,7 @@ public class InventorySlot : MonoBehaviour
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
             if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                var weapon = ItemDataGameObject.GetComponent<Weapon>();
-                ItemStatsText.text = $"Damage: {weapon.Power}\n";
-                ItemStatsText.text += $"Cooldown: {weapon.Cooldown}s\n";
-                if (weapon.HasProjectileAttack)
-                    ItemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed}\n";
-                ItemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
+                ShowWeaponStats(ItemStatsText);
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
             {
@@ -265,6 +271,49 @@ public class InventorySlot : MonoBehaviour
 
         // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
     }
+
+    private void ShowWeaponStats(TextMeshProUGUI itemStatsText)
+    {
+        Weapon currentlyEquippedWeapon = null;
+        if (gameObject.name != GetEquipmentSlotNameForItem())
+        {
+            var item = GetEquipmentSlotForItem().ItemDataInSlot;
+            if (item != null)
+                currentlyEquippedWeapon = item.GetComponent<Weapon>();
+        }
+        var weapon = ItemDataGameObject.GetComponent<Weapon>();
+        itemStatsText.text = $"Damage: {weapon.Power}";
+        if (currentlyEquippedWeapon != null)
+        {
+            float powerDiff = weapon.Power - currentlyEquippedWeapon.Power;
+            itemStatsText.text += GetHoverDiffText(powerDiff);
+        }
+        itemStatsText.text += $"\nCooldown: {weapon.Cooldown}s\n";
+        if (weapon.HasProjectileAttack)
+            itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed}\n";
+        itemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
+    }
+
+    // Returns a string describing the difference between the hovered item
+    // and the currently equipped item
+    // For example, if we have equipped a sword with power 10,
+    // and the weapon we are hovering on has power 15, the text will be "+5" in green
+    private string GetHoverDiffText(float diff)
+    {
+        string color;
+        string sign = "+";
+        if (diff > 0)
+            color = "green";
+        else if (diff == 0)
+            color = "white";
+        else
+        {
+            color = "red";
+            sign = "-";
+        }
+        return $"<color={color}> {sign}{Math.Abs(diff)}</color>";
+    }
+
     public void RemoveDataShowingOnExit()
     {
         this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 0f;
