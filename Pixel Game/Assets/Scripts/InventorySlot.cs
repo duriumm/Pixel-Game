@@ -138,6 +138,7 @@ public class InventorySlot : MonoBehaviour
         {
             dropItemButton.SetActive(false);
         }
+        RemoveDataShowingOnExit();
     }
 
     public void AddItem(GameObject itemToAdd, InventorySlot sourceSlot = null)
@@ -157,10 +158,12 @@ public class InventorySlot : MonoBehaviour
         //If sourceSlot is not null it will be cleared or get the item of this slot if not null
         if (sourceSlot != null)
         {
+            sourceSlot.ClearSlot();
             if (tempItem != null)
+            {
                 sourceSlot.AddItem(tempItem.gameObject);
-            else
-                sourceSlot.ClearSlot();
+                sourceSlot.ShowDataOnHover();
+            }
         }
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
@@ -274,23 +277,19 @@ public class InventorySlot : MonoBehaviour
 
     private void ShowWeaponStats(TextMeshProUGUI itemStatsText)
     {
-        Weapon currentlyEquippedWeapon = null;
+        var weapon = ItemDataGameObject.GetComponent<Weapon>();
+        string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
         if (gameObject.name != GetEquipmentSlotNameForItem())
         {
-            var item = GetEquipmentSlotForItem().ItemDataInSlot;
-            if (item != null)
-                currentlyEquippedWeapon = item.GetComponent<Weapon>();
+            powerDiff = GetHoverDiffText(weapon.Power - playerAttack.CurrentWeapon.Power);
+            cooldownDiff = GetHoverDiffText(weapon.Cooldown - playerAttack.CurrentWeapon.Cooldown, true);
+            if (weapon.HasProjectileAttack && playerAttack.CurrentWeapon.HasProjectileAttack)
+                projectileSpeedDiff = GetHoverDiffText(weapon.ProjectileAttack.Speed - playerAttack.CurrentWeapon.ProjectileAttack.Speed);
         }
-        var weapon = ItemDataGameObject.GetComponent<Weapon>();
-        itemStatsText.text = $"Damage: {weapon.Power}";
-        if (currentlyEquippedWeapon != null)
-        {
-            float powerDiff = weapon.Power - currentlyEquippedWeapon.Power;
-            itemStatsText.text += GetHoverDiffText(powerDiff);
-        }
-        itemStatsText.text += $"\nCooldown: {weapon.Cooldown}s\n";
+        itemStatsText.text = $"Damage: {weapon.Power} {powerDiff}\n";
+        itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
         if (weapon.HasProjectileAttack)
-            itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed}\n";
+            itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";
         itemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
     }
 
@@ -298,17 +297,26 @@ public class InventorySlot : MonoBehaviour
     // and the currently equipped item
     // For example, if we have equipped a sword with power 10,
     // and the weapon we are hovering on has power 15, the text will be "+5" in green
-    private string GetHoverDiffText(float diff)
+    private string GetHoverDiffText(float diff, bool reverseColor = false)
     {
+        string positive = "green";
+        string negative = "#ff7070";
+        string neutral = "white";
         string color;
-        string sign = "+";
+        string sign;
         if (diff > 0)
-            color = "green";
+        {
+            color = reverseColor ? negative : positive;
+            sign = "+";
+        }
         else if (diff == 0)
-            color = "white";
+        {
+            color = neutral;
+            sign = "+/-";
+        }
         else
         {
-            color = "red";
+            color = reverseColor ? positive : negative;
             sign = "-";
         }
         return $"<color={color}> {sign}{Math.Abs(diff)}</color>";
