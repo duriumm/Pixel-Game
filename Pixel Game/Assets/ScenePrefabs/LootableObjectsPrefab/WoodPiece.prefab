@@ -159,13 +159,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 100
+  power: 50
   cooldawn: 1
   sound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
   projectileAttack:
     speed: 5
     projectileTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
     timeToLive: 2
-    destroyOnCollision: 1
+    destroyOnHit: 1
   hasMeleeAttack: 1
   hasProjectileAttack: 1

@@ -9,10 +9,12 @@ class Projectile : MonoBehaviour
     private bool destroyOnHit;
     public bool DestroyOnHit => destroyOnHit;
     private ObjectPool pool;
+    [SerializeField]
+    private float spriteRotation;
 
     public bool IsActive => timeToLive > 0;
 
-    public void Shoot(float timeToLive, ObjectPool pool, Vector2 velocity, bool destroyOnCollision)
+    public void Shoot(float timeToLive, ObjectPool pool, Vector2 velocity, bool destroyOnHit)
     {
         this.timeToLive = timeToLive;
         this.pool = pool;
@@ -21,10 +23,8 @@ class Projectile : MonoBehaviour
         float angle = Vector2.Angle(velocity, new Vector2(1, 0));
         if (velocity.y < 0)
             angle *= -1;
-        //-45 is to compensate for the arrow sprite being rotated 45 degrees
-        transform.Rotate(0, 0, angle - 45); 
-        Debug.Log(angle);
-        this.destroyOnHit = destroyOnCollision;
+        transform.Rotate(0, 0, angle - spriteRotation);
+        this.destroyOnHit = destroyOnHit;
     }
 
     void FixedUpdate()

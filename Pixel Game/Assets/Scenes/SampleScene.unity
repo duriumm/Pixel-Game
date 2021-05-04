@@ -51007,30 +51007,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: power
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: cooldawn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: hasMeleeAttack
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: hasProjectileAttack
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: projectileAttack.speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7631855403513499647, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-      propertyPath: projectileAttack.projectileTemplate
-      value: 
-      objectReference: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
     - target: {fileID: 8776739252053834925, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
       propertyPath: m_Name
       value: WoodPiece
