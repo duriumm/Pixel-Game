@@ -54,8 +54,9 @@ public class Movement : MonoBehaviour
                 animator.TrySetFloat(paramId_LastMoveX, faceDir.x);
                 animator.TrySetFloat(paramId_LastMoveY, faceDir.y);
             }
-            animator.TrySetFloat(paramId_Horizontal, faceDir.x);
-            animator.TrySetFloat(paramId_Vertical, faceDir.y);
+            Vector2 movementAnim = movementDir == Vector2.zero ? Vector2.zero : faceDir;
+            animator.TrySetFloat(paramId_Horizontal, movementAnim.x);
+            animator.TrySetFloat(paramId_Vertical, movementAnim.y);
             animator.TrySetFloat(paramId_Speed, maxSpeed);
         }
     }
