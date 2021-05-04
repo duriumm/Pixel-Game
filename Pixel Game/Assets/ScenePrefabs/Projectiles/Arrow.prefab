@@ -64,7 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeAttacked: 0
   canAttack: 1
-  attackCooldown: 1
+  attackCooldown: 0
   group: 0
   owner: {fileID: 0}
 --- !u!114 &8167614337120770635

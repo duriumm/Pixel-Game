@@ -6,7 +6,8 @@ class Projectile : MonoBehaviour
 {
     private float timeToLive;
     private Vector3 velocity;
-    private bool destroyOnCollision;
+    private bool destroyOnHit;
+    public bool DestroyOnHit => destroyOnHit;
     private ObjectPool pool;
 
     public bool IsActive => timeToLive > 0;
@@ -17,14 +18,13 @@ class Projectile : MonoBehaviour
         this.pool = pool;
         this.velocity = velocity;
         transform.rotation = Quaternion.identity;
-        //transform.rotation = new Quaternion(velocity.x, velocity.y, 0, 0);
         float angle = Vector2.Angle(velocity, new Vector2(1, 0));
         if (velocity.y < 0)
             angle *= -1;
         //-45 is to compensate for the arrow sprite being rotated 45 degrees
         transform.Rotate(0, 0, angle - 45); 
         Debug.Log(angle);
-        this.destroyOnCollision = destroyOnCollision;
+        this.destroyOnHit = destroyOnCollision;
     }
 
     void FixedUpdate()
@@ -38,11 +38,5 @@ class Projectile : MonoBehaviour
     public void Destroy()
     {
         this.pool.Destroy(gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collider)
-    {
-        if (destroyOnCollision)
-            Destroy();
     }
 }

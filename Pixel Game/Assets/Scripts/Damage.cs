@@ -43,6 +43,12 @@ public class Damage : MonoBehaviour
         //Check if we can inflict damage and if the colliding object can take damage
         if (colliderDamage.canBeAttacked && canAttack)
         {
+            var projectile = GetComponent<Projectile>();
+            if (projectile != null)
+            {
+                if (projectile.DestroyOnHit)
+                    projectile.Destroy();
+            }
             Weapon weapon;
             var attack = owner.GetComponent<Attack>();
             if (attack == null)

@@ -17,8 +17,6 @@ public class ProjectileAttack
     [SerializeField]
     private bool destroyOnCollision = true;
     
-    //private List<Projectile> shots = new List<Projectile>();
-
     private GameObject ownerOfFiringWeapon; //Needed for correct spawning pos
 
     public void Init(GameObject firingWeapon)
@@ -31,38 +29,17 @@ public class ProjectileAttack
         }
     }
 
-    //public void Update(float deltaTime)
-    //{
-        //foreach (var shot in shots)
-          //  shot.Update(deltaTime);
-        //shots.RemoveAll((shot) => !shot.IsActive);
-    //}
-
     public void Shoot(Vector2 direction)
     {
         var pos = ownerOfFiringWeapon.transform.position;
         pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
         var velocity = direction.normalized * speed;
-        //var projectile = GameObject.Instantiate(ProjectileTemplate);
         var projectile = pool.Spawn(pos);
         projectile.GetComponent<Projectile>().Shoot(timeToLive, pool, velocity, destroyOnCollision);
-        //shots.Add(new Projectile(projectileTimeToLive, shotPool, pos, velocity));
     }
 
     public void SetOwnerOfFiringWeapon(GameObject ownerOfFiringWeapon)
     {
         this.ownerOfFiringWeapon = ownerOfFiringWeapon;
     }
-
-    //public void DestroyShots()
-    //{
-        //foreach (var shot in shots)
-          //  shot.Destroy();
-        //shots.Clear();        
-    //}
-
-    //private void OnDestroy()
-    //{
-    //    DestroyShots();
-    //}
 }

@@ -95233,6 +95233,10 @@ PrefabInstance:
       propertyPath: HasIdleAnim
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7792499652420547699, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8538559603111980554, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: hasProjectileAttack
       value: 0
