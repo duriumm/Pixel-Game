@@ -61,11 +61,6 @@ public class EnemyHealth : Health
         // make the whole movementscript disabled so he cant move OR attack
         toggleActive(false);
 
-        // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
-        var enemyAttack = gameObject.GetComponent<AiAttack>();
-        if (enemyAttack != null && enemyAttack.CurrentWeapon.HasShotAttack)
-            enemyAttack.CurrentWeapon.ShotAttack.DestroyShots();
-
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
         //Debug.Log("start fade");

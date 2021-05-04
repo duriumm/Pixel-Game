@@ -15,7 +15,7 @@ public class ObjectPool
 			var obj = GameObject.Instantiate(templateObject);
 			obj.SetActive(false);
             obj.hideFlags = HideFlags.HideInHierarchy;
-            GameObject.DontDestroyOnLoad(obj);
+            //GameObject.DontDestroyOnLoad(obj);
 			pool.Add(obj);
 		}
 	}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 443223490596278564}
   - component: {fileID: 4520761248188824625}
   - component: {fileID: -8108205346132507392}
+  - component: {fileID: 8167614337120770635}
   m_Layer: 0
   m_Name: ParticleAttack
   m_TagString: Enemy
@@ -4788,7 +4789,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -4846,4 +4847,16 @@ MonoBehaviour:
   canAttack: 1
   attackCooldown: 1
   group: 1
-  owner: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+  owner: {fileID: 0}
+--- !u!114 &8167614337120770635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015373485553373971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a3e2481bdcce241ba11aec26e4a213, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

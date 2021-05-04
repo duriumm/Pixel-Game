@@ -575,7 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeAnimator: {fileID: 0}
   preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
-  attackRange: 2
+  attackRange: 3
   enablePreAttack: 1
 --- !u!114 &1926192919
 MonoBehaviour:
@@ -590,11 +590,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 20
-  cooldawn: 1
+  cooldawn: 2
   sound: {fileID: 8300000, guid: ba14656d588586b448192cb66ac93698, type: 3}
-  shotAttack:
-    shotSpeed: 2
-    shotTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
-    shotTimeToLive: 2
+  projectileAttack:
+    speed: 2
+    projectileTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+    timeToLive: 2
+    destroyOnCollision: 1
   hasMeleeAttack: 0
-  hasShotAttack: 1
+  hasProjectileAttack: 1

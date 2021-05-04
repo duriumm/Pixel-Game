@@ -13,14 +13,14 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private AudioClip sound;
     [SerializeField]
-    private ShotAttack shotAttack;
-    public ShotAttack ShotAttack => shotAttack;
+    private ProjectileAttack projectileAttack;
+    public ProjectileAttack ProjectileAttack => projectileAttack;
     [SerializeField]
     private bool hasMeleeAttack;
     public bool HasMeleeAttack => hasMeleeAttack;
     [SerializeField]
-    private bool hasShotAttack;
-    public bool HasShotAttack => hasShotAttack;
+    private bool hasProjectileAttack;
+    public bool HasProjectileAttack => hasProjectileAttack;
 
     private bool readyToAttack = true;
     public bool ReadyToAttack => readyToAttack;
@@ -32,17 +32,12 @@ public class Weapon : MonoBehaviour
         // If instead attached to a lootable item, the owner will be set when equipping the item
         if (GetComponent<Attack>() != null)
             SetOwner(gameObject);
-        ShotAttack.Init(gameObject);
+        ProjectileAttack.Init(gameObject);
     }
 
     public void SetOwner(GameObject owner)
     {
-        shotAttack.SetOwnerOfFiringWeapon(owner);
-    }
-
-    private void FixedUpdate()
-    {
-        ShotAttack?.Update(Time.fixedDeltaTime);
+        projectileAttack.SetOwnerOfFiringWeapon(owner);
     }
 
     public void Attack(Vector2? direction = null)
@@ -51,8 +46,8 @@ public class Weapon : MonoBehaviour
             return;
         if (sound != null)
             AudioSource.PlayClipAtPoint(sound, this.transform.position);
-        if (HasShotAttack)
-            shotAttack.SpawnShot((Vector2)direction);
+        if (HasProjectileAttack)
+            projectileAttack.Shoot((Vector2)direction);
     }
 
     public IEnumerator WaitForCooldown()
