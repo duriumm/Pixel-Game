@@ -23,6 +23,17 @@ public class Weapon : MonoBehaviour
     public bool HasProjectileAttack => hasProjectileAttack;
 
     private bool readyToAttack = true;
+    private GameObject owner;
+    public GameObject Owner
+    {
+        get => owner;
+        set
+        {
+            owner = value;
+            //projectileAttack.SetOwnerOfFiringWeapon(owner);
+        }
+    }
+
     public bool ReadyToAttack => readyToAttack;
 
     protected virtual void Start()
@@ -31,13 +42,8 @@ public class Weapon : MonoBehaviour
         // so that spawned shots appear at the character's positiion
         // If instead attached to a lootable item, the owner will be set when equipping the item
         if (GetComponent<Attack>() != null)
-            SetOwner(gameObject);
+            Owner = gameObject;
         ProjectileAttack.Init(gameObject);
-    }
-
-    public void SetOwner(GameObject owner)
-    {
-        projectileAttack.SetOwnerOfFiringWeapon(owner);
     }
 
     public void Attack(Vector2? direction = null)

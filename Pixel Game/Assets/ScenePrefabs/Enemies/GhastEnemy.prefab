@@ -481,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasIdleAnim: 0
   maxSpeed: 0.5
   acceleration: 0.1
   animator: {fileID: 2238159970977591414}
@@ -557,9 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeAttacked: 1
-  canAttack: 0
   attackCooldown: 1
-  group: 1
   owner: {fileID: 8702507365765926596}
 --- !u!114 &366886232
 MonoBehaviour:
@@ -574,6 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAnimator: {fileID: 0}
+  group: 1
   preAttackSound: {fileID: 8300000, guid: d290b568fefd62543be3b4ef0dad6343, type: 3}
   attackRange: 3
   enablePreAttack: 1

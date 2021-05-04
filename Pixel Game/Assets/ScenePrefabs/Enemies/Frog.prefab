@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 884672663}
   - component: {fileID: 449024253}
+  - component: {fileID: 1516500706}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -480,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasIdleAnim: 0
   maxSpeed: 1
   acceleration: 1
   animator: {fileID: 0}
@@ -558,7 +560,6 @@ MonoBehaviour:
   canBeAttacked: 1
   canAttack: 1
   attackCooldown: 1
-  group: 1
   owner: {fileID: 8702507365765926596}
 --- !u!114 &449024253
 MonoBehaviour:
@@ -575,9 +576,24 @@ MonoBehaviour:
   power: 20
   cooldawn: 1
   sound: {fileID: 0}
-  shotAttack:
-    shotSpeed: 2
-    shotTemplate: {fileID: 0}
-    shotTimeToLive: 2
+  projectileAttack:
+    speed: 2
+    projectileTemplate: {fileID: 0}
+    timeToLive: 2
+    destroyOnCollision: 1
   hasMeleeAttack: 0
-  hasShotAttack: 0
+  hasProjectileAttack: 0
+--- !u!114 &1516500706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb67c0879d17d346b9280e8b2e5ce2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeAnimator: {fileID: 0}
+  group: 1

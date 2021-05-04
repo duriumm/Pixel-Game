@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackGroup { Players, Mobs }
+
 public class Attack : MonoBehaviour
 {
     [SerializeField]
     private Animator meleeAnimator;
-
+    [SerializeField]
+    private AttackGroup group;
+    public AttackGroup Group => group;
     private Weapon defaultWeapon; //Used if no weapon is equipped
     private Weapon equippedWeapon;
     public Weapon CurrentWeapon
@@ -52,9 +56,9 @@ public class Attack : MonoBehaviour
     public void EquipWeapon(Weapon weapon)
     {
         if (equippedWeapon != null)
-            equippedWeapon.SetOwner(null);
+            equippedWeapon.Owner = null;
         if (weapon != null)
-            weapon.SetOwner(gameObject);
+            weapon.Owner = gameObject;
         equippedWeapon = weapon;
     }
 

@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3985200814381900833}
   - component: {fileID: 8538559603111980554}
   - component: {fileID: 8538559603111980563}
+  - component: {fileID: 6336070729507474656}
   m_Layer: 0
   m_Name: MyCharacter
   m_TagString: MyPlayer
@@ -172,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f16194c0026e6409fb07872b28951a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasIdleAnim: 1
   maxSpeed: 7
   acceleration: 5
   animator: {fileID: 638322088875909781}
@@ -220,12 +222,13 @@ MonoBehaviour:
   power: 4
   cooldawn: 0.15
   sound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
-  shotAttack:
-    shotSpeed: 2
-    shotTemplate: {fileID: 0}
-    shotTimeToLive: 2
+  projectileAttack:
+    speed: 2
+    projectileTemplate: {fileID: 0}
+    timeToLive: 2
+    destroyOnCollision: 1
   hasMeleeAttack: 1
-  hasShotAttack: 0
+  hasProjectileAttack: 0
 --- !u!114 &8538559603111980563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +242,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAnimator: {fileID: 638322088875909781}
+--- !u!114 &6336070729507474656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697616969040342004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537abda95b2e03148849094fab27ab80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5810949078116800679
 GameObject:
   m_ObjectHideFlags: 0
