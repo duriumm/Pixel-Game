@@ -51,7 +51,7 @@ public class Weapon : MonoBehaviour
         if (!readyToAttack)
             return;
         if (sound != null)
-            AudioSource.PlayClipAtPoint(sound, this.transform.position);
+            AudioSource.PlayClipAtPoint(sound, owner.transform.position);
         if (HasProjectileAttack)
             projectileAttack.Shoot((Vector2)direction);
     }
