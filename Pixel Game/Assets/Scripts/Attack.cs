@@ -51,7 +51,10 @@ public class Attack : MonoBehaviour
 
     public void EquipWeapon(Weapon weapon)
     {
-        weapon.SetOwner(gameObject);
+        if (equippedWeapon != null)
+            equippedWeapon.SetOwner(null);
+        if (weapon != null)
+            weapon.SetOwner(gameObject);
         equippedWeapon = weapon;
     }
 

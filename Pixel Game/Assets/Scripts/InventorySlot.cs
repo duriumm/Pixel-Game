@@ -96,8 +96,13 @@ public class InventorySlot : MonoBehaviour
     {
         if (ItemDataInSlot == null)
             return;
+        //Only unequip if the inventory has an empty slot to put the item in
         if (inventory.AddItemToEmptySlot(ItemDataGameObject))
+        {
+            if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+                playerAttack.EquipWeapon(null);
             ClearSlot();
+        }
     }
 
     public void ClearSlot()
