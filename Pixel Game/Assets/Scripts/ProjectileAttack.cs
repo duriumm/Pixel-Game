@@ -27,7 +27,7 @@ public class ProjectileAttack
         {
             var damage = projectileTemplate.GetComponent<Damage>();
             damage.owner = firingWeapon;
-            pool = new ObjectPool(projectileTemplate, 5);
+            pool = new ObjectPool(projectileTemplate, 10);
         }
     }
 

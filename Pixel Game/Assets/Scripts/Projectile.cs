@@ -16,6 +16,14 @@ class Projectile : MonoBehaviour
         this.timeToLive = timeToLive;
         this.pool = pool;
         this.velocity = velocity;
+        transform.rotation = Quaternion.identity;
+        //transform.rotation = new Quaternion(velocity.x, velocity.y, 0, 0);
+        float angle = Vector2.Angle(velocity, new Vector2(1, 0));
+        if (velocity.y < 0)
+            angle *= -1;
+        //-45 is to compensate for the arrow sprite being rotated 45 degrees
+        transform.Rotate(0, 0, angle - 45); 
+        Debug.Log(angle);
         this.destroyOnCollision = destroyOnCollision;
     }
 
