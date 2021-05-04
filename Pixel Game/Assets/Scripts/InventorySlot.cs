@@ -92,17 +92,28 @@ public class InventorySlot : MonoBehaviour
         equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
-    public void UnequipItem()
+    public void MoveEquippedItemToInventory()
     {
         if (ItemDataInSlot == null)
             return;
         //Only unequip if the inventory has an empty slot to put the item in
         if (inventory.AddItemToEmptySlot(ItemDataGameObject))
         {
-            if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
-                playerAttack.EquipWeapon(null);
+            UnequipItem();
             ClearSlot();
         }
+    }
+
+    public void DropEquippedItem()
+    {
+        UnequipItem();
+        DropItem();
+    }
+
+    private void UnequipItem()
+    {
+        if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+            playerAttack.EquipWeapon(null);
     }
 
     public void ClearSlot()

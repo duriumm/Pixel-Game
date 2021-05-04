@@ -126,7 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Iron Axe
   description: Heavy axe that easily cleaves trees (or skulls) in half
-  damage: 10
   defense: 0
   durability: 100
   value: 15
@@ -169,3 +168,4 @@ MonoBehaviour:
     destroyOnHit: 1
   hasMeleeAttack: 1
   hasProjectileAttack: 0
+  Owner: {fileID: 0}

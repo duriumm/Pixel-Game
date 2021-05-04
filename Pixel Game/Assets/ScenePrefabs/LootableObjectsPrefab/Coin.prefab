@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Bronze coin
   description: The lowest value of coin, made out of bronze
-  damage: 0
   defense: 0
   durability: 0
   value: 1
