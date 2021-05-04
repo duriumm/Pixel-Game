@@ -217,7 +217,6 @@ public class InventorySlot : MonoBehaviour
     {
         if(ItemDataGameObject != null)
         {
-
             // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
             TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
             itemNameText.text = ItemDataInSlot.itemName;
@@ -226,7 +225,12 @@ public class InventorySlot : MonoBehaviour
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
             if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                ItemStatsText.text = "Damage: " + ItemDataInSlot.damage + "\n" + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+                var weapon = ItemDataGameObject.GetComponent<Weapon>();
+                ItemStatsText.text = $"Damage: {weapon.Power}\n";
+                ItemStatsText.text += $"Cooldown: {weapon.Cooldown}s\n";
+                if (weapon.HasProjectileAttack)
+                    ItemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed}\n";
+                ItemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
             {

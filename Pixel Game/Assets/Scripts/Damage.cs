@@ -35,7 +35,6 @@ public class Damage : MonoBehaviour
     {
         this.owner = owner;
         health = owner.GetComponent<Health>();
-        //attack = owner.GetComponent<Attack>();
      }
 
     //Inflict damage on colliding object

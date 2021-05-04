@@ -8,6 +8,7 @@ public class ProjectileAttack
 {
     [SerializeField]
     private float speed = 2f;
+    public float Speed => speed;
     [SerializeField]
     private GameObject projectileTemplate;
     public GameObject ProjectileTemplate => projectileTemplate;

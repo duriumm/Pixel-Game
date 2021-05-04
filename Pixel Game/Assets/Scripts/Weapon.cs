@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     public int Power => power;
     [SerializeField]
     protected float cooldawn = 1;
+    public float Cooldown => cooldawn;
     [SerializeField]
     private AudioClip sound;
     [SerializeField]
@@ -23,16 +24,7 @@ public class Weapon : MonoBehaviour
     public bool HasProjectileAttack => hasProjectileAttack;
 
     private bool readyToAttack = true;
-    private GameObject owner;
-    public GameObject Owner
-    {
-        get => owner;
-        set
-        {
-            owner = value;
-            //projectileAttack.SetOwnerOfFiringWeapon(owner);
-        }
-    }
+    public GameObject Owner;
 
     public bool ReadyToAttack => readyToAttack;
 
@@ -51,7 +43,7 @@ public class Weapon : MonoBehaviour
         if (!readyToAttack)
             return;
         if (sound != null)
-            AudioSource.PlayClipAtPoint(sound, owner.transform.position);
+            AudioSource.PlayClipAtPoint(sound, Owner.transform.position);
         if (HasProjectileAttack)
             projectileAttack.Shoot((Vector2)direction);
     }
