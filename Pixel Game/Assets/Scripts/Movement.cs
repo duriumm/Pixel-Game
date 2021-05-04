@@ -7,6 +7,8 @@ public class Movement : MonoBehaviour
 {
     private const float KnockbackAcceleration = 0.5f;
     [SerializeField]
+    bool HasIdleAnim;
+    [SerializeField]
     protected float maxSpeed = 5;
     [SerializeField]
     private float acceleration = 5;
@@ -33,7 +35,7 @@ public class Movement : MonoBehaviour
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         health = gameObject.GetComponent<Health>();
-
+        
         if (animator != null)
         {
             paramId_LastMoveX = animator.GetParamId("LastMoveX");
@@ -54,7 +56,7 @@ public class Movement : MonoBehaviour
                 animator.TrySetFloat(paramId_LastMoveX, faceDir.x);
                 animator.TrySetFloat(paramId_LastMoveY, faceDir.y);
             }
-            Vector2 movementAnim = movementDir == Vector2.zero ? Vector2.zero : faceDir;
+            Vector2 movementAnim = movementDir == Vector2.zero && HasIdleAnim ? Vector2.zero : faceDir;
             animator.TrySetFloat(paramId_Horizontal, movementAnim.x);
             animator.TrySetFloat(paramId_Vertical, movementAnim.y);
             animator.TrySetFloat(paramId_Speed, maxSpeed);

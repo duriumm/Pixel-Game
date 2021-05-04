@@ -93817,11 +93817,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4144447419025406582, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 121.29
+      value: 124.34
       objectReference: {fileID: 0}
     - target: {fileID: 4144447419025406582, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.52
+      value: -20.65
       objectReference: {fileID: 0}
     - target: {fileID: 4144447419025406582, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -95228,6 +95228,10 @@ PrefabInstance:
     - target: {fileID: 4697616969040342004, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: m_Name
       value: MyCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6220882671748775716, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: HasIdleAnim
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8538559603111980554, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
       propertyPath: hasProjectileAttack

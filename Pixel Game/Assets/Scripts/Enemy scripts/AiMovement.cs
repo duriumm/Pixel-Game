@@ -34,13 +34,13 @@ public class AiMovement : Movement
         float playerDistance = Vector3.Distance(playerTransform.position, enemyTransform.position);
 
         // If player is far away, roam around
-        // If close, chase to get well within attack range
-        // Back away if too close
-        faceDir = Vector2.zero;
+        // If close, chase
+        // If too close, back away but stay well within attack range
+        bool backAway = false;
         if (playerDistance < retreatUpperDistance * 0.97f) //Back away
         {
             movementDir = enemyTransform.position - playerTransform.position;
-            faceDir = -movementDir; //Enemy should face player when backing away
+            backAway = true;
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
@@ -63,8 +63,12 @@ public class AiMovement : Movement
             else
                 movementDir = Vector2.zero;
         }
-        if (faceDir == Vector2.zero)
+        if (movementDir != Vector2.zero)
+        {
             faceDir = movementDir;
+            if (backAway)
+                faceDir *= -1;
+        }
 
         base.FixedUpdate();
     }
