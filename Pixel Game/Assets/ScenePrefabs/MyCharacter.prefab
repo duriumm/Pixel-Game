@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HasIdleAnim: 1
   maxSpeed: 7
-  acceleration: 5
+  acceleration: 2
   animator: {fileID: 638322088875909781}
 --- !u!114 &8620282104999495127
 MonoBehaviour:
@@ -226,7 +226,7 @@ MonoBehaviour:
     speed: 2
     projectileTemplate: {fileID: 0}
     timeToLive: 2
-    destroyOnCollision: 1
+    destroyOnHit: 1
   hasMeleeAttack: 1
   hasProjectileAttack: 0
 --- !u!114 &8538559603111980563
@@ -242,6 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeAnimator: {fileID: 638322088875909781}
+  group: 0
 --- !u!114 &6336070729507474656
 MonoBehaviour:
   m_ObjectHideFlags: 0

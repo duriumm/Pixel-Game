@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8319600169151556584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.72, y: 8.27, z: -1.4199154}
+  m_LocalPosition: {x: 43.72, y: 8.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,7 @@ MonoBehaviour:
   itemIdString: BadFruit2
   healingCapability: 15
   itemType: 3
+  isEquippable: 0
 --- !u!114 &5177073972932986824
 MonoBehaviour:
   m_ObjectHideFlags: 0

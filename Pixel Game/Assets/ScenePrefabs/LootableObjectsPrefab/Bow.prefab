@@ -166,6 +166,6 @@ MonoBehaviour:
     speed: 10
     projectileTemplate: {fileID: 6015373485553373971, guid: bfcb4147203ec81478434924a8acf8b4, type: 3}
     timeToLive: 2
-    destroyOnCollision: 1
+    destroyOnHit: 1
   hasMeleeAttack: 0
   hasProjectileAttack: 1

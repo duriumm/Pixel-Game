@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8776739252053834925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 2.75, z: -1.4199154}
+  m_LocalPosition: {x: 1.5, y: 2.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -163,9 +163,9 @@ MonoBehaviour:
   cooldawn: 1
   sound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
   projectileAttack:
-    speed: 5
+    speed: 8
     projectileTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
     timeToLive: 2
     destroyOnHit: 1
-  hasMeleeAttack: 1
+  hasMeleeAttack: 0
   hasProjectileAttack: 1
