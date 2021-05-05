@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 50
+  damage: 50
   cooldawn: 1
   sound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
   projectileAttack:

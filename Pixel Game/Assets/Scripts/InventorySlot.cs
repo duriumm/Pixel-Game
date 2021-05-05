@@ -281,12 +281,12 @@ public class InventorySlot : MonoBehaviour
         string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
         if (gameObject.name != GetEquipmentSlotNameForItem())
         {
-            powerDiff = GetHoverDiffText(weapon.Power - playerAttack.CurrentWeapon.Power);
+            powerDiff = GetHoverDiffText(weapon.Damage - playerAttack.CurrentWeapon.Damage);
             cooldownDiff = GetHoverDiffText(weapon.Cooldown - playerAttack.CurrentWeapon.Cooldown, true);
             if (weapon.HasProjectileAttack && playerAttack.CurrentWeapon.HasProjectileAttack)
                 projectileSpeedDiff = GetHoverDiffText(weapon.ProjectileAttack.Speed - playerAttack.CurrentWeapon.ProjectileAttack.Speed);
         }
-        itemStatsText.text = $"Damage: {weapon.Power} {powerDiff}\n";
+        itemStatsText.text = $"Damage: {weapon.Damage} {powerDiff}\n";
         itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
         if (weapon.HasProjectileAttack)
             itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";

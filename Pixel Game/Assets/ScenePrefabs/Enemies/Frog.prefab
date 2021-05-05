@@ -502,6 +502,7 @@ MonoBehaviour:
   slider: {fileID: 6133221291524073454}
   deathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
+  respawnTime: 100
   enemyType: 2
 --- !u!61 &1919312349314565125
 BoxCollider2D:
@@ -573,16 +574,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 20
+  damage: 20
   cooldawn: 1
   sound: {fileID: 0}
   projectileAttack:
     speed: 2
     projectileTemplate: {fileID: 0}
     timeToLive: 2
-    destroyOnCollision: 1
+    destroyOnHit: 1
   hasMeleeAttack: 0
   hasProjectileAttack: 0
+  Owner: {fileID: 0}
 --- !u!114 &1516500706
 MonoBehaviour:
   m_ObjectHideFlags: 0

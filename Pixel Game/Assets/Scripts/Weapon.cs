@@ -6,8 +6,8 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]
-    private int power;
-    public int Power => power;
+    private int damage;
+    public int Damage => damage;
     [SerializeField]
     protected float cooldawn = 1;
     public float Cooldown => cooldawn;

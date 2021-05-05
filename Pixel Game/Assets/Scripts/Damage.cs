@@ -61,7 +61,7 @@ public class Damage : MonoBehaviour
             }
             
             lastAttackTime = DateTime.Now;
-            colliderDamage.health.TakeDamage(Attack.CurrentWeapon.Power, transform.position);
+            colliderDamage.health.TakeDamage(Attack.CurrentWeapon.Damage, transform.position);
         }
     }
 }
