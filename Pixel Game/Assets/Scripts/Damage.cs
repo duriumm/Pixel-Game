@@ -5,32 +5,42 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-    public enum Group { Players, Mobs }
-
     [SerializeField]
-    private int attackPower = 0;
+    protected bool canBeAttacked;
+    [SerializeField]
+    protected bool canAttack;
+    [SerializeField]
+    protected GameObject owner;
     [SerializeField]
     private float attackCooldown = 1;
-    [SerializeField]
-    private Group group;
-    [SerializeField]
-    private GameObject damageReceiver;
-    
+
     private DateTime lastAttackTime;
     private Health health;
-
-    private bool CanInflictDamage => attackPower > 0;
-    private bool CanTakeDamage => damageReceiver != null;
-
+    private Attack Attack
+    {
+        get
+        {
+            var attack = owner.GetComponent<Attack>();
+            if (attack == null)
+                attack = owner.GetComponent<Weapon>().Owner.GetComponent<Attack>();
+            return attack;
+        }
+    }
+    
     private void Start()
     {
-        if (damageReceiver != null)
-            health = damageReceiver.GetComponent<Health>();
+        SetOwner(owner);
     }
+
+    public void SetOwner(GameObject owner)
+    {
+        this.owner = owner;
+        health = owner.GetComponent<Health>();
+     }
+
     //Inflict damage on colliding object
     private void OnTriggerStay2D(Collider2D collider)
     {
-        Debug.Log("Damage OnCollision");
         //Check cooldown
         if ((DateTime.Now - lastAttackTime).TotalSeconds < attackCooldown)
             return;
@@ -38,14 +48,21 @@ public class Damage : MonoBehaviour
         var colliderDamage = collider.gameObject.GetComponent<Damage>();
         
         //Can't inflict damage if in same group
-        if (colliderDamage == null || colliderDamage.group == group)
+        if (colliderDamage == null || colliderDamage.Attack.Group == Attack.Group)
             return;
 
         //Check if we can inflict damage and if the colliding object can take damage
-        if (colliderDamage.CanTakeDamage && CanInflictDamage)
+        if (colliderDamage.canBeAttacked && canAttack)
         {
+            var projectile = GetComponent<Projectile>();
+            if (projectile != null)
+            {
+                if (projectile.DestroyOnHit)
+                    projectile.Destroy();
+            }
+            
             lastAttackTime = DateTime.Now;
-            colliderDamage.health.TakeDamage(attackPower, transform.position);
+            colliderDamage.health.TakeDamage(Attack.CurrentWeapon.Damage, transform.position);
         }
     }
 }

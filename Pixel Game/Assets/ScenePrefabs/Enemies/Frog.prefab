@@ -354,6 +354,8 @@ GameObject:
   - component: {fileID: 1919312349314565125}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 884672663}
+  - component: {fileID: 449024253}
+  - component: {fileID: 1516500706}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -479,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasIdleAnim: 0
   maxSpeed: 1
   acceleration: 1
   animator: {fileID: 0}
@@ -499,6 +502,7 @@ MonoBehaviour:
   slider: {fileID: 6133221291524073454}
   deathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
+  respawnTime: 100
   enemyType: 2
 --- !u!61 &1919312349314565125
 BoxCollider2D:
@@ -554,7 +558,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 20
+  canBeAttacked: 1
+  canAttack: 1
   attackCooldown: 1
+  owner: {fileID: 8702507365765926596}
+--- !u!114 &449024253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  cooldawn: 1
+  sound: {fileID: 0}
+  projectileAttack:
+    speed: 2
+    projectileTemplate: {fileID: 0}
+    timeToLive: 2
+    destroyOnHit: 1
+  hasMeleeAttack: 0
+  hasProjectileAttack: 0
+  Owner: {fileID: 0}
+--- !u!114 &1516500706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcb67c0879d17d346b9280e8b2e5ce2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeAnimator: {fileID: 0}
   group: 1
-  damageReceiver: {fileID: 8702507365765926596}

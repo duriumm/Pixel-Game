@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5371522974981631728}
   - component: {fileID: -2900236624606531730}
   - component: {fileID: 6283380197544540388}
+  - component: {fileID: 7631855403513499647}
   m_Layer: 0
   m_Name: WoodPiece
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8776739252053834925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 2.75, z: -1.4199154}
+  m_LocalPosition: {x: 1.5, y: 2.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 5c8cf22ca45965b47829008bfaa104ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -125,7 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Wooden log
   description: Can be used as a weapon or firewood
-  damage: 1
   defense: 0
   durability: 0
   value: 2
@@ -146,3 +146,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569092fa28ab4bf44a08a793e306173b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7631855403513499647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8776739252053834925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
+  cooldawn: 1
+  sound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
+  projectileAttack:
+    speed: 8
+    projectileTemplate: {fileID: 6015373485553373971, guid: bcf70880df61a0e4f87a073399c80ce0, type: 3}
+    timeToLive: 2
+    destroyOnHit: 1
+  hasMeleeAttack: 0
+  hasProjectileAttack: 1
+  Owner: {fileID: 0}

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8319600169151556584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.72, y: 8.27, z: -1.4199154}
+  m_LocalPosition: {x: 43.72, y: 8.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 24c42bc8f42245c43b2b1085b1d3df02, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Mahoony fruit
   description: A fruit consisting mostly of water
-  damage: 0
   defense: 0
   durability: 0
   value: 2
@@ -107,6 +106,7 @@ MonoBehaviour:
   itemIdString: BadFruit2
   healingCapability: 15
   itemType: 3
+  isEquippable: 0
 --- !u!114 &5177073972932986824
 MonoBehaviour:
   m_ObjectHideFlags: 0

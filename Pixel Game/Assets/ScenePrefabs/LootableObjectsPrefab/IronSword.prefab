@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2591643192803153600}
   - component: {fileID: 221562371710303449}
   - component: {fileID: -5394723945475449613}
+  - component: {fileID: 5999557307959826569}
   m_Layer: 0
   m_Name: IronSword
   m_TagString: Untagged
@@ -99,7 +100,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Iron Sword
   description: Standard sword used by all over [insert land name]
-  damage: 5
   defense: 0
   durability: 0
   value: 10
@@ -146,3 +146,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 569092fa28ab4bf44a08a793e306173b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5999557307959826569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4069441921147659030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31db5c586f3387741a69b1811d79d9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  cooldawn: 0.5
+  sound: {fileID: 8300000, guid: 510b79125438e3644a4eee313c326473, type: 3}
+  projectileAttack:
+    speed: 2
+    projectileTemplate: {fileID: 0}
+    timeToLive: 2
+    destroyOnHit: 1
+  hasMeleeAttack: 1
+  hasProjectileAttack: 0
+  Owner: {fileID: 0}

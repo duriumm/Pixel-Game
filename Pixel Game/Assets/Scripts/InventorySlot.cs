@@ -27,6 +27,7 @@ public class InventorySlot : MonoBehaviour
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
     public bool isInventoryPanel;
     private static PlayerInventory inventory;
+    private Attack playerAttack;
 
     void Awake()
     {
@@ -44,6 +45,7 @@ public class InventorySlot : MonoBehaviour
         //Debug.Log("object we foudn was: " + dropItemButton);
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
+        playerAttack = playerCharacter.GetComponent<Attack>();
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
     }
@@ -68,14 +70,6 @@ public class InventorySlot : MonoBehaviour
                     ClearSlot();
                 }
             }
-            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
-            {
-                Debug.Log("Equipped Weapon");
-            }
-            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
-            {
-                Debug.Log("Equipped Armor");
-            }
         }
         else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
@@ -86,18 +80,51 @@ public class InventorySlot : MonoBehaviour
     void EquipItem()
     {
         //Add item to equipment slot
-        var equipmentSlotName = Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
-        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
-        var equipmentSlotMono = equipmentSlotGameObject.GetComponent<InventorySlot>();
-        equipmentSlotMono.AddItem(ItemDataGameObject, this);
+        
+        var equipmentSlot = GetEquipmentSlotForItem();
+
+        // If weapon, set as player's equipped weapon
+        var weapon = ItemDataGameObject.GetComponent<Weapon>();
+        if (weapon != null)
+            playerAttack.EquipWeapon(weapon);
+
+        equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
-    public void UnequipItem()
+    InventorySlot GetEquipmentSlotForItem()
+    {
+        string equipmentSlotName = GetEquipmentSlotNameForItem();
+        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
+        return equipmentSlotGameObject.GetComponent<InventorySlot>();
+    }
+
+    string GetEquipmentSlotNameForItem()
+    {
+        return Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
+    }
+
+    public void MoveEquippedItemToInventory()
     {
         if (ItemDataInSlot == null)
             return;
+        //Only unequip if the inventory has an empty slot to put the item in
         if (inventory.AddItemToEmptySlot(ItemDataGameObject))
+        {
+            UnequipItem();
             ClearSlot();
+        }
+    }
+
+    public void DropEquippedItem()
+    {
+        UnequipItem();
+        DropItem();
+    }
+
+    private void UnequipItem()
+    {
+        if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+            playerAttack.EquipWeapon(null);
     }
 
     public void ClearSlot()
@@ -111,6 +138,7 @@ public class InventorySlot : MonoBehaviour
         {
             dropItemButton.SetActive(false);
         }
+        RemoveDataShowingOnExit();
     }
 
     public void AddItem(GameObject itemToAdd, InventorySlot sourceSlot = null)
@@ -130,14 +158,16 @@ public class InventorySlot : MonoBehaviour
         //If sourceSlot is not null it will be cleared or get the item of this slot if not null
         if (sourceSlot != null)
         {
+            sourceSlot.ClearSlot();
             if (tempItem != null)
+            {
                 sourceSlot.AddItem(tempItem.gameObject);
-            else
-                sourceSlot.ClearSlot();
+                sourceSlot.ShowDataOnHover();
+            }
         }
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
-        //ItemDataGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
+                
     }
     public void BuyItemFromShop()
     {
@@ -212,7 +242,6 @@ public class InventorySlot : MonoBehaviour
     {
         if(ItemDataGameObject != null)
         {
-
             // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
             TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
             itemNameText.text = ItemDataInSlot.itemName;
@@ -221,7 +250,7 @@ public class InventorySlot : MonoBehaviour
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
             if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                ItemStatsText.text = "Damage: " + ItemDataInSlot.damage + "\n" + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+                ShowWeaponStats(ItemStatsText);
             }
             else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
             {
@@ -231,10 +260,6 @@ public class InventorySlot : MonoBehaviour
             {   // Show the text in green to indicate hp gain on eating item
                 ItemStatsText.text = "Effect on eating: " + "<color=green>+" + ItemDataInSlot.healingCapability + " hp</color>";
             }
-
-
-
-
             this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }
         else
@@ -245,6 +270,54 @@ public class InventorySlot : MonoBehaviour
 
         // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
     }
+
+    private void ShowWeaponStats(TextMeshProUGUI itemStatsText)
+    {
+        var weapon = ItemDataGameObject.GetComponent<Weapon>();
+        string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
+        if (gameObject.name != GetEquipmentSlotNameForItem())
+        {
+            powerDiff = GetHoverDiffText(weapon.Damage - playerAttack.CurrentWeapon.Damage);
+            cooldownDiff = GetHoverDiffText(weapon.Cooldown - playerAttack.CurrentWeapon.Cooldown, true);
+            if (weapon.HasProjectileAttack && playerAttack.CurrentWeapon.HasProjectileAttack)
+                projectileSpeedDiff = GetHoverDiffText(weapon.ProjectileAttack.Speed - playerAttack.CurrentWeapon.ProjectileAttack.Speed);
+        }
+        itemStatsText.text = $"Damage: {weapon.Damage} {powerDiff}\n";
+        itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
+        if (weapon.HasProjectileAttack)
+            itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";
+        itemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
+    }
+
+    // Returns a string describing the difference between the hovered item
+    // and the currently equipped item
+    // For example, if we have equipped a sword with power 10,
+    // and the weapon we are hovering on has power 15, the text will be "+5" in green
+    private string GetHoverDiffText(float diff, bool reverseColor = false)
+    {
+        string positive = "green";
+        string negative = "#ff7070";
+        string neutral = "white";
+        string color;
+        string sign;
+        if (diff > 0)
+        {
+            color = reverseColor ? negative : positive;
+            sign = "+";
+        }
+        else if (diff == 0)
+        {
+            color = neutral;
+            sign = "+/-";
+        }
+        else
+        {
+            color = reverseColor ? positive : negative;
+            sign = "-";
+        }
+        return $"<color={color}> {sign}{Math.Abs(diff)}</color>";
+    }
+
     public void RemoveDataShowingOnExit()
     {
         this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 0f;

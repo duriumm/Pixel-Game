@@ -69,7 +69,7 @@ public class PlayerInventory : MonoBehaviour
     public void ClosingUI()
     {
         // disable player attack
-        playerGameObject.GetComponent<PlayerAttack>().enabled = true;
+        playerGameObject.GetComponent<Attack>().enabled = true;
 
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -83,7 +83,7 @@ public class PlayerInventory : MonoBehaviour
     public void OpeningGUI()
     {
         // enable player attack
-        playerGameObject.GetComponent<PlayerAttack>().enabled = false;
+        playerGameObject.GetComponent<Attack>().enabled = false;
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
         
