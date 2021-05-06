@@ -42,7 +42,7 @@ public class Attack : MonoBehaviour
         if (CurrentWeapon.ReadyToAttack)
         {
             if (CurrentWeapon.HasMeleeAttack)
-                StartCoroutine(PlayMeleeAnimationCo());
+                StartCoroutine(PlayMeleeAnimation());
             Vector2 direction;
             if (target != null)
                 direction = (Vector2)(target - transform.position);
@@ -62,12 +62,7 @@ public class Attack : MonoBehaviour
         equippedWeapon = weapon;
     }
 
-    private void PlayMeleeAnimation()
-    {
-        StartCoroutine(PlayMeleeAnimationCo());
-    }
-
-    private IEnumerator PlayMeleeAnimationCo()
+    private IEnumerator PlayMeleeAnimation()
     {
         meleeAnimator.TrySetBool(meleeAnimParamId_isAttacking, true);
         yield return null; // skip a frame and then set isAttacking to false so we wont loop the attack

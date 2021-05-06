@@ -19,7 +19,6 @@ public class PlayerInput : MonoBehaviour
 
     public GameObject dataToPassGameObject;
 
-    private GameObject closestNPC;
     private void Awake()
     {
     }
@@ -28,16 +27,8 @@ public class PlayerInput : MonoBehaviour
         playerGameObject = this.gameObject;
         inventoryManager = GameObject.FindWithTag("InventoryManager");
         shopScreen = GameObject.Find("ShopScreen");
-        //mainCamera = GameObject.FindWithTag("MainCamera");
-        //playerAnimator = playerGameObject.GetComponent<Animator>();
-        //feetSocket.SetActive(false);  // Do all this when equipment is added to the character
-
         torchGameObject = playerGameObject.transform.GetChild(2).gameObject; // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
-
-        // TO-DO - Get the closestNPC by looping through a list of NPC to get the closest one
-        closestNPC = GameObject.FindWithTag("Npc"); // This should be changed to distance calculation so we get closest npc
-
     }
 
     void Update()

@@ -260,10 +260,6 @@ public class InventorySlot : MonoBehaviour
             {   // Show the text in green to indicate hp gain on eating item
                 ItemStatsText.text = "Effect on eating: " + "<color=green>+" + ItemDataInSlot.healingCapability + " hp</color>";
             }
-
-
-
-
             this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }
         else
