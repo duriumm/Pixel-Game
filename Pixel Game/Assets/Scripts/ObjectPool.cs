@@ -27,12 +27,11 @@ public class ObjectPool
 		{
 			if (!obj.activeInHierarchy)
 			{
-				//Z pos needs to be -1 for glitch-free animation (Why? Can we fix this?)
-                obj.transform.position = new Vector3(pos.x, pos.y, -1);
-				obj.SetActive(true);
-				AvailableItems--;
-				//Debug.Log("Spawn! " + AvailableItems);
-				return obj;
+                obj.transform.position = pos;
+                obj.SetActive(true);
+                AvailableItems--;
+                //Debug.Log("Spawn! " + AvailableItems);
+                return obj;
 			}
 		}
 		// No available object found, pick one anyway
