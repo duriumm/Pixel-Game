@@ -38,6 +38,8 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public string savedSceneTransitionId;
 
+    public List<string> openedChestGameObjectName= new List<string>();
+
     
 
 

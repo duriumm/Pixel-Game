@@ -96756,6 +96756,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1125439973}
+    - target: {fileID: 1843213773967193150, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1884425280513270353, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: dialogueController
       value: 

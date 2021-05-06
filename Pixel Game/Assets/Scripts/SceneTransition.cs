@@ -24,8 +24,11 @@ public class SceneTransition : MonoBehaviour
 
 
         string dbSceneTransId = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId;
-        spawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
-        myPlayerObject.transform.position = spawnPos;
+        if (dbSceneTransId != "")
+        {
+            spawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
+            myPlayerObject.transform.position = spawnPos;
+        }
 
     }
 
