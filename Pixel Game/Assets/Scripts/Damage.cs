@@ -6,13 +6,14 @@ using UnityEngine;
 public class Damage : MonoBehaviour
 {
     [SerializeField]
-    private bool canBeAttacked;
+    protected bool canBeAttacked;
     [SerializeField]
-    private bool canAttack;
+    protected bool canAttack;
+    [SerializeField]
+    protected GameObject owner;
     [SerializeField]
     private float attackCooldown = 1;
-    [SerializeField]
-    private GameObject owner;
+
     private DateTime lastAttackTime;
     private Health health;
     private Attack Attack

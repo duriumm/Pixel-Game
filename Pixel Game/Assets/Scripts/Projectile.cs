@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class Projectile : MonoBehaviour
+class Projectile : Damage
 {
     private float timeToLive;
     private Vector3 velocity;

@@ -24,7 +24,12 @@ public class Weapon : MonoBehaviour
     public bool HasProjectileAttack => hasProjectileAttack;
 
     private bool readyToAttack = true;
-    public GameObject Owner;
+    private GameObject owner;
+    public GameObject Owner
+    {
+        get => owner;
+        set => owner = value;
+    }
 
     public bool ReadyToAttack => readyToAttack;
 

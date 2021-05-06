@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2338761507265489005}
   - component: {fileID: 4520761248188824625}
-  - component: {fileID: -8108205346132507392}
   - component: {fileID: 8167614337120770635}
   - component: {fileID: 8604920233226096892}
   m_Layer: 0
@@ -50,22 +49,6 @@ CircleCollider2D:
   m_Offset: {x: 0.00035883486, y: -0.0301921}
   serializedVersion: 2
   m_Radius: 0.24920695
---- !u!114 &-8108205346132507392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6015373485553373971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b89a49246d6f2c4eb7d8ab9cd73eeb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canBeAttacked: 0
-  canAttack: 1
-  attackCooldown: 0
-  owner: {fileID: 0}
 --- !u!114 &8167614337120770635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a3e2481bdcce241ba11aec26e4a213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeAttacked: 0
+  canAttack: 1
+  owner: {fileID: 0}
+  attackCooldown: 1
   spriteRotation: 45
 --- !u!212 &8604920233226096892
 SpriteRenderer:

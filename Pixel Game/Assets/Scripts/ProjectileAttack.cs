@@ -25,7 +25,7 @@ public class ProjectileAttack
         if (projectileTemplate != null)
         {
             this.firingWeapon = firingWeapon.GetComponent<Weapon>();
-            var damage = projectileTemplate.GetComponent<Damage>();
+            var damage = projectileTemplate.GetComponent<Projectile>();
             damage.SetOwner(firingWeapon);
             pool = new ObjectPool(projectileTemplate, 10);
         }
@@ -34,7 +34,6 @@ public class ProjectileAttack
     public void Shoot(Vector2 direction)
     {
         var pos = firingWeapon.Owner.transform.position;
-        pos.z = -1; // we change the Z axis since otherwise the particle effect doesnt play correctly 
         var velocity = direction.normalized * speed;
         var projectile = pool.Spawn(pos);
         projectile.GetComponent<Projectile>().Shoot(timeToLive, pool, velocity, destroyOnHit);
