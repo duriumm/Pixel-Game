@@ -24,7 +24,7 @@ public class Chest : MonoBehaviour
         currentChestSprite = gameObject.GetComponent<SpriteRenderer>();
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
 
-        if (dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectName.Contains(this.gameObject.name)){
+        if (dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Contains(this.gameObject.name)){
             ClearChest();
         }
         
@@ -51,9 +51,8 @@ public class Chest : MonoBehaviour
         openingSound.UnloadAudioData();
         currentChestSprite.sprite = openedEmptySprite;
         AudioSource.PlayClipAtPoint(lootSound, mainCamera.transform.position);
-        //chestInteractableScript.interactAction = null;
         chestInteractableScript.enabled = false;
-        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectName.Add(this.gameObject.name);
+        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Add(this.gameObject.name);
     }
 
     public void ClearChest()
