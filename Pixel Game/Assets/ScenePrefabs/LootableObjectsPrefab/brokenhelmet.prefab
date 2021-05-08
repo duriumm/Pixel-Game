@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 734902800046470439}
   - component: {fileID: 1176339550340347174}
   m_Layer: 0
-  m_Name: BrokenHelmet
+  m_Name: brokenhelmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Broken Helmet
   description: Whats left over from a helmet
-  damage: 0
   defense: 5
   durability: 100
   value: 5

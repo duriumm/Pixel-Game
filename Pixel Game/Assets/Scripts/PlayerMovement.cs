@@ -11,7 +11,8 @@ public class PlayerMovement : Movement
         // Input for movement on both axis
         movementDir.x = Input.GetAxisRaw("Horizontal");
         movementDir.y = Input.GetAxisRaw("Vertical");
-        faceDir = movementDir;
+        if (movementDir != Vector2.zero)
+            faceDir = movementDir;
         base.Update();
     }
 }

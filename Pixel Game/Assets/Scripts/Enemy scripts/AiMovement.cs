@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : Movement
+public class AiMovement : Movement
 {
     private GameObject playerObject;
     private GameObject mainCamera;
@@ -24,7 +24,7 @@ public class EnemyMovement : Movement
         base.Start();
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
         enemyTransform = gameObject.transform;
-         var enemyAttack = gameObject.GetComponent<EnemyAttack>();
+         var enemyAttack = gameObject.GetComponent<AiAttack>();
         float attackRange = enemyAttack == null ? 0 : enemyAttack.AttackRange;
 		retreatUpperDistance = attackRange * 0.7f;
 	}
@@ -34,13 +34,13 @@ public class EnemyMovement : Movement
         float playerDistance = Vector3.Distance(playerTransform.position, enemyTransform.position);
 
         // If player is far away, roam around
-        // If close, chase to get well within attack range
-        // Back away if too close
-        faceDir = Vector2.zero;
+        // If close, chase
+        // If too close, back away but stay well within attack range
+        bool backAway = false;
         if (playerDistance < retreatUpperDistance * 0.97f) //Back away
         {
             movementDir = enemyTransform.position - playerTransform.position;
-            faceDir = -movementDir; //Enemy should face player when backing away
+            backAway = true;
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
@@ -63,8 +63,12 @@ public class EnemyMovement : Movement
             else
                 movementDir = Vector2.zero;
         }
-        if (faceDir == Vector2.zero)
+        if (movementDir != Vector2.zero)
+        {
             faceDir = movementDir;
+            if (backAway)
+                faceDir *= -1;
+        }
 
         base.FixedUpdate();
     }

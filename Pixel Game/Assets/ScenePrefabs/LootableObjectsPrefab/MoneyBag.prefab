@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Bag of money
   description: This might be worth a lot!
-  damage: 0
   defense: 0
   durability: 0
   value: 100
@@ -107,6 +106,7 @@ MonoBehaviour:
   itemIdString: MoneyBag
   healingCapability: 0
   itemType: 4
+  isEquippable: 0
 --- !u!114 &2788272210976984025
 MonoBehaviour:
   m_ObjectHideFlags: 0

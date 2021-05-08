@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class EnemyHealth : Health
 {
+    [SerializeField]
+    private float respawnTime = 100;
     private SpriteRenderer spriteRenderer;
-    private EnemyAttack enemyAttack;
-    private EnemyMovement enemyMovement;
+    private AiAttack enemyAttack;
+    private AiMovement enemyMovement;
     private Collider2D[] colliderList;
     private DataToPassBetweenScenes dataToPassBetweenScenes;
     public enum ENEMYTYPE
@@ -22,15 +24,14 @@ public class EnemyHealth : Health
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        enemyAttack = gameObject.GetComponent<EnemyAttack>();
-        enemyMovement = gameObject.GetComponent<EnemyMovement>();
+        enemyAttack = gameObject.GetComponent<AiAttack>();
+        enemyMovement = gameObject.GetComponent<AiMovement>();
         colliderList = gameObject.GetComponentsInChildren<Collider2D>();
         dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
     }
 
     protected override void Kill()
     {
-
         if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES)
         {
             dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
@@ -53,20 +54,16 @@ public class EnemyHealth : Health
                 StartCoroutine(FadeOutEnemy());
                 break;
         }
+
+        StartCoroutine(WaitForRespawn());
     }
 
     private IEnumerator FadeOutEnemy()
     {
-        // Disable enemy is attackable to not get hit by player and also
-        // make the whole movementscript disabled so he cant move OR attack
         toggleActive(false);
-
-        // If enemy has shot attack, destroy the shot object so it doesnt get stuck in mid air on enemy death
-        gameObject.GetComponent<EnemyShotAttack>()?.DestroyShots();
 
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
-        //Debug.Log("start fade");
         for (float f = 1f; f >= -0.05f; f -= 0.05f)
         {
             Color c = spriteRenderer.material.color;
@@ -74,18 +71,20 @@ public class EnemyHealth : Health
             spriteRenderer.material.color = c;
             yield return new WaitForSeconds(0.10f);
         }
-        //Debug.Log("END fade");
+    }
 
-        // Set back enemy alpha color to 1 again which is normal max color
-        Color clr = spriteRenderer.material.color;
-        clr.a = 1f;
-        spriteRenderer.material.color = clr;
-        
+    IEnumerator WaitForRespawn()
+    {
+        yield return new WaitForSeconds(respawnTime);
         Respawn();
     }
 
     protected override void Respawn()
     {
+        // Set back enemy alpha color to 1 again which is normal max color
+        Color clr = spriteRenderer.material.color;
+        clr.a = 1f;
+        spriteRenderer.material.color = clr;
         toggleActive(true);
         base.Respawn();
     }
@@ -98,5 +97,6 @@ public class EnemyHealth : Health
             enemyAttack.enabled = active;
         foreach (var collider in colliderList)
             collider.enabled = active;
+        transform.Find("EnemyCanvas").gameObject.SetActive(active);
     }
 }

@@ -2,20 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//ObjectPool usage example:
-
-//public class EnemyAttack : MonoBehaviour
-//{
-//	public GameObject shotTemplate;
-//	private static ObjectPool shotPool;
-//	void Start()
-//	{
-//		shotPool = new ObjectPool(shotTemplate, 10);
-//	}
-//	...
-//	spawnedObject = shotPool.Spawn(pos);
-//	shotPool.Destroy(spawnedObject);
-
 public class ObjectPool
 {
 	public int AvailableItems { get; private set; }
@@ -29,26 +15,28 @@ public class ObjectPool
 			var obj = GameObject.Instantiate(templateObject);
 			obj.SetActive(false);
             obj.hideFlags = HideFlags.HideInHierarchy;
-            GameObject.DontDestroyOnLoad(obj);
+            //GameObject.DontDestroyOnLoad(obj);
 			pool.Add(obj);
 		}
 	}
 
-	public GameObject Spawn(Vector3 pos)
+	public GameObject Spawn(Vector2 pos)
 	{
 		//Find an inactive object
 		foreach (var obj in pool)
 		{
 			if (!obj.activeInHierarchy)
 			{
-				obj.transform.position = pos;
-				obj.SetActive(true);
-				AvailableItems--;
-				//Debug.Log("Spawn! " + AvailableItems);
-				return obj;
+                obj.transform.position = pos;
+                obj.SetActive(true);
+                AvailableItems--;
+                //Debug.Log("Spawn! " + AvailableItems);
+                return obj;
 			}
 		}
-		return null;
+		// No available object found, pick one anyway
+        // Todo: return object which has been active the longest time
+        return pool[0];
 	}
 
 	public void Destroy(GameObject obj)
