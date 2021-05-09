@@ -15,11 +15,19 @@ public class Chest : MonoBehaviour
     public Sprite openedEmptySprite;
     public Sprite openedWithLootSprite;
     private SpriteRenderer currentChestSprite;
+
+    private GameObject dataToPassGameObject;
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         chestInteractableScript = gameObject.GetComponent<Interactable>();
-        currentChestSprite = gameObject.GetComponent<SpriteRenderer>();      
+        currentChestSprite = gameObject.GetComponent<SpriteRenderer>();
+        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
+
+        if (dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Contains(this.gameObject.name)){
+            ClearChest();
+        }
+        
     }
 
     // Update is called once per frame
@@ -35,14 +43,22 @@ public class Chest : MonoBehaviour
         // BUG - On looting the chest after opening it first time, the opening sound plays again
         AudioSource.PlayClipAtPoint(openingSound, mainCamera.transform.position);
         Debug.Log("YOU OPENED CHEST");
-        chestInteractableScript.interactAction.AddListener(LootChest);
-        
+        chestInteractableScript.interactAction.AddListener(LootChest);          
     }
 
     public void LootChest()
     {
+        openingSound.UnloadAudioData();
         currentChestSprite.sprite = openedEmptySprite;
         AudioSource.PlayClipAtPoint(lootSound, mainCamera.transform.position);
-        chestInteractableScript.interactAction = null;
+        chestInteractableScript.enabled = false;
+        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Add(this.gameObject.name);
+    }
+
+    public void ClearChest()
+    {
+        currentChestSprite.sprite = openedEmptySprite;
+        chestInteractableScript.enabled = false;
+        this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
     }
 }

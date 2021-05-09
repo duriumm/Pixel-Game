@@ -28,11 +28,15 @@ public class NpcData : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
 
+    public AudioClip npcTalkSound;
+    private GameObject mainCamera;
+
     void Start()
     {
         dialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
+        mainCamera = GameObject.FindWithTag("MainCamera");
     }
 
 
@@ -40,6 +44,12 @@ public class NpcData : MonoBehaviour
     {
         if (collision.gameObject.tag == "MyPlayer")
         {
+            // Some npcs might not have a sound attached which is fine. Therefor we check if its null
+            if(npcTalkSound != null)
+            {
+                AudioSource.PlayClipAtPoint(npcTalkSound, mainCamera.transform.position);
+            }
+
             // Set this NPCs dialogue to be active in dialogueController
             dialogueController.twineText = currentActiveConvo;
             // Initialize the NPCs dialogue so that when we open the dialogue window next time

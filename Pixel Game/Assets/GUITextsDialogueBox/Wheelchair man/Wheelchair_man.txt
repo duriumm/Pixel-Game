@@ -1,0 +1,19 @@
+:: StoryTitle
+Wheelchair_man
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Start of story[START]
+I remember when these lands were peaceful and safe...
+You mean they are not?[[No peaceful lands]]
+
+:: No peaceful lands
+No boy... have you been outside of this town?.. These lands are full of bandits and monsters. Oh how the times have changed...
+Walk away[[End Conversation]]
+
+:: End Conversation[END]
+

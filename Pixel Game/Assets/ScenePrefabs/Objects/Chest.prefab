@@ -143,6 +143,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openingSound: {fileID: 8300000, guid: 815b4019841013641a13f702fd7f62d3, type: 3}
-  lootSound: {fileID: 0}
-  openedEmptySprite: {fileID: 0}
-  openedWithLootSprite: {fileID: 0}
+  lootSound: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
+  openedEmptySprite: {fileID: 21300000, guid: e430213f82efa744aa24055e6f20899f, type: 3}
+  openedWithLootSprite: {fileID: 21300000, guid: 3d0b682037c22db4fb66f1b657819570, type: 3}
