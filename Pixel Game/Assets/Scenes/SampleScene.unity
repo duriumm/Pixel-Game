@@ -778,23 +778,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3988932952514855773, guid: 0df1e869dc390294f8f9224a0d425129, type: 3}
   m_PrefabInstance: {fileID: 509578589}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &519420028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8124833035510669127, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-  m_PrefabInstance: {fileID: 8124833035059029819}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &519420029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db23a335e95607d40817b6ea5a63cdae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &531626138 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6331735293764940088, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
@@ -49688,79 +49671,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: isQuestFinished
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: convoList.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentQuest.questName
-      value: Ghast Killer
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: convoList.Array.data[2]
-      value: 
-      objectReference: {fileID: 4900000, guid: edbeccfa50ac8ea47ad55ba30497012c, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: convoList.Array.data[3]
-      value: 
-      objectReference: {fileID: 4900000, guid: 76cd07c48bbdbe242b63ce7dd4bcc1d3, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentQuest.description
-      value: There is an annoying Ghast roaming around, kill it and i will reward
-        you greatly!
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentQuest.moneyReward
-      value: 999
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentNpcQuest.questName
-      value: Ghast Killer
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questConvoList.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentNpcQuest.description
-      value: There is a Ghast roaming around, kill him pls!
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentNpcQuest.moneyReward
-      value: 999
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentNpcQuest.amountToKill
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questConvoList.Array.data[0]
-      value: 
-      objectReference: {fileID: 4900000, guid: 95c4a28e6bbaa8743853f270ba65cbd8, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questConvoList.Array.data[1]
-      value: 
-      objectReference: {fileID: 4900000, guid: c3aac4b858914af489f6d750010eac07, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questConvoList.Array.data[2]
-      value: 
-      objectReference: {fileID: 4900000, guid: edbeccfa50ac8ea47ad55ba30497012c, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: questConvoList.Array.data[3]
-      value: 
-      objectReference: {fileID: 4900000, guid: 76cd07c48bbdbe242b63ce7dd4bcc1d3, type: 3}
-    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
-      propertyPath: currentNpcQuest.amountOfEnemiesToKill
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1391972506, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -83467,29 +83377,9 @@ PrefabInstance:
       propertyPath: CoinAmountText
       value: 
       objectReference: {fileID: 531626138}
-    - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: buyAndSellSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
-    - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: dataToPassPrefab
-      value: 
-      objectReference: {fileID: 8159923538760270473, guid: 2b4a83fea96e7204b88446f73b4514eb, type: 3}
-    - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: dataToPassGameObject
-      value: 
-      objectReference: {fileID: 8159923538760270455, guid: 2b4a83fea96e7204b88446f73b4514eb, type: 3}
     - target: {fileID: 8973467112481931545, guid: 9d833f1f6326030439f083e346cee915, type: 3}
       propertyPath: m_Name
       value: InvEntoryManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 8973467112481931545, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8973467112481931545, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: m_TagString
-      value: InventoryManager
       objectReference: {fileID: 0}
     - target: {fileID: 8973467112481931547, guid: 9d833f1f6326030439f083e346cee915, type: 3}
       propertyPath: m_RootOrder
@@ -98796,10 +98686,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1298397504, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2824421787628749487, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -98861,22 +98747,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: traderID
-      value: FatNpc
-      objectReference: {fileID: 0}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.data[0]
-      value: 
-      objectReference: {fileID: 4069441921147659030, guid: 5a4a81d6cb0c2634db631cc9bdf80df4, type: 3}
-    - target: {fileID: -4759392353146039957, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: shopItems.Array.data[1]
-      value: 
-      objectReference: {fileID: 8776739252053834925, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
     - target: {fileID: 4252617600775834032, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
       propertyPath: m_RootOrder
       value: 21
@@ -98924,14 +98794,6 @@ PrefabInstance:
     - target: {fileID: 6977666638280157480, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
       propertyPath: m_Name
       value: FatNpc
-      objectReference: {fileID: 0}
-    - target: {fileID: 9115208725788499396, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d889edbd222c3644b88365c127b08daf, type: 3}
-    - target: {fileID: 9115208725788499396, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff24f0203010c9845b1c95d0683f8ebc, type: 3}
@@ -99391,30 +99253,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: lootSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
-    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: openedSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e430213f82efa744aa24055e6f20899f, type: 3}
-    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: openedEmptySprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e430213f82efa744aa24055e6f20899f, type: 3}
-    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: openedWithLootSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 3d0b682037c22db4fb66f1b657819570, type: 3}
-    - target: {fileID: 6282491209356646492, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ff05419d58021c1449031a574a4cc647, type: 3}
-    - target: {fileID: 6282491209356646492, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
       propertyPath: m_RootOrder
       value: 35
@@ -99728,22 +99566,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-      propertyPath: field of view
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-      propertyPath: far clip plane
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-      propertyPath: near clip plane
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8124833035510669124, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
-      propertyPath: orthographic size
-      value: 4.21875
-      objectReference: {fileID: 0}
     - target: {fileID: 8124833035510669127, guid: d262b40823072ed44bb5d4225e92b830, type: 3}
       propertyPath: m_Name
       value: Main Camera
