@@ -301,9 +301,8 @@ Transform:
   - {fileID: 1886766526}
   - {fileID: 465090149}
   - {fileID: 2063777597}
-  - {fileID: 1346968875}
-  - {fileID: 1645782241}
-  - {fileID: 1301182276}
+
+
   - {fileID: 984998483}
   - {fileID: 1572730496}
   - {fileID: 1184396867}
@@ -50424,7 +50423,7 @@ Transform:
   m_LocalPosition: {x: -0.028326467, y: -1.1458411, z: 22.666843}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1771153802}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &720203909
@@ -96540,7 +96539,7 @@ PrefabInstance:
     - target: {fileID: 1186829748208278499, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2142639216}
+      objectReference: {fileID: 0}
     - target: {fileID: 1186829748208278499, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DropEquippedItem
@@ -96688,7 +96687,7 @@ PrefabInstance:
     - target: {fileID: 2248264689500377297, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2142639216}
+      objectReference: {fileID: 0}
     - target: {fileID: 2248264689500377297, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DropEquippedItem
@@ -96704,7 +96703,7 @@ PrefabInstance:
     - target: {fileID: 3135768408173485468, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2142639216}
+      objectReference: {fileID: 0}
     - target: {fileID: 3135768408173485468, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DropEquippedItem
@@ -96720,7 +96719,7 @@ PrefabInstance:
     - target: {fileID: 5368707373508839426, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2142639216}
+      objectReference: {fileID: 0}
     - target: {fileID: 5368707373508839426, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DropEquippedItem

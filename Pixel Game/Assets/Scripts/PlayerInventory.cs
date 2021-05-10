@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 public class PlayerInventory : MonoBehaviour
 {
     private InventorySlot[] slots;
+    private InventorySlot[] equipmentSlots;
     private GameObject inventoryScreenGameObject;
     public GameObject prefabCanvas;
     private Transform inventorySlotsTransform;
@@ -44,6 +45,10 @@ public class PlayerInventory : MonoBehaviour
         inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
         inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(0).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
+
+        equipmentSlots = inventoryScreenGameObject.transform.GetChild(1).
+            transform.GetComponentsInChildren<InventorySlot>(); // Get all equipment slots in player inventory
+
         screenTabs = prefabCanvas.transform.Find("GuiTabsButtons").gameObject;
         shopScreen = GameObject.Find("ShopScreen");
         // Player is set in awake since it needs to be called before the start in shopscreen 
@@ -79,6 +84,11 @@ public class PlayerInventory : MonoBehaviour
             //Debug.Log(item.name);
             item.GetComponent<EventTrigger>().enabled = false;
         }
+        foreach (var item in equipmentSlots)
+        {
+            //Debug.Log(item.name);
+            item.GetComponent<EventTrigger>().enabled = false;
+        }
     }
     public void OpeningGUI()
     {
@@ -87,14 +97,20 @@ public class PlayerInventory : MonoBehaviour
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
         
+        // These 2 loops disable the ability to hover over each slot when inv is closed
         foreach (var item in slots)
         {
             item.GetComponent<EventTrigger>().enabled = true;
 
         }
+        foreach (var item in equipmentSlots)
+        {
+            //Debug.Log(item.name);
+            item.GetComponent<EventTrigger>().enabled = true;
+        }
         // We should only show the tabs for each screen when opening the inventory 
         // if the shop is closed. Otherwise they will render on top of shop window and look weird
-        if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+        if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
         {
             screenTabs.SetActive(true);
         }
