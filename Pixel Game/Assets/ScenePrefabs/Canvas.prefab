@@ -6908,7 +6908,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 36.5, y: -2.1}
+  m_AnchoredPosition: {x: 38.431, y: 0}
   m_SizeDelta: {x: 76.861374, y: 76.861374}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1843213773409756835
@@ -18275,6 +18275,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -18362,6 +18366,14 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: EquipmentSlotPanel (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -18683,6 +18695,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -18770,6 +18786,10 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: BOOTS_SlotPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -19193,6 +19213,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -19280,6 +19304,10 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: BODY_SlotPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -19703,6 +19731,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -19790,6 +19822,10 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: PANTS_SlotPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -20009,6 +20045,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20097,6 +20137,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SHIELD_SlotPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
 --- !u!224 &8394318049016584078 stripped
@@ -20111,6 +20159,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20198,6 +20250,10 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: WEAPON_SlotPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -20417,6 +20473,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20505,6 +20565,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EquipmentSlotPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
 --- !u!224 &8878174067293936828 stripped
@@ -20519,6 +20587,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20607,6 +20679,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HELMET_SlotPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
 --- !u!224 &8671497570627842731 stripped
@@ -20621,6 +20697,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20708,6 +20788,14 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: EquipmentSlotPanel (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
@@ -20825,6 +20913,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5858320209183433906}
     m_Modifications:
+    - target: {fileID: 808156646991335877, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MoveEquippedItemToInventory
+      objectReference: {fileID: 0}
     - target: {fileID: 2788945366039332428, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20912,6 +21004,10 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: EquipmentSlotPanel (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropEquippedItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}

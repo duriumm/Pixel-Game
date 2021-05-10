@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 4483081238741481981}
   m_Layer: 0
   m_Name: InvEntoryManager
-  m_TagString: Untagged
+  m_TagString: InventoryManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8973467112481931547
 Transform:
   m_ObjectHideFlags: 0
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc029ea859b0d64caf586d6b848b539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabCanvas: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+  prefabCanvas: {fileID: 0}
   isInventoryOpen: 0
-  dataToPassGameObject: {fileID: 0}
-  buyAndSellSound: {fileID: 0}
+  dataToPassGameObject: {fileID: 8159923538760270455, guid: 2b4a83fea96e7204b88446f73b4514eb, type: 3}
+  buyAndSellSound: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
   playerInvMoney: 0
   CoinAmountText: {fileID: 0}
 --- !u!114 &4483081238741481981
@@ -62,3 +62,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2027467d12cd1c648a1eabdc38b1323c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStatsScreenOpen: 0

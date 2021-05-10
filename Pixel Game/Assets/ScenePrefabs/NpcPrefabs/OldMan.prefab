@@ -185,9 +185,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentActiveConvo: {fileID: 4900000, guid: 95c4a28e6bbaa8743853f270ba65cbd8, type: 3}
-  convoList:
+  questConvoList:
   - {fileID: 4900000, guid: 95c4a28e6bbaa8743853f270ba65cbd8, type: 3}
   - {fileID: 4900000, guid: c3aac4b858914af489f6d750010eac07, type: 3}
+  - {fileID: 4900000, guid: edbeccfa50ac8ea47ad55ba30497012c, type: 3}
+  - {fileID: 4900000, guid: 76cd07c48bbdbe242b63ce7dd4bcc1d3, type: 3}
+  currentNpcQuest:
+    questType: 0
+    questName: Ghast Killer
+    description: There is a Ghast roaming around, kill him pls!
+    moneyReward: 999
+    amountToKill: 1
+    currentKilled: 0
+    isQuestFinished: 0
+  npcTalkSound: {fileID: 0}
 --- !u!1 &4212733957229248313
 GameObject:
   m_ObjectHideFlags: 0
