@@ -87,7 +87,8 @@ public class PlayerInventory : MonoBehaviour
         foreach (var item in equipmentSlots)
         {
             //Debug.Log(item.name);
-            item.GetComponent<EventTrigger>().enabled = false;
+            //item.GetComponent<EventTrigger>().enabled = false; 
+            item.gameObject.SetActive(false);
         }
     }
     public void OpeningGUI()
@@ -96,17 +97,35 @@ public class PlayerInventory : MonoBehaviour
         playerGameObject.GetComponent<Attack>().enabled = false;
         isInventoryOpen = true;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
-        
-        // These 2 loops disable the ability to hover over each slot when inv is closed
+
+        // These 2 loops enable the ability to hover over each slot when inv is closed
+        if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        {
+            foreach (var item in equipmentSlots)
+            {
+                item.gameObject.SetActive(false);
+                //item.GetComponent<EventTrigger>().enabled = false;
+                //item.GetComponent<Button>().enabled = false;
+                //item.gameObject.
+                //item.transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            foreach (var item in equipmentSlots)
+            {
+                item.gameObject.SetActive(true);
+                //Debug.Log(item.name);
+                //item.GetComponent<EventTrigger>().enabled = true;
+                //item.GetComponent<Button>().enabled = true;
+
+            }
+
+        }
         foreach (var item in slots)
         {
             item.GetComponent<EventTrigger>().enabled = true;
 
-        }
-        foreach (var item in equipmentSlots)
-        {
-            //Debug.Log(item.name);
-            item.GetComponent<EventTrigger>().enabled = true;
         }
         // We should only show the tabs for each screen when opening the inventory 
         // if the shop is closed. Otherwise they will render on top of shop window and look weird
