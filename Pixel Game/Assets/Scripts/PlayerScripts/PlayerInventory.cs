@@ -81,13 +81,11 @@ public class PlayerInventory : MonoBehaviour
         screenTabs.SetActive(false);
         foreach (var item in slots)
         {
-            //Debug.Log(item.name);
             item.GetComponent<EventTrigger>().enabled = false;
         }
         foreach (var item in equipmentSlots)
         {
-            //Debug.Log(item.name);
-            //item.GetComponent<EventTrigger>().enabled = false; 
+
             item.gameObject.SetActive(false);
         }
     }
