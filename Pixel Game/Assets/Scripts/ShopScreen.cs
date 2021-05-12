@@ -22,7 +22,7 @@ public class ShopScreen : MonoBehaviour
         //shopSlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         shopSlots = this.gameObject.transform.GetComponentsInChildren<InventorySlot>();
 
-        Debug.Log("Amount of shopslots is: " + shopSlots.Length);
+        //Debug.Log("Amount of shopslots is: " + shopSlots.Length);
 
         // Set all shop slot sprites to alpha color 0, otherwise we will see a white box instead of empty item slot
         foreach (var item in shopSlots)

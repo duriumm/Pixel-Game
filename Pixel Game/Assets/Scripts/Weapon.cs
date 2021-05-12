@@ -33,11 +33,18 @@ public class Weapon : MonoBehaviour
 
     public bool ReadyToAttack => readyToAttack;
 
+    // Start() only runs once on game startup. FakeStart() runs when a scene is loaded
     protected virtual void Start()
     {
         // If attached to a character with an Attack script, make the character the owner of the weapon
         // so that spawned shots appear at the character's positiion
         // If instead attached to a lootable item, the owner will be set when equipping the item
+        if (GetComponent<Attack>() != null)
+            Owner = gameObject;
+        ProjectileAttack.Init(gameObject);
+    }
+    public void FakeStart()
+    {
         if (GetComponent<Attack>() != null)
             Owner = gameObject;
         ProjectileAttack.Init(gameObject);

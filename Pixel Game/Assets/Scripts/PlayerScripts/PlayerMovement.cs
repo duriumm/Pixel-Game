@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : Movement
 {
-    //public Animator bootsAnimator;        // Use when equipment is being added
 
     protected override void Update()
     {
