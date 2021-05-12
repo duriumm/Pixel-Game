@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
         }
         get => hp;
     }
-    public bool HasFullHp => hp == maxHp;
+    public bool HasFullHp => hp == maxHp; // If hp == maxHp, bool is true :)
 
     [SerializeField]
     protected Slider slider;
@@ -93,4 +93,4 @@ public class Health : MonoBehaviour
         KnockedBack = false;
     }
 }
-    //}
+    

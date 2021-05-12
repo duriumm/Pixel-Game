@@ -5,30 +5,15 @@ using UnityEngine;
 
 public class NpcData : MonoBehaviour
 {
-    // Assign a twine convo fort this NPC
 
     public TextAsset currentActiveConvo;
-
-
     public List<TextAsset> questConvoList = new List<TextAsset>();
-
-    // If npc only has one talking convo he does not need a convolist. Only a currentActiveConvo.
-    // if npc has questConvo and a regular convo after quest, then he might need a regularConvoList
-    //public List<TextAsset> regularConvoList = new List<TextAsset>();
-
-
-    // Do we really need a questList?? maybe just one quest
-    //public List<Quest> questList = new List<Quest>();
-
+    // For now the NPC can only hold 1 quest at a time. Add list in the future for several
     public Quest currentNpcQuest;
-
-
-
+    public AudioClip npcTalkSound;
     private DialogueController dialogueController;
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
-
-    public AudioClip npcTalkSound;
     private GameObject mainCamera;
 
     void Start()
@@ -71,16 +56,10 @@ public class NpcData : MonoBehaviour
         }
     }
 
-    public void ProgressDialogue()
-    {
-        //currentActiveConvo = convoList
-    }
-
     // To-Do - Activate a quest in a list of quests!
     public void ActivateQuest()
     {
         Debug.Log("QUEST ACTIVATYED on npc named: " + this.gameObject.name);
-        //currentActiveConvo = convoList.
 
         foreach (var item in questConvoList)
         {
@@ -101,7 +80,6 @@ public class NpcData : MonoBehaviour
                 dialogueController.InitializeDialogue();
 
                 break;
-
             }
         }
         //dialogueController.twineText = questTwineConvo;

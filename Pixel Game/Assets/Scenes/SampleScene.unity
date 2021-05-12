@@ -219,6 +219,7 @@ Transform:
   m_Children:
   - {fileID: 156671381942715938}
   - {fileID: 7367992894917996652}
+  - {fileID: 1749767340}
   m_Father: {fileID: 0}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96758,6 +96759,75 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1451846450
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 100778606}
+    m_Modifications:
+    - target: {fileID: -2862576637602397499, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: respawnTime
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -9.399239
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.9847698
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.22420008
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_Name
+      value: GhastEnemy (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
 --- !u!1001 &1476597209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -97209,6 +97279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c84c4eeed64680e43b3f4746d69e1491, type: 3}
+--- !u!4 &1749767340 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4144447419025406582, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+  m_PrefabInstance: {fileID: 1451846450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1775772308
 GameObject:
   m_ObjectHideFlags: 0
@@ -97603,6 +97678,14 @@ PrefabInstance:
       propertyPath: questConvoList.Array.data[3]
       value: 
       objectReference: {fileID: 4900000, guid: 76cd07c48bbdbe242b63ce7dd4bcc1d3, type: 3}
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.enemyTypeToKill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.gameObjectReward
+      value: 
+      objectReference: {fileID: 8319600169151556584, guid: 5a50459914dbb8f4aa4099f5f03692f3, type: 3}
     - target: {fileID: 1391972506, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

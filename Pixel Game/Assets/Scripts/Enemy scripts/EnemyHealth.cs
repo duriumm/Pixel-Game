@@ -32,7 +32,9 @@ public class EnemyHealth : Health
 
     protected override void Kill()
     {
-        if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES)
+        // Comparing two enums, can be more efficent than this. TODO: Make it more efficent
+        if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES &&
+            enemyType.ToString().Equals(dataToPassBetweenScenes.currentActivePlayerQuest.enemyTypeToKill.ToString()))
         {
             dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
         }

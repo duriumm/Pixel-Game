@@ -104,11 +104,7 @@ public class SceneTransition : MonoBehaviour
         playerInput.FakeStart();
         playerAttack.FakeStart();
         playerWeapon.FakeStart();
-
-
     }
-
-
 }
 
 

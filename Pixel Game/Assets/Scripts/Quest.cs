@@ -13,10 +13,22 @@ public class Quest
     }
     public QUESTTYPE questType;
 
+    public enum ENEMYTYPE
+    {
+        None,
+        GHOST,
+        HUMAN,
+        BEAST
+    }
+    public ENEMYTYPE enemyTypeToKill = ENEMYTYPE.None;
+
+
     public string questName;
     [TextArea(2,5)]
     public string description;
+
     public int moneyReward;
+    public GameObject gameObjectReward;
 
     public int amountToKill;
 
@@ -27,6 +39,7 @@ public class Quest
 
     public void IncrementKilledEnemies()
     {
+
         currentKilled++;
         if(currentKilled >= amountToKill)
         {
