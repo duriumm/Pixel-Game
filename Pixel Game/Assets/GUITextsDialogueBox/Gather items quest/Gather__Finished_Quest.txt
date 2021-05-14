@@ -1,0 +1,22 @@
+:: StoryTitle
+Davidbaby__Finished_Quest
+
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Good job lad [START]
+Thanks sir! Take this!
+
+Claim reward[[Reward text]]
+
+:: Reward text [QUEST_DONE]
+Enter reward text here
+
+Sweet![[End Conversation]]
+
+:: End Conversation [END]
+

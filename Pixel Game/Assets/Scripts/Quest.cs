@@ -7,6 +7,7 @@ public class Quest
 {
     public enum QUESTTYPE
     {
+        None,
         KILL_ENEMIES,
         GATHER_ITEMS,
         WAIT_TIME
@@ -30,13 +31,36 @@ public class Quest
     public int moneyReward;
     public GameObject gameObjectReward;
 
+    // Kill enemies quest
     public int amountToKill;
-
     public int currentKilled;
 
     public bool isQuestFinished = false;
 
+    // Gather items quest
+    public GameObject itemToGather;
+    public int amountToCollect;
+    public int currentCollected;
 
+    public void IncrementItemsCollected()
+    {
+        currentCollected++;
+        if(currentCollected >= amountToCollect)
+        {
+            isQuestFinished = true;
+        }
+    }
+    public void DecrementItemsCollected()
+    {
+        if(currentCollected > 0)
+        {
+            currentCollected--;
+            if (currentCollected < amountToCollect)
+            {
+                isQuestFinished = false;
+            }
+        }  
+    }
     public void IncrementKilledEnemies()
     {
 

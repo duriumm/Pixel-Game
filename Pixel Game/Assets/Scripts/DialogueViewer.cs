@@ -132,7 +132,9 @@ public class DialogueViewer : MonoBehaviour
             // the lines of "You did a good job before, thanks" 
             string currentActiveNpc = dataToPass.currentActivateNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-            npcGameobject.GetComponent<NpcData>().EndTheQuest();         
+            npcGameobject.GetComponent<NpcData>().EndTheQuest();
+
+            dataToPass.currentActivePlayerQuest = null;
         }
     }
 

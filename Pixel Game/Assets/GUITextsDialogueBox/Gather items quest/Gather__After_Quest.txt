@@ -1,0 +1,16 @@
+:: StoryTitle
+Davidbaby__After_Quest
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Good job [START]
+U da best!!
+
+Ye whatever lil shit[[End Conversation]]
+
+:: End Conversation [END]
+

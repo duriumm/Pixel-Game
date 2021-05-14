@@ -28,6 +28,7 @@ public class InventorySlot : MonoBehaviour
     public bool isInventoryPanel;
     private static PlayerInventory inventory;
     private Attack playerAttack;
+    private DataToPassBetweenScenes dataToPass;
 
     void Awake()
     {
@@ -48,6 +49,11 @@ public class InventorySlot : MonoBehaviour
         playerAttack = playerCharacter.GetComponent<Attack>();
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
+        
+    }
+    private void Start()
+    {
+        dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
     }
 
     public void UseItem()
@@ -196,6 +202,16 @@ public class InventorySlot : MonoBehaviour
 
     public void DropItem()
     {
+        if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+        {
+            if (ItemDataInSlot.itemName.Equals(
+                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName))
+            {
+                dataToPass.currentActivePlayerQuest.DecrementItemsCollected();
+                Debug.Log("WE DECREMENTED FFS");
+            }
+            
+        }
         // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)
         {

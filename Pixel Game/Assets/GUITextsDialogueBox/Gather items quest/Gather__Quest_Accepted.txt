@@ -1,0 +1,21 @@
+:: StoryTitle
+Davidbaby__Quest_Accepted
+
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Is Quest Done [START]
+Hey man! Snyft.. have you got my tears? :(
+
+Yes!![[Check If Quest Is Done]]
+Not yet..[[End Conversation]]
+
+:: Check If Quest Is Done [CHECK_QUEST]
+Oh i havent got them all..[[Is Quest Done]] 
+
+:: End Conversation [END]
+Double-click this passage to edit it.

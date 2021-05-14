@@ -1,0 +1,29 @@
+:: StoryTitle
+Davidbaby__Starting
+
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Start of convo [START]
+Boohohooo im such a baby.. i cry all the time :( i wish i could get my tears back...
+
+Can i help?[[Help Baby]]
+Bye[[End Conversation]]
+
+:: Help Baby
+Well it would be very nice to get my tears back! Hmm maybe i could use Ghast tears aswell... Could u get me 3?? 
+
+Yes sure thing, ill get your ghast tears[[Accept Quest]]
+Nah, i gotta go[[End Conversation]] 
+
+:: End Conversation [END]
+It ends here
+
+:: Accept Quest [ACCEPT_QUEST]
+Woho! Ill be waiting for you :)
+
+Ok![[End Conversation]]

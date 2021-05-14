@@ -17,6 +17,7 @@ public class Chest : MonoBehaviour
     private SpriteRenderer currentChestSprite;
 
     private GameObject dataToPassGameObject;
+    //public GameObject loot;
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");

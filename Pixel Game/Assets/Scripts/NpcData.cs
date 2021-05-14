@@ -63,7 +63,7 @@ public class NpcData : MonoBehaviour
 
         foreach (var item in questConvoList)
         {
-            if (item.name.Contains("Quest_Is_Accepted"))
+            if (item.name.Contains("Quest_Accepted"))
             {
                 // We CAN remove the old convo so it doesnt get mixed up, 
                 // Is it neccecary though??? This removal can enable more quests in the future though 
@@ -128,7 +128,7 @@ public class NpcData : MonoBehaviour
     {
         foreach (var item in questConvoList)
         {
-            if (item.name.Contains("After_Quest_Finished"))
+            if (item.name.Contains("After_Quest"))
             {
                 //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;

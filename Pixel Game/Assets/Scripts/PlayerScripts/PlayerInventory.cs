@@ -17,6 +17,7 @@ public class PlayerInventory : MonoBehaviour
     public bool isInventoryOpen = false;
     private ItemData lootedItemData;
     public GameObject dataToPassGameObject;
+    private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
     private GameObject screenTabs;
@@ -53,7 +54,8 @@ public class PlayerInventory : MonoBehaviour
         shopScreen = GameObject.Find("ShopScreen");
         // Player is set in awake since it needs to be called before the start in shopscreen 
         // since shopscreen uses shopscreen.close() 
-        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer"); 
+        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
+        dataToPass = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>();
 
 
     }
@@ -143,7 +145,20 @@ public class PlayerInventory : MonoBehaviour
             Destroy(lootedGameObject);
         }
         else
+        {
+            if (dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+            {
+                if (lootedGameObject.GetComponent<ItemData>().itemName.Equals(
+                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName))
+                {
+                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
+                    Debug.Log("WE incremented FFS");
+                }
+
+            }
             AddItemToEmptySlot(lootedGameObject);
+        }
+            
     }
 
     public bool AddItemToEmptySlot(GameObject itemToAdd)
