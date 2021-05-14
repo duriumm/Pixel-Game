@@ -42,6 +42,12 @@ public class Quest
     public int amountToCollect;
     public int currentCollected;
 
+
+
+    public void ClearCollectedItems(GameObject gameObjToClear)
+    {
+
+    }
     public void IncrementItemsCollected()
     {
         currentCollected++;

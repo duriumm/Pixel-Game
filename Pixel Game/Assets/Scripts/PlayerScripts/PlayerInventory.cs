@@ -68,10 +68,22 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    // When a gather items quest is done, we want to remove the gathered items
+    // from players inventory, that is done here
+    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)
     {
-        
+        foreach (var slot in slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                if (slot.ItemDataInSlot.itemName.Equals(itemNameToRemove))
+                {
+                    slot.DropItem();
+                    Destroy(slot.ItemDataGameObject);
+                    slot.ClearSlot();
+                }
+            }
+        }
     }
     public void ClosingUI()
     {

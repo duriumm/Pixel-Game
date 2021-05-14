@@ -18,7 +18,7 @@ public class InventorySlot : MonoBehaviour
     private GameObject playerCharacter;
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
-    private ItemData ItemDataInSlot;
+    public ItemData ItemDataInSlot; // Changed from private to public. All good?
     public GameObject ItemDataGameObject => ItemDataInSlot?.gameObject;
     public bool IsEmpty => ItemDataInSlot == null;
     private GameObject shopScreen;

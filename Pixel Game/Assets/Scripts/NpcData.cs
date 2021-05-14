@@ -15,6 +15,7 @@ public class NpcData : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
     private GameObject mainCamera;
+    private PlayerInventory playerInventory;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class NpcData : MonoBehaviour
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
         mainCamera = GameObject.FindWithTag("MainCamera");
+        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
     }
 
 
@@ -105,6 +107,7 @@ public class NpcData : MonoBehaviour
                 {
                     //convoList.Remove(currentActiveConvo);
                     currentActiveConvo = item;
+                    
                 }
             }
             // If the quest requirements are fullfilled, we want to start the next dialogue
@@ -130,6 +133,14 @@ public class NpcData : MonoBehaviour
         {
             if (item.name.Contains("After_Quest"))
             {
+                if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+                {
+                    // When a gather items quest is done we want to clear the inventory of said items
+                    string itemName = dataToPass.currentActivePlayerQuest.itemToGather.
+                        GetComponent<ItemData>().itemName;
+                    playerInventory.RemoveCollectedQuestItemsFromInventory(itemName);
+
+                }
                 //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
             }
