@@ -68,6 +68,21 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
+    // Check player inventory if there are already some of the items we need to collect
+    // so we can increment the value correctly 
+    public void CheckInventoryForCollectedItems(string itemNameToRemove)
+    {
+        foreach (var slot in slots)
+        {
+            if (!slot.IsEmpty)
+            {
+                if (slot.ItemDataInSlot.itemName.Equals(itemNameToRemove))
+                {
+                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
+                }
+            }
+        }
+    }
     // When a gather items quest is done, we want to remove the gathered items
     // from players inventory, that is done here
     public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)

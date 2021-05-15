@@ -67,11 +67,6 @@ public class NpcData : MonoBehaviour
         {
             if (item.name.Contains("Quest_Accepted"))
             {
-                // We CAN remove the old convo so it doesnt get mixed up, 
-                // Is it neccecary though??? This removal can enable more quests in the future though 
-                // since they can all be named "[something]__Quest_Is_Accepted"
-
-                //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
                 Debug.Log("Current active convo is: " + currentActiveConvo.name);
 
@@ -84,7 +79,6 @@ public class NpcData : MonoBehaviour
                 break;
             }
         }
-        //dialogueController.twineText = questTwineConvo;
         
         // We turn dialogueCanvas off after the activation of the quest since otherwise 
         // the next conversation will be started immediately
@@ -92,6 +86,15 @@ public class NpcData : MonoBehaviour
 
 
         dataToPass.currentActivePlayerQuest = currentNpcQuest;
+
+        // On activating a gather item quest, we need to check if we already have
+        // one or more of said item in our inventory
+        if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+        {
+            playerInventory.CheckInventoryForCollectedItems(
+                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName);
+        }
+
         Debug.Log("Current active playerquest is: "+ dataToPass.currentActivePlayerQuest.questName);
     }
     public bool CheckIfQuestIsDone()
