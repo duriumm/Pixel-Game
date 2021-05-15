@@ -94,6 +94,13 @@ public class NpcData : MonoBehaviour
             playerInventory.CheckInventoryForCollectedItems(
                 dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName);
         }
+        else if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.DELIVER_ITEM)
+        {
+            string originalItemName = dataToPass.currentActivePlayerQuest.itemToDeliver.name;
+            GameObject instantiatedObj = Instantiate(dataToPass.currentActivePlayerQuest.itemToDeliver) as GameObject;
+            instantiatedObj.name = originalItemName;
+            playerInventory.LootItem(instantiatedObj);
+        }
 
         Debug.Log("Current active playerquest is: "+ dataToPass.currentActivePlayerQuest.questName);
     }

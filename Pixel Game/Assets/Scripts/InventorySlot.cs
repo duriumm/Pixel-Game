@@ -76,6 +76,15 @@ public class InventorySlot : MonoBehaviour
                     ClearSlot();
                 }
             }
+            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
+            {
+                if (dataToPass.currentActivateNpc.Equals(dataToPass.currentActivePlayerQuest.npcDeliveryTarget.name))
+                {
+                    Destroy(ItemDataGameObject);
+                    ClearSlot();
+                    dataToPass.currentActivePlayerQuest.isQuestFinished = true;
+                }
+            }
         }
         else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {

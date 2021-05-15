@@ -224,6 +224,7 @@ Transform:
   - {fileID: 2093088270}
   - {fileID: 243128842}
   - {fileID: 2008622504}
+  - {fileID: 1414116895}
   m_Father: {fileID: 0}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -809,6 +810,10 @@ PrefabInstance:
       propertyPath: currentNpcQuest.amountToCollect
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2597011702295145950, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
+      propertyPath: currentNpcQuest.gameObjectReward
+      value: 
+      objectReference: {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
     - target: {fileID: 2597011702295145950, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
       propertyPath: currentNpcQuest.gatherItemsQuestList.Array.size
       value: 1
@@ -50878,6 +50883,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0df1e869dc390294f8f9224a0d425129, type: 3}
+--- !u!1 &824531508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2730091609474680775, guid: 288c459cbc62de94289773673b9f754e, type: 3}
+  m_PrefabInstance: {fileID: 2730091610086721260}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &867749481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9125179677300675803, guid: c84c4eeed64680e43b3f4746d69e1491, type: 3}
@@ -96666,6 +96676,11 @@ PrefabInstance:
       objectReference: {fileID: 1125439973}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
+--- !u!4 &1414116895 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+  m_PrefabInstance: {fileID: 1598885126965015898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1417348762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98879,6 +98894,124 @@ PolygonCollider2D:
       - {x: 1.6048244, y: 0.60585237}
       - {x: -1.4765456, y: 0.5447203}
       - {x: -1.4360507, y: -1.5874907}
+--- !u!1001 &1598885126965015898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 100778606}
+    m_Modifications:
+    - target: {fileID: 1598885127699432260, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_Name
+      value: BigMysticMan
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.93
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.22420008
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432261, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: npcTalkSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 28ba50a134600c645870856e6a2cebe3, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentActiveConvo
+      value: 
+      objectReference: {fileID: 4900000, guid: ab388207ab424f040a1d54af6d589113, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.questName
+      value: Old mans little man
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.questType
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.description
+      value: A weirdo wanted me to deliver this bottle of pills to an old man and
+        promised me a reward.. why not?
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.moneyReward
+      value: 7777
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: questConvoList.Array.data[0]
+      value: 
+      objectReference: {fileID: 4900000, guid: df473c70915700043b74b25711c3f83e, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: questConvoList.Array.data[1]
+      value: 
+      objectReference: {fileID: 4900000, guid: 1b216ffe98af9e0489ada2250f4fdba0, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: questConvoList.Array.data[2]
+      value: 
+      objectReference: {fileID: 4900000, guid: ed34183efb48d79409af7d88b2e7e412, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.itemToDeliver
+      value: 
+      objectReference: {fileID: 8151814093293516711, guid: a8477d78156702f43825e694a6b5f57a, type: 3}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.amountToCollect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.isQuestFinished
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.gameObjectReward
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1598885127699432314, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: currentNpcQuest.npcDeliveryTarget
+      value: 
+      objectReference: {fileID: 824531508}
+    - target: {fileID: 1598885127699432318, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
+      propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2127244941}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 37cdf9c3dc132244b86de67ba0f8dc40, type: 3}
 --- !u!1001 &1797365666922256964
 PrefabInstance:
   m_ObjectHideFlags: 0

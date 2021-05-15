@@ -1,0 +1,21 @@
+:: StoryTitle
+Mysticman__Finished_Quest
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Successful delivery [START]
+Good job, he ..and others.. will surely enjoy it!
+
+Claim reward[[Reward text]]
+
+:: Reward text [QUEST_DONE]
+Enter reward text here
+
+Collect Reward[[End Conversation]]
+
+:: End Conversation [END]
+

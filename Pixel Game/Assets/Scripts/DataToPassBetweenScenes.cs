@@ -30,7 +30,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public Quest currentActivePlayerQuest;
 
     public string[] NpcDatabase = { "FatNpc", "Pawi", "SecondFatNPC" }; // A list of all the NPCs in our game. This list wont change
-    public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change.
+    public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change. 
 
     public string currentActivateNpc;
 

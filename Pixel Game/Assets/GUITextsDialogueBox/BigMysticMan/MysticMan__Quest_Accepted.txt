@@ -1,0 +1,21 @@
+:: StoryTitle
+Mysticman__Quest_Accepted
+
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Is Quest Done [START]
+Got it delivered yet?
+
+Yeah[[Check If Quest Is Done]]
+Not yet..[[End Conversation]]
+
+:: Check If Quest Is Done [CHECK_QUEST]
+Yeah i havent found him yet.. sorry..[[Is Quest Done]] 
+
+:: End Conversation [END]
+Double-click this passage to edit it.

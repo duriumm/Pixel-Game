@@ -83,8 +83,8 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    // When a gather items quest is done, we want to remove the gathered items
-    // from players inventory, that is done here
+    // When a gather items quest is finished, we want to remove the gathered items
+    // from the players inventory, that is done here
     public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)
     {
         foreach (var slot in slots)
@@ -114,7 +114,6 @@ public class PlayerInventory : MonoBehaviour
         }
         foreach (var item in equipmentSlots)
         {
-
             item.gameObject.SetActive(false);
         }
     }
@@ -162,6 +161,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    // Adding items to players inventory is started here
     public void LootItem(GameObject lootedGameObject)
     {
         bool isMoney = lootedGameObject.GetComponent<ItemData>().itemType == ItemData.ITEMTYPE.MONEY;
@@ -181,11 +181,9 @@ public class PlayerInventory : MonoBehaviour
                     dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
                     Debug.Log("WE incremented FFS");
                 }
-
             }
             AddItemToEmptySlot(lootedGameObject);
-        }
-            
+        }           
     }
 
     public bool AddItemToEmptySlot(GameObject itemToAdd)

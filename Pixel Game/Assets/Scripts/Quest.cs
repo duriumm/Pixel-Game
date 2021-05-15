@@ -10,7 +10,8 @@ public class Quest
         None,
         KILL_ENEMIES,
         GATHER_ITEMS,
-        WAIT_TIME
+        WAIT_TIME,
+        DELIVER_ITEM
     }
     public QUESTTYPE questType;
 
@@ -30,24 +31,38 @@ public class Quest
 
     public int moneyReward;
     public GameObject gameObjectReward;
+    private PlayerInventory playerInventory;
 
+    public bool isQuestFinished = false;
     // Kill enemies quest
+    [Header("Kill enemies quest")]
     public int amountToKill;
     public int currentKilled;
 
-    public bool isQuestFinished = false;
 
     // Gather items quest
+    [Header("Gather items quest")]
     public GameObject itemToGather;
     public int amountToCollect;
     public int currentCollected;
 
+    // Item delivery quest
+    [Header("Item delivery quest")]
+    public GameObject itemToDeliver;
+    public GameObject npcDeliveryTarget;
 
-
-    public void ClearCollectedItems(GameObject gameObjToClear)
+    void Start()
     {
-
+        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
     }
+
+
+    //public void DeliverAndDestroyItem(GameObject gameObjectToDestroy)
+    //{
+    //    // TODO: delete item from player inventory 
+    //    playerInventory.
+    //    isQuestFinished = true;
+    //}
     public void IncrementItemsCollected()
     {
         currentCollected++;
