@@ -124,7 +124,7 @@ public class DialogueViewer : MonoBehaviour
                 instantiatedObj.name = originalItemName;
 
                 // Add instantiated item to inventory and add text to reward window showing what item we got
-                playerInv.AddItemToEmptySlot(instantiatedObj);
+                playerInv.LootItem(instantiatedObj);
                 txtNodeDisplay.text += " and a " + instantiatedObj.name;
             }
 

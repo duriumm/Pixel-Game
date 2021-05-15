@@ -225,6 +225,7 @@ Transform:
   - {fileID: 243128842}
   - {fileID: 2008622504}
   - {fileID: 1414116895}
+  - {fileID: 124141974}
   m_Father: {fileID: 0}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -289,6 +290,80 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 9125179677300675803, guid: c84c4eeed64680e43b3f4746d69e1491, type: 3}
   m_PrefabInstance: {fileID: 200182118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &124141973
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 100778606}
+    m_Modifications:
+    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: moneyLoot
+      value: 333
+      objectReference: {fileID: 0}
+    - target: {fileID: 362388572, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: gameObjectLoot
+      value: 
+      objectReference: {fileID: 6662477887734707362, guid: be1cbf8d7bd3050419cefde91103de40, type: 3}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6282491209356646495, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+      propertyPath: m_Name
+      value: Chest
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+--- !u!4 &124141974 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6282491209356646493, guid: 3b44b31ba8fc27f4ab25eb788840fa8e, type: 3}
+  m_PrefabInstance: {fileID: 124141973}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &200182118
 PrefabInstance:
@@ -813,7 +888,7 @@ PrefabInstance:
     - target: {fileID: 2597011702295145950, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
       propertyPath: currentNpcQuest.gameObjectReward
       value: 
-      objectReference: {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
+      objectReference: {fileID: 6662477887734707362, guid: be1cbf8d7bd3050419cefde91103de40, type: 3}
     - target: {fileID: 2597011702295145950, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
       propertyPath: currentNpcQuest.gatherItemsQuestList.Array.size
       value: 1
@@ -99754,6 +99829,8 @@ MonoBehaviour:
   lootSound: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
   openedEmptySprite: {fileID: 21300000, guid: e430213f82efa744aa24055e6f20899f, type: 3}
   openedWithLootSprite: {fileID: 21300000, guid: 3d0b682037c22db4fb66f1b657819570, type: 3}
+  gameObjectLoot: {fileID: 0}
+  moneyLoot: 0
 --- !u!1001 &6282491209582511110
 PrefabInstance:
   m_ObjectHideFlags: 0

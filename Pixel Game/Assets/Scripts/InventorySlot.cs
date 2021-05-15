@@ -76,6 +76,8 @@ public class InventorySlot : MonoBehaviour
                     ClearSlot();
                 }
             }
+            // Using a Quest item when in range of the target delivery npc will mark the quest as finished
+            // and destroy said quest item
             else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
             {
                 if (dataToPass.currentActivateNpc.Equals(dataToPass.currentActivePlayerQuest.npcDeliveryTarget.name))
