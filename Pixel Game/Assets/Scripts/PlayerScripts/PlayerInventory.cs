@@ -17,6 +17,7 @@ public class PlayerInventory : MonoBehaviour
     public bool isInventoryOpen = false;
     private ItemData lootedItemData;
     public GameObject dataToPassGameObject;
+    private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
     private GameObject screenTabs;
@@ -53,7 +54,8 @@ public class PlayerInventory : MonoBehaviour
         shopScreen = GameObject.Find("ShopScreen");
         // Player is set in awake since it needs to be called before the start in shopscreen 
         // since shopscreen uses shopscreen.close() 
-        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer"); 
+        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
+        dataToPass = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>();
 
 
     }
@@ -66,10 +68,31 @@ public class PlayerInventory : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    // Check player inventory if there are already some of the items we need to collect
+    // so we can increment the value correctly 
+    public void CheckInventoryForCollectedItems(string itemNameToRemove)
     {
-        
+        foreach (var slot in slots)
+        {
+            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
+            {
+                dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
+            }
+        }
+    }
+    // When a gather items quest is finished, we want to remove the gathered items
+    // from the players inventory, that is done here
+    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)
+    {
+        foreach (var slot in slots)
+        {
+            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
+            {
+                slot.DropItem();
+                Destroy(slot.ItemDataGameObject);
+                slot.ClearSlot();
+            }
+        }
     }
     public void ClosingUI()
     {
@@ -85,7 +108,6 @@ public class PlayerInventory : MonoBehaviour
         }
         foreach (var item in equipmentSlots)
         {
-
             item.gameObject.SetActive(false);
         }
     }
@@ -133,6 +155,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    // Adding items to players inventory is started here
     public void LootItem(GameObject lootedGameObject)
     {
         bool isMoney = lootedGameObject.GetComponent<ItemData>().itemType == ItemData.ITEMTYPE.MONEY;
@@ -143,7 +166,18 @@ public class PlayerInventory : MonoBehaviour
             Destroy(lootedGameObject);
         }
         else
+        {
+            if (dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+            {
+                if (lootedGameObject.GetComponent<ItemData>().itemName ==
+                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
+                {
+                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
+                    Debug.Log("WE incremented FFS");
+                }
+            }
             AddItemToEmptySlot(lootedGameObject);
+        }           
     }
 
     public bool AddItemToEmptySlot(GameObject itemToAdd)

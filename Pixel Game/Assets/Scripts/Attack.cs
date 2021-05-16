@@ -28,7 +28,7 @@ public class Attack : MonoBehaviour
 
     private int meleeAnimParamId_isAttacking;
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         defaultWeapon = gameObject.GetComponent<Weapon>();
         if (meleeAnimator != null)

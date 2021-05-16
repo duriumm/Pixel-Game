@@ -20,7 +20,7 @@ public class AiAttack : Attack
     private bool InRange => (playerGameObject.transform.position - gameObject.transform.position).sqrMagnitude < SqrAttackRange;
 	private float SqrAttackRange => attackRange * attackRange; //Avoid square root calculation in exchange for an extra multiplication
   
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");

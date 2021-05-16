@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
         }
         get => hp;
     }
-    public bool HasFullHp => hp == maxHp;
+    public bool HasFullHp => hp == maxHp; // If hp == maxHp, bool is true :)
 
     [SerializeField]
     protected Slider slider;
@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
 
     public bool KnockedBack { get; private set; }
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         spawnPoint = this.gameObject.transform.position;
@@ -93,4 +93,4 @@ public class Health : MonoBehaviour
         KnockedBack = false;
     }
 }
-    //}
+    

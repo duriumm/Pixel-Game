@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8403192751221809334}
   - component: {fileID: 362388574}
   - component: {fileID: 362388572}
+  - component: {fileID: 6413068481111248112}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: ff05419d58021c1449031a574a4cc647, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -146,3 +147,31 @@ MonoBehaviour:
   lootSound: {fileID: 8300000, guid: 3609f3e1a9f865543a12a926ff408053, type: 3}
   openedEmptySprite: {fileID: 21300000, guid: e430213f82efa744aa24055e6f20899f, type: 3}
   openedWithLootSprite: {fileID: 21300000, guid: 3d0b682037c22db4fb66f1b657819570, type: 3}
+  gameObjectLoot: {fileID: 0}
+  moneyLoot: 0
+--- !u!61 &6413068481111248112
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282491209356646495}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.18721288}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.62557423}
+  m_EdgeRadius: 0

@@ -6,8 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
+    private PlayerHealth playerHealth;
+    private PlayerInput playerInput;
+    private Attack playerAttack;
+    private Weapon playerWeapon;
     public string sceneToLoad;
-    private GameObject dataToPassBetweenScenesGameObject;
+    //private GameObject dataToPassBetweenScenesGameObject;
+    private DataToPassBetweenScenes dataToPassBetweenScenes;
     private GameObject myPlayerObject;
     private GameObject invManager;
 
@@ -20,13 +25,17 @@ public class SceneTransition : MonoBehaviour
     public TextMeshProUGUI bannerText;
     private void Start()
     {
-        dataToPassBetweenScenesGameObject = GameObject.FindGameObjectWithTag("PassData");
+        dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         myPlayerObject = GameObject.FindGameObjectWithTag("MyPlayer");
+        playerHealth = myPlayerObject.GetComponent<PlayerHealth>();
+        playerInput = myPlayerObject.GetComponent<PlayerInput>();
+        playerAttack = myPlayerObject.GetComponent<Attack>();
+        playerWeapon = myPlayerObject.GetComponent<Weapon>();
         invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         transitionId = gameObject.name;
 
         // Get the savedSceneTransitionId from database and act only if not null (first ever scene)
-        string dbSceneTransId = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId;
+        string dbSceneTransId = dataToPassBetweenScenes.savedSceneTransitionId;
         if (dbSceneTransId != "")
         {
             spawnPos = GameObject.Find(dbSceneTransId).transform.Find("RespawnSpot").gameObject.transform.position;
@@ -34,24 +43,31 @@ public class SceneTransition : MonoBehaviour
 
             // For now the banner is playing everytime we enter a new scene. This can be changed to only 
             // display when entering scenes outdoors etc in the future
-            bannerText.text = dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().currentAreaName;
+            bannerText.text = dataToPassBetweenScenes.currentAreaName;
         }
         
-
+        
+        // Run the Start() function for the scripts that are transfered between scenes
+        // since they cant run Start() on scene change by themselves
+        dataToPassBetweenScenes.Start(); 
+        playerHealth.Start();
+        playerInput.Start();
+        playerAttack.Start();
+        playerWeapon.Start();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "MyPlayer")
         {
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().savedSceneTransitionId = transitionId;
+            dataToPassBetweenScenes.savedSceneTransitionId = transitionId;
 
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
+            dataToPassBetweenScenes.playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
             invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB = invManager.GetComponent<PlayerInventory>().playerInvMoney;
+            dataToPassBetweenScenes.playerMoneyDB = invManager.GetComponent<PlayerInventory>().playerInvMoney;
             StartCoroutine(LoadLevel(sceneToLoad));
-            dataToPassBetweenScenesGameObject.GetComponent<DataToPassBetweenScenes>().currentAreaName = sceneToLoad;
+            dataToPassBetweenScenes.currentAreaName = sceneToLoad;
         }
     }
 
@@ -65,8 +81,6 @@ public class SceneTransition : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
         
     }
-
-    
 }
 
 

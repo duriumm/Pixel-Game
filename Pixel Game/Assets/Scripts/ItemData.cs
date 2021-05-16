@@ -22,7 +22,8 @@ public class ItemData : MonoBehaviour
         MONEY,
         WEAPON,
         ARMOR,
-        HELMET
+        HELMET,
+        QUEST_ITEM
     }
     public ITEMTYPE itemType;
     public bool isEquippable;

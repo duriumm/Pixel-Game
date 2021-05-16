@@ -15,6 +15,7 @@ TagManager:
   - PassData
   - damageCollider
   - Npc
+  - VCam
   layers:
   - Default
   - TransparentFX

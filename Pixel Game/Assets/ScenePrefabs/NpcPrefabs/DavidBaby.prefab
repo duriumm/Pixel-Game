@@ -266,14 +266,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663c339f67344904a9d6673f2343e3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentActiveConvo: {fileID: 4900000, guid: bedd50752860692499f7a2c7354607d3, type: 3}
-  questConvoList: []
+  currentActiveConvo: {fileID: 4900000, guid: b93d18be5e1ae0c4f8332b84f04d0a69, type: 3}
+  questConvoList:
+  - {fileID: 4900000, guid: 7ccd3b7abd843624db2f9f8dbf35055e, type: 3}
+  - {fileID: 4900000, guid: c90f708288d488347bf3c58c77e7fb63, type: 3}
+  - {fileID: 4900000, guid: 9d2111d93f168924a9a33196378da591, type: 3}
   currentNpcQuest:
     questType: 0
+    enemyTypeToKill: 0
     questName: 
     description: 
     moneyReward: 0
+    gameObjectReward: {fileID: 0}
     amountToKill: 0
     currentKilled: 0
     isQuestFinished: 0
+    gatherItemsQuestList: []
+    amountToCollect: 0
+    currentCollected: 0
   npcTalkSound: {fileID: 0}

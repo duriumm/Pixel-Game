@@ -30,7 +30,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public Quest currentActivePlayerQuest;
 
     public string[] NpcDatabase = { "FatNpc", "Pawi", "SecondFatNPC" }; // A list of all the NPCs in our game. This list wont change
-    public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change.
+    public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change. 
 
     public string currentActivateNpc;
 
@@ -39,7 +39,7 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public string savedSceneTransitionId;
 
     public List<string> openedChestGameObjectNames= new List<string>();
-
+    
     public string currentAreaName;
 
     
@@ -47,9 +47,13 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     public List<string> mySavedStringListDatabase = new List<string>();
     // String List with names of all our gameobjects, all player inventory items names are saved here on entering new scene.
-
+    [SerializeField]
     private GameObject player;
-    private void Start()
+
+
+    //Here we do NOT need a FakeStart() function since we reference the player object
+    // which is carried between scenes aswell.Therefor the reference is not required
+    public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
 

@@ -17,12 +17,17 @@ public class Chest : MonoBehaviour
     private SpriteRenderer currentChestSprite;
 
     private GameObject dataToPassGameObject;
+    public GameObject gameObjectLoot;
+    public int moneyLoot;
+
+    private PlayerInventory playerInventory;
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         chestInteractableScript = gameObject.GetComponent<Interactable>();
         currentChestSprite = gameObject.GetComponent<SpriteRenderer>();
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
+        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
 
         if (dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Contains(this.gameObject.name)){
             ClearChest();
@@ -53,6 +58,19 @@ public class Chest : MonoBehaviour
         AudioSource.PlayClipAtPoint(lootSound, mainCamera.transform.position);
         chestInteractableScript.enabled = false;
         dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().openedChestGameObjectNames.Add(this.gameObject.name);
+        if(moneyLoot != 0)
+        {
+            playerInventory.AddCoinAmount(moneyLoot);
+        }
+        if(gameObjectLoot != null)
+        {
+            // Get original name of obj so we dont get (clone) as name when we instantiate
+            string originalItemName = gameObjectLoot.name;
+            GameObject instantiatedObj = Instantiate(gameObjectLoot) as GameObject;
+            instantiatedObj.name = originalItemName;
+            playerInventory.LootItem(instantiatedObj);
+        }
+        
     }
 
     public void ClearChest()

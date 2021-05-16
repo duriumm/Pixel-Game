@@ -35,16 +35,11 @@ public class Torch : MonoBehaviour
 
     }
 
-    void Update()
-    {
-
-    }
-
-
-
 
     public void toggleTorch()
     {
+        isTorchActive = !isTorchActive;
+
         if(isTorchActive == true && hasTorchBurntOut == false) { 
             torch2dLightComponent.enabled = true;
             fireParticleEffect.Play();

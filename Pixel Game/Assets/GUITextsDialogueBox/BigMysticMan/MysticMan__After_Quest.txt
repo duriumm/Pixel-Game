@@ -1,0 +1,17 @@
+:: StoryTitle
+Mysticman__After_Quest
+
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: After delivery talk [START]
+Leave me alone..
+
+Okay weirdo..[[End Conversation]]
+
+:: End Conversation [END]
+

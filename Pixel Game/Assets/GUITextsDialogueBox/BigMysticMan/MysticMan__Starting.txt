@@ -1,0 +1,22 @@
+:: StoryTitle
+Mysticman__Starting
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Start of convo [START]
+Hello there... could you help me deliver an item? its nothing shady just a normal thing i promise...
+Okay ill do it[[Help With Delivery]]
+Bye weirdo[[End Conversation]]
+
+:: End Conversation [END]
+It ends here
+
+:: Help With Delivery [ACCEPT_QUEST]
+Peeerfect... there is a man in a wheelchair somewhere in the town, sneak this into his wheelchair... he might need it..
+And of course, i will reward you!
+
+Got it..[[End Conversation]]

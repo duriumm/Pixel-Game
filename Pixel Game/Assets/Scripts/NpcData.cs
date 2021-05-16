@@ -5,31 +5,17 @@ using UnityEngine;
 
 public class NpcData : MonoBehaviour
 {
-    // Assign a twine convo fort this NPC
 
     public TextAsset currentActiveConvo;
-
-
     public List<TextAsset> questConvoList = new List<TextAsset>();
-
-    // If npc only has one talking convo he does not need a convolist. Only a currentActiveConvo.
-    // if npc has questConvo and a regular convo after quest, then he might need a regularConvoList
-    //public List<TextAsset> regularConvoList = new List<TextAsset>();
-
-
-    // Do we really need a questList?? maybe just one quest
-    //public List<Quest> questList = new List<Quest>();
-
+    // For now the NPC can only hold 1 quest at a time. Add list in the future for several
     public Quest currentNpcQuest;
-
-
-
+    public AudioClip npcTalkSound;
     private DialogueController dialogueController;
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
-
-    public AudioClip npcTalkSound;
     private GameObject mainCamera;
+    private PlayerInventory playerInventory;
 
     void Start()
     {
@@ -37,6 +23,7 @@ public class NpcData : MonoBehaviour
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
         mainCamera = GameObject.FindWithTag("MainCamera");
+        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
     }
 
 
@@ -71,26 +58,15 @@ public class NpcData : MonoBehaviour
         }
     }
 
-    public void ProgressDialogue()
-    {
-        //currentActiveConvo = convoList
-    }
-
     // To-Do - Activate a quest in a list of quests!
     public void ActivateQuest()
     {
         Debug.Log("QUEST ACTIVATYED on npc named: " + this.gameObject.name);
-        //currentActiveConvo = convoList.
 
         foreach (var item in questConvoList)
         {
-            if (item.name.Contains("Quest_Is_Accepted"))
+            if (item.name.Contains("Quest_Accepted"))
             {
-                // We CAN remove the old convo so it doesnt get mixed up, 
-                // Is it neccecary though??? This removal can enable more quests in the future though 
-                // since they can all be named "[something]__Quest_Is_Accepted"
-
-                //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
                 Debug.Log("Current active convo is: " + currentActiveConvo.name);
 
@@ -101,10 +77,8 @@ public class NpcData : MonoBehaviour
                 dialogueController.InitializeDialogue();
 
                 break;
-
             }
         }
-        //dialogueController.twineText = questTwineConvo;
         
         // We turn dialogueCanvas off after the activation of the quest since otherwise 
         // the next conversation will be started immediately
@@ -112,6 +86,22 @@ public class NpcData : MonoBehaviour
 
 
         dataToPass.currentActivePlayerQuest = currentNpcQuest;
+
+        // On activating a gather item quest, we need to check if we already have
+        // one or more of said item in our inventory
+        if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+        {
+            playerInventory.CheckInventoryForCollectedItems(
+                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName);
+        }
+        else if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.DELIVER_ITEM)
+        {
+            string originalItemName = dataToPass.currentActivePlayerQuest.itemToDeliver.name;
+            GameObject instantiatedObj = Instantiate(dataToPass.currentActivePlayerQuest.itemToDeliver) as GameObject;
+            instantiatedObj.name = originalItemName;
+            playerInventory.LootItem(instantiatedObj);
+        }
+
         Debug.Log("Current active playerquest is: "+ dataToPass.currentActivePlayerQuest.questName);
     }
     public bool CheckIfQuestIsDone()
@@ -127,6 +117,7 @@ public class NpcData : MonoBehaviour
                 {
                     //convoList.Remove(currentActiveConvo);
                     currentActiveConvo = item;
+                    
                 }
             }
             // If the quest requirements are fullfilled, we want to start the next dialogue
@@ -150,8 +141,16 @@ public class NpcData : MonoBehaviour
     {
         foreach (var item in questConvoList)
         {
-            if (item.name.Contains("After_Quest_Finished"))
+            if (item.name.Contains("After_Quest"))
             {
+                if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
+                {
+                    // When a gather items quest is done we want to clear the inventory of said items
+                    string itemName = dataToPass.currentActivePlayerQuest.itemToGather.
+                        GetComponent<ItemData>().itemName;
+                    playerInventory.RemoveCollectedQuestItemsFromInventory(itemName);
+
+                }
                 //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
             }
