@@ -15,8 +15,7 @@ public class PlayerInput : MonoBehaviour
 
     public GameObject dataToPassGameObject;
 
-    // Start() only runs once on game startup. FakeStart() runs when a scene is loaded
-    public void FakeStart()
+    public void Start()
     {
         playerGameObject = this.gameObject;
         playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
@@ -29,15 +28,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)){
 
-            // TODO, make this fucking get component stuff easier. no get component ffs!!
-            if(torch.isTorchActive == false) {
-                torch.isTorchActive = true;
-                torch.toggleTorch();
-            }
-            else if (torch.isTorchActive == true) {
-                torch.isTorchActive = false;
-                torch.toggleTorch();
-            }
+            torch.toggleTorch();
         }
 
         // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active

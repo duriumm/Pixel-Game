@@ -20,7 +20,7 @@ public class EnemyHealth : Health
     }
     public ENEMYTYPE enemyType;
 
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -34,7 +34,7 @@ public class EnemyHealth : Health
     {
         // Comparing two enums, can be more efficent than this. TODO: Make it more efficent
         if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES &&
-            enemyType.ToString().Equals(dataToPassBetweenScenes.currentActivePlayerQuest.enemyTypeToKill.ToString()))
+            enemyType == dataToPassBetweenScenes.currentActivePlayerQuest.enemyTypeToKill)
         {
             dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
         }

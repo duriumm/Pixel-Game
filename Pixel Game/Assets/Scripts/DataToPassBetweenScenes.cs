@@ -53,19 +53,10 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     //Here we do NOT need a FakeStart() function since we reference the player object
     // which is carried between scenes aswell.Therefor the reference is not required
-    private void Start()
+    public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
 
-    }
-
-
-    // This FakeStart() function is used on the gameObjects which we carry between scenes 
-    // since their start() will otherwise only run one time when game is started
-    public void FakeStart()
-    {
-        player = GameObject.FindGameObjectWithTag("MyPlayer");
-        Debug.Log("we did fakestart :)");
     }
 
     // We only need to update the player health stat as playerHealth has its own script 

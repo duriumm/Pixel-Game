@@ -15,14 +15,8 @@ public class Quest
     }
     public QUESTTYPE questType;
 
-    public enum ENEMYTYPE
-    {
-        None,
-        GHOST,
-        HUMAN,
-        BEAST
-    }
-    public ENEMYTYPE enemyTypeToKill = ENEMYTYPE.None;
+    // Refers to Enemyhealth enumtype (to not make double enums)
+    public EnemyHealth.ENEMYTYPE enemyTypeToKill = EnemyHealth.ENEMYTYPE.BEAST;
 
 
     public string questName;

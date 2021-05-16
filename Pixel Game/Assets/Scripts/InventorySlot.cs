@@ -18,9 +18,14 @@ public class InventorySlot : MonoBehaviour
     private GameObject playerCharacter;
     private Color ColorOfSlot;
     private Vector2 itemDropPosition;
-    public ItemData ItemDataInSlot; // Changed from private to public. All good?
-    public GameObject ItemDataGameObject => ItemDataInSlot?.gameObject;
-    public bool IsEmpty => ItemDataInSlot == null;
+
+    private ItemData itemDataInSlot; // Changed from private to public. All good?
+
+    // "Get" function for returning private itemDataInSlot variable
+    public ItemData ItemDataInSlot => itemDataInSlot;
+
+    public GameObject ItemDataGameObject => itemDataInSlot?.gameObject;
+    public bool IsEmpty => itemDataInSlot == null;
     private GameObject shopScreen;
     private EventTrigger eventTrigger;
     private GameObject dropItemButton;
@@ -59,18 +64,18 @@ public class InventorySlot : MonoBehaviour
     public void UseItem()
     {
         if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false && 
-            ItemDataInSlot != null && inventory.isInventoryOpen == true)
+            itemDataInSlot != null && inventory.isInventoryOpen == true)
         {
-            if(ItemDataInSlot.isEquippable)
+            if(itemDataInSlot.isEquippable)
             {
                 EquipItem();
             }
-            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
+            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
                 if (!playerCharacter.GetComponent<PlayerHealth>().HasFullHp)
                 {
-                    Debug.Log("Ate food, we gained: " + ItemDataInSlot.healingCapability + " health");
-                    playerCharacter.GetComponent<PlayerHealth>().GainHealth(ItemDataInSlot.healingCapability);
+                    Debug.Log("Ate food, we gained: " + itemDataInSlot.healingCapability + " health");
+                    playerCharacter.GetComponent<PlayerHealth>().GainHealth(itemDataInSlot.healingCapability);
 
                     Destroy(ItemDataGameObject);
                     ClearSlot();
@@ -78,9 +83,9 @@ public class InventorySlot : MonoBehaviour
             }
             // Using a Quest item when in range of the target delivery npc will mark the quest as finished
             // and destroy said quest item
-            else if(ItemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
+            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
             {
-                if (dataToPass.currentActivateNpc.Equals(dataToPass.currentActivePlayerQuest.npcDeliveryTarget.name))
+                if (dataToPass.currentActivateNpc == dataToPass.currentActivePlayerQuest.npcDeliveryTarget.name)
                 {
                     Destroy(ItemDataGameObject);
                     ClearSlot();
@@ -117,12 +122,12 @@ public class InventorySlot : MonoBehaviour
 
     string GetEquipmentSlotNameForItem()
     {
-        return Enum.GetName(typeof(ItemData.ITEMTYPE), ItemDataInSlot.itemType) + "_SlotPanel";
+        return Enum.GetName(typeof(ItemData.ITEMTYPE), itemDataInSlot.itemType) + "_SlotPanel";
     }
 
     public void MoveEquippedItemToInventory()
     {
-        if (ItemDataInSlot == null)
+        if (itemDataInSlot == null)
             return;
         //Only unequip if the inventory has an empty slot to put the item in
         if (inventory.AddItemToEmptySlot(ItemDataGameObject))
@@ -140,13 +145,13 @@ public class InventorySlot : MonoBehaviour
 
     private void UnequipItem()
     {
-        if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+        if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             playerAttack.EquipWeapon(null);
     }
 
     public void ClearSlot()
     {
-        ItemDataInSlot = null;
+        itemDataInSlot = null;
         slotIcon.sprite = null;
         SetAlphaOfColor(0f);
         // Here we check if dropItemButton is null or not, since we use same invSlot script for shops slots
@@ -169,8 +174,8 @@ public class InventorySlot : MonoBehaviour
         }
 
         var tempItem = ItemDataGameObject;
-        ItemDataInSlot = itemToAdd.GetComponent<ItemData>();
-        slotIcon.sprite = ItemDataInSlot.itemIcon;
+        itemDataInSlot = itemToAdd.GetComponent<ItemData>();
+        slotIcon.sprite = itemDataInSlot.itemIcon;
 
         //If sourceSlot is not null it will be cleared or get the item of this slot if not null
         if (sourceSlot != null)
@@ -189,9 +194,9 @@ public class InventorySlot : MonoBehaviour
     public void BuyItemFromShop()
     {
         // If there is an actual item in current slot and inventory is actually open
-        if (ItemDataInSlot != null && inventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        if (itemDataInSlot != null && inventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
         {
-            if(inventory.playerInvMoney >= ItemDataInSlot.value)
+            if(inventory.playerInvMoney >= itemDataInSlot.value)
             {
                 inventory.BuyAndSellItemSound();
                 string originalItemName = ItemDataGameObject.name;
@@ -200,7 +205,7 @@ public class InventorySlot : MonoBehaviour
 
                 inventory.AddItemToEmptySlot(instantiatedGameObject);
 
-                inventory.RemoveCoinAmount(ItemDataInSlot.value);
+                inventory.RemoveCoinAmount(itemDataInSlot.value);
                 Debug.Log("trying to buy");
             }
             else
@@ -215,8 +220,8 @@ public class InventorySlot : MonoBehaviour
     {
         if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
         {
-            if (ItemDataInSlot.itemName.Equals(
-                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName))
+            if (itemDataInSlot.itemName ==
+                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
             {
                 dataToPass.currentActivePlayerQuest.DecrementItemsCollected();
                 Debug.Log("WE DECREMENTED FFS");
@@ -233,7 +238,7 @@ public class InventorySlot : MonoBehaviour
 
         Debug.Log("Is shot screen open: " + shopScreen.GetComponent<ShopScreen>().isShopScreenOpen);
         // If there is an actual item in current slot and inventory is actually open
-        if (ItemDataInSlot != null && inventory.isInventoryOpen == true)
+        if (itemDataInSlot != null && inventory.isInventoryOpen == true)
         {
             if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
             {
@@ -271,21 +276,21 @@ public class InventorySlot : MonoBehaviour
         {
             // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
             TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
-            itemNameText.text = ItemDataInSlot.itemName;
+            itemNameText.text = itemDataInSlot.itemName;
             TextMeshProUGUI ItemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
-            ItemDescriptionText.text = ItemDataInSlot.description;
+            ItemDescriptionText.text = itemDataInSlot.description;
             TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
-            if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+            if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
                 ShowWeaponStats(ItemStatsText);
             }
-            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || ItemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
+            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || itemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
             {
-                ItemStatsText.text = "Armor: " + ItemDataInSlot.defense + "\n" + "Value: <color=yellow>" + ItemDataInSlot.value + " coins</color> ";
+                ItemStatsText.text = "Armor: " + itemDataInSlot.defense + "\n" + "Value: <color=yellow>" + itemDataInSlot.value + " coins</color> ";
             }
-            else if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
+            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {   // Show the text in green to indicate hp gain on eating item
-                ItemStatsText.text = "Effect on eating: " + "<color=green>+" + ItemDataInSlot.healingCapability + " hp</color>";
+                ItemStatsText.text = "Effect on eating: " + "<color=green>+" + itemDataInSlot.healingCapability + " hp</color>";
             }
             this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }
@@ -313,7 +318,7 @@ public class InventorySlot : MonoBehaviour
         itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
         if (weapon.HasProjectileAttack)
             itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";
-        itemStatsText.text += $"Value: <color=yellow>{ItemDataInSlot.value} coins</color> ";
+        itemStatsText.text += $"Value: <color=yellow>{itemDataInSlot.value} coins</color> ";
     }
 
     // Returns a string describing the difference between the hovered item

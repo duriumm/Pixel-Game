@@ -49915,6 +49915,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.questType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.enemyTypeToKill
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1391972506, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: interactAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -98019,6 +98027,10 @@ PrefabInstance:
       value: Kill the frogboys
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.questType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: questConvoList.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -98032,7 +98044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: currentNpcQuest.amountToKill
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: questConvoList.Array.data[0]
@@ -98052,7 +98064,7 @@ PrefabInstance:
       objectReference: {fileID: 4900000, guid: 76cd07c48bbdbe242b63ce7dd4bcc1d3, type: 3}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: currentNpcQuest.enemyTypeToKill
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: currentNpcQuest.gameObjectReward

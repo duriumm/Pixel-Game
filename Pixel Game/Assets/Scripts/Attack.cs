@@ -28,14 +28,7 @@ public class Attack : MonoBehaviour
 
     private int meleeAnimParamId_isAttacking;
 
-    // Start() only runs once on game startup. FakeStart() runs when a scene is loaded
-    protected virtual void Start()
-    {
-        defaultWeapon = gameObject.GetComponent<Weapon>();
-        if (meleeAnimator != null)
-            meleeAnimParamId_isAttacking = meleeAnimator.GetParamId("isAttacking");
-    }
-    public void FakeStart()
+    public virtual void Start()
     {
         defaultWeapon = gameObject.GetComponent<Weapon>();
         if (meleeAnimator != null)

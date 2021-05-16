@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
 
     public bool KnockedBack { get; private set; }
 
-    protected virtual void Start()
+    public virtual void Start()
     {
         body = gameObject.GetComponent<Rigidbody2D>();
         spawnPoint = this.gameObject.transform.position;

@@ -74,12 +74,9 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach (var slot in slots)
         {
-            if (!slot.IsEmpty)
+            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
             {
-                if (slot.ItemDataInSlot.itemName.Equals(itemNameToRemove))
-                {
-                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
-                }
+                dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
             }
         }
     }
@@ -89,14 +86,11 @@ public class PlayerInventory : MonoBehaviour
     {
         foreach (var slot in slots)
         {
-            if (!slot.IsEmpty)
+            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
             {
-                if (slot.ItemDataInSlot.itemName.Equals(itemNameToRemove))
-                {
-                    slot.DropItem();
-                    Destroy(slot.ItemDataGameObject);
-                    slot.ClearSlot();
-                }
+                slot.DropItem();
+                Destroy(slot.ItemDataGameObject);
+                slot.ClearSlot();
             }
         }
     }
@@ -175,8 +169,8 @@ public class PlayerInventory : MonoBehaviour
         {
             if (dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
             {
-                if (lootedGameObject.GetComponent<ItemData>().itemName.Equals(
-                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName))
+                if (lootedGameObject.GetComponent<ItemData>().itemName ==
+                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
                 {
                     dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
                     Debug.Log("WE incremented FFS");

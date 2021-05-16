@@ -46,7 +46,14 @@ public class SceneTransition : MonoBehaviour
             bannerText.text = dataToPassBetweenScenes.currentAreaName;
         }
         
-
+        
+        // Run the Start() function for the scripts that are transfered between scenes
+        // since they cant run Start() on scene change by themselves
+        dataToPassBetweenScenes.Start(); 
+        playerHealth.Start();
+        playerInput.Start();
+        playerAttack.Start();
+        playerWeapon.Start();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -73,37 +80,6 @@ public class SceneTransition : MonoBehaviour
 
         SceneManager.LoadScene(sceneToLoad);
         
-    }
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= WhenNewSceneIsLoaded;// unsubscribe to event
-    }
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += WhenNewSceneIsLoaded; // subscribe to event
-    }
-
-    // Whenever a new scene is loaded, this script below will run.
-    // To enable the use of FakeStart() functions in our DontDestroyOnLoad() objects
-    // we setup a coroutine of 0.05 seconds. Without this small delay, our WhenNewSceneIsLoaded()
-    // will run before all other objects start() function. Order of execution shown below.
-    // 0. Awake()
-    // 1. WhenNewSceneIsLoaded()
-    // 2. Start()
-    void WhenNewSceneIsLoaded(Scene scene, LoadSceneMode mode)
-    {
-        //Debug.Log("WE LOADED NEW SCENE");
-        StartCoroutine(LateSceneLoad());       
-    }
-
-    IEnumerator LateSceneLoad()
-    {
-        yield return new WaitForSeconds(0.05f);
-        dataToPassBetweenScenes.FakeStart(); // Not needed maybe?
-        playerHealth.FakeStart();
-        playerInput.FakeStart();
-        playerAttack.FakeStart();
-        playerWeapon.FakeStart();
     }
 }
 
