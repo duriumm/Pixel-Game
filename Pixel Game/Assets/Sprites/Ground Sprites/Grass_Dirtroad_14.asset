@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Grass_Dirtroad (2)_14
+  m_Name: Grass_Dirtroad_14
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -3419619165343750280, guid: 6736953c0f0c1814198a67e7b70f6f1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
