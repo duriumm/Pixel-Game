@@ -104,10 +104,12 @@ public class PlayerInventory : MonoBehaviour
         screenTabs.SetActive(false);
         foreach (var item in slots)
         {
+            item.RemoveDataShowingOnExit();
             item.GetComponent<EventTrigger>().enabled = false;
         }
         foreach (var item in equipmentSlots)
         {
+            item.RemoveDataShowingOnExit();
             item.gameObject.SetActive(false);
         }
     }
@@ -140,7 +142,6 @@ public class PlayerInventory : MonoBehaviour
                 //item.GetComponent<Button>().enabled = true;
 
             }
-
         }
         foreach (var item in slots)
         {
