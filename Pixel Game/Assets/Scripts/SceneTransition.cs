@@ -8,13 +8,14 @@ public class SceneTransition : MonoBehaviour
 {
     private PlayerHealth playerHealth;
     private PlayerInput playerInput;
+    private PlayerInventory playerInventory;
     private Attack playerAttack;
     private Weapon playerWeapon;
     public string sceneToLoad;
-    //private GameObject dataToPassBetweenScenesGameObject;
+
     private DataToPassBetweenScenes dataToPassBetweenScenes;
     private GameObject myPlayerObject;
-    private GameObject invManager;
+    //private GameObject invManager;
 
     public Animator transition;
 
@@ -31,7 +32,8 @@ public class SceneTransition : MonoBehaviour
         playerInput = myPlayerObject.GetComponent<PlayerInput>();
         playerAttack = myPlayerObject.GetComponent<Attack>();
         playerWeapon = myPlayerObject.GetComponent<Weapon>();
-        invManager = GameObject.FindGameObjectWithTag("InventoryManager");
+        playerInventory = GameObject.FindGameObjectWithTag("InventoryManager").GetComponent<PlayerInventory>();
+        //invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         transitionId = gameObject.name;
 
         // Get the savedSceneTransitionId from database and act only if not null (first ever scene)
@@ -64,8 +66,9 @@ public class SceneTransition : MonoBehaviour
 
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
             dataToPassBetweenScenes.playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
-            invManager.GetComponent<PlayerInventory>().SaveInvGameObjectsOnSceneChange();
-            dataToPassBetweenScenes.playerMoneyDB = invManager.GetComponent<PlayerInventory>().playerInvMoney;
+            playerInventory.SaveInvGameObjectsOnSceneChange();
+            playerInventory.SaveEquipmentOnSceneChange(); // TODO: Only saves to inventory, make it equip said items aswell
+            dataToPassBetweenScenes.playerMoneyDB = playerInventory.playerInvMoney;
             StartCoroutine(LoadLevel(sceneToLoad));
             dataToPassBetweenScenes.currentAreaName = sceneToLoad;
         }

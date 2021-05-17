@@ -44,15 +44,14 @@ public class DataToPassBetweenScenes : MonoBehaviour
 
     
 
-
-    public List<string> mySavedStringListDatabase = new List<string>();
     // String List with names of all our gameobjects, all player inventory items names are saved here on entering new scene.
+    public List<string> mySavedStringListDatabase = new List<string>();
+    public List<string> savedEquipmentListDB = new List<string>(10);
+
     [SerializeField]
     private GameObject player;
 
 
-    //Here we do NOT need a FakeStart() function since we reference the player object
-    // which is carried between scenes aswell.Therefor the reference is not required
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");

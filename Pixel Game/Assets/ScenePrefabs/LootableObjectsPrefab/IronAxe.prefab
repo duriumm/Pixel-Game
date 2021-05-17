@@ -134,6 +134,7 @@ MonoBehaviour:
   healingCapability: 0
   itemType: 5
   isEquippable: 1
+  shallEquipOnSceneChange: 0
 --- !u!114 &7548094927607393147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,4 +169,3 @@ MonoBehaviour:
     destroyOnHit: 1
   hasMeleeAttack: 1
   hasProjectileAttack: 0
-  Owner: {fileID: 0}

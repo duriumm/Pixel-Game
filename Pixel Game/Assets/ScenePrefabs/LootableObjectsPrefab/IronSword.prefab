@@ -108,6 +108,7 @@ MonoBehaviour:
   healingCapability: 0
   itemType: 5
   isEquippable: 1
+  shallEquipOnSceneChange: 0
 --- !u!61 &221562371710303449
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -168,4 +169,3 @@ MonoBehaviour:
     destroyOnHit: 1
   hasMeleeAttack: 1
   hasProjectileAttack: 0
-  Owner: {fileID: 0}
