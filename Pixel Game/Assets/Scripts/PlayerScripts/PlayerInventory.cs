@@ -102,15 +102,19 @@ public class PlayerInventory : MonoBehaviour
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
         screenTabs.SetActive(false);
+
+        // Two foreach loops disables hovering activation when inv is closed
         foreach (var item in slots)
         {
             item.RemoveDataShowingOnExit();
-            item.GetComponent<EventTrigger>().enabled = false;
+            // We dont set gameobject active to false here like foreach below 
+            // since we need the inventory slot to be useable on looting
+            item.GetComponent<EventTrigger>().enabled = false; 
         }
         foreach (var item in equipmentSlots)
         {
             item.RemoveDataShowingOnExit();
-            item.gameObject.SetActive(false);
+            item.gameObject.SetActive(false); 
         }
     }
     public void OpeningGUI()
