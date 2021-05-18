@@ -115,7 +115,8 @@ public class PlayerInventory : MonoBehaviour
         foreach (var item in equipmentSlots)
         {
             item.RemoveDataShowingOnExit();
-            item.gameObject.SetActive(false); 
+            //item.gameObject.SetActive(false);
+            item.GetComponent<EventTrigger>().enabled = false;
         }
     }
     public void OpeningGUI()
@@ -130,14 +131,18 @@ public class PlayerInventory : MonoBehaviour
         {
             foreach (var item in equipmentSlots)
             {
-                item.gameObject.SetActive(false);
+                //item.gameObject.SetActive(false);
+                item.GetComponent<EventTrigger>().enabled = false;
+                Debug.Log("Inside 1");
             }
         }
         else
         {
             foreach (var item in equipmentSlots)
             {
-                item.gameObject.SetActive(true);
+                //item.gameObject.SetActive(true);
+                Debug.Log("Inside 2");
+                item.GetComponent<EventTrigger>().enabled = true;
             }
         }
         foreach (var item in slots)
@@ -240,28 +245,33 @@ public class PlayerInventory : MonoBehaviour
             if (equipmentSlots[i].ItemDataGameObject != null)
             {
                 dataToPass.savedEquipmentListDB.Add(equipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
-                Debug.Log("This is what we saved before scene change: " + equipmentSlots[i].ItemDataGameObject.ToString());
-                //equipmentSlots[i].ItemDataInSlot.shallEquipOnSceneChange = true;
             }
         }
     }
 
     public void LoadEquipmentOnStartScene()
     {
-        // TODO: Equip the item from inventory on new scene. For now the equipped items just 
-        // gets instantiated in the player inventory and nothing more
+        // Items previously equipped get added to the inventory 
         foreach (string savedEquipmentName in dataToPass.savedEquipmentListDB)
         {         
             for (int i = 0; i < dataToPass.lootDatabase.Length; i++)
             {
                 if (savedEquipmentName == dataToPass.lootDatabase[i].name)
                 {
-                    Debug.Log("EQ EQ EQ" + savedEquipmentName);
                     GameObject instantiatedGameObject = Instantiate(dataToPass.lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
                     instantiatedGameObject.name = savedEquipmentName;  // Give the copied object the name of the original object so it doesnt get named (clone)
                     AddItemToEmptySlot(instantiatedGameObject);
-                    // TODO: Equip the instantiated item 
                 }
+            }
+        }
+        // Items get equipped by checking databases saved equipped item list for a match
+        foreach (var slot in slots)
+        {
+            // TODO: Check why we get a object reference not set here on line 276
+            if (!slot.IsEmpty && dataToPass.savedEquipmentListDB.Count != 0 && 
+                dataToPass.savedEquipmentListDB.Contains(slot.ItemDataInSlot.itemIdString))
+            {
+                slot.EquipItem();
             }
         }
 
