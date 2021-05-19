@@ -27,6 +27,7 @@ public class ItemData : MonoBehaviour
     }
     public ITEMTYPE itemType;
     public bool isEquippable;
+    public bool shallEquipOnSceneChange;
 
     public ItemData(string itemName, string description, int defense,
         int durability, int value, Sprite itemIcon, string itemIdString, int healingCapability)

@@ -4889,6 +4889,7 @@ MonoBehaviour:
   healingCapability: -15
   itemType: 2
   isEquippable: 0
+  shallEquipOnSceneChange: 0
 --- !u!61 &4949766167320377186
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -63,8 +63,9 @@ public class PlayerInventory : MonoBehaviour
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
+        LoadEquipmentOnStartScene();
         ClosingUI();
-        SetCoinAmount(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerMoneyDB);
+        SetCoinAmount(dataToPass.playerMoneyDB);
 
     }
 
@@ -102,13 +103,20 @@ public class PlayerInventory : MonoBehaviour
         isInventoryOpen = false;
         inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
         screenTabs.SetActive(false);
+
+        // Two foreach loops disables hovering activation when inv is closed
         foreach (var item in slots)
         {
-            item.GetComponent<EventTrigger>().enabled = false;
+            item.RemoveDataShowingOnExit();
+            // We dont set gameobject active to false here like foreach below 
+            // since we need the inventory slot to be useable on looting
+            item.GetComponent<EventTrigger>().enabled = false; 
         }
         foreach (var item in equipmentSlots)
         {
-            item.gameObject.SetActive(false);
+            item.RemoveDataShowingOnExit();
+            //item.gameObject.SetActive(false);
+            item.GetComponent<EventTrigger>().enabled = false;
         }
     }
     public void OpeningGUI()
@@ -123,24 +131,19 @@ public class PlayerInventory : MonoBehaviour
         {
             foreach (var item in equipmentSlots)
             {
-                item.gameObject.SetActive(false);
-                //item.GetComponent<EventTrigger>().enabled = false;
-                //item.GetComponent<Button>().enabled = false;
-                //item.gameObject.
-                //item.transform.GetChild(1).gameObject.SetActive(false);
+                //item.gameObject.SetActive(false);
+                item.GetComponent<EventTrigger>().enabled = false;
+                Debug.Log("Inside 1");
             }
         }
         else
         {
             foreach (var item in equipmentSlots)
             {
-                item.gameObject.SetActive(true);
-                //Debug.Log(item.name);
-                //item.GetComponent<EventTrigger>().enabled = true;
-                //item.GetComponent<Button>().enabled = true;
-
+                //item.gameObject.SetActive(true);
+                Debug.Log("Inside 2");
+                item.GetComponent<EventTrigger>().enabled = true;
             }
-
         }
         foreach (var item in slots)
         {
@@ -185,8 +188,10 @@ public class PlayerInventory : MonoBehaviour
         //Look for empty slot
         foreach (var slot in slots)
         {
+
             if (slot.IsEmpty)
             {
+                
                 slot.AddItem(itemToAdd);
                 //If this was an equipped item being unequipped, it is already inactive but still visible in equipment slot
                 //It is the EquipmentSlot caller's responsibility to clear it from slot
@@ -222,40 +227,84 @@ public class PlayerInventory : MonoBehaviour
     // its NAME to our stringDatabase 
     public void SaveInvGameObjectsOnSceneChange()
     {
-        int saveCounter = 0;
-        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
+        dataToPass.mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
         for (int i = 0; i < slots.Length; i++)
         {
             if(slots[i].ItemDataGameObject != null)
             {
-                dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase.Add(slots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
-                Debug.Log("This is what we saved before scene change: "+slots[i].ItemDataGameObject.ToString());
+                dataToPass.mySavedStringListDatabase.Add(slots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
+                //Debug.Log("This is what we saved before scene change: "+slots[i].ItemDataGameObject.ToString());
             }
-            saveCounter++;
+        }
+    }
+    public void SaveEquipmentOnSceneChange()
+    {
+        dataToPass.savedEquipmentListDB.Clear(); // Clear the database so we dont stack duplicates
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            if (equipmentSlots[i].ItemDataGameObject != null)
+            {
+                dataToPass.savedEquipmentListDB.Add(equipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
+            }
         }
     }
 
+    public void LoadEquipmentOnStartScene()
+    {
+        // Items previously equipped get added to the inventory 
+        foreach (string savedEquipmentName in dataToPass.savedEquipmentListDB)
+        {         
+            for (int i = 0; i < dataToPass.lootDatabase.Length; i++)
+            {
+                if (savedEquipmentName == dataToPass.lootDatabase[i].name)
+                {
+                    GameObject instantiatedGameObject = Instantiate(dataToPass.lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
+                    instantiatedGameObject.name = savedEquipmentName;  // Give the copied object the name of the original object so it doesnt get named (clone)
+                    AddItemToEmptySlot(instantiatedGameObject);
+                }
+            }
+        }
+        // Items get equipped by checking databases saved equipped item list for a match
+        foreach (var slot in slots)
+        {
+            // TODO: Check why we get a object reference not set here on line 276
+            if (!slot.IsEmpty && dataToPass.savedEquipmentListDB.Count != 0 && 
+                dataToPass.savedEquipmentListDB.Contains(slot.ItemDataInSlot.itemIdString))
+            {
+                slot.EquipItem();
+            }
+        }
+
+        // On loading the inventory, if there is not any sprite in each inventory slot we want to
+        // set the slots Alpha color to 0
+        foreach (var item in equipmentSlots)
+        {
+            if (item.slotIcon.sprite == null) // try to: check sprite null, check Alpha null, check obj in slot null
+            {
+                item.SetAlphaOfColor(0f);
+            }
+        }
+    }
     // here we check our itemDatabase for names matching our savedStringItems
     public void LoadInvGameObjectOnStartScene()
     {
         int counterGang = 0;
-        // TODO - Instantiate Local list here which we can send to addItemToSlot()
-        foreach (string savedItemStringName in dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().mySavedStringListDatabase)
+   
+        foreach (string savedItemStringName in dataToPass.mySavedStringListDatabase)
         {
             Debug.Log(savedItemStringName);
-            for (int i = 0; i < dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase.Length; i++)
+            for (int i = 0; i < dataToPass.lootDatabase.Length; i++)
             {
-                if(savedItemStringName == dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i].name)
-                {
-                    // TODO - Add to local list ??? dont know what i ment here         
-                    GameObject instantiatedGameObject = Instantiate(dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
+                if(savedItemStringName == dataToPass.lootDatabase[i].name)
+                {       
+                    GameObject instantiatedGameObject = Instantiate(dataToPass.lootDatabase[i]) as GameObject; // Instantiate object so we dont touch prefab
                     instantiatedGameObject.name = savedItemStringName;  // Give the copied object the name of the original object so it doesnt get named (clone)
                     AddItemToEmptySlot(instantiatedGameObject);               
                 }  
                 counterGang++;
             }
         }
-        // TODO - addItemToSlot(LocalListGang)
+
         
         // On loading the inventory, if there is not any sprite in each inventory slot we want to
         // set the slots Alpha color to 0

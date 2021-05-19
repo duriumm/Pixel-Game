@@ -1,55 +1,37 @@
 fileFormatVersion: 2
-guid: 6736953c0f0c1814198a67e7b70f6f1b
+guid: 01c7ca294ce3ca349a3d22d848614502
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5482034736620542534
-    second: Grass_Dirtroad (2)_0
+      213: -4293364775501372796
+    second: real spritesheet bridge_0
   - first:
-      213: -6766414698506539514
-    second: Grass_Dirtroad (2)_1
+      213: 2402938822468068759
+    second: real spritesheet bridge_1
   - first:
-      213: 3118677386533893465
-    second: Grass_Dirtroad (2)_2
+      213: -1669938257781297509
+    second: real spritesheet bridge_2
   - first:
-      213: 5999282641671557941
-    second: Grass_Dirtroad (2)_3
+      213: -575939439887266965
+    second: real spritesheet bridge_3
   - first:
-      213: 8892695400058230114
-    second: Grass_Dirtroad (2)_4
+      213: 3839861817966483637
+    second: real spritesheet bridge_4
   - first:
-      213: 7804873233748927615
-    second: Grass_Dirtroad (2)_5
+      213: 5565570171783460514
+    second: real spritesheet bridge_5
   - first:
-      213: 7439801927775611240
-    second: Grass_Dirtroad (2)_6
+      213: 5224827864009227538
+    second: real spritesheet bridge_6
   - first:
-      213: 212889942041194480
-    second: Grass_Dirtroad (2)_7
+      213: -5156955273463236333
+    second: real spritesheet bridge_7
   - first:
-      213: 9059902536661235534
-    second: Grass_Dirtroad (2)_8
+      213: -2507402517354365257
+    second: real spritesheet bridge_8
   - first:
-      213: 853530060183783738
-    second: Grass_Dirtroad (2)_9
-  - first:
-      213: -8764120932252602544
-    second: Grass_Dirtroad (2)_10
-  - first:
-      213: -221114120639038233
-    second: Grass_Dirtroad (2)_11
-  - first:
-      213: -507760658536504030
-    second: Grass_Dirtroad (2)_12
-  - first:
-      213: -5162004613261930890
-    second: Grass_Dirtroad (2)_13
-  - first:
-      213: -3419619165343750280
-    second: Grass_Dirtroad (2)_14
-  - first:
-      213: -5794204940406347431
-    second: Grass_Dirtroad (2)_15
+      213: -4168629964606783622
+    second: real spritesheet bridge_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -149,7 +131,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_0
+      name: real spritesheet bridge_0
       rect:
         serializedVersion: 2
         x: 0
@@ -163,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab5616db376ebe3b0800000000000000
-      internalID: -5482034736620542534
+      spriteID: 482e011eb77ea64c0800000000000000
+      internalID: -4293364775501372796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_1
+      name: real spritesheet bridge_1
       rect:
         serializedVersion: 2
         x: 32
@@ -181,17 +163,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: -9}
+        - {x: 16, y: -9}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 60e29848eadd812a0800000000000000
-      internalID: -6766414698506539514
+      spriteID: 7956432b024f85120800000000000000
+      internalID: 2402938822468068759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_2
+      name: real spritesheet bridge_2
       rect:
         serializedVersion: 2
         x: 64
@@ -202,38 +188,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: -9}
+        - {x: 16, y: -9}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 95575614f84c74b20800000000000000
-      internalID: 3118677386533893465
+      spriteID: b9e6c14900033d8e0800000000000000
+      internalID: -1669938257781297509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_3
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 533100ce6cbb14350800000000000000
-      internalID: 5999282641671557941
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_4
+      name: real spritesheet bridge_3
       rect:
         serializedVersion: 2
         x: 0
@@ -244,17 +213,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: -9}
+        - {x: 16, y: -9}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 2659830d953396b70800000000000000
-      internalID: 8892695400058230114
+      spriteID: b6bc161812ad108f0800000000000000
+      internalID: -575939439887266965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_5
+      name: real spritesheet bridge_4
       rect:
         serializedVersion: 2
         x: 32
@@ -265,17 +238,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: -10}
+        - {x: -7, y: -10}
+        - {x: -2, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: f742f86aada705c60800000000000000
-      internalID: 7804873233748927615
+      spriteID: 5b85a7e9afde94530800000000000000
+      internalID: 3839861817966483637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_6
+      name: real spritesheet bridge_5
       rect:
         serializedVersion: 2
         x: 64
@@ -286,38 +263,22 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 16}
+        - {x: -1, y: 16}
+        - {x: 16, y: 6}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 869e4508f6c7f3760800000000000000
-      internalID: 7439801927775611240
+      spriteID: 2a6b9a56590ec3d40800000000000000
+      internalID: 5565570171783460514
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_7
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ff6e9b364654f200800000000000000
-      internalID: 212889942041194480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_8
+      name: real spritesheet bridge_6
       rect:
         serializedVersion: 2
         x: 0
@@ -328,17 +289,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: 4, y: -16}
+        - {x: 9, y: -11}
+        - {x: 16, y: -11}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: e477a5d0b5d3bbd70800000000000000
-      internalID: 9059902536661235534
+      spriteID: 21d35de8241528840800000000000000
+      internalID: 5224827864009227538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_9
+      name: real spritesheet bridge_7
       rect:
         serializedVersion: 2
         x: 32
@@ -349,17 +314,22 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 6}
+        - {x: 0, y: 16}
+        - {x: 16, y: 16}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: a394f5a411958db00800000000000000
-      internalID: 853530060183783738
+      spriteID: 31975a26080de68b0800000000000000
+      internalID: -5156955273463236333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_10
+      name: real spritesheet bridge_8
       rect:
         serializedVersion: 2
         x: 64
@@ -370,38 +340,21 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: 7}
+        - {x: 16, y: -9}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 05fa48842769f5680800000000000000
-      internalID: -8764120932252602544
+      spriteID: 7be3c2cf1bae33dd0800000000000000
+      internalID: -2507402517354365257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grass_Dirtroad (2)_11
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ecbc78f0e17eecf0800000000000000
-      internalID: -221114120639038233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_12
+      name: real spritesheet bridge_9
       rect:
         serializedVersion: 2
         x: 0
@@ -412,74 +365,15 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -16, y: -16}
+        - {x: -16, y: -11}
+        - {x: 16, y: 7}
+        - {x: 16, y: -16}
       tessellationDetail: 0
       bones: []
-      spriteID: 225630d0f5214f8f0800000000000000
-      internalID: -507760658536504030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_13
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 67e48995720ec58b0800000000000000
-      internalID: -5162004613261930890
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_14
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 877619eac721b80d0800000000000000
-      internalID: -3419619165343750280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grass_Dirtroad (2)_15
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 95924434e49d69fa0800000000000000
-      internalID: -5794204940406347431
+      spriteID: a7f309f222d0626c0800000000000000
+      internalID: -4168629964606783622
       vertices: []
       indices: 
       edges: []

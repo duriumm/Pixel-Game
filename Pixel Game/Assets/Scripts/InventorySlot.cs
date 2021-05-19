@@ -99,10 +99,10 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    void EquipItem()
+    public void EquipItem()
     {
         //Add item to equipment slot
-        
+        Debug.Log("we came IN HERE EQUIP");
         var equipmentSlot = GetEquipmentSlotForItem();
 
         // If weapon, set as player's equipped weapon
@@ -291,6 +291,10 @@ public class InventorySlot : MonoBehaviour
             else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {   // Show the text in green to indicate hp gain on eating item
                 ItemStatsText.text = "Effect on eating: " + "<color=green>+" + itemDataInSlot.healingCapability + " hp</color>";
+            }
+            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
+            {
+                ItemStatsText.text = null;
             }
             this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }
