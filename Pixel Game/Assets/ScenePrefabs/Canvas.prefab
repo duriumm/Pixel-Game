@@ -18367,6 +18367,58 @@ PrefabInstance:
       propertyPath: m_Name
       value: EquipmentSlotPanel (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4548699540278120714, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.4420776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.500902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.489987
+      objectReference: {fileID: 0}
     - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -18786,6 +18838,58 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: BOOTS_SlotPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540278120714, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.4420776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.500902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.489987
       objectReference: {fileID: 0}
     - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -20679,6 +20783,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HELMET_SlotPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 4548699540278120714, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.4420776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DropEquippedItem
@@ -20788,6 +20908,58 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: EquipmentSlotPanel (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540278120714, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.4420776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.500902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.489987
       objectReference: {fileID: 0}
     - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -21004,6 +21176,58 @@ PrefabInstance:
     - target: {fileID: 2788945366039332429, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_Name
       value: EquipmentSlotPanel (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540278120714, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.4420776
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 14.500902
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.489987
       objectReference: {fileID: 0}
     - target: {fileID: 5618724389270765843, guid: d66beaf1e5af78e46b7b6d824088e9fd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
