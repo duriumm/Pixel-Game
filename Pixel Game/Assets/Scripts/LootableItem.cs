@@ -20,12 +20,7 @@ public class LootableItem : MonoBehaviour
     {
         if(collision.gameObject.tag == "MyPlayer")
         {
-            if(inventoryManager == null)
-            {
-                //Debug.Log("IT WAS NULL");
-            }
             inventoryManager.GetComponent<PlayerInventory>().LootItem(this.gameObject/*.GetComponent<ItemData>()*/);
-
             //Debug.Log("Picked up something");
         }
     }

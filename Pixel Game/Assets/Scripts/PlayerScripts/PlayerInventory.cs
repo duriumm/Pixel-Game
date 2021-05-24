@@ -271,7 +271,7 @@ public class PlayerInventory : MonoBehaviour
             if (!slot.IsEmpty && dataToPass.savedEquipmentListDB.Count != 0 && 
                 dataToPass.savedEquipmentListDB.Contains(slot.ItemDataInSlot.itemIdString))
             {
-                slot.EquipItem();
+                StartCoroutine(slot.EquipItem());
             }
         }
 

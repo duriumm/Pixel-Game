@@ -51,11 +51,8 @@ public class SceneTransition : MonoBehaviour
         
         // Run the Start() function for the scripts that are transfered between scenes
         // since they cant run Start() on scene change by themselves
-        dataToPassBetweenScenes.Start(); 
-        playerHealth.Start();
+        playerHealth.OnSceneChange();
         playerInput.Start();
-        playerAttack.Start();
-        playerWeapon.Start();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -65,7 +62,6 @@ public class SceneTransition : MonoBehaviour
             dataToPassBetweenScenes.savedSceneTransitionId = transitionId;
 
             // Here we save all data to our database (dataToPassBetweenScenesGameObject) on entering a new scene
-            dataToPassBetweenScenes.playerHealthDB = myPlayerObject.GetComponent<PlayerHealth>().Hp;
             playerInventory.SaveInvGameObjectsOnSceneChange();
             playerInventory.SaveEquipmentOnSceneChange(); // TODO: Only saves to inventory, make it equip said items aswell
             dataToPassBetweenScenes.playerMoneyDB = playerInventory.playerInvMoney;

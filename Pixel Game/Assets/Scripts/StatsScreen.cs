@@ -34,9 +34,6 @@ public class StatsScreen : MonoBehaviour
     {
         isStatsScreenOpen = true;
         statsScreen.SetActive(true);
-        // Health updates from its own local value which is not regurarly saved in DB since it changes a lot
-        dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().UpdatePlayerHealthDB();
-        // The rest of the values (armor, attack. buff etc) 
         UpdateStatsText();
         
 
@@ -52,11 +49,10 @@ public class StatsScreen : MonoBehaviour
 
     public void UpdateStatsText()
     {
-        healthText.text = "Health: " + dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerHealthDB.ToString();
-        armorText.text = "Armor: " + dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerArmorDB.ToString();
-        attackText.text = "Attack: " + dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().playerAttackDB.ToString();
-
-
+        var health = player.GetComponent<PlayerHealth>();
+        healthText.text = $"Health: {health.Hp} / {health.MaxHp}";
+        armorText.text = "Armor: " + health.Defense;
+        attackText.text = "Attack: " + player.GetComponent<Attack>().CurrentWeapon.Damage;
     }
 
 
