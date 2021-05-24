@@ -104,6 +104,9 @@ public class InventorySlot : MonoBehaviour
     {
         //Add item to equipment slot
         Debug.Log("we came IN HERE EQUIP");
+        
+        var equipmentSlot = GetEquipmentSlotForItemType();
+        equipmentSlot.UnequipItem();
 
         //Make sure the item has been initialized
         ItemDataGameObject.SetActive(true);
@@ -116,9 +119,7 @@ public class InventorySlot : MonoBehaviour
             playerAttack.EquipWeapon(weapon);
         }
 
-        var equipmentSlot = GetEquipmentSlotForItemType();
-        equipmentSlot.UnequipItem();
-        playerHealth.Armor += itemDataInSlot.defense;
+        playerHealth.Defense += itemDataInSlot.defense;
         equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
@@ -159,7 +160,7 @@ public class InventorySlot : MonoBehaviour
 
         if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             playerAttack.EquipWeapon(null);
-        playerHealth.Armor -= ItemDataInSlot.defense;
+        playerHealth.Defense -= ItemDataInSlot.defense;
     }
 
     public void ClearSlot()
@@ -290,25 +291,27 @@ public class InventorySlot : MonoBehaviour
             // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
             TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
             itemNameText.text = itemDataInSlot.itemName;
-            TextMeshProUGUI ItemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
-            ItemDescriptionText.text = itemDataInSlot.description;
-            TextMeshProUGUI ItemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI itemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
+            itemDescriptionText.text = itemDataInSlot.description;
+            TextMeshProUGUI itemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
             if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             {
-                ShowWeaponStats(ItemStatsText);
+                ShowWeaponStats(itemStatsText);
             }
-            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.HELMET || itemDataInSlot.itemType == ItemData.ITEMTYPE.ARMOR)
+            else if (itemDataInSlot.isEquippable)
             {
-                ItemStatsText.text = "Armor: " + itemDataInSlot.defense + "\n" + "Value: <color=yellow>" + itemDataInSlot.value + " coins</color> ";
+                ShowEquipmentStats(itemStatsText);
             }
             else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {   // Show the text in green to indicate hp gain on eating item
-                ItemStatsText.text = "Effect on eating: " + "<color=green>+" + itemDataInSlot.healingCapability + " hp</color>";
+                itemStatsText.text = "Effect on eating: " + "<color=green>+" + itemDataInSlot.healingCapability + " hp</color>";
             }
             else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
             {
-                ItemStatsText.text = null;
+                itemStatsText.text = null;
             }
+            if (ItemDataInSlot.value > 0)
+                itemStatsText.text += $"Value: <color=yellow>{itemDataInSlot.value} coins</color> ";
             this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }
         else
@@ -320,10 +323,31 @@ public class InventorySlot : MonoBehaviour
         // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
     }
 
+    private void ShowEquipmentStats(TextMeshProUGUI itemStatsText)
+    {
+        string defenseDiff = "";
+        bool showDefense = itemDataInSlot.defense > 0;
+        //If this is not an equipment slot, show difference with currently equipped item
+        if (gameObject.name != GetEquipmentSlotNameForItemType())
+        {
+            var equipmentSlot = GetEquipmentSlotForItemType();
+            int equippedDefense = equipmentSlot.ItemDataInSlot != null ?
+                equipmentSlot.ItemDataInSlot.defense : 0;
+            if (equippedDefense > 0 || itemDataInSlot.defense > 0)
+            {
+                showDefense = true;
+                defenseDiff = GetHoverDiffText(ItemDataInSlot.defense - equippedDefense);
+            }
+        }
+        itemStatsText.text = $"Defense: {itemDataInSlot.defense} {defenseDiff}\n";
+    }
+
     private void ShowWeaponStats(TextMeshProUGUI itemStatsText)
     {
         var weapon = ItemDataGameObject.GetComponent<Weapon>();
         string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
+        
+        //If this is not an equipment slot, show difference with currently equipped weapon
         if (gameObject.name != GetEquipmentSlotNameForItemType())
         {
             powerDiff = GetHoverDiffText(weapon.Damage - playerAttack.CurrentWeapon.Damage);
@@ -331,11 +355,11 @@ public class InventorySlot : MonoBehaviour
             if (weapon.HasProjectileAttack && playerAttack.CurrentWeapon.HasProjectileAttack)
                 projectileSpeedDiff = GetHoverDiffText(weapon.ProjectileAttack.Speed - playerAttack.CurrentWeapon.ProjectileAttack.Speed);
         }
+
         itemStatsText.text = $"Damage: {weapon.Damage} {powerDiff}\n";
         itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
         if (weapon.HasProjectileAttack)
             itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";
-        itemStatsText.text += $"Value: <color=yellow>{itemDataInSlot.value} coins</color> ";
     }
 
     // Returns a string describing the difference between the hovered item

@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 {
     private const float KnockbackDuration = 0.5f;
     private const float KnockbackSpeed = 7;
-    public int Armor { get; set; } 
+    public int Defense { get; set; } 
     private Rigidbody2D body;
     [SerializeField]
     private int maxHp = 100;
@@ -57,7 +57,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
     {
-        damage = Math.Max(1, damage - Armor);
+        damage = Math.Max(1, damage - Defense);
 
         if (hurtSound != null)
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
