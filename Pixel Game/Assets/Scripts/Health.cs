@@ -8,13 +8,14 @@ public class Health : MonoBehaviour
 {
     private const float KnockbackDuration = 0.5f;
     private const float KnockbackSpeed = 7;
+    public int Armor { get; set; } 
     private Rigidbody2D body;
     [SerializeField]
     private int maxHp = 100;
     private int hp;
     public int Hp
     {
-        protected set
+        set
         {
             hp = Math.Min(maxHp, value);
             slider.value = hp;
@@ -56,8 +57,8 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
     {
-        //Todo: reduce damage depending on armor
-        
+        damage = Math.Max(1, damage - Armor);
+
         if (hurtSound != null)
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
@@ -66,11 +67,6 @@ public class Health : MonoBehaviour
         Hp -= damage;
         if (hp <= 0)
             Kill();
-    }
-
-    public void GainHealth(int value)
-    {
-        Hp += value;
     }
 
     private IEnumerator HurtEffect()
@@ -93,4 +89,3 @@ public class Health : MonoBehaviour
         KnockedBack = false;
     }
 }
-    

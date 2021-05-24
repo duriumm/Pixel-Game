@@ -34,6 +34,7 @@ public class InventorySlot : MonoBehaviour
     private static PlayerInventory inventory;
     private Attack playerAttack;
     private DataToPassBetweenScenes dataToPass;
+    private PlayerHealth playerHealth;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class InventorySlot : MonoBehaviour
         eventTrigger = this.gameObject.GetComponent<EventTrigger>();
         playerCharacter = GameObject.FindGameObjectWithTag("MyPlayer");
         playerAttack = playerCharacter.GetComponent<Attack>();
+        playerHealth = playerCharacter.GetComponent<PlayerHealth>();
         slotIcon = this.gameObject.GetComponent<Image>();
         shopScreen = GameObject.Find("ShopScreen");
         
@@ -68,15 +70,14 @@ public class InventorySlot : MonoBehaviour
         {
             if(itemDataInSlot.isEquippable)
             {
-                EquipItem();
+                StartCoroutine(EquipItem());
             }
             else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
-                if (!playerCharacter.GetComponent<PlayerHealth>().HasFullHp)
+                if (!playerHealth.HasFullHp)
                 {
                     Debug.Log("Ate food, we gained: " + itemDataInSlot.healingCapability + " health");
-                    playerCharacter.GetComponent<PlayerHealth>().GainHealth(itemDataInSlot.healingCapability);
-
+                    playerHealth.Hp += itemDataInSlot.healingCapability;
                     Destroy(ItemDataGameObject);
                     ClearSlot();
                 }
@@ -99,28 +100,36 @@ public class InventorySlot : MonoBehaviour
         }
     }
 
-    public void EquipItem()
+    public IEnumerator EquipItem()
     {
         //Add item to equipment slot
         Debug.Log("we came IN HERE EQUIP");
-        var equipmentSlot = GetEquipmentSlotForItem();
 
-        // If weapon, set as player's equipped weapon
-        var weapon = ItemDataGameObject.GetComponent<Weapon>();
-        if (weapon != null)
+        //Make sure the item has been initialized
+        ItemDataGameObject.SetActive(true);
+        yield return null;
+        ItemDataGameObject.SetActive(false);
+
+        if (ItemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
+        {
+            var weapon = ItemDataGameObject.GetComponent<Weapon>();
             playerAttack.EquipWeapon(weapon);
+        }
 
+        var equipmentSlot = GetEquipmentSlotForItemType();
+        equipmentSlot.UnequipItem();
+        playerHealth.Armor += itemDataInSlot.defense;
         equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
-    InventorySlot GetEquipmentSlotForItem()
+    InventorySlot GetEquipmentSlotForItemType()
     {
-        string equipmentSlotName = GetEquipmentSlotNameForItem();
+        string equipmentSlotName = GetEquipmentSlotNameForItemType();
         var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
         return equipmentSlotGameObject.GetComponent<InventorySlot>();
     }
 
-    string GetEquipmentSlotNameForItem()
+    string GetEquipmentSlotNameForItemType()
     {
         return Enum.GetName(typeof(ItemData.ITEMTYPE), itemDataInSlot.itemType) + "_SlotPanel";
     }
@@ -145,8 +154,12 @@ public class InventorySlot : MonoBehaviour
 
     private void UnequipItem()
     {
+        if (itemDataInSlot == null)
+            return;
+
         if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
             playerAttack.EquipWeapon(null);
+        playerHealth.Armor -= ItemDataInSlot.defense;
     }
 
     public void ClearSlot()
@@ -189,8 +202,8 @@ public class InventorySlot : MonoBehaviour
         }
         // Set alpha of slot to 1 so we can see the item sprite
         SetAlphaOfColor(1f);
-                
     }
+
     public void BuyItemFromShop()
     {
         // If there is an actual item in current slot and inventory is actually open
@@ -311,7 +324,7 @@ public class InventorySlot : MonoBehaviour
     {
         var weapon = ItemDataGameObject.GetComponent<Weapon>();
         string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
-        if (gameObject.name != GetEquipmentSlotNameForItem())
+        if (gameObject.name != GetEquipmentSlotNameForItemType())
         {
             powerDiff = GetHoverDiffText(weapon.Damage - playerAttack.CurrentWeapon.Damage);
             cooldownDiff = GetHoverDiffText(weapon.Cooldown - playerAttack.CurrentWeapon.Cooldown, true);

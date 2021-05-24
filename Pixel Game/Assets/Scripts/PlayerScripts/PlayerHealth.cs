@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Health
 {
-
     public override void Start()
     {
         var canvasPrefab = GameObject.FindWithTag("Canvas");

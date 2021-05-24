@@ -48,7 +48,7 @@ public class PlantScript : MonoBehaviour
         // TO-DO
         // Make sparkling green glow when player gets healed
         // TO-DO
-        myPlayer.GetComponent<PlayerHealth>().GainHealth(20);
+        myPlayer.GetComponent<PlayerHealth>().Hp += 20;
         Destroy(gameObject);
 
     }
