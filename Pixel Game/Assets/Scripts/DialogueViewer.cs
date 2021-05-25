@@ -17,6 +17,7 @@ public class DialogueViewer : MonoBehaviour
     private GameObject dialogueCanvas;
     private DataToPassBetweenScenes dataToPass;
     private PlayerInventory playerInv;
+    private PlayerInput playerInput;
 
     [DllImport("__Internal")]
     private static extern void openPage(string url);
@@ -28,7 +29,6 @@ public class DialogueViewer : MonoBehaviour
         controller.onEnteredNode += OnNodeEntered;
         controller.InitializeDialogue();
 
-
         // Start the dialogue
         var curNode = controller.GetCurrentNode();
 
@@ -36,6 +36,7 @@ public class DialogueViewer : MonoBehaviour
         dialogueCanvas.SetActive(false);
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         playerInv = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
+        playerInput = GameObject.Find("MyCharacter").GetComponent<PlayerInput>();
     }
 
     public static void KillAllChildren(UnityEngine.Transform parent)
@@ -146,7 +147,6 @@ public class DialogueViewer : MonoBehaviour
         if (dialogueCanvas.activeSelf == true) 
         { 
             dialogueCanvas.SetActive(false);
-
         }
         // Each time we turn the dialogue canvas ON, we want to also initialize the dialogue
         // that is the current active convo of the databases current active npc
@@ -161,5 +161,17 @@ public class DialogueViewer : MonoBehaviour
             controller.twineText = npcGameobject.GetComponent<NpcData>().currentActiveConvo;
             controller.InitializeDialogue();
         }
+    }
+
+    void OnDisable()
+    {
+        if (playerInput != null)
+            playerInput.enabled = true;
+    }
+
+    void OnEnable()
+    {
+        if (playerInput != null)
+            playerInput.enabled = false;
     }
 }
