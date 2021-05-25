@@ -11,8 +11,9 @@ public class TraderNpc : MonoBehaviour
     public string traderID;
     
     private GameObject mainCamera;
-    private GameObject shopScreen;
+    private ShopScreen shopScreen;
     private GameObject dataToPassGameObject;
+    private UIScreenManager uiScreenManager;
 
     private GameObject invManager;
     void Start()
@@ -21,8 +22,8 @@ public class TraderNpc : MonoBehaviour
         merchantInfoBubble = gameObject.transform.Find("MerchantPopup").gameObject;
         merchantInfoBubble.SetActive(false);
         mainCamera = GameObject.FindWithTag("MainCamera");
-        shopScreen = GameObject.Find("ShopScreen");
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
+        uiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<UIScreenManager>();
     }
 
     // Update is called once per frame
@@ -42,15 +43,6 @@ public class TraderNpc : MonoBehaviour
             // Assign current active trader to be this trader. 
             // TRADER ID HAS TO BE THE SAME AS GAMEOBJECTS NAME
             dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader = traderID;
-
-            // Clear the shopScreen list so we only put in the NPC list of items in a empty list
-            shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Clear();
-            Debug.Log("Shop screen list before adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
-            foreach (var item in shopItems)
-            {
-                shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Add(item);
-            }
-            Debug.Log("Shop screen list AFTER adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
         }
     }
 
@@ -61,24 +53,22 @@ public class TraderNpc : MonoBehaviour
             merchantInfoBubble.SetActive(false);
             isPlayerInRange = false;
 
-            shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-            invManager.GetComponent<PlayerInventory>().ClosingUI();
+            //shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
+            //invManager.GetComponent<PlayerInventory>().ClosingUI();
         }
     }
 
 
     public void OpenNpcShop()
     {
-        float alpha = shopScreen.GetComponent<CanvasGroup>().alpha;
+        uiScreenManager.Toggle(UIScreenType.Shop);
+        if (shopScreen == null)
+            shopScreen = GameObject.Find("ShopScreen").GetComponent<ShopScreen>();
 
-
-        if (alpha == 1) // If shopscreen is visible
+        uiScreenManager.Shop.ItemList.Clear();
+        foreach (var item in shopItems)
         {
-            shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-        }
-        else // If shopscreen is NOT visible
-        { 
-            shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
+            uiScreenManager.Shop.ItemList.Add(item);
         }
     }
 

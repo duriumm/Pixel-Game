@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InitCanvas : MonoBehaviour
+public class InventoryScreen : UIScreen
 {
     private void Start()
     {
-        //PlaceEquipmentSlots();
+        PlaceEquipmentSlots();
+        Close();
         //gameObject.transform.Find("Screens").gameObject.GetComponent<UIScreenManager>().CloseAll();
     }
 

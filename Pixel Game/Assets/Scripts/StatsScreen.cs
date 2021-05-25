@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class StatsScreen : MonoBehaviour
+public class StatsScreen : UIScreen
 {
     private GameObject player;
     private GameObject dataToPassGameObject;
@@ -25,26 +25,24 @@ public class StatsScreen : MonoBehaviour
         armorText = statsScreen.transform.Find("ArmorText").gameObject.GetComponent<TextMeshProUGUI>();
         attackText = statsScreen.transform.Find("AttackText").gameObject.GetComponent<TextMeshProUGUI>();
 
-        CloseStatsScreen();
+        Close();
 
 
 }
 
-    public void OpenStatsScreen()
+    public override void Open()
     {
         isStatsScreenOpen = true;
         statsScreen.SetActive(true);
         UpdateStatsText();
-        
+        base.Open();
+    }
 
-
-}
-
-    public void CloseStatsScreen()
+    public override void Close()
     {
         Debug.Log("We closed stats screen");
         isStatsScreenOpen = true;
-        statsScreen.SetActive(false);
+        base.Close();
     }
 
     public void UpdateStatsText()

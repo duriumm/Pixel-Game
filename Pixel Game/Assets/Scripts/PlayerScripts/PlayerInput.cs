@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
     public GameObject playerAttackColliderObject;
     private GameObject inventoryManager;
     private PlayerInventory playerInventory;
+    private UIScreenManager uiScreenManager;
     private GameObject shopScreen;
 
     private GameObject playerGameObject;
@@ -17,9 +18,10 @@ public class PlayerInput : MonoBehaviour
 
     public void Start()
     {
+        uiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<UIScreenManager>();
         playerGameObject = this.gameObject;
         playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
-        shopScreen = GameObject.Find("ShopScreen");
+        //shopScreen = canvasScreens.transform.Find("ShopScreen").gameObject;
         torch = playerGameObject.transform.GetChild(2).gameObject.GetComponent<Torch>(); // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
     }
@@ -40,14 +42,16 @@ public class PlayerInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (playerInventory.isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                playerInventory.OpeningGUI();
-            }
-            else if(playerInventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                playerInventory.ClosingUI();
-            }
+            uiScreenManager.Toggle(UIScreenType.Inventory);
+
+    //if (playerInventory.isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+    //{
+    //    //playerInventory.OpeningGUI();
+    //}
+    //else if(playerInventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+    //{
+    //    playerInventory.ClosingUI();
+    //}
         }
     }
 }

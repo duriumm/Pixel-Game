@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopScreen : MonoBehaviour
+public class ShopScreen : UIScreen
 {
     public bool isShopScreenOpen = false;
     private GameObject inventoryManager;
@@ -11,13 +11,13 @@ public class ShopScreen : MonoBehaviour
     public GameObject sceneCanvas;
     private Transform shopSlotsTransform;
     private GameObject dataToPassGameObject;
-    public List<GameObject> shopScreenItemList = new List<GameObject>();
+    public List<GameObject> ItemList = new List<GameObject>();
     public string currentActiveNpc;
     void Start()
     {
         dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
         inventoryManager = GameObject.FindWithTag("InventoryManager");
-        CloseShopScreen();
+        //CloseShopScreen();
         //inventoryScreenGameObject = sceneCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
         //shopSlotsTransform = inventoryScreenGameObject.transform.GetChild(6).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
         shopSlots = this.gameObject.transform.GetComponentsInChildren<InventorySlot>();
@@ -32,6 +32,8 @@ public class ShopScreen : MonoBehaviour
                 item.SetAlphaOfColor(0f);
             }
         }
+        gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        base.Close();
     }
 
     // Update is called once per frame
@@ -40,16 +42,16 @@ public class ShopScreen : MonoBehaviour
         
     }
 
-    public void CloseShopScreen()
+    public override void Close()
     {
         isShopScreenOpen = false;
-        inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
-        this.gameObject.GetComponent<CanvasGroup>().alpha = 0;
-        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        base.Close();
+    //    inventoryManager.GetComponent<PlayerInventory>().ClosingUI();
+    //    this.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+    //    this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
-    public void OpenShopScreen()
+    public override void Open()
     {
-
         // Clear all data flor shop slots so we can add new data!
         for (int i = 0; i < shopSlots.Length; i++)
         {
@@ -57,16 +59,17 @@ public class ShopScreen : MonoBehaviour
         }
 
         // Populate shop screens slots with copies of prefab items
-        for (int i = 0; i < shopScreenItemList.Count; i++)
+        for (int i = 0; i < ItemList.Count; i++)
         {
             // We add the original gameobject prefab here into the shop slot since we instantiate the object on buying items anyway!
-            shopSlots[i].AddItem(shopScreenItemList[i]); 
+            shopSlots[i].AddItem(ItemList[i]); 
         }
 
         isShopScreenOpen = true;
-        inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
-        this.gameObject.GetComponent<CanvasGroup>().alpha = 1;
-        this.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        //inventoryManager.GetComponent<PlayerInventory>().OpeningGUI();
+        //this.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        base.Open();
     }
 
 

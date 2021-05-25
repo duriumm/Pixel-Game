@@ -8,7 +8,7 @@ using System;
 
 
 /* Inventory slot script is used on each inventory slot of the player AND on each shop screens slot.
-   Players inventory slot is using Remove() func on buttonpress while shop slot is using BuyItemFromShop()
+   Players inventory slot is using UseItem() func on buttonpress while shop slot is using BuyItemFromShop()
    on button press
 */
 
@@ -26,7 +26,7 @@ public class InventorySlot : MonoBehaviour
 
     public GameObject ItemDataGameObject => itemDataInSlot?.gameObject;
     public bool IsEmpty => itemDataInSlot == null;
-    private GameObject shopScreen;
+    //private GameObject shopScreen;
     private EventTrigger eventTrigger;
     private GameObject dropItemButton;
     // Enable this bool in inspector for all inventory slots but disable for all shop slots
@@ -35,6 +35,7 @@ public class InventorySlot : MonoBehaviour
     private Attack playerAttack;
     private DataToPassBetweenScenes dataToPass;
     private PlayerHealth playerHealth;
+    private UIScreenManager uiScreenManager;
 
     void Awake()
     {
@@ -55,18 +56,18 @@ public class InventorySlot : MonoBehaviour
         playerAttack = playerCharacter.GetComponent<Attack>();
         playerHealth = playerCharacter.GetComponent<PlayerHealth>();
         slotIcon = this.gameObject.GetComponent<Image>();
-        shopScreen = GameObject.Find("ShopScreen");
+        //shopScreen = GameObject.Find("ShopScreen");
         
     }
     private void Start()
     {
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
+        uiScreenManager = GameObject.Find("Canvas/Screens").GetComponent<UIScreenManager>();
     }
 
     public void UseItem()
     {
-        if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false && 
-            itemDataInSlot != null && inventory.isInventoryOpen == true)
+        if(!uiScreenManager.IsOpen(UIScreenType.Shop) && itemDataInSlot != null)
         {
             if(itemDataInSlot.isEquippable)
             {
@@ -94,7 +95,7 @@ public class InventorySlot : MonoBehaviour
                 }
             }
         }
-        else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        else if (uiScreenManager.IsOpen(UIScreenType.Shop))
         {
             DropItem();
         }
@@ -208,7 +209,7 @@ public class InventorySlot : MonoBehaviour
     public void BuyItemFromShop()
     {
         // If there is an actual item in current slot and inventory is actually open
-        if (itemDataInSlot != null && inventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+        if (itemDataInSlot != null && uiScreenManager.IsOpen(UIScreenType.Shop))
         {
             if(inventory.playerInvMoney >= itemDataInSlot.value)
             {
@@ -250,11 +251,11 @@ public class InventorySlot : MonoBehaviour
 
         Debug.Log("You pressed button");
 
-        Debug.Log("Is shot screen open: " + shopScreen.GetComponent<ShopScreen>().isShopScreenOpen);
+        Debug.Log("Is shot screen open: " + uiScreenManager.IsOpen(UIScreenType.Shop));
         // If there is an actual item in current slot and inventory is actually open
-        if (itemDataInSlot != null && inventory.isInventoryOpen == true)
+        if (itemDataInSlot != null)
         {
-            if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
+            if(!uiScreenManager.IsOpen(UIScreenType.Shop))
             {
                 // Set spawn position of item to where the player is standing currently
                 // TO-DO - Spawn the item in a cricle around the player of random numbers
@@ -267,7 +268,7 @@ public class InventorySlot : MonoBehaviour
                 //instantiatedGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
             }
             // If the shops item screen is open, we will sell our inventory slot item instead of dropping it on the ground
-            else if(shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
+            else if(uiScreenManager.IsOpen(UIScreenType.Shop))
             {
                 inventory.BuyAndSellItemSound();
                 inventory.AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
@@ -317,7 +318,6 @@ public class InventorySlot : MonoBehaviour
         else
         {
             Debug.Log("no item in slot :(");
-
         }
 
         // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
