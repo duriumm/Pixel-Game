@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UIScreenType 
+public enum GuiScreenType 
 { 
     Inventory,
     Stats,
     Shop,
 }
 
-public class UIScreenManager : MonoBehaviour
+public class GuiScreenManager : MonoBehaviour
 {
     StatsScreen stats;
     InventoryScreen inventory;
     ShopScreen shop;
-    UIScreen activeScreen;
+    GuiScreen activeScreen;
     GameObject tabs;
     Attack playerAttack;
 
@@ -34,7 +34,7 @@ public class UIScreenManager : MonoBehaviour
     }
 
     //Return false if already open
-    bool Open(UIScreen screen)
+    bool Open(GuiScreen screen)
     {
         if (screen != activeScreen)
         {
@@ -42,17 +42,23 @@ public class UIScreenManager : MonoBehaviour
                 activeScreen.Close();
             activeScreen = screen;
             activeScreen.Open();
-            if (screen != shop)
-                tabs.SetActive(true);
+            if (screen == shop)
+            {
+                tabs.SetActive(false);
+                //The right part of inventory screen is used together with shop
+                inventory.Open(); 
+            }
             else
-                inventory.Open();
+            {
+                tabs.SetActive(true);
+            }
             playerAttack.enabled = false;
             return true;
         }
         return false;
     }
 
-    public void Toggle(UIScreenType type)
+    public void Toggle(GuiScreenType type)
     {
         if (!Open(type))
         {
@@ -61,7 +67,7 @@ public class UIScreenManager : MonoBehaviour
         }
     }
 
-    public void Close(UIScreenType type)
+    public void Close(GuiScreenType type)
     {
         tabs.SetActive(false);
         activeScreen.Close();
@@ -71,7 +77,7 @@ public class UIScreenManager : MonoBehaviour
         playerAttack.enabled = true;
     }
 
-    public bool Open(UIScreenType type)
+    public bool Open(GuiScreenType type)
     {
         return Open(GetScreen(type));
     }
@@ -91,22 +97,22 @@ public class UIScreenManager : MonoBehaviour
         Open(shop);
     }
 
-    UIScreen GetScreen(UIScreenType type)
+    GuiScreen GetScreen(GuiScreenType type)
     {
         switch (type)
         {
-            case UIScreenType.Inventory:
+            case GuiScreenType.Inventory:
                 return inventory;
-            case UIScreenType.Stats:
+            case GuiScreenType.Stats:
                 return stats;
-            case UIScreenType.Shop:
+            case GuiScreenType.Shop:
                 return shop;
             default:
                 throw new NotImplementedException();
         }
     }
 
-    public bool IsOpen(UIScreenType type)
+    public bool IsOpen(GuiScreenType type)
     {
         return activeScreen == GetScreen(type);
     }

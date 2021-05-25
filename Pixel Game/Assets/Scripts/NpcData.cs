@@ -44,7 +44,7 @@ public class NpcData : MonoBehaviour
             dialogueController.InitializeDialogue();
             // Set the currentActiveNpc to this NPC so that we can run the ActiveQuest() function for
             // only this specific NPC
-            dataToPass.currentActivateNpc = this.gameObject.name;
+            dataToPass.currentActiveNpc = this.gameObject.name;
 
         }
     }
@@ -53,7 +53,7 @@ public class NpcData : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             // Remove this npc from current active npc and set the dialogueCanvas to false
-            dataToPass.currentActivateNpc = "";
+            dataToPass.currentActiveNpc = "";
             dialogueCanvas.SetActive(false);
         }
     }

@@ -87,13 +87,13 @@ public class DialogueViewer : MonoBehaviour
             // If the current node has a "ACCEPT_QUEST" tag on it, we will take the current active npc from our database
             // then find the GameObject with the same name in the scene and run ActivateQuest() on that NpcData script
 
-            string currentActiveNpc = dataToPass.currentActivateNpc;
+            string currentActiveNpc = dataToPass.currentActiveNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
             npcGameobject.GetComponent<NpcData>().ActivateQuest();
         }
         else if (newNode.tags.Contains("CHECK_QUEST"))
         {
-            string currentActiveNpc = dataToPass.currentActivateNpc;
+            string currentActiveNpc = dataToPass.currentActiveNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
 
             // If the function returns false, the textNodeDisplay prints "you are not done, and the option to
@@ -130,7 +130,7 @@ public class DialogueViewer : MonoBehaviour
 
             // Load the last conversation that COMPLETELY ends the quest, and makes the npc just say something along
             // the lines of "You did a good job before, thanks" 
-            string currentActiveNpc = dataToPass.currentActivateNpc;
+            string currentActiveNpc = dataToPass.currentActiveNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
             npcGameobject.GetComponent<NpcData>().EndTheQuest();
 
@@ -155,7 +155,7 @@ public class DialogueViewer : MonoBehaviour
             // Turn dialogue canvas off
             dialogueCanvas.SetActive(true);
             // Get the current active npc from database and Find that gameobject on the scene
-            string currentActiveNpc = dataToPass.currentActivateNpc;
+            string currentActiveNpc = dataToPass.currentActiveNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
             // Set our twinetext (dialogue text) to the Npcs current active convo and initialize the dialogue
             controller.twineText = npcGameobject.GetComponent<NpcData>().currentActiveConvo;

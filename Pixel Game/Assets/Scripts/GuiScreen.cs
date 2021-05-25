@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIScreen : MonoBehaviour
+public class GuiScreen : MonoBehaviour
 {
     public virtual void Open()
     {

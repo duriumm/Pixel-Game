@@ -20,9 +20,6 @@ public class PlayerInventory : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
-    //private GameObject screenTabs;
-    //private GameObject shopScreen;
-
     private GameObject playerGameObject;
 
     // TO-DO - Move playerMoney to some other place.. not sure where yet
@@ -51,8 +48,6 @@ public class PlayerInventory : MonoBehaviour
         equipmentSlots = inventoryScreenGameObject.transform.GetChild(1).
         transform.GetComponentsInChildren<InventorySlot>(); // Get all equipment slots in player inventory
 
-        //screenTabs = prefabCanvas.transform.Find("Screens/GuiTabsButtons").gameObject;
-        //shopScreen = GameObject.Find("ShopScreen");
         // Player is set in awake since it needs to be called before the start in shopscreen 
         // since shopscreen uses shopscreen.close() 
         playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
@@ -96,68 +91,6 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-    //public void ClosingUI()
-    //{
-    //    // disable player attack
-    //    playerGameObject.GetComponent<Attack>().enabled = true;
-
-    //    //isInventoryOpen = false;
-    //    //inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
-    //    //screenTabs.SetActive(false);
-
-    //    // Two foreach loops disables hovering activation when inv is closed
-    //    foreach (var item in slots)
-    //    {
-    //        item.RemoveDataShowingOnExit();
-    //        // We dont set gameobject active to false here like foreach below 
-    //        // since we need the inventory slot to be useable on looting
-    //        item.GetComponent<EventTrigger>().enabled = false; 
-    //    }
-    //    foreach (var item in equipmentSlots)
-    //    {
-    //        item.RemoveDataShowingOnExit();
-    //        //item.gameObject.SetActive(false);
-    //        item.GetComponent<EventTrigger>().enabled = false;
-    //    }
-    //}
-    //public void OpeningGUI()
-    //{
-    //    // enable player attack
-    //    playerGameObject.GetComponent<Attack>().enabled = false;
-    //    isInventoryOpen = true;
-    //    inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
-
-    //    // These 2 loops enable the ability to hover over each slot when inv is closed
-    //    if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
-    //    {
-    //        foreach (var item in equipmentSlots)
-    //        {
-    //            //item.gameObject.SetActive(false);
-    //            item.GetComponent<EventTrigger>().enabled = false;
-    //            Debug.Log("Inside 1");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        foreach (var item in equipmentSlots)
-    //        {
-    //            //item.gameObject.SetActive(true);
-    //            Debug.Log("Inside 2");
-    //            item.GetComponent<EventTrigger>().enabled = true;
-    //        }
-    //    }
-    //    foreach (var item in slots)
-    //    {
-    //        item.GetComponent<EventTrigger>().enabled = true;
-
-    //    }
-    //    // We should only show the tabs for each screen when opening the inventory 
-    //    // if the shop is closed. Otherwise they will render on top of shop window and look weird
-    //    if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-    //    {
-    //        screenTabs.SetActive(true);
-    //    }
-    //}
 
     // Adding items to players inventory is started here
     public void LootItem(GameObject lootedGameObject)

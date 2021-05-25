@@ -43,6 +43,7 @@ public class Health : MonoBehaviour
     {
         Hp = maxHp;
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        OnSceneChange();
     }
 
     public virtual void OnSceneChange()

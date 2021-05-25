@@ -502,7 +502,7 @@ MonoBehaviour:
   slider: {fileID: 6133221291524073454}
   deathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
-  respawnTime: 100
+  respawnTime: 10
   enemyType: 0
 --- !u!61 &1919312349314565125
 BoxCollider2D:

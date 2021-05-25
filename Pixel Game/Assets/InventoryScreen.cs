@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryScreen : UIScreen
+public class InventoryScreen : GuiScreen
 {
     private void Start()
     {
         PlaceEquipmentSlots();
         Close();
-        //gameObject.transform.Find("Screens").gameObject.GetComponent<UIScreenManager>().CloseAll();
     }
 
     private void PlaceEquipmentSlots()
