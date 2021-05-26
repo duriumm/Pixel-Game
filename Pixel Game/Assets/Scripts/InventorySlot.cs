@@ -64,37 +64,41 @@ public class InventorySlot : MonoBehaviour
 
     public void UseItem()
     {
-        if(!guiScreenManager.IsOpen(GuiScreenType.Shop) && itemDataInSlot != null)
+        if (itemDataInSlot == null)
+            return;
+
+        //If shop is open, sell the item, otherwise use it
+        if (guiScreenManager.IsOpen(GuiScreenType.Shop))
+        { 
+            SellItem();
+        }
+        else
         {
-            if(itemDataInSlot.isEquippable)
+            if (itemDataInSlot.isEquippable)
             {
                 StartCoroutine(EquipItem());
             }
-            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
+            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
             {
-                if (!playerHealth.HasFullHp)
-                {
-                    Debug.Log("Ate food, we gained: " + itemDataInSlot.healingCapability + " health");
-                    playerHealth.Hp += itemDataInSlot.healingCapability;
-                    Destroy(ItemDataGameObject);
-                    ClearSlot();
-                }
+                EatItem();
             }
             // Using a Quest item when in range of the target delivery npc will mark the quest as finished
             // and destroy said quest item
-            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
+            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
             {
-                if (dataToPass.currentActiveNpc == dataToPass.currentActivePlayerQuest.npcDeliveryTarget.name)
-                {
-                    Destroy(ItemDataGameObject);
-                    ClearSlot();
-                    dataToPass.currentActivePlayerQuest.isQuestFinished = true;
-                }
+                if (dataToPass.currentActivePlayerQuest.TryDeliverItem(dataToPass.currentActiveNpc))
+                    DestroyItem();
             }
         }
-        else if (guiScreenManager.IsOpen(GuiScreenType.Shop))
+    }
+
+    private void EatItem()
+    {
+        if (!playerHealth.HasFullHp)
         {
-            DropItem();
+            Debug.Log("Ate food, we gained: " + itemDataInSlot.healingCapability + " health");
+            playerHealth.Hp += itemDataInSlot.healingCapability;
+            DestroyItem();
         }
     }
 
@@ -205,71 +209,58 @@ public class InventorySlot : MonoBehaviour
 
     public void BuyItemFromShop()
     {
-        // If there is an actual item in current slot and inventory is actually open
-        if (itemDataInSlot != null && guiScreenManager.IsOpen(GuiScreenType.Shop))
+        if (itemDataInSlot == null)
+            return;
+        
+        if(inventory.playerInvMoney >= itemDataInSlot.value)
         {
-            if(inventory.playerInvMoney >= itemDataInSlot.value)
-            {
-                inventory.BuyAndSellItemSound();
-                string originalItemName = ItemDataGameObject.name;
-                GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
-                instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
+            inventory.BuyAndSellItemSound();
+            string originalItemName = ItemDataGameObject.name;
+            GameObject instantiatedGameObject = Instantiate(ItemDataGameObject) as GameObject; // Create a new gameObject
+            instantiatedGameObject.name = originalItemName;  // Give the copied object the name of the original object so it doesnt get named (clone)
 
-                inventory.AddItemToEmptySlot(instantiatedGameObject);
+            inventory.AddItemToEmptySlot(instantiatedGameObject);
 
-                inventory.RemoveCoinAmount(itemDataInSlot.value);
-                Debug.Log("trying to buy");
-            }
-            else
-            {
-                //TO-DO - Play a nuh-uh! Sound from the npc
-                Debug.Log("Sorry you do not have enough money...");
-            }
+            inventory.RemoveCoinAmount(itemDataInSlot.value);
+            Debug.Log("trying to buy");
+        }
+        else
+        {
+            //TO-DO - Play a nuh-uh! Sound from the npc
+            Debug.Log("Sorry you do not have enough money...");
         }
     }
 
     public void DropItem()
     {
-        if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
-        {
-            if (itemDataInSlot.itemName ==
-                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
-            {
-                dataToPass.currentActivePlayerQuest.DecrementItemsCollected();
-                Debug.Log("WE DECREMENTED FFS");
-            }
-            
-        }
+        dataToPass.currentActivePlayerQuest.DecrementItemsCollected(itemDataInSlot.itemName);
+        
         // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)
         {
             dropItemButton.SetActive(false);
         }
 
-        if (itemDataInSlot != null)
-        {
-            //If shop is closed, drop item instead of selling
-            if(!guiScreenManager.IsOpen(GuiScreenType.Shop))
-            {
-                // Set spawn position of item to where the player is standing currently
-                // TO-DO - Spawn the item in a cricle around the player of random numbers
-                itemDropPosition.x = playerCharacter.transform.position.x + 1f;
-                itemDropPosition.y = playerCharacter.transform.position.y + 1f;
-                ItemDataGameObject.transform.position = itemDropPosition;
-                ItemDataGameObject.SetActive(true);
-                ClearSlot();
-                Debug.Log("Removed inventory item from GUI");
-                //instantiatedGameObject.hideFlags = HideFlags.HideInHierarchy; // THIS HIDES THE GAMEOBJECTS IN THE HIREARCHY SCENE SO WE CANT SEE THEM
-            }
-            // If shop is open, sell item instead of dropping it
-            else
-            {
-                inventory.BuyAndSellItemSound();
-                inventory.AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
-                Destroy(ItemDataGameObject);
-                ClearSlot();
-            }
-        }
+        // Set spawn position of item to where the player is standing currently
+        // TO-DO - Spawn the item in a cricle around the player of random numbers
+        itemDropPosition.x = playerCharacter.transform.position.x + 1f;
+        itemDropPosition.y = playerCharacter.transform.position.y + 1f;
+        ItemDataGameObject.transform.position = itemDropPosition;
+        ItemDataGameObject.SetActive(true);
+        ClearSlot();
+    }
+
+    void SellItem()
+    {
+        inventory.BuyAndSellItemSound();
+        inventory.AddCoinAmount(ItemDataGameObject.GetComponent<ItemData>().value);
+        DestroyItem();
+    }
+
+    private void DestroyItem()
+    {
+        Destroy(ItemDataGameObject);
+        ClearSlot();
     }
 
     public void SetAlphaOfColor(float alphaColorValue)

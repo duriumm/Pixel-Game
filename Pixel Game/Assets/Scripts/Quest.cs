@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +19,6 @@ public class Quest
     // Refers to Enemyhealth enumtype (to not make double enums)
     public EnemyHealth.ENEMYTYPE enemyTypeToKill = EnemyHealth.ENEMYTYPE.BEAST;
 
-
     public string questName;
     [TextArea(2,5)]
     public string description;
@@ -27,18 +27,18 @@ public class Quest
     public GameObject gameObjectReward;
     private PlayerInventory playerInventory;
 
-    public bool isQuestFinished = false;
+    private bool isQuestFinished = false;
+    public bool IsQuestFinished => isQuestFinished;
     // Kill enemies quest
     [Header("Kill enemies quest")]
     public int amountToKill;
-    public int currentKilled;
-
+    private int currentKilled;
 
     // Gather items quest
     [Header("Gather items quest")]
     public GameObject itemToGather;
     public int amountToCollect;
-    public int currentCollected;
+    private int currentCollected;
 
     // Item delivery quest
     [Header("Item delivery quest")]
@@ -50,32 +50,30 @@ public class Quest
         playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
     }
 
-
-    //public void DeliverAndDestroyItem(GameObject gameObjectToDestroy)
-    //{
-    //    // TODO: delete item from player inventory 
-    //    playerInventory.
-    //    isQuestFinished = true;
-    //}
-    public void IncrementItemsCollected()
+    public void IncrementItemsCollected(string itemName)
     {
-        currentCollected++;
-        if(currentCollected >= amountToCollect)
+        if (CorrectItem(itemName))
         {
-            isQuestFinished = true;
+            isQuestFinished = ++currentCollected >= amountToCollect;
+            Debug.Log($"{currentCollected}/{amountToCollect} {itemName} collected");
         }
     }
-    public void DecrementItemsCollected()
+
+    public void DecrementItemsCollected(string itemName)
     {
-        if(currentCollected > 0)
+        if (CorrectItem(itemName))
         {
-            currentCollected--;
-            if (currentCollected < amountToCollect)
-            {
-                isQuestFinished = false;
-            }
-        }  
+            isQuestFinished =  --currentCollected < amountToCollect;
+            Debug.Log($"{currentCollected}/{amountToCollect} {itemName} collected");
+        }
     }
+
+    bool CorrectItem(string itemName)
+    {
+        return questType == Quest.QUESTTYPE.GATHER_ITEMS && 
+            itemName == itemToGather.GetComponent<ItemData>().itemName;
+    }
+
     public void IncrementKilledEnemies()
     {
 
@@ -86,7 +84,13 @@ public class Quest
         }
     }
 
-
-
-
+    public bool TryDeliverItem(string npcName)
+    {
+        if (npcName == npcDeliveryTarget.name)
+        {
+            isQuestFinished = true;
+            return true;
+        }
+        return false;
+    }
 }

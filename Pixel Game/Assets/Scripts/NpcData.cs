@@ -108,7 +108,7 @@ public class NpcData : MonoBehaviour
     {
         Debug.Log("Checking if the quest is finished!");
 
-        if (dataToPass.currentActivePlayerQuest.isQuestFinished == true)
+        if (dataToPass.currentActivePlayerQuest.IsQuestFinished)
         {
             Debug.Log("quest is done!");
             foreach (var item in questConvoList)

@@ -11,17 +11,11 @@ public class PlayerInventory : MonoBehaviour
 {
     private InventorySlot[] slots;
     private InventorySlot[] equipmentSlots;
-    private GameObject inventoryScreenGameObject;
-    public GameObject prefabCanvas;
-    private Transform inventorySlotsTransform;
-    public bool isInventoryOpen = false;
-    private ItemData lootedItemData;
     public GameObject dataToPassGameObject;
     private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
-    private GameObject playerGameObject;
-
+    
     // TO-DO - Move playerMoney to some other place.. not sure where yet
     public int playerInvMoney;
     public TextMeshProUGUI CoinAmountText;
@@ -30,7 +24,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("PassData") != null)
         {
-            dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  
+            dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
         }
         else
         {
@@ -39,42 +33,30 @@ public class PlayerInventory : MonoBehaviour
             dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  
         }
 
-        //Transform a = prefabCanvas.transform.Find("InventoryScreen");
-        inventoryScreenGameObject = GameObject.Find("InventoryScreen");
-        //inventoryScreenGameObject = a.gameObject;
-        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(0).transform;
+        var inventoryScreenTransform = GameObject.Find("InventoryScreen").transform;
+        var inventorySlotsTransform = inventoryScreenTransform.GetChild(0).transform;
         slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
+        equipmentSlots = inventoryScreenTransform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
 
-        equipmentSlots = inventoryScreenGameObject.transform.GetChild(1).
-        transform.GetComponentsInChildren<InventorySlot>(); // Get all equipment slots in player inventory
-
-        // Player is set in awake since it needs to be called before the start in shopscreen 
-        // since shopscreen uses shopscreen.close() 
-        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
         dataToPass = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>();
-
-
     }
+
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
         LoadEquipmentOnStartScene();
-        //ClosingUI();
         SetCoinAmount(dataToPass.playerMoneyDB);
-
     }
 
     // Check player inventory if there are already some of the items we need to collect
     // so we can increment the value correctly 
-    public void CheckInventoryForCollectedItems(string itemNameToRemove)
+    public void CheckInventoryForCollectedItems(string itemName)
     {
         foreach (var slot in slots)
         {
-            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
-            {
-                dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
-            }
+            if (!slot.IsEmpty)
+                dataToPass.currentActivePlayerQuest.IncrementItemsCollected(itemName);
         }
     }
     // When a gather items quest is finished, we want to remove the gathered items
@@ -104,15 +86,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            if (dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
-            {
-                if (lootedGameObject.GetComponent<ItemData>().itemName ==
-                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
-                {
-                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
-                    Debug.Log("WE incremented FFS");
-                }
-            }
+            dataToPass.currentActivePlayerQuest.IncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
             AddItemToEmptySlot(lootedGameObject);
         }           
     }
@@ -141,16 +115,19 @@ public class PlayerInventory : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(buyAndSellSound, mainCamera.transform.position);
     }
+
     public void AddCoinAmount(int coinAmountToAdd)
     {
         playerInvMoney = playerInvMoney + coinAmountToAdd;
         CoinAmountText.text = playerInvMoney.ToString();
     }
+
     public void RemoveCoinAmount(int coinAmountToRemove)
     {
         playerInvMoney = playerInvMoney - coinAmountToRemove;
         CoinAmountText.text = playerInvMoney.ToString();
     }
+
     public void SetCoinAmount(int coinAmount)
     {
         playerInvMoney = coinAmount;
@@ -171,6 +148,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
     public void SaveEquipmentOnSceneChange()
     {
         dataToPass.savedEquipmentListDB.Clear(); // Clear the database so we dont stack duplicates
@@ -219,6 +197,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
     // here we check our itemDatabase for names matching our savedStringItems
     public void LoadInvGameObjectOnStartScene()
     {
@@ -250,5 +229,4 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-
 }
