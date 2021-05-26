@@ -174,6 +174,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_Name
       value: GhastEnemy (1)
@@ -34311,6 +34319,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916018001020736454, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8702507365765926596, guid: 201ae0af5fd20974082370d805dc0a8e, type: 3}
       propertyPath: m_Name
       value: GhastEnemy (2)
@@ -66569,6 +66585,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 480131489}
     m_Modifications:
+    - target: {fileID: -2862576637602397499, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
+      propertyPath: respawnTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4144447419025406582, guid: 4719c0aa53ea1644b82b48cdb1875ef9, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -74958,6 +74978,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MyCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 9211724748546694894, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 543e98dbe9925374383541b129bbc389, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b673130f318f144e8ac1d3a1146dcfa, type: 3}
 --- !u!1001 &3988932953224416732
