@@ -86,7 +86,7 @@ public class InventorySlot : MonoBehaviour
             // and destroy said quest item
             else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
             {
-                if (dataToPass.currentActivePlayerQuest.TryDeliverItem(dataToPass.currentActiveNpc))
+                if (dataToPass.ActiveQuests.TryDeliverItem(dataToPass.currentActiveNpc, ItemDataGameObject.name))
                     DestroyItem();
             }
         }
@@ -233,7 +233,7 @@ public class InventorySlot : MonoBehaviour
 
     public void DropItem()
     {
-        dataToPass.currentActivePlayerQuest.TryDecrementItemsCollected(itemDataInSlot.itemName);
+        dataToPass.ActiveQuests.TryDecrementItemsCollected(itemDataInSlot.itemName);
         
         // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)

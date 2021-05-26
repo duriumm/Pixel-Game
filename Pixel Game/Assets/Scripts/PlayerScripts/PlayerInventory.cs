@@ -56,7 +56,7 @@ public class PlayerInventory : MonoBehaviour
         foreach (var slot in slots)
         {
             if (!slot.IsEmpty)
-                dataToPass.currentActivePlayerQuest.TryIncrementItemsCollected(itemName);
+                dataToPass.ActiveQuests.TryIncrementItemsCollected(itemName);
         }
     }
     // When a gather items quest is finished, we want to remove the gathered items
@@ -89,7 +89,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            dataToPass.currentActivePlayerQuest.TryIncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
+            dataToPass.ActiveQuests.TryIncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
             AddItemToEmptySlot(lootedGameObject);
         }           
     }

@@ -34,7 +34,7 @@ public class EnemyHealth : Health
 
     protected override void Kill()
     {
-        dataToPassBetweenScenes.currentActivePlayerQuest.TryIncrementKilledEnemies(gameObject.name);
+        dataToPassBetweenScenes.ActiveQuests.TryIncrementKilledEnemies(gameObject.name);
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
         StartCoroutine(PlayDeathAnimation());

@@ -83,14 +83,13 @@ public class NpcData : MonoBehaviour
         // the next conversation will be started immediately
         dialogueCanvas.SetActive(false);
 
-        dataToPass.currentActivePlayerQuest = currentNpcQuest;
-        currentNpcQuest.Activate();
+        dataToPass.ActiveQuests.Add(currentNpcQuest);
     }
     public bool CheckIfQuestIsDone()
     {
         Debug.Log("Checking if the quest is finished!");
 
-        if (dataToPass.currentActivePlayerQuest.IsQuestFinished)
+        if (currentNpcQuest.IsQuestFinished)
         {
             Debug.Log("quest is done!");
             foreach (var item in questConvoList)
@@ -99,7 +98,6 @@ public class NpcData : MonoBehaviour
                 {
                     //convoList.Remove(currentActiveConvo);
                     currentActiveConvo = item;
-                    
                 }
             }
             // If the quest requirements are fullfilled, we want to start the next dialogue
@@ -119,13 +117,13 @@ public class NpcData : MonoBehaviour
     // when old mans quest is completely done. He will just reply with "Great job before!" 
     // With this convo loaded we could either trigger the start of a normal conversation or a 
     // new quest conversation
-    public void EndTheQuest()
+    public void EndQuest()
     {
+        dataToPass.ActiveQuests.Remove(currentNpcQuest);
         foreach (var item in questConvoList)
         {
             if (item.name.Contains("After_Quest"))
             {
-                dataToPass.currentActivePlayerQuest.EndQuest();
                 //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
             }

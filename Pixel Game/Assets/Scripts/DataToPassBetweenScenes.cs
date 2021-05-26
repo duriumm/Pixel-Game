@@ -22,7 +22,8 @@ public class DataToPassBetweenScenes : MonoBehaviour
     //}
 
     public int playerMoneyDB;
-    public Quest currentActivePlayerQuest;
+    public ActiveQuests activeQuests = new ActiveQuests();
+    public ActiveQuests ActiveQuests => activeQuests;
 
     public string[] NpcDatabase = { "FatNpc", "Pawi", "SecondFatNPC" }; // A list of all the NPCs in our game. This list wont change
     public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change. 
@@ -48,6 +49,5 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
-
     }    
 }

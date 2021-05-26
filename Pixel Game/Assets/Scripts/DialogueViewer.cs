@@ -18,6 +18,7 @@ public class DialogueViewer : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private PlayerInventory playerInv;
     private PlayerInput playerInput;
+    private NpcData currentNpc;
 
     [DllImport("__Internal")]
     private static extern void openPage(string url);
@@ -56,6 +57,12 @@ public class DialogueViewer : MonoBehaviour
 
     private void OnNodeEntered(Node newNode)
     {
+        if (dataToPass == null)
+            return;
+        var npcObject = GameObject.Find(dataToPass.currentActiveNpc);
+        if (npcObject == null)
+            return;
+
         Debug.Log("Entering node: " + newNode.title);
         txtNodeDisplay.text = newNode.text;
 
@@ -69,37 +76,21 @@ public class DialogueViewer : MonoBehaviour
             responceButton.onClick.AddListener(delegate { OnNodeSelected(currentChoiceIndex); });
         }
 
-        // TO-DO - Implement this part and put all node tag if statements inside this if statement
-        //if(newNode.tags != null)
-        //{
-        //    string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
-        //    GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-        //}
-
+        NpcData npc = npcObject.GetComponent<NpcData>();
         if (newNode.tags.Contains("END"))
         {
-            // To-Do
-            // Here we can close the window or something :) since the talk is finished
             Debug.Log("End!");
             dialogueCanvas.SetActive(false);
         }
         else if (newNode.tags.Contains("ACCEPT_QUEST"))
         {
-            // If the current node has a "ACCEPT_QUEST" tag on it, we will take the current active npc from our database
-            // then find the GameObject with the same name in the scene and run ActivateQuest() on that NpcData script
-
-            string currentActiveNpc = dataToPass.currentActiveNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-            npcGameobject.GetComponent<NpcData>().ActivateQuest();
+            npc.ActivateQuest();
         }
         else if (newNode.tags.Contains("CHECK_QUEST"))
         {
-            string currentActiveNpc = dataToPass.currentActiveNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-
             // If the function returns false, the textNodeDisplay prints "you are not done, and the option to
             // go back appears with a button
-            if(npcGameobject.GetComponent<NpcData>().CheckIfQuestIsDone() == false)
+            if (!npc.CheckIfQuestIsDone())
             {
                 txtNodeDisplay.text = "You are not done...";
             }
@@ -109,33 +100,16 @@ public class DialogueViewer : MonoBehaviour
             // Give reward to the player accordingly to the current active quests reward
             // If there is a item like a sword as reward it is given to the player by
             // entering it into players inventory
-
-            int moneyReward = dataToPass.currentActivePlayerQuest.MoneyReward;
-            playerInv.AddCoinAmount(moneyReward);
-
-            GameObject gameObjReward = dataToPass.currentActivePlayerQuest.GameObjectReward;
-            txtNodeDisplay.text = "You got "+ moneyReward + " gold";
-            if (gameObjReward != null)
-            {
-                // To-Do: Check if inventory is full
-
-                // Get original name of obj so we dont get (clone) when we instantiate
-                string originalItemName = gameObjReward.name;
-                GameObject instantiatedObj = Instantiate(gameObjReward) as GameObject;
-                instantiatedObj.name = originalItemName;
-
-                // Add instantiated item to inventory and add text to reward window showing what item we got
-                playerInv.LootItem(instantiatedObj);
-                txtNodeDisplay.text += " and a " + instantiatedObj.name;
-            }
+                
+            txtNodeDisplay.text = "You received:\n\n";
+            if (npc.currentNpcQuest.MoneyReward > 0)
+                txtNodeDisplay.text += npc.currentNpcQuest.MoneyReward + "gold\n";
+            if (npc.currentNpcQuest.GameObjectReward != null)
+                txtNodeDisplay.text += npc.currentNpcQuest.GameObjectReward.name;
 
             // Load the last conversation that COMPLETELY ends the quest, and makes the npc just say something along
             // the lines of "You did a good job before, thanks" 
-            string currentActiveNpc = dataToPass.currentActiveNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-            npcGameobject.GetComponent<NpcData>().EndTheQuest();
-
-            dataToPass.currentActivePlayerQuest = null;
+            npc.EndQuest();
         }
     }
 

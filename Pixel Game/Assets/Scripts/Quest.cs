@@ -62,7 +62,7 @@ public class Quest
 
     public bool TryIncrementItemsCollected(string itemName)
     {
-        if (CorrectItem(itemName))
+        if (IsCorrectItem(itemName))
         {
             isQuestFinished = ++currentCollected >= amountToCollect;
             Debug.Log($"{currentCollected}/{amountToCollect} {itemName}s collected");
@@ -74,7 +74,7 @@ public class Quest
 
     public bool TryDecrementItemsCollected(string itemName)
     {
-        if (CorrectItem(itemName))
+        if (IsCorrectItem(itemName))
         {
             isQuestFinished =  --currentCollected < amountToCollect;
             Debug.Log($"{currentCollected}/{amountToCollect} {itemName}s collected");
@@ -83,7 +83,7 @@ public class Quest
         return false;
     }
 
-    bool CorrectItem(string itemName)
+    bool IsCorrectItem(string itemName)
     {
         return questType == Quest.QUESTTYPE.GATHER_ITEMS && 
             itemName == itemToGather.GetComponent<ItemData>().itemName;
@@ -100,10 +100,15 @@ public class Quest
         return false;        
     }
 
-    public bool TryDeliverItem(string npcName)
+    public bool TryDeliverItem(string npcName, string itemName)
     {
-        isQuestFinished = npcName == npcDeliveryTarget.name;
-        return isQuestFinished;
+        if (questType == QUESTTYPE.DELIVER_ITEM)
+        {
+            isQuestFinished = npcName == npcDeliveryTarget.name
+                && itemName == itemToDeliver.name;
+            return true;
+        }
+        return false;
     }
 
     public void Activate()
@@ -125,7 +130,7 @@ public class Quest
         Debug.Log("Current active playerquest is: " + questName);
     }
 
-    public void EndQuest()
+    public void End()
     {
         if (questType == Quest.QUESTTYPE.GATHER_ITEMS)
         {
@@ -133,5 +138,20 @@ public class Quest
             string itemName = itemToGather.GetComponent<ItemData>().itemName;
             playerInventory.RemoveCollectedQuestItemsFromInventory(itemName, amountToCollect);
         }
+
+        playerInventory.AddCoinAmount(moneyReward);
+
+        if (gameObjectReward != null)
+        {
+            // To-Do: Check if inventory is full
+            // Get original name of obj so we dont get (clone) when we instantiate
+            string originalItemName = gameObjectReward.name;
+            GameObject instantiatedObj = GameObject.Instantiate(gameObjectReward) as GameObject;
+            instantiatedObj.name = originalItemName;
+
+            // Add instantiated item to inventory and add text to reward window showing what item we got
+            playerInventory.LootItem(instantiatedObj);
+        }
+
     }
 }
