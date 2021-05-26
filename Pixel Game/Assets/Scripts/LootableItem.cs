@@ -5,9 +5,12 @@ using UnityEngine;
 public class LootableItem : MonoBehaviour
 {
     private GameObject inventoryManager;
+    private GameObject playerColliderObject;
     void Start()
     {
         inventoryManager = GameObject.FindWithTag("InventoryManager");
+        playerColliderObject = GameObject.Find("MyCharacter");
+        playerColliderObject = playerColliderObject.transform.Find("AttackColliders/DamageCollider").gameObject;
     }
 
     // Update is called once per frame
@@ -18,7 +21,7 @@ public class LootableItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "MyPlayer")
+        if(collision.gameObject == playerColliderObject)
         {
             inventoryManager.GetComponent<PlayerInventory>().LootItem(this.gameObject/*.GetComponent<ItemData>()*/);
             //Debug.Log("Picked up something");
