@@ -34,16 +34,9 @@ public class EnemyHealth : Health
 
     protected override void Kill()
     {
-        // Comparing two enums, can be more efficent than this. TODO: Make it more efficent
-        if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES &&
-            enemyType == dataToPassBetweenScenes.currentActivePlayerQuest.enemyTypeToKill)
-        {
-            dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
-        }
-
+        dataToPassBetweenScenes.currentActivePlayerQuest.TryIncrementKilledEnemies(gameObject.name);
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
-
         StartCoroutine(PlayDeathAnimation());
     }
 

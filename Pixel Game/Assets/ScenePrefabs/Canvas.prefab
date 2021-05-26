@@ -4313,11 +4313,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77d9f4a5d1670ab498072166bc2df1ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isShopScreenOpen: 0
   shopSlots: []
-  sceneCanvas: {fileID: 0}
-  shopScreenItemList: []
-  currentActiveNpc: 
+  ItemList: []
 --- !u!1 &389828510092492822
 GameObject:
   m_ObjectHideFlags: 0
@@ -7796,7 +7793,6 @@ GameObject:
   - component: {fileID: 1843213773902416587}
   - component: {fileID: 1843213773902416586}
   - component: {fileID: 1843213773902416581}
-  - component: {fileID: 2609671443945309336}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas
@@ -7886,18 +7882,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2609671443945309336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843213773902416580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d52789174d9a1ba4388412894efe6899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1843213773967193150
 GameObject:
   m_ObjectHideFlags: 0
@@ -11865,7 +11849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2027467d12cd1c648a1eabdc38b1323c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStatsScreenOpen: 0
 --- !u!1 &4544633365552271303
 GameObject:
   m_ObjectHideFlags: 0

@@ -48,5 +48,6 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
+
     }    
 }

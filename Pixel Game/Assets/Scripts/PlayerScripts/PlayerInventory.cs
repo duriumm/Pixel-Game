@@ -56,22 +56,25 @@ public class PlayerInventory : MonoBehaviour
         foreach (var slot in slots)
         {
             if (!slot.IsEmpty)
-                dataToPass.currentActivePlayerQuest.IncrementItemsCollected(itemName);
+                dataToPass.currentActivePlayerQuest.TryIncrementItemsCollected(itemName);
         }
     }
     // When a gather items quest is finished, we want to remove the gathered items
     // from the players inventory, that is done here
-    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)
+    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove, int count)
     {
+        int itemsRemoved = 0;
         foreach (var slot in slots)
         {
             if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
             {
-                slot.DropItem();
-                Destroy(slot.ItemDataGameObject);
-                slot.ClearSlot();
+                slot.DestroyItem();
+                if (++itemsRemoved == count)
+                    return;
             }
         }
+        //Getting to this line means there were not enough items to remove
+        Debug.Assert(false);
     }
 
     // Adding items to players inventory is started here
@@ -86,7 +89,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            dataToPass.currentActivePlayerQuest.IncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
+            dataToPass.currentActivePlayerQuest.TryIncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
             AddItemToEmptySlot(lootedGameObject);
         }           
     }

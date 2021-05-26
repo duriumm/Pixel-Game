@@ -67220,7 +67220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: currentNpcQuest.description
-      value: Kill 3 frogpigs, they are a disgrace to our lands!
+      value: Kill 1 frogpigs, they are a disgrace to our lands!
+      objectReference: {fileID: 0}
+    - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
+      propertyPath: currentNpcQuest.enemyToKill
+      value: Frog
       objectReference: {fileID: 0}
     - target: {fileID: 610015674, guid: 4e3d00ba06317ec4c883cbb1683fcd85, type: 3}
       propertyPath: currentNpcQuest.moneyReward

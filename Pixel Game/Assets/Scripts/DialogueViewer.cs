@@ -110,10 +110,10 @@ public class DialogueViewer : MonoBehaviour
             // If there is a item like a sword as reward it is given to the player by
             // entering it into players inventory
 
-            int moneyReward = dataToPass.currentActivePlayerQuest.moneyReward;
+            int moneyReward = dataToPass.currentActivePlayerQuest.MoneyReward;
             playerInv.AddCoinAmount(moneyReward);
 
-            GameObject gameObjReward = dataToPass.currentActivePlayerQuest.gameObjectReward;
+            GameObject gameObjReward = dataToPass.currentActivePlayerQuest.GameObjectReward;
             txtNodeDisplay.text = "You got "+ moneyReward + " gold";
             if (gameObjReward != null)
             {

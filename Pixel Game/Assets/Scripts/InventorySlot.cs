@@ -233,7 +233,7 @@ public class InventorySlot : MonoBehaviour
 
     public void DropItem()
     {
-        dataToPass.currentActivePlayerQuest.DecrementItemsCollected(itemDataInSlot.itemName);
+        dataToPass.currentActivePlayerQuest.TryDecrementItemsCollected(itemDataInSlot.itemName);
         
         // Only inventory slot panels has the dropItemButton therefor we dont touch it for shop slots
         if (isInventoryPanel)
@@ -257,7 +257,7 @@ public class InventorySlot : MonoBehaviour
         DestroyItem();
     }
 
-    private void DestroyItem()
+    public void DestroyItem()
     {
         Destroy(ItemDataGameObject);
         ClearSlot();
