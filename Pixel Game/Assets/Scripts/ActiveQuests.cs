@@ -18,23 +18,16 @@ public class ActiveQuests
         quest.End();
     }
 
-    public bool TryIncrementItemsCollected(string itemName)
+    public void TryIncrementItemsCollected(string itemName)
     {
         foreach (var quest in quests)
-        {
-            if (quest.TryIncrementItemsCollected(itemName))
-                return true;
-        }
-        return false;
+            quest.TryIncrementItemsCollected(itemName);
     }
-    public bool TryDecrementItemsCollected(string itemName)
+
+    public void TryDecrementItemsCollected(string itemName)
     {
         foreach (var quest in quests)
-        {
-            if (quest.TryDecrementItemsCollected(itemName))
-                return true;
-        }
-        return false;
+            quest.TryDecrementItemsCollected(itemName);
     }
 
     public bool TryDeliverItem(string npcName, string itemName)
@@ -47,13 +40,9 @@ public class ActiveQuests
         return false;
     }
 
-    public bool TryIncrementKilledEnemies(string name)
+    public void TryIncrementKilledEnemies(string name)
     {
         foreach (var quest in quests)
-        {
-            if (quest.TryIncrementKilledEnemies(name))
-                return true;
-        }
-        return false;
+            quest.TryIncrementKilledEnemies(name);
     }
 }
