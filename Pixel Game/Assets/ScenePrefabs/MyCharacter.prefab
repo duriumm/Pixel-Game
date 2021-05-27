@@ -365,9 +365,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5256436658474153739}
   - component: {fileID: 2260985528161194786}
-  - component: {fileID: 812469754729729457}
   m_Layer: 0
-  m_Name: InterractionCollider
+  m_Name: InteractionCollider
   m_TagString: MyPlayerInterractionCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -398,32 +397,11 @@ CircleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.03}
   serializedVersion: 2
   m_Radius: 0.95
---- !u!50 &812469754729729457
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6853713572949519316}
-  m_BodyType: 1
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1001 &1661094854825138700
 PrefabInstance:
   m_ObjectHideFlags: 0

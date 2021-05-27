@@ -243,8 +243,8 @@ public class InventorySlot : MonoBehaviour
 
         // Set spawn position of item to where the player is standing currently
         // TO-DO - Spawn the item in a cricle around the player of random numbers
-        itemDropPosition.x = playerCharacter.transform.position.x + 1f;
-        itemDropPosition.y = playerCharacter.transform.position.y + 1f;
+        itemDropPosition.x = playerCharacter.transform.position.x + 1.5f;
+        itemDropPosition.y = playerCharacter.transform.position.y + 1.5f;
         ItemDataGameObject.transform.position = itemDropPosition;
         ItemDataGameObject.SetActive(true);
         ClearSlot();

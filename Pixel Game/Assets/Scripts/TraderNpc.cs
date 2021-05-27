@@ -6,7 +6,7 @@ public class TraderNpc : MonoBehaviour
 {
     public List<GameObject> shopItems = new List<GameObject>(); //  We can now add custom items in inspector for every trader
     private GameObject merchantInfoBubble;
-    public AudioClip interractSound;
+    public AudioClip interactSound;
     private GameObject mainCamera;
     private GuiScreenManager guiScreenManager;
     void Start()
@@ -22,7 +22,7 @@ public class TraderNpc : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             merchantInfoBubble.SetActive(true);
-            AudioSource.PlayClipAtPoint(interractSound, mainCamera.transform.position);
+            AudioSource.PlayClipAtPoint(interactSound, mainCamera.transform.position);
             guiScreenManager.Shop.ItemList.Clear();
             foreach (var item in shopItems)
                 guiScreenManager.Shop.ItemList.Add(item);

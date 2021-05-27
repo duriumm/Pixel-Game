@@ -88,18 +88,18 @@ public class PlantScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
 
     {
-        if(collision.gameObject.tag == "InterractCollider")
+        if(collision.gameObject.tag == "InteractCollider")
         {
             // TO-DO
             // Fix that the plants edges highlight here to see easier pickup
             // TO-DO
             isPlantReadyForPickup = true;
-            Debug.Log("Plant script interracted with players interraction collider!!!");
+            Debug.Log("Plant script interacted with players interaction collider!!!");
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "InterractCollider")
+        if (collision.gameObject.tag == "InteractCollider")
         {
             // TO-DO
             // Fix that the plants edges STOP THE highlight 
