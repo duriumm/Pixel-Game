@@ -18,8 +18,7 @@ public class DialogueViewer : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private PlayerInventory playerInv;
     private PlayerInput playerInput;
-    private NpcData currentNpc;
-
+    
     [DllImport("__Internal")]
     private static extern void openPage(string url);
 

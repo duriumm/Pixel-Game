@@ -202,6 +202,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4483081238741481981, guid: 9d833f1f6326030439f083e346cee915, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
       propertyPath: prefabCanvas
       value: 
@@ -272,17 +276,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d833f1f6326030439f083e346cee915, type: 3}
---- !u!114 &603728421 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4483081238741481981, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-  m_PrefabInstance: {fileID: 267178195}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2027467d12cd1c648a1eabdc38b1323c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &937706868
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,14 +527,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1843213772825017901, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 603728421}
-    - target: {fileID: 1843213772825017901, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenStatsScreen
-      objectReference: {fileID: 0}
     - target: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -629,34 +614,6 @@ PrefabInstance:
     - target: {fileID: 1843213773902416584, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 603728421}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CloseStatsScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: StatsScreen, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1843213773967193148, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PlayerInventory, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}

@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     protected Vector2 movementDir;
     protected Vector2 faceDir = Vector2.zero;
     public Vector2 FaceDir => faceDir;
-    private Rigidbody2D rigidBody;
+    private Rigidbody2D rbody;
     
     private float ActualAcceleration =>
         health != null && health.KnockedBack ?
@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
         //Make sure z is 0
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         
-        rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        rbody = gameObject.GetComponent<Rigidbody2D>();
         health = gameObject.GetComponent<Health>();
         
         if (animator != null)
@@ -71,11 +71,11 @@ public class Movement : MonoBehaviour
         Vector2 velocityTarget = movementDir;
         if (velocityTarget != Vector2.zero)
             velocityTarget = velocityTarget.normalized * maxSpeed;
-        var difference = velocityTarget - rigidBody.velocity;
+        var difference = velocityTarget - rbody.velocity;
         if (difference == Vector2.zero)
             return;
         var velocityStep = difference.normalized * ActualAcceleration;
         velocityStep = Vector2.ClampMagnitude(velocityStep, difference.magnitude);
-        rigidBody.velocity += velocityStep;
+        rbody.velocity += velocityStep;
     }
 }

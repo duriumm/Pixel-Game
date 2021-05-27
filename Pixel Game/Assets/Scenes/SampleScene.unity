@@ -953,11 +953,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f1a682930c9bc34f924214482219d3d, type: 3}
---- !u!1 &508234433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1843213773902416580, guid: e24c0efbe25886b4d9e32430dcb04a6e, type: 3}
-  m_PrefabInstance: {fileID: 1399312102}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &509578589
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62473,14 +62468,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4483081238741481981, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
-      propertyPath: prefabCanvas
-      value: 
-      objectReference: {fileID: 508234433}
     - target: {fileID: 8973467112481931544, guid: 9d833f1f6326030439f083e346cee915, type: 3}
       propertyPath: CoinAmountText
       value: 
