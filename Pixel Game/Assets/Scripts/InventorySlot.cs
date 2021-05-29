@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System;
+using System.Linq;
 
 
 /* Inventory slot script is used on each inventory slot of the player AND on each shop screens slot.
@@ -125,11 +126,14 @@ public class InventorySlot : MonoBehaviour
         equipmentSlot.AddItem(ItemDataGameObject, this);
     }
 
+    //Returns equipment slot for specified item type.
+    //There will be one slot with a unique name for every type, e.g. one slot for swords, one for shields etc.
     InventorySlot GetEquipmentSlotForItemType()
     {
         string equipmentSlotName = GetEquipmentSlotNameForItemType();
-        var equipmentSlotGameObject = GameObject.Find(equipmentSlotName);
-        return equipmentSlotGameObject.GetComponent<InventorySlot>();
+        
+        //This is a LINQ extension method that finds the first slot with matching name
+        return guiScreenManager.Inventory.EquipmentSlots.First(slot => slot.gameObject.name == equipmentSlotName);
     }
 
     string GetEquipmentSlotNameForItemType()
