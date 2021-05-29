@@ -4,24 +4,20 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public GameObject playerAttackColliderObject;
-    private GameObject inventoryManager;
-    private PlayerInventory playerInventory;
-    private GameObject shopScreen;
-
-    private GameObject playerGameObject;
-
+    private GuiScreenManager guiScreenManager;
+    private Attack playerAttack;
     private Torch torch;
-
-    public GameObject dataToPassGameObject;
 
     public void Start()
     {
-        playerGameObject = this.gameObject;
-        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
-        shopScreen = GameObject.Find("ShopScreen");
-        torch = playerGameObject.transform.GetChild(2).gameObject.GetComponent<Torch>(); // gets the index of where torch is in MyCharacter gameobject which is 4. Keep it at 4
-        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
+        OnSceneChange();
+        playerAttack = GetComponent<Attack>();
+        torch = gameObject.transform.Find("Torch").gameObject.GetComponent<Torch>();
+    }
+
+    public void OnSceneChange()
+    {
+        guiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<GuiScreenManager>();
     }
 
     void Update()
@@ -31,23 +27,20 @@ public class PlayerInput : MonoBehaviour
             torch.toggleTorch();
         }
 
-        // checks if mousbuttonLEFT is pressed AND if the collider in question is not currently active
-        // Checking that the inventory is closed before attacking
-        if (Input.GetMouseButtonDown(0) && playerGameObject.GetComponent<Attack>().enabled == true)
+        // checks if mousbuttonLEFT is pressed
+        if (Input.GetMouseButtonDown(0) && playerAttack.enabled)
         {
-            playerGameObject.GetComponent<Attack>().Execute();
+            playerAttack.Execute();
         }
 
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (playerInventory.isInventoryOpen == false && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                playerInventory.OpeningGUI();
-            }
-            else if(playerInventory.isInventoryOpen == true && shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-            {
-                playerInventory.ClosingUI();
-            }
+            guiScreenManager.Toggle(GuiScreenType.Inventory);
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            guiScreenManager.Toggle(GuiScreenType.Stats);
         }
     }
 }

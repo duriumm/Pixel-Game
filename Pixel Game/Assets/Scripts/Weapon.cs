@@ -33,7 +33,6 @@ public class Weapon : MonoBehaviour
 
     public bool ReadyToAttack => readyToAttack;
 
-    // Start() only runs once on game startup. FakeStart() runs when a scene is loaded
     public virtual void Start()
     {
         // If attached to a character with an Attack script, make the character the owner of the weapon
@@ -43,13 +42,7 @@ public class Weapon : MonoBehaviour
             Owner = gameObject;
         ProjectileAttack.Init(gameObject);
     }
-    //public void FakeStart()
-    //{
-    //    if (GetComponent<Attack>() != null)
-    //        Owner = gameObject;
-    //    ProjectileAttack.Init(gameObject);
-    //}
-
+  
     public void Attack(Vector2? direction = null)
     {
         if (!readyToAttack)

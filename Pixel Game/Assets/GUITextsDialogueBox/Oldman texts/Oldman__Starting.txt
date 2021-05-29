@@ -8,7 +8,7 @@ Oldman__Before_Quest_Accepted
 
 
 :: Untitled Passage[START]
-Hey there kiddo! I need your help to slay three ghosts! What do you say?
+Hey there kiddo! I saw a frogpigcat lurking nearby. Please kill it why not.
 
 Sure thing![[Accept Quest]]
 Nope, bye![[End conversation]]

@@ -4845,5 +4845,5 @@ MonoBehaviour:
   canBeAttacked: 0
   canAttack: 1
   owner: {fileID: 0}
-  attackCooldown: 1
+  attackCooldown: 0
   spriteRotation: 0

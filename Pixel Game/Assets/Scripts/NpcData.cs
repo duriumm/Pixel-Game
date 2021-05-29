@@ -15,7 +15,6 @@ public class NpcData : MonoBehaviour
     private DataToPassBetweenScenes dataToPass;
     private GameObject dialogueCanvas;
     private GameObject mainCamera;
-    private PlayerInventory playerInventory;
 
     void Start()
     {
@@ -23,7 +22,7 @@ public class NpcData : MonoBehaviour
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         dialogueCanvas = GameObject.Find("DialogueCanvas");
         mainCamera = GameObject.FindWithTag("MainCamera");
-        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
+        currentNpcQuest.Init();
     }
 
 
@@ -44,7 +43,7 @@ public class NpcData : MonoBehaviour
             dialogueController.InitializeDialogue();
             // Set the currentActiveNpc to this NPC so that we can run the ActiveQuest() function for
             // only this specific NPC
-            dataToPass.currentActivateNpc = this.gameObject.name;
+            dataToPass.currentActiveNpc = this.gameObject.name;
 
         }
     }
@@ -53,7 +52,7 @@ public class NpcData : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             // Remove this npc from current active npc and set the dialogueCanvas to false
-            dataToPass.currentActivateNpc = "";
+            dataToPass.currentActiveNpc = "";
             dialogueCanvas.SetActive(false);
         }
     }
@@ -84,31 +83,13 @@ public class NpcData : MonoBehaviour
         // the next conversation will be started immediately
         dialogueCanvas.SetActive(false);
 
-
-        dataToPass.currentActivePlayerQuest = currentNpcQuest;
-
-        // On activating a gather item quest, we need to check if we already have
-        // one or more of said item in our inventory
-        if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
-        {
-            playerInventory.CheckInventoryForCollectedItems(
-                dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName);
-        }
-        else if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.DELIVER_ITEM)
-        {
-            string originalItemName = dataToPass.currentActivePlayerQuest.itemToDeliver.name;
-            GameObject instantiatedObj = Instantiate(dataToPass.currentActivePlayerQuest.itemToDeliver) as GameObject;
-            instantiatedObj.name = originalItemName;
-            playerInventory.LootItem(instantiatedObj);
-        }
-
-        Debug.Log("Current active playerquest is: "+ dataToPass.currentActivePlayerQuest.questName);
+        dataToPass.ActiveQuests.Add(currentNpcQuest);
     }
     public bool CheckIfQuestIsDone()
     {
         Debug.Log("Checking if the quest is finished!");
 
-        if (dataToPass.currentActivePlayerQuest.isQuestFinished == true)
+        if (currentNpcQuest.IsQuestFinished)
         {
             Debug.Log("quest is done!");
             foreach (var item in questConvoList)
@@ -117,7 +98,6 @@ public class NpcData : MonoBehaviour
                 {
                     //convoList.Remove(currentActiveConvo);
                     currentActiveConvo = item;
-                    
                 }
             }
             // If the quest requirements are fullfilled, we want to start the next dialogue
@@ -137,20 +117,13 @@ public class NpcData : MonoBehaviour
     // when old mans quest is completely done. He will just reply with "Great job before!" 
     // With this convo loaded we could either trigger the start of a normal conversation or a 
     // new quest conversation
-    public void EndTheQuest()
+    public void EndQuest()
     {
+        dataToPass.ActiveQuests.Remove(currentNpcQuest);
         foreach (var item in questConvoList)
         {
             if (item.name.Contains("After_Quest"))
             {
-                if(dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
-                {
-                    // When a gather items quest is done we want to clear the inventory of said items
-                    string itemName = dataToPass.currentActivePlayerQuest.itemToGather.
-                        GetComponent<ItemData>().itemName;
-                    playerInventory.RemoveCollectedQuestItemsFromInventory(itemName);
-
-                }
                 //convoList.Remove(currentActiveConvo);
                 currentActiveConvo = item;
             }
