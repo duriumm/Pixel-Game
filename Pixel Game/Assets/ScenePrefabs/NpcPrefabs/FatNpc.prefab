@@ -268,9 +268,7 @@ MonoBehaviour:
   shopItems:
   - {fileID: 4069441921147659030, guid: 5a4a81d6cb0c2634db631cc9bdf80df4, type: 3}
   - {fileID: 8776739252053834925, guid: 3363093f8d42e3f47b688019fdd09807, type: 3}
-  isPlayerInRange: 0
-  interractSound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
-  traderID: FatNpc
+  interactSound: {fileID: 8300000, guid: cef8df0507791494c88f794c85225de6, type: 3}
 --- !u!58 &3633316663772964055
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -318,7 +316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4175582c9bc4664b8db9b52fa36b852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInRange: 0
   interactKey: 101
   interactAction:
     m_PersistentCalls:
