@@ -10,9 +10,14 @@ public class PlayerInput : MonoBehaviour
 
     public void Start()
     {
-        guiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<GuiScreenManager>();
-        torch = gameObject.transform.Find("Torch").gameObject.GetComponent<Torch>();
+        OnSceneChange();
         playerAttack = GetComponent<Attack>();
+        torch = gameObject.transform.Find("Torch").gameObject.GetComponent<Torch>();
+    }
+
+    public void OnSceneChange()
+    {
+        guiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<GuiScreenManager>();
     }
 
     void Update()

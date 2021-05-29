@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class InventoryScreen : GuiScreen
 {
+    private InventorySlot[] inventorySlots;
+    public InventorySlot[] InventorySlots => inventorySlots;
+    private InventorySlot[] equipmentSlots;
+    public InventorySlot[] EquipmentSlots => equipmentSlots;
+
+    private void Awake()
+    {
+        inventorySlots = transform.GetChild(0).transform.GetComponentsInChildren<InventorySlot>();
+        equipmentSlots = transform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
+    }
+
     private void Start()
     {
         PlaceEquipmentSlots();
         Close();
     }
+
+    public override void Close()
+    {
+        foreach (var item in inventorySlots)
+            item.RemoveDataShowingOnExit();
+        foreach (var item in equipmentSlots)
+            item.RemoveDataShowingOnExit();
+        base.Close();
+    }
+
 
     private void PlaceEquipmentSlots()
     {

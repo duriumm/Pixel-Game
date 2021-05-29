@@ -58,10 +58,7 @@ public class DialogueViewer : MonoBehaviour
     {
         if (dataToPass == null)
             return;
-        var npcObject = GameObject.Find(dataToPass.currentActiveNpc);
-        if (npcObject == null)
-            return;
-
+       
         Debug.Log("Entering node: " + newNode.title);
         txtNodeDisplay.text = newNode.text;
 
@@ -75,6 +72,10 @@ public class DialogueViewer : MonoBehaviour
             responceButton.onClick.AddListener(delegate { OnNodeSelected(currentChoiceIndex); });
         }
 
+        //TODO: Use member variable for current npc and update only when needed
+        var npcObject = GameObject.Find(dataToPass.currentActiveNpc);
+        if (npcObject == null)
+            return;
         NpcData npc = npcObject.GetComponent<NpcData>();
         if (newNode.tags.Contains("END"))
         {

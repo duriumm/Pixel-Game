@@ -20,7 +20,7 @@ public class LootableItem : MonoBehaviour
     {
         if (collision.gameObject == pickUpColliderObject)
         {
-            playerInventory.GetComponent<PlayerInventory>().LootItem(this.gameObject);
+            playerInventory.LootItem(this.gameObject);
             //Debug.Log("Picked up something");
         }
     }

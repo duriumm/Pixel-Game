@@ -9,8 +9,9 @@ using UnityEngine.EventSystems;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private InventorySlot[] slots;
-    private InventorySlot[] equipmentSlots;
+    private InventorySlot[] InventorySlots => inventoryScreen.InventorySlots;
+    private InventorySlot[] EquipmentSlots => inventoryScreen.EquipmentSlots;
+    private InventoryScreen inventoryScreen;
     public GameObject dataToPassGameObject;
     private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
@@ -32,13 +33,8 @@ public class PlayerInventory : MonoBehaviour
             Instantiate(dataToPassGameObject);
             dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  
         }
-
-        var inventoryScreenTransform = GameObject.Find("InventoryScreen").transform;
-        var inventorySlotsTransform = inventoryScreenTransform.GetChild(0).transform;
-        slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
-        equipmentSlots = inventoryScreenTransform.GetChild(1).transform.GetComponentsInChildren<InventorySlot>();
-
         dataToPass = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>();
+        inventoryScreen = GameObject.Find("InventoryScreen").GetComponent<InventoryScreen>();
     }
 
     void Start()
@@ -53,18 +49,19 @@ public class PlayerInventory : MonoBehaviour
     // so we can increment the value correctly 
     public void CheckInventoryForCollectedItems(string itemName)
     {
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
             if (!slot.IsEmpty)
                 dataToPass.ActiveQuests.TryIncrementItemsCollected(itemName);
         }
     }
+
     // When a gather items quest is finished, we want to remove the gathered items
     // from the players inventory, that is done here
     public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove, int count)
     {
         int itemsRemoved = 0;
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
             if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
             {
@@ -97,7 +94,7 @@ public class PlayerInventory : MonoBehaviour
     public bool AddItemToEmptySlot(GameObject itemToAdd)
     {
         //Look for empty slot
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
 
             if (slot.IsEmpty)
@@ -121,7 +118,7 @@ public class PlayerInventory : MonoBehaviour
 
     public void AddCoinAmount(int coinAmountToAdd)
     {
-        playerInvMoney = playerInvMoney + coinAmountToAdd;
+        playerInvMoney += coinAmountToAdd;
         CoinAmountText.text = playerInvMoney.ToString();
     }
 
@@ -142,11 +139,11 @@ public class PlayerInventory : MonoBehaviour
     public void SaveInvGameObjectsOnSceneChange()
     {
         dataToPass.mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < InventorySlots.Length; i++)
         {
-            if(slots[i].ItemDataGameObject != null)
+            if(InventorySlots[i].ItemDataGameObject != null)
             {
-                dataToPass.mySavedStringListDatabase.Add(slots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
+                dataToPass.mySavedStringListDatabase.Add(InventorySlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
                 //Debug.Log("This is what we saved before scene change: "+slots[i].ItemDataGameObject.ToString());
             }
         }
@@ -155,11 +152,11 @@ public class PlayerInventory : MonoBehaviour
     public void SaveEquipmentOnSceneChange()
     {
         dataToPass.savedEquipmentListDB.Clear(); // Clear the database so we dont stack duplicates
-        for (int i = 0; i < equipmentSlots.Length; i++)
+        for (int i = 0; i < EquipmentSlots.Length; i++)
         {
-            if (equipmentSlots[i].ItemDataGameObject != null)
+            if (EquipmentSlots[i].ItemDataGameObject != null)
             {
-                dataToPass.savedEquipmentListDB.Add(equipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
+                dataToPass.savedEquipmentListDB.Add(EquipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
             }
         }
     }
@@ -180,7 +177,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         // Items get equipped by checking databases saved equipped item list for a match
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
             // TODO: Check why we get a object reference not set here on line 276
             if (!slot.IsEmpty && dataToPass.savedEquipmentListDB.Count != 0 && 
@@ -192,7 +189,7 @@ public class PlayerInventory : MonoBehaviour
 
         // On loading the inventory, if there is not any sprite in each inventory slot we want to
         // set the slots Alpha color to 0
-        foreach (var item in equipmentSlots)
+        foreach (var item in EquipmentSlots)
         {
             if (item.slotIcon.sprite == null) // try to: check sprite null, check Alpha null, check obj in slot null
             {
@@ -224,7 +221,7 @@ public class PlayerInventory : MonoBehaviour
         
         // On loading the inventory, if there is not any sprite in each inventory slot we want to
         // set the slots Alpha color to 0
-        foreach (var item in slots)
+        foreach (var item in InventorySlots)
         {           
             if (item.slotIcon.sprite == null) // try to: check sprite null, check Alpha null, check obj in slot null
             {

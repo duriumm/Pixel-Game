@@ -49,10 +49,11 @@ public class SceneTransition : MonoBehaviour
         }
         
         
-        // Run the Start() function for the scripts that are transfered between scenes
-        // since they cant run Start() on scene change by themselves
+        // The Start() functions for the scripts that are transfered between scenes
+        // does not get called on scene transition.
+        // So here we make sure any needed scene initialization gets done.
         playerHealth.OnSceneChange();
-        playerInput.Start();
+        playerInput.OnSceneChange();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
