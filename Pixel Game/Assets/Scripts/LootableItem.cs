@@ -1,32 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LootableItem : MonoBehaviour
 {
-    private GameObject inventoryManager;
+    private PlayerInventory playerInventory;
+    private GameObject vacuumColliderObject;
+    private GameObject pickUpColliderObject;
     void Start()
     {
-        inventoryManager = GameObject.FindWithTag("InventoryManager");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerInventory = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
+        var player = GameObject.Find("MyCharacter");
+        vacuumColliderObject = player.transform.Find("InteractionCollider").gameObject;
+        pickUpColliderObject = player; //Player's feet
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "MyPlayer")
+        if (collision.gameObject == pickUpColliderObject)
         {
-            if(inventoryManager == null)
-            {
-                //Debug.Log("IT WAS NULL");
-            }
-            inventoryManager.GetComponent<PlayerInventory>().LootItem(this.gameObject/*.GetComponent<ItemData>()*/);
-
+            playerInventory.LootItem(this.gameObject);
             //Debug.Log("Picked up something");
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject == vacuumColliderObject)
+        {
+            var direction = collision.gameObject.transform.position - transform.position;
+            transform.position += direction.normalized * 0.1f;
         }
     }
 }

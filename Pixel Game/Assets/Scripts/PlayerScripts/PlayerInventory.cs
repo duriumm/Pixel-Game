@@ -9,32 +9,23 @@ using UnityEngine.EventSystems;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private InventorySlot[] slots;
-    private InventorySlot[] equipmentSlots;
-    private GameObject inventoryScreenGameObject;
-    public GameObject prefabCanvas;
-    private Transform inventorySlotsTransform;
-    public bool isInventoryOpen = false;
-    private ItemData lootedItemData;
+    private InventorySlot[] InventorySlots => inventoryScreen.InventorySlots;
+    private InventorySlot[] EquipmentSlots => inventoryScreen.EquipmentSlots;
+    private InventoryScreen inventoryScreen;
     public GameObject dataToPassGameObject;
     private DataToPassBetweenScenes dataToPass;
     public AudioClip buyAndSellSound;
     private GameObject mainCamera;
-    private GameObject screenTabs;
-    private GameObject shopScreen;
-
-    private GameObject playerGameObject;
-
+    
     // TO-DO - Move playerMoney to some other place.. not sure where yet
     public int playerInvMoney;
     public TextMeshProUGUI CoinAmountText;
 
     private void Awake()
     {
-        
         if (GameObject.FindGameObjectWithTag("PassData") != null)
         {
-            dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  
+            dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
         }
         else
         {
@@ -42,120 +33,45 @@ public class PlayerInventory : MonoBehaviour
             Instantiate(dataToPassGameObject);
             dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");  
         }
-
-        inventoryScreenGameObject = prefabCanvas.transform.GetChild(1).gameObject; // Get the second index gameobhject which is the inventoryscreen
-        inventorySlotsTransform = inventoryScreenGameObject.transform.GetChild(0).transform; // Get the transform of inv screens child index 6 which is the InventorySlots gameobjects transform
-        slots = inventorySlotsTransform.GetComponentsInChildren<InventorySlot>();
-
-        equipmentSlots = inventoryScreenGameObject.transform.GetChild(1).
-            transform.GetComponentsInChildren<InventorySlot>(); // Get all equipment slots in player inventory
-
-        screenTabs = prefabCanvas.transform.Find("GuiTabsButtons").gameObject;
-        shopScreen = GameObject.Find("ShopScreen");
-        // Player is set in awake since it needs to be called before the start in shopscreen 
-        // since shopscreen uses shopscreen.close() 
-        playerGameObject = GameObject.FindGameObjectWithTag("MyPlayer");
         dataToPass = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>();
-
-
+        inventoryScreen = GameObject.Find("InventoryScreen").GetComponent<InventoryScreen>();
     }
+
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
         LoadInvGameObjectOnStartScene();
         LoadEquipmentOnStartScene();
-        ClosingUI();
         SetCoinAmount(dataToPass.playerMoneyDB);
-
     }
 
     // Check player inventory if there are already some of the items we need to collect
     // so we can increment the value correctly 
-    public void CheckInventoryForCollectedItems(string itemNameToRemove)
+    public void CheckInventoryForCollectedItems(string itemName)
     {
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
-            if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
-            {
-                dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
-            }
+            if (!slot.IsEmpty)
+                dataToPass.ActiveQuests.TryIncrementItemsCollected(itemName);
         }
     }
+
     // When a gather items quest is finished, we want to remove the gathered items
     // from the players inventory, that is done here
-    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove)
+    public void RemoveCollectedQuestItemsFromInventory(string itemNameToRemove, int count)
     {
-        foreach (var slot in slots)
+        int itemsRemoved = 0;
+        foreach (var slot in InventorySlots)
         {
             if (!slot.IsEmpty && slot.ItemDataInSlot.itemName == itemNameToRemove)
             {
-                slot.DropItem();
-                Destroy(slot.ItemDataGameObject);
-                slot.ClearSlot();
+                slot.DestroyItem();
+                if (++itemsRemoved == count)
+                    return;
             }
         }
-    }
-    public void ClosingUI()
-    {
-        // disable player attack
-        playerGameObject.GetComponent<Attack>().enabled = true;
-
-        isInventoryOpen = false;
-        inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 0;
-        screenTabs.SetActive(false);
-
-        // Two foreach loops disables hovering activation when inv is closed
-        foreach (var item in slots)
-        {
-            item.RemoveDataShowingOnExit();
-            // We dont set gameobject active to false here like foreach below 
-            // since we need the inventory slot to be useable on looting
-            item.GetComponent<EventTrigger>().enabled = false; 
-        }
-        foreach (var item in equipmentSlots)
-        {
-            item.RemoveDataShowingOnExit();
-            //item.gameObject.SetActive(false);
-            item.GetComponent<EventTrigger>().enabled = false;
-        }
-    }
-    public void OpeningGUI()
-    {
-        // enable player attack
-        playerGameObject.GetComponent<Attack>().enabled = false;
-        isInventoryOpen = true;
-        inventoryScreenGameObject.GetComponent<CanvasGroup>().alpha = 1;
-
-        // These 2 loops enable the ability to hover over each slot when inv is closed
-        if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == true)
-        {
-            foreach (var item in equipmentSlots)
-            {
-                //item.gameObject.SetActive(false);
-                item.GetComponent<EventTrigger>().enabled = false;
-                Debug.Log("Inside 1");
-            }
-        }
-        else
-        {
-            foreach (var item in equipmentSlots)
-            {
-                //item.gameObject.SetActive(true);
-                Debug.Log("Inside 2");
-                item.GetComponent<EventTrigger>().enabled = true;
-            }
-        }
-        foreach (var item in slots)
-        {
-            item.GetComponent<EventTrigger>().enabled = true;
-
-        }
-        // We should only show the tabs for each screen when opening the inventory 
-        // if the shop is closed. Otherwise they will render on top of shop window and look weird
-        if (shopScreen.GetComponent<ShopScreen>().isShopScreenOpen == false)
-        {
-            screenTabs.SetActive(true);
-        }
+        //Getting to this line means there were not enough items to remove
+        Debug.Assert(false);
     }
 
     // Adding items to players inventory is started here
@@ -170,15 +86,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            if (dataToPass.currentActivePlayerQuest.questType == Quest.QUESTTYPE.GATHER_ITEMS)
-            {
-                if (lootedGameObject.GetComponent<ItemData>().itemName ==
-                    dataToPass.currentActivePlayerQuest.itemToGather.GetComponent<ItemData>().itemName)
-                {
-                    dataToPass.currentActivePlayerQuest.IncrementItemsCollected();
-                    Debug.Log("WE incremented FFS");
-                }
-            }
+            dataToPass.ActiveQuests.TryIncrementItemsCollected(lootedGameObject.GetComponent<ItemData>().itemName);
             AddItemToEmptySlot(lootedGameObject);
         }           
     }
@@ -186,7 +94,7 @@ public class PlayerInventory : MonoBehaviour
     public bool AddItemToEmptySlot(GameObject itemToAdd)
     {
         //Look for empty slot
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
 
             if (slot.IsEmpty)
@@ -207,16 +115,19 @@ public class PlayerInventory : MonoBehaviour
     {
         AudioSource.PlayClipAtPoint(buyAndSellSound, mainCamera.transform.position);
     }
+
     public void AddCoinAmount(int coinAmountToAdd)
     {
-        playerInvMoney = playerInvMoney + coinAmountToAdd;
+        playerInvMoney += coinAmountToAdd;
         CoinAmountText.text = playerInvMoney.ToString();
     }
+
     public void RemoveCoinAmount(int coinAmountToRemove)
     {
         playerInvMoney = playerInvMoney - coinAmountToRemove;
         CoinAmountText.text = playerInvMoney.ToString();
     }
+
     public void SetCoinAmount(int coinAmount)
     {
         playerInvMoney = coinAmount;
@@ -228,23 +139,24 @@ public class PlayerInventory : MonoBehaviour
     public void SaveInvGameObjectsOnSceneChange()
     {
         dataToPass.mySavedStringListDatabase.Clear(); // Clear the database so we dont stack duplicates
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < InventorySlots.Length; i++)
         {
-            if(slots[i].ItemDataGameObject != null)
+            if(InventorySlots[i].ItemDataGameObject != null)
             {
-                dataToPass.mySavedStringListDatabase.Add(slots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
+                dataToPass.mySavedStringListDatabase.Add(InventorySlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString); 
                 //Debug.Log("This is what we saved before scene change: "+slots[i].ItemDataGameObject.ToString());
             }
         }
     }
+
     public void SaveEquipmentOnSceneChange()
     {
         dataToPass.savedEquipmentListDB.Clear(); // Clear the database so we dont stack duplicates
-        for (int i = 0; i < equipmentSlots.Length; i++)
+        for (int i = 0; i < EquipmentSlots.Length; i++)
         {
-            if (equipmentSlots[i].ItemDataGameObject != null)
+            if (EquipmentSlots[i].ItemDataGameObject != null)
             {
-                dataToPass.savedEquipmentListDB.Add(equipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
+                dataToPass.savedEquipmentListDB.Add(EquipmentSlots[i].ItemDataGameObject.GetComponent<ItemData>().itemIdString);
             }
         }
     }
@@ -265,19 +177,19 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         // Items get equipped by checking databases saved equipped item list for a match
-        foreach (var slot in slots)
+        foreach (var slot in InventorySlots)
         {
             // TODO: Check why we get a object reference not set here on line 276
             if (!slot.IsEmpty && dataToPass.savedEquipmentListDB.Count != 0 && 
                 dataToPass.savedEquipmentListDB.Contains(slot.ItemDataInSlot.itemIdString))
             {
-                slot.EquipItem();
+                StartCoroutine(slot.EquipItem());
             }
         }
 
         // On loading the inventory, if there is not any sprite in each inventory slot we want to
         // set the slots Alpha color to 0
-        foreach (var item in equipmentSlots)
+        foreach (var item in EquipmentSlots)
         {
             if (item.slotIcon.sprite == null) // try to: check sprite null, check Alpha null, check obj in slot null
             {
@@ -285,6 +197,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
     // here we check our itemDatabase for names matching our savedStringItems
     public void LoadInvGameObjectOnStartScene()
     {
@@ -308,7 +221,7 @@ public class PlayerInventory : MonoBehaviour
         
         // On loading the inventory, if there is not any sprite in each inventory slot we want to
         // set the slots Alpha color to 0
-        foreach (var item in slots)
+        foreach (var item in InventorySlots)
         {           
             if (item.slotIcon.sprite == null) // try to: check sprite null, check Alpha null, check obj in slot null
             {
@@ -316,5 +229,4 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
-
 }

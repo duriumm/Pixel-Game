@@ -6,29 +6,15 @@ public class TraderNpc : MonoBehaviour
 {
     public List<GameObject> shopItems = new List<GameObject>(); //  We can now add custom items in inspector for every trader
     private GameObject merchantInfoBubble;
-    public bool isPlayerInRange;
-    public AudioClip interractSound;
-    public string traderID;
-    
+    public AudioClip interactSound;
     private GameObject mainCamera;
-    private GameObject shopScreen;
-    private GameObject dataToPassGameObject;
-
-    private GameObject invManager;
+    private GuiScreenManager guiScreenManager;
     void Start()
     {
-        invManager = GameObject.FindGameObjectWithTag("InventoryManager");
         merchantInfoBubble = gameObject.transform.Find("MerchantPopup").gameObject;
         merchantInfoBubble.SetActive(false);
         mainCamera = GameObject.FindWithTag("MainCamera");
-        shopScreen = GameObject.Find("ShopScreen");
-        dataToPassGameObject = GameObject.FindGameObjectWithTag("PassData");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        guiScreenManager = GameObject.Find("Canvas/Screens").gameObject.GetComponent<GuiScreenManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,21 +22,10 @@ public class TraderNpc : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             merchantInfoBubble.SetActive(true);
-            isPlayerInRange = true;
-            AudioSource.PlayClipAtPoint(interractSound, mainCamera.transform.position);
-
-            // Assign current active trader to be this trader. 
-            // TRADER ID HAS TO BE THE SAME AS GAMEOBJECTS NAME
-            dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActiveTrader = traderID;
-
-            // Clear the shopScreen list so we only put in the NPC list of items in a empty list
-            shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Clear();
-            Debug.Log("Shop screen list before adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
+            AudioSource.PlayClipAtPoint(interactSound, mainCamera.transform.position);
+            guiScreenManager.Shop.ItemList.Clear();
             foreach (var item in shopItems)
-            {
-                shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Add(item);
-            }
-            Debug.Log("Shop screen list AFTER adding npc items: " + shopScreen.GetComponent<ShopScreen>().shopScreenItemList.Count);
+                guiScreenManager.Shop.ItemList.Add(item);
         }
     }
 
@@ -59,27 +34,13 @@ public class TraderNpc : MonoBehaviour
         if (collision.gameObject.tag == "MyPlayer")
         {
             merchantInfoBubble.SetActive(false);
-            isPlayerInRange = false;
-
-            shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-            invManager.GetComponent<PlayerInventory>().ClosingUI();
         }
     }
 
 
     public void OpenNpcShop()
     {
-        float alpha = shopScreen.GetComponent<CanvasGroup>().alpha;
-
-
-        if (alpha == 1) // If shopscreen is visible
-        {
-            shopScreen.GetComponent<ShopScreen>().CloseShopScreen();
-        }
-        else // If shopscreen is NOT visible
-        { 
-            shopScreen.GetComponent<ShopScreen>().OpenShopScreen();
-        }
+        guiScreenManager.Toggle(GuiScreenType.Shop);
     }
 
 

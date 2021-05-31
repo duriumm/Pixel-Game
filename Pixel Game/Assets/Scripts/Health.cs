@@ -8,13 +8,19 @@ public class Health : MonoBehaviour
 {
     private const float KnockbackDuration = 0.5f;
     private const float KnockbackSpeed = 7;
-    private Rigidbody2D body;
+    public int Defense { get; set; } 
+    private Rigidbody2D rbody;
     [SerializeField]
     private int maxHp = 100;
+    public int MaxHp
+    {
+        get => maxHp;
+        set => maxHp = value;
+    }
     private int hp;
     public int Hp
     {
-        protected set
+        set
         {
             hp = Math.Min(maxHp, value);
             slider.value = hp;
@@ -35,15 +41,20 @@ public class Health : MonoBehaviour
 
     public virtual void Start()
     {
-        body = gameObject.GetComponent<Rigidbody2D>();
-        spawnPoint = this.gameObject.transform.position;
         Hp = maxHp;
+        rbody = gameObject.GetComponent<Rigidbody2D>();
+        OnSceneChange();
+    }
+
+    public virtual void OnSceneChange()
+    {
+        spawnPoint = gameObject.transform.position;
     }
 
     protected virtual void Kill()
     {
-        if (body != null)
-            body.velocity = Vector2.zero;
+        if (rbody != null)
+            rbody.velocity = Vector2.zero;
         if (deathSound != null)
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
     }
@@ -56,8 +67,8 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 sourcePoint)
     {
-        //Todo: reduce damage depending on armor
-        
+        damage = Math.Max(1, damage - Defense);
+
         if (hurtSound != null)
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
@@ -68,11 +79,6 @@ public class Health : MonoBehaviour
             Kill();
     }
 
-    public void GainHealth(int value)
-    {
-        Hp += value;
-    }
-
     private IEnumerator HurtEffect()
     {
         yield return new WaitForSeconds(0.1f);
@@ -80,7 +86,7 @@ public class Health : MonoBehaviour
 
     private void Knockback(Vector3 sourcePoint)
     {
-        body.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
+        rbody.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
         StartCoroutine(reduceAcceleration());
     }
 
@@ -93,4 +99,3 @@ public class Health : MonoBehaviour
         KnockedBack = false;
     }
 }
-    

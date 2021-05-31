@@ -17,7 +17,8 @@ public class DialogueViewer : MonoBehaviour
     private GameObject dialogueCanvas;
     private DataToPassBetweenScenes dataToPass;
     private PlayerInventory playerInv;
-
+    private PlayerInput playerInput;
+    
     [DllImport("__Internal")]
     private static extern void openPage(string url);
 
@@ -28,7 +29,6 @@ public class DialogueViewer : MonoBehaviour
         controller.onEnteredNode += OnNodeEntered;
         controller.InitializeDialogue();
 
-
         // Start the dialogue
         var curNode = controller.GetCurrentNode();
 
@@ -36,6 +36,7 @@ public class DialogueViewer : MonoBehaviour
         dialogueCanvas.SetActive(false);
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         playerInv = GameObject.FindWithTag("InventoryManager").GetComponent<PlayerInventory>();
+        playerInput = GameObject.Find("MyCharacter").GetComponent<PlayerInput>();
     }
 
     public static void KillAllChildren(UnityEngine.Transform parent)
@@ -55,6 +56,9 @@ public class DialogueViewer : MonoBehaviour
 
     private void OnNodeEntered(Node newNode)
     {
+        if (dataToPass == null)
+            return;
+       
         Debug.Log("Entering node: " + newNode.title);
         txtNodeDisplay.text = newNode.text;
 
@@ -68,37 +72,25 @@ public class DialogueViewer : MonoBehaviour
             responceButton.onClick.AddListener(delegate { OnNodeSelected(currentChoiceIndex); });
         }
 
-        // TO-DO - Implement this part and put all node tag if statements inside this if statement
-        //if(newNode.tags != null)
-        //{
-        //    string currentActiveNpc = dataToPassGameObject.GetComponent<DataToPassBetweenScenes>().currentActivateNpc;
-        //    GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-        //}
-
+        //TODO: Use member variable for current npc and update only when needed
+        var npcObject = GameObject.Find(dataToPass.currentActiveNpc);
+        if (npcObject == null)
+            return;
+        NpcData npc = npcObject.GetComponent<NpcData>();
         if (newNode.tags.Contains("END"))
         {
-            // To-Do
-            // Here we can close the window or something :) since the talk is finished
             Debug.Log("End!");
             dialogueCanvas.SetActive(false);
         }
         else if (newNode.tags.Contains("ACCEPT_QUEST"))
         {
-            // If the current node has a "ACCEPT_QUEST" tag on it, we will take the current active npc from our database
-            // then find the GameObject with the same name in the scene and run ActivateQuest() on that NpcData script
-
-            string currentActiveNpc = dataToPass.currentActivateNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-            npcGameobject.GetComponent<NpcData>().ActivateQuest();
+            npc.ActivateQuest();
         }
         else if (newNode.tags.Contains("CHECK_QUEST"))
         {
-            string currentActiveNpc = dataToPass.currentActivateNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-
             // If the function returns false, the textNodeDisplay prints "you are not done, and the option to
             // go back appears with a button
-            if(npcGameobject.GetComponent<NpcData>().CheckIfQuestIsDone() == false)
+            if (!npc.CheckIfQuestIsDone())
             {
                 txtNodeDisplay.text = "You are not done...";
             }
@@ -108,33 +100,16 @@ public class DialogueViewer : MonoBehaviour
             // Give reward to the player accordingly to the current active quests reward
             // If there is a item like a sword as reward it is given to the player by
             // entering it into players inventory
-
-            int moneyReward = dataToPass.currentActivePlayerQuest.moneyReward;
-            playerInv.AddCoinAmount(moneyReward);
-
-            GameObject gameObjReward = dataToPass.currentActivePlayerQuest.gameObjectReward;
-            txtNodeDisplay.text = "You got "+ moneyReward + " gold";
-            if (gameObjReward != null)
-            {
-                // To-Do: Check if inventory is full
-
-                // Get original name of obj so we dont get (clone) when we instantiate
-                string originalItemName = gameObjReward.name;
-                GameObject instantiatedObj = Instantiate(gameObjReward) as GameObject;
-                instantiatedObj.name = originalItemName;
-
-                // Add instantiated item to inventory and add text to reward window showing what item we got
-                playerInv.LootItem(instantiatedObj);
-                txtNodeDisplay.text += " and a " + instantiatedObj.name;
-            }
+                
+            txtNodeDisplay.text = "You received:\n\n";
+            if (npc.currentNpcQuest.MoneyReward > 0)
+                txtNodeDisplay.text += npc.currentNpcQuest.MoneyReward + "gold\n";
+            if (npc.currentNpcQuest.GameObjectReward != null)
+                txtNodeDisplay.text += npc.currentNpcQuest.GameObjectReward.name;
 
             // Load the last conversation that COMPLETELY ends the quest, and makes the npc just say something along
             // the lines of "You did a good job before, thanks" 
-            string currentActiveNpc = dataToPass.currentActivateNpc;
-            GameObject npcGameobject = GameObject.Find(currentActiveNpc);
-            npcGameobject.GetComponent<NpcData>().EndTheQuest();
-
-            dataToPass.currentActivePlayerQuest = null;
+            npc.EndQuest();
         }
     }
 
@@ -146,7 +121,6 @@ public class DialogueViewer : MonoBehaviour
         if (dialogueCanvas.activeSelf == true) 
         { 
             dialogueCanvas.SetActive(false);
-
         }
         // Each time we turn the dialogue canvas ON, we want to also initialize the dialogue
         // that is the current active convo of the databases current active npc
@@ -155,11 +129,23 @@ public class DialogueViewer : MonoBehaviour
             // Turn dialogue canvas off
             dialogueCanvas.SetActive(true);
             // Get the current active npc from database and Find that gameobject on the scene
-            string currentActiveNpc = dataToPass.currentActivateNpc;
+            string currentActiveNpc = dataToPass.currentActiveNpc;
             GameObject npcGameobject = GameObject.Find(currentActiveNpc);
             // Set our twinetext (dialogue text) to the Npcs current active convo and initialize the dialogue
             controller.twineText = npcGameobject.GetComponent<NpcData>().currentActiveConvo;
             controller.InitializeDialogue();
         }
+    }
+
+    void OnDisable()
+    {
+        if (playerInput != null)
+            playerInput.enabled = true;
+    }
+
+    void OnEnable()
+    {
+        if (playerInput != null)
+            playerInput.enabled = false;
     }
 }

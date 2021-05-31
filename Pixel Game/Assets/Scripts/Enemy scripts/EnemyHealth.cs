@@ -12,6 +12,7 @@ public class EnemyHealth : Health
     private AiMovement enemyMovement;
     private Collider2D[] colliderList;
     private DataToPassBetweenScenes dataToPassBetweenScenes;
+    private GameObject player;
     public enum ENEMYTYPE
     {
         GHOST,
@@ -28,42 +29,39 @@ public class EnemyHealth : Health
         enemyMovement = gameObject.GetComponent<AiMovement>();
         colliderList = gameObject.GetComponentsInChildren<Collider2D>();
         dataToPassBetweenScenes = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
+        player = GameObject.Find("MyCharacter");
     }
 
     protected override void Kill()
     {
-        // Comparing two enums, can be more efficent than this. TODO: Make it more efficent
-        if (dataToPassBetweenScenes.currentActivePlayerQuest.questType == Quest.QUESTTYPE.KILL_ENEMIES &&
-            enemyType == dataToPassBetweenScenes.currentActivePlayerQuest.enemyTypeToKill)
-        {
-            dataToPassBetweenScenes.currentActivePlayerQuest.IncrementKilledEnemies();
-        }
-
+        dataToPassBetweenScenes.ActiveQuests.TryIncrementKilledEnemies(gameObject.name);
         base.Kill();
         gameObject.GetComponent<EnemyLootDrops>().DropLoot();
-        
+        StartCoroutine(PlayDeathAnimation());
+    }
+
+    private IEnumerator PlayDeathAnimation()
+    {
+        disableEnemy(true);
         switch (enemyType)
         {
             case ENEMYTYPE.GHOST:
-                StartCoroutine(FadeOutEnemy());
+                yield return FadeOutEnemy();
                 break;
             case ENEMYTYPE.BEAST:
                 //Todo: implement beast death animation
-                StartCoroutine(FadeOutEnemy());
+                yield return FadeOutEnemy();
                 break;
             case ENEMYTYPE.HUMAN:
                 //Todo: implement human death animation
-                StartCoroutine(FadeOutEnemy());
+                yield return FadeOutEnemy();
                 break;
         }
-
-        StartCoroutine(WaitForRespawn());
+        yield return WaitForRespawn();
     }
 
     private IEnumerator FadeOutEnemy()
     {
-        toggleActive(false);
-
         // This fade last for 2 sek and turns enemy from 1 in alpha (max) to 
         // 0 in alpha (lowest)
         for (float f = 1f; f >= -0.05f; f -= 0.05f)
@@ -77,7 +75,16 @@ public class EnemyHealth : Health
 
     IEnumerator WaitForRespawn()
     {
-        yield return new WaitForSeconds(respawnTime);
+        float minRespawnSqrDistance = 200;
+        float sqrDistanceToPlayer;
+        do
+        {
+            yield return new WaitForSeconds(respawnTime);
+            sqrDistanceToPlayer = Vector2.SqrMagnitude(player.transform.position - transform.position);
+            if (sqrDistanceToPlayer < minRespawnSqrDistance)
+                Debug.Log("Distance to player too short for respawn: " + sqrDistanceToPlayer);
+        }
+        while (sqrDistanceToPlayer < minRespawnSqrDistance);
         Respawn();
     }
 
@@ -87,18 +94,18 @@ public class EnemyHealth : Health
         Color clr = spriteRenderer.material.color;
         clr.a = 1f;
         spriteRenderer.material.color = clr;
-        toggleActive(true);
+        disableEnemy(false);
         base.Respawn();
     }
 
-    void toggleActive(bool active)
+    void disableEnemy(bool disable)
     {
         if (enemyMovement != null)
-            enemyMovement.enabled = active;
+            enemyMovement.enabled = !disable;
         if (enemyAttack != null)
-            enemyAttack.enabled = active;
+            enemyAttack.enabled = !disable;
         foreach (var collider in colliderList)
-            collider.enabled = active;
-        transform.Find("EnemyCanvas").gameObject.SetActive(active);
+            collider.enabled = !disable;
+        transform.Find("EnemyCanvas").gameObject.SetActive(!disable);
     }
 }

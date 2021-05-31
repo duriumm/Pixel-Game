@@ -64,7 +64,7 @@ MonoBehaviour:
   canBeAttacked: 0
   canAttack: 1
   owner: {fileID: 0}
-  attackCooldown: 1
+  attackCooldown: 0
   spriteRotation: 45
 --- !u!212 &8604920233226096892
 SpriteRenderer:

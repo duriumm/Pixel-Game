@@ -21,18 +21,14 @@ public class DataToPassBetweenScenes : MonoBehaviour
     //    }
     //}
 
-    public int playerHealthDB;
-    public int playerArmorDB;
-    public int playerAttackDB;
-
     public int playerMoneyDB;
-    public string currentActiveTrader;
-    public Quest currentActivePlayerQuest;
+    public ActiveQuests activeQuests = new ActiveQuests();
+    public ActiveQuests ActiveQuests => activeQuests;
 
     public string[] NpcDatabase = { "FatNpc", "Pawi", "SecondFatNPC" }; // A list of all the NPCs in our game. This list wont change
     public GameObject[] lootDatabase = { }; // A list of all the gameObjects in our game. This list wont change. 
 
-    public string currentActivateNpc;
+    public string currentActiveNpc;
 
     public Vector3 sceneTransitionSpawnPoint;
 
@@ -41,8 +37,6 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public List<string> openedChestGameObjectNames= new List<string>();
     
     public string currentAreaName;
-
-    
 
     // String List with names of all our gameobjects, all player inventory items names are saved here on entering new scene.
     public List<string> mySavedStringListDatabase = new List<string>();
@@ -55,21 +49,5 @@ public class DataToPassBetweenScenes : MonoBehaviour
     public void Start()
     {
         player = GameObject.FindGameObjectWithTag("MyPlayer");
-
-    }
-
-    // We only need to update the player health stat as playerHealth has its own script 
-    // This is because playerhealth will change a lot so we dont want to update this stat here
-    // unneccecary :D
-
-    // Armor for example will update the playerArmorDB value on equipping a new armor and therefor
-    // will not need updating function but just grab the value straight from the DB or set the value 
-    // straight to the DB
-    public void UpdatePlayerHealthDB()
-    {
-        playerHealthDB = player.GetComponent<PlayerHealth>().Hp;
-    }
-
-
-    
+    }    
 }
