@@ -55,12 +55,12 @@ public class InventorySlot : MonoBehaviour
         playerAttack = playerCharacter.GetComponent<Attack>();
         playerHealth = playerCharacter.GetComponent<PlayerHealth>();
         slotIcon = this.gameObject.GetComponent<Image>();
+        guiScreenManager = GameObject.Find("Canvas/Screens").GetComponent<GuiScreenManager>();
     }
 
     private void Start()
     {
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
-        guiScreenManager = GameObject.Find("Canvas/Screens").GetComponent<GuiScreenManager>();
     }
 
     public void UseItem()

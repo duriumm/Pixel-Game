@@ -23,7 +23,7 @@ public class GuiScreenManager : MonoBehaviour
     public InventoryScreen Inventory => inventory;
     public ShopScreen Shop => shop;
 
-    void Start()
+    void Awake()
     {
         stats = gameObject.transform.Find("StatsScreen").gameObject.GetComponent<StatsScreen>();
         inventory = gameObject.transform.Find("InventoryScreen").gameObject.GetComponent<InventoryScreen>();
@@ -82,21 +82,6 @@ public class GuiScreenManager : MonoBehaviour
         return Open(GetScreen(type));
     }
 
-    public void OpenStats()
-    {
-        Open(stats);
-    }
-
-    public void OpenInventory()
-    {
-        Open(inventory);
-    }
-
-    public void OpenShop()
-    {
-        Open(shop);
-    }
-
     GuiScreen GetScreen(GuiScreenType type)
     {
         switch (type)
@@ -115,6 +100,19 @@ public class GuiScreenManager : MonoBehaviour
     public bool IsOpen(GuiScreenType type)
     {
         return activeScreen == GetScreen(type);
+    }
+
+    
+    //These parameter-less methods should be called when clicking on tab buttons
+    
+    public void OpenStats()
+    {
+        Open(stats);
+    }
+
+    public void OpenInventory()
+    {
+        Open(inventory);
     }
 }
     
