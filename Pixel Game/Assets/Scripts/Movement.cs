@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    private const float KnockbackAcceleration = 0.5f;
+    private const float AccelerationDuringKnockback = 0.5f;
+    private const float KnockbackDuration = 0.5f;
+    private const float KnockbackSpeed = 7;
     [SerializeField]
     bool HasIdleAnim;
     [SerializeField]
@@ -15,21 +17,23 @@ public class Movement : MonoBehaviour
     [SerializeField]
     protected Animator animator;
 
-    private Health health;
     protected Vector2 movementDir;
     protected Vector2 faceDir = Vector2.zero;
-    public Vector2 FaceDir => faceDir;
-    private Rigidbody2D rbody;
-    
-    private float ActualAcceleration =>
-        health != null && health.KnockedBack ?
-        KnockbackAcceleration : acceleration;
+    protected Rigidbody2D rbody;
 
+    private float currentAcceleration;
     private int paramId_LastMoveX;
     private int paramId_LastMoveY;
     private int paramId_Horizontal;
     private int paramId_Vertical;
     private int paramId_Speed;
+
+    public Vector2 FaceDir => faceDir;
+    public Vector2 Velocity
+    {
+        get => rbody.velocity;
+        set => rbody.velocity = value;
+    }
 
     protected virtual void Start()
     {
@@ -37,8 +41,8 @@ public class Movement : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         
         rbody = gameObject.GetComponent<Rigidbody2D>();
-        health = gameObject.GetComponent<Health>();
-        
+        currentAcceleration = acceleration;
+
         if (animator != null)
         {
             paramId_LastMoveX = animator.GetParamId("LastMoveX");
@@ -71,11 +75,19 @@ public class Movement : MonoBehaviour
         Vector2 velocityTarget = movementDir;
         if (velocityTarget != Vector2.zero)
             velocityTarget = velocityTarget.normalized * maxSpeed;
-        var difference = velocityTarget - rbody.velocity;
+        var difference = velocityTarget - Velocity;
         if (difference == Vector2.zero)
             return;
-        var velocityStep = difference.normalized * ActualAcceleration;
+        var velocityStep = difference.normalized * currentAcceleration;
         velocityStep = Vector2.ClampMagnitude(velocityStep, difference.magnitude);
-        rbody.velocity += velocityStep;
+        Velocity += velocityStep;
+    }
+
+    public virtual IEnumerator KnockBack(Vector3 sourcePoint)
+    {
+        Velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
+        currentAcceleration = AccelerationDuringKnockback;
+        yield return new WaitForSeconds(KnockbackDuration);
+        currentAcceleration = acceleration;
     }
 }

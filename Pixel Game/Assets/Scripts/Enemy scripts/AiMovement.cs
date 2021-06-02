@@ -99,6 +99,13 @@ public class AiMovement : Movement
         yield return new WaitForSeconds(9);
         isPlayingAmbientSound = false;
     }
+
+    public override IEnumerator KnockBack(Vector3 sourcePoint)
+    {
+        rbody.bodyType = RigidbodyType2D.Dynamic;
+        yield return base.KnockBack(sourcePoint);
+        rbody.bodyType = RigidbodyType2D.Kinematic;
+    }
 }
 
 class AiPath
