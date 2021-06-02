@@ -88,7 +88,7 @@ public class AiMovement : Movement
             if (backAway)
                 faceDir *= -1;
         }
-        
+        aiPath.Update();
         base.FixedUpdate();
     }
 
@@ -103,6 +103,7 @@ public class AiMovement : Movement
 
 class AiPath
 {
+    private int targetWaypointIndex;
     private Path path;
     private GameObject gameObject;
     private Seeker seeker;
@@ -123,25 +124,52 @@ class AiPath
         }
     }
 
-    public Vector2? CurrentDirection
+    public Vector2 NextPosition
     {
         get
         {
             if (path == null || destination == null || path.vectorPath.Count < 2)
-                return null;
+                return gameObject.transform.position;
+            return path.vectorPath[targetWaypointIndex];
+        }
+    }
 
-            return path.vectorPath[1] - gameObject.transform.position;
+    public Vector2 CurrentDirection => NextPosition - CurrentPosition;
+    public Vector2 CurrentPosition => gameObject.transform.position;
+
+    public List<Vector3> WayPoints => path.vectorPath;
+    private float waypointDetectionRadius;
+    private float sqrWaypointDetectionRadius;
+    public float WaypointDetectionRadius 
+    { 
+        get => waypointDetectionRadius;
+        set
+        {
+            waypointDetectionRadius = value;
+            sqrWaypointDetectionRadius = value * value;
         }
     }
 
     public AiPath(GameObject gameObject)
     {
+        WaypointDetectionRadius = 0.5f;
         this.gameObject = gameObject;
         seeker = gameObject.GetComponent<Seeker>();
         seeker.pathCallback = (path) =>
         {
             this.path = path;
+            targetWaypointIndex = 1;
             calculatingPath = false;
         };
     }
+
+    public void Update()
+    {
+        if (path != null && Vector2.SqrMagnitude(CurrentPosition - NextPosition) < sqrWaypointDetectionRadius)
+        {
+            if (++targetWaypointIndex >= WayPoints.Count)
+                targetWaypointIndex = WayPoints.Count - 1;
+
+    }
+}
 }
