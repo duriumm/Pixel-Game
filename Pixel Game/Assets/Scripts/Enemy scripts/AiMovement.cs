@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AiMovement : Movement
 {
@@ -13,12 +16,47 @@ public class AiMovement : Movement
     private bool isPlayingAmbientSound = false;
     private float roamStartTime;
     private float roamDuration;
-    
+  //  private NavMeshAgent navMeshAgent;
+    private Seeker seeker;
+    Path currentPath;
+    private bool calculatingPath;
+
+    private AIPath aiPath;
+
     private const float MinRoamDuration = 2;
     private const float MaxRoamDuration = 5;
     private const float ChaseUpperDistance = 4;
 	private float retreatUpperDistance;
-    
+
+    private Vector2? destination;
+    private Vector2? Destination
+    {
+        get => destination;
+        set
+        {
+            destination = value;
+            if (!calculatingPath)
+            {
+                seeker.StartPath(transform.position, (Vector2)value);
+                calculatingPath = true;
+            }
+        }
+    }
+
+    public Vector2? CurrentPathDirection
+    {
+        get
+        {
+            //var path = seeker.GetCurrentPath();
+            if (currentPath == null || destination == null)
+                return null;
+            if (currentPath.vectorPath.Count > 0)
+                return currentPath.vectorPath[1] - transform.position;
+            else
+                return null;
+        }
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -27,6 +65,19 @@ public class AiMovement : Movement
          var enemyAttack = gameObject.GetComponent<AiAttack>();
         float attackRange = enemyAttack == null ? 0 : enemyAttack.AttackRange;
 		retreatUpperDistance = attackRange * 0.7f;
+        //navMeshAgent = GetComponent<NavMeshAgent>();
+        //navMeshAgent.updateRotation = navMeshAgent.updateUpAxis = false;
+        //navMeshAgent.isStopped = true;
+        seeker = GetComponent<Seeker>();
+        seeker.pathCallback = (path) =>
+        {
+            currentPath = path;
+            calculatingPath = false;
+            //foreach (var point in currentPath.vectorPath)
+            //    Debug.Log(point);
+            //Debug.Log("*************");
+        };
+        aiPath = GetComponent<AIPath>();
 	}
 
     protected override void FixedUpdate()
@@ -46,8 +97,9 @@ public class AiMovement : Movement
         {
             if (playerDistance < retreatUpperDistance)
                 movementDir = Vector2.zero;
-            else
-                movementDir = playerTransform.position - enemyTransform.position;
+            //else
+              //  Destination = playerTransform.position;
+            //movementDir = playerTransform.position - enemyTransform.position;
             //Sound acts as indication that the enemy started chasing
             //Helps the player to differentiate between roaming movement and chasing movement
             if (!isPlayingAmbientSound && ambientSound != null)
@@ -63,12 +115,27 @@ public class AiMovement : Movement
             else
                 movementDir = Vector2.zero;
         }
+        //navMeshAgent.SetDestination(playerTransform.position);
+        //aiPath.target = transform;
+        aiPath.destination = playerTransform.position;
+        //movementDir = navMeshAgent.path.corners[0] - transform.position;
+        //movementDir = navMeshAgent.desiredVelocity;
+
+        if (Input.GetKeyDown(KeyCode.P))
+            Destination = playerTransform.position;
+
+        if (CurrentPathDirection != null)
+        {
+            movementDir = (Vector2)CurrentPathDirection;
+        }
         if (movementDir != Vector2.zero)
         {
             faceDir = movementDir;
             if (backAway)
                 faceDir *= -1;
         }
+        //navMeshAgent.velocity = new Vector3(movementDir.x, movementDir.y, 0);
+        Destination = playerTransform.position;
 
         base.FixedUpdate();
     }
