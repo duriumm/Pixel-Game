@@ -60,14 +60,14 @@ public class Torch : MonoBehaviour
     private void decreaseTorchFuelAndFlicker()
     {
         torch2dLightComponent.intensity -= 0.02f;
-
-        if(torch2dLightComponent.intensity < 1.0f && isTorchBelow_1_Intensity == false)
+       if (torch2dLightComponent.intensity < 1.0f && isTorchBelow_1_Intensity == false)
         {
             isTorchBelow_1_Intensity = true;
             torch2dLightComponent.pointLightOuterRadius = (regularTorchLightOuterRadius / 2.0f); // Halves the size of light radius when low on fuel
             minOuterRadius = 1.70f;
             maxOuterRadius = 1.80f;
-            fireParticleEffect.startSize = (fireParticleEffect.startSize / 2); // Halves the size of particles when low on fuel
+            var startSize = fireParticleEffect.main.startSize;
+            startSize.constant /= 2; // Halves the size of particles when low on fuel
         }
         // At low intensity value we turn the torch off 
         else if(torch2dLightComponent.intensity < 0.2f)

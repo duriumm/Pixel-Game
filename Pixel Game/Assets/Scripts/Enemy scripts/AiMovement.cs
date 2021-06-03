@@ -119,10 +119,10 @@ class AiPath
             sqrWaypointDetectionRadius = value * value;
         }
     }
+
     public Vector2? Destination
     {
         get => destination;
-
         set
         {
             if (value == null)
@@ -164,6 +164,7 @@ class AiPath
             return Waypoints[targetWaypointIndex];
         }
     }
+
     public Vector2 CurrentDir => TargetWaypoint - CurrentPosition;
     public Vector2 CurrentPosition => movement.transform.position;
     public List<Vector3> Waypoints => path.vectorPath;

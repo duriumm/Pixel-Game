@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-
     public AudioClip openingSound;
     public AudioClip lootSound;
-
-
     private GameObject mainCamera;
-    private bool isOpened = false;
     private Interactable chestInteractableScript;
+    private SpriteRenderer currentChestSprite;
+    private GameObject dataToPassGameObject;
+    private PlayerInventory playerInventory;
+
     public Sprite openedEmptySprite;
     public Sprite openedWithLootSprite;
-    private SpriteRenderer currentChestSprite;
-
-    private GameObject dataToPassGameObject;
     public GameObject gameObjectLoot;
     public int moneyLoot;
 
-    private PlayerInventory playerInventory;
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
