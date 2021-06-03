@@ -13,7 +13,7 @@ public class PlayerMovement : Movement
             Input.GetAxisRaw("Vertical")
             );
         if (MovementDir != Vector2.zero)
-            faceDir = MovementDir;
+            FaceDir = MovementDir;
         base.Update();
     }
 }

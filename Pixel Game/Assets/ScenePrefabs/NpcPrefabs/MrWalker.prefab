@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 6874011172409656199}
   - component: {fileID: 6874011172409656200}
   m_Layer: 8
-  m_Name: MrWalker 1
+  m_Name: MrWalker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4286145544183849254}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.16, y: -1.88, z: 11.16196}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -189,15 +189,15 @@ MonoBehaviour:
   currentActiveConvo: {fileID: 4900000, guid: 90b4ce6725a4eb7499bb8da11caa4395, type: 3}
   questConvoList: []
   currentNpcQuest:
-    questType: 2
-    questName: Get my tears back!!!
+    questType: 0
+    questName: 
     description: Baby man wants 3 teards, ghast tears should work fine!
-    moneyReward: 666
-    gameObjectReward: {fileID: 6662477887734707362, guid: be1cbf8d7bd3050419cefde91103de40, type: 3}
+    moneyReward: 0
+    gameObjectReward: {fileID: 0}
     enemyToKill: 
     amountToKill: 0
-    itemToGather: {fileID: 3990344799117223384, guid: a79cd5846f119f74588746253bac24ad, type: 3}
-    amountToCollect: 3
+    itemToGather: {fileID: 0}
+    amountToCollect: 0
     itemToDeliver: {fileID: 0}
     npcDeliveryTarget: {fileID: 0}
   npcTalkSound: {fileID: 0}
@@ -242,9 +242,10 @@ MonoBehaviour:
   retreatSound: {fileID: 8300000, guid: 531183d362bf86546bf375cd7eaf0810, type: 3}
   followSound: {fileID: 0}
   RoamWhenIdle: 1
-  targetTransform: {fileID: 0}
   followUpperDistance: 0
   followLowerDistance: 0
+  alwaysLookAtTarget: 0
+  TargetTransform: {fileID: 0}
   retreatUpperDistance: 7
 --- !u!114 &6874011172409656200
 MonoBehaviour:
