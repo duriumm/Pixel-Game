@@ -16,11 +16,15 @@ public class NpcData : MonoBehaviour
     private GameObject dialogueCanvas;
     private GameObject mainCamera;
 
+    private void Awake()
+    {
+        dialogueCanvas = GameObject.Find("DialogueCanvas");
+    }
+
     void Start()
     {
         dialogueController = GameObject.Find("DialogueController").GetComponent<DialogueController>();
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
-        dialogueCanvas = GameObject.Find("DialogueCanvas");
         mainCamera = GameObject.FindWithTag("MainCamera");
         currentNpcQuest.Init();
     }
