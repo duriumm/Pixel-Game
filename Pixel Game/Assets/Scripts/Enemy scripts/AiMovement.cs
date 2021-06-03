@@ -106,6 +106,7 @@ class AiPath
     private Seeker seeker;
     private bool calculatingPath;
     private Vector2? destination;
+    private Vector2? queuedDestination;
     private float waypointDetectionRadius;
     private float sqrWaypointDetectionRadius;
     
@@ -122,23 +123,36 @@ class AiPath
     {
         get => destination;
 
-        // Start calculating a path to specified position from current position
-        // Check that the previous path has been calculated first to prevent the queue from building up
         set
         {
             if (value == null)
             {
                 seeker.CancelCurrentPathRequest();
                 path = null;
-                destination = null;
+                destination = queuedDestination = null;
             }
-            else if (!calculatingPath)
-            {
-                seeker.StartPath(CurrentPosition, (Vector2)value);
-                calculatingPath = true;
-            }
+            if (value != null)
+                CalculatePathAsync((Vector2)value);
         }
     }
+
+    private void CalculatePathAsync(Vector2 target)
+    {
+        if (!calculatingPath)
+        {
+            // If no path is currently being calculated, start calculating new path immediately
+            calculatingPath = true;
+            queuedDestination = null;
+            seeker.StartPath(CurrentPosition, target);
+        }
+        else
+        {
+            // Queue destination until current calculation is finished
+            // overwriting any previously queued destination
+            queuedDestination = target;
+        }
+    }
+
     public Vector2 TargetWaypoint
     {
         // Returns position of currently targeted waypoint
@@ -175,20 +189,24 @@ class AiPath
             //Start moving towards second waypoint, because first one is current position
             targetWaypointIndex = 1;
             
-            //Signals that we're ready to start calculating a new path
-            calculatingPath = false; 
+            //Signals that we're ready to calculate a new path
+            calculatingPath = false;
+
+            //Start a new path calculation if there's a queued destination
+            if (queuedDestination != null)
+                CalculatePathAsync((Vector2)queuedDestination);
         };
     }
 
-    //Call this from Update or FixedUpdate of a MonoBehaviour
+    //Call this from Update or FixedUpdate of Movement class
     public void Update()
     {
-        movement.MovementDir = CurrentDir; //
+        movement.MovementDir = CurrentDir; //This is Vector2.Zero if path is null
 
         if (path == null)
             return;
         
-        //Check if we are close to target waypoint and switch to next
+        //Check if we are close to target waypoint and switch to next one
         if (Vector2.SqrMagnitude(CurrentPosition - TargetWaypoint) < sqrWaypointDetectionRadius)
         {
             if (++targetWaypointIndex >= Waypoints.Count)
