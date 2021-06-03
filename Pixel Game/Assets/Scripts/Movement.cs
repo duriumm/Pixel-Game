@@ -17,7 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     protected Animator animator;
 
-    protected Vector2 movementDir;
+    public Vector2 MovementDir { get; set; }
     protected Vector2 faceDir = Vector2.zero;
     protected Rigidbody2D rbody;
 
@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour
                 animator.TrySetFloat(paramId_LastMoveX, faceDir.x);
                 animator.TrySetFloat(paramId_LastMoveY, faceDir.y);
             }
-            Vector2 movementAnim = movementDir == Vector2.zero && HasIdleAnim ? Vector2.zero : faceDir;
+            Vector2 movementAnim = MovementDir == Vector2.zero && HasIdleAnim ? Vector2.zero : faceDir;
             animator.TrySetFloat(paramId_Horizontal, movementAnim.x);
             animator.TrySetFloat(paramId_Vertical, movementAnim.y);
             animator.TrySetFloat(paramId_Speed, maxSpeed);
@@ -72,7 +72,7 @@ public class Movement : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        Vector2 velocityTarget = movementDir;
+        Vector2 velocityTarget = MovementDir;
         if (velocityTarget != Vector2.zero)
             velocityTarget = velocityTarget.normalized * maxSpeed;
         var difference = velocityTarget - Velocity;

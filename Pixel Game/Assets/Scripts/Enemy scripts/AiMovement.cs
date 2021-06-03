@@ -22,6 +22,7 @@ public class AiMovement : Movement
     private const float MaxRoamDuration = 5;
     private const float ChaseUpperDistance = 4;
 	private float retreatUpperDistance;
+    private float idleUpperDistance;
 
     
     protected override void Start()
@@ -30,8 +31,10 @@ public class AiMovement : Movement
         playerTransform = GameObject.FindGameObjectWithTag("MyPlayer").GetComponent<Transform>();
         var enemyAttack = gameObject.GetComponent<AiAttack>();
         float attackRange = enemyAttack == null ? 0 : enemyAttack.AttackRange;
-		retreatUpperDistance = attackRange * 0.7f;
-        aiPath = new AiPath(gameObject);
+		idleUpperDistance = attackRange * 0.7f;
+        //Stand still within 3% of retreatUpperDistance to prevent rapid switching between chase and backaway
+        retreatUpperDistance = idleUpperDistance * 0.97f;
+        aiPath = new AiPath(this);
 	}
 
     protected override void FixedUpdate()
@@ -42,17 +45,15 @@ public class AiMovement : Movement
         // If close, chase
         // If too close, back away but stay well within attack range
         bool backAway = false;
-        //Destination = null;
-        if (playerDistance < retreatUpperDistance * 0.97f) //Back away
+        if (playerDistance < retreatUpperDistance) //Back away
         {
-            //movementDir = transform.position - playerTransform.position;
-            aiPath.Destination = playerTransform.position;
+            aiPath.Destination = transform.position + (transform.position - playerTransform.position).normalized * retreatUpperDistance;
             backAway = true;
         }
         else if (playerDistance < ChaseUpperDistance) //Chase
         {
-            if (playerDistance < retreatUpperDistance)
-                movementDir = Vector2.zero;
+            if (playerDistance < idleUpperDistance)
+                aiPath.Destination = null;
             else
                 aiPath.Destination = playerTransform.position;
             
@@ -66,25 +67,15 @@ public class AiMovement : Movement
             //If moving, stop moving. If not moving, start moving in random direction
             roamDuration = Random.Range(MinRoamDuration, MaxRoamDuration);
             roamStartTime = Time.time;
-            if (movementDir == Vector2.zero)
+            if (MovementDir == Vector2.zero)
                 aiPath.Destination = (Vector2)transform.position + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)) * 10;
             else
-            {
-                movementDir = Vector2.zero;
                 aiPath.Destination = null;
-            }
         }
         
-        //if (Input.GetKeyDown(KeyCode.P))
-        //    Destination = playerTransform.position;
-
-        if (aiPath.CurrentDirection != null)
+        if (aiPath.CurrentDir != Vector2.zero)
         {
-            movementDir = (Vector2)aiPath.CurrentDirection;
-        }
-        if (movementDir != Vector2.zero)
-        {
-            faceDir = movementDir;
+            faceDir = aiPath.CurrentDir;
             if (backAway)
                 faceDir *= -1;
         }
@@ -112,7 +103,7 @@ class AiPath
 {
     private int targetWaypointIndex;
     private Path path;
-    private GameObject gameObject;
+    private Movement movement;
     private Seeker seeker;
     private bool calculatingPath;
 
@@ -125,7 +116,7 @@ class AiPath
             destination = value;
             if (!calculatingPath && value != null)
             {
-                seeker.StartPath(gameObject.transform.position, (Vector2)value);
+                seeker.StartPath(movement.transform.position, (Vector2)value);
                 calculatingPath = true;
             }
         }
@@ -136,13 +127,13 @@ class AiPath
         get
         {
             if (path == null || destination == null || path.vectorPath.Count < 2)
-                return gameObject.transform.position;
+                return movement.transform.position;
             return path.vectorPath[targetWaypointIndex];
         }
     }
 
-    public Vector2 CurrentDirection => NextPosition - CurrentPosition;
-    public Vector2 CurrentPosition => gameObject.transform.position;
+    public Vector2 CurrentDir => NextPosition - CurrentPosition;
+    public Vector2 CurrentPosition => movement.transform.position;
 
     public List<Vector3> WayPoints => path.vectorPath;
     private float waypointDetectionRadius;
@@ -157,11 +148,11 @@ class AiPath
         }
     }
 
-    public AiPath(GameObject gameObject)
+    public AiPath(Movement movement)
     {
         WaypointDetectionRadius = 0.5f;
-        this.gameObject = gameObject;
-        seeker = gameObject.GetComponent<Seeker>();
+        this.movement = movement;
+        seeker = movement.GetComponent<Seeker>();
         seeker.pathCallback = (path) =>
         {
             this.path = path;
@@ -172,11 +163,13 @@ class AiPath
 
     public void Update()
     {
-        if (path != null && Vector2.SqrMagnitude(CurrentPosition - NextPosition) < sqrWaypointDetectionRadius)
+        if (path == null)
+            return;
+        movement.MovementDir = CurrentDir;
+        if (Vector2.SqrMagnitude(CurrentPosition - NextPosition) < sqrWaypointDetectionRadius)
         {
             if (++targetWaypointIndex >= WayPoints.Count)
                 targetWaypointIndex = WayPoints.Count - 1;
-
+        }
     }
-}
 }
