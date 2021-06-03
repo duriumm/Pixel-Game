@@ -17,7 +17,6 @@ public class AiMovement : Movement
     private float roamStartTime;
     private float roamDuration;
     private AiPath aiPath;
-
     private const float MinRoamDuration = 2;
     private const float MaxRoamDuration = 5;
     private const float ChaseUpperDistance = 4;
@@ -67,13 +66,13 @@ public class AiMovement : Movement
             //If moving, stop moving. If not moving, start moving in random direction
             roamDuration = Random.Range(MinRoamDuration, MaxRoamDuration);
             roamStartTime = Time.time;
-            if (MovementDir == Vector2.zero)
-                aiPath.Destination = (Vector2)transform.position + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)) * 10;
+            if (aiPath.Destination == null)
+                aiPath.Destination = (Vector2)transform.position + new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)) * 20;
             else
                 aiPath.Destination = null;
         }
         
-        if (aiPath.CurrentDir != Vector2.zero)
+        if (aiPath.Destination != null)
         {
             faceDir = aiPath.CurrentDir;
             if (backAway)
@@ -106,38 +105,10 @@ class AiPath
     private Movement movement;
     private Seeker seeker;
     private bool calculatingPath;
-
     private Vector2? destination;
-    public Vector2? Destination
-    {
-        get => destination;
-        set
-        {
-            destination = value;
-            if (!calculatingPath && value != null)
-            {
-                seeker.StartPath(movement.transform.position, (Vector2)value);
-                calculatingPath = true;
-            }
-        }
-    }
-
-    public Vector2 NextPosition
-    {
-        get
-        {
-            if (path == null || destination == null || path.vectorPath.Count < 2)
-                return movement.transform.position;
-            return path.vectorPath[targetWaypointIndex];
-        }
-    }
-
-    public Vector2 CurrentDir => NextPosition - CurrentPosition;
-    public Vector2 CurrentPosition => movement.transform.position;
-
-    public List<Vector3> WayPoints => path.vectorPath;
     private float waypointDetectionRadius;
     private float sqrWaypointDetectionRadius;
+    
     public float WaypointDetectionRadius 
     { 
         get => waypointDetectionRadius;
@@ -147,29 +118,81 @@ class AiPath
             sqrWaypointDetectionRadius = value * value;
         }
     }
+    public Vector2? Destination
+    {
+        get => destination;
+
+        // Start calculating a path to specified position from current position
+        // Check that the previous path has been calculated first to prevent the queue from building up
+        set
+        {
+            if (value == null)
+            {
+                seeker.CancelCurrentPathRequest();
+                path = null;
+                destination = null;
+            }
+            else if (!calculatingPath)
+            {
+                seeker.StartPath(CurrentPosition, (Vector2)value);
+                calculatingPath = true;
+            }
+        }
+    }
+    public Vector2 TargetWaypoint
+    {
+        // Returns position of currently targeted waypoint
+        // If there is no waypoint, return our current position
+        get
+        {
+            if (path == null || Waypoints.Count == 0)
+                return CurrentPosition;
+            return Waypoints[targetWaypointIndex];
+        }
+    }
+    public Vector2 CurrentDir => TargetWaypoint - CurrentPosition;
+    public Vector2 CurrentPosition => movement.transform.position;
+    public List<Vector3> Waypoints => path.vectorPath;
 
     public AiPath(Movement movement)
     {
         WaypointDetectionRadius = 0.5f;
         this.movement = movement;
         seeker = movement.GetComponent<Seeker>();
+        
+        // Called when a path has been calculated
         seeker.pathCallback = (path) =>
         {
+            if (path.error)
+            {
+                // There was an error, probably because we cancelled calculation
+                Destination = null;
+                return;
+            }
             this.path = path;
+            destination = Waypoints.Last();
+            
+            //Start moving towards second waypoint, because first one is current position
             targetWaypointIndex = 1;
-            calculatingPath = false;
+            
+            //Signals that we're ready to start calculating a new path
+            calculatingPath = false; 
         };
     }
 
+    //Call this from Update or FixedUpdate of a MonoBehaviour
     public void Update()
     {
+        movement.MovementDir = CurrentDir; //
+
         if (path == null)
             return;
-        movement.MovementDir = CurrentDir;
-        if (Vector2.SqrMagnitude(CurrentPosition - NextPosition) < sqrWaypointDetectionRadius)
+        
+        //Check if we are close to target waypoint and switch to next
+        if (Vector2.SqrMagnitude(CurrentPosition - TargetWaypoint) < sqrWaypointDetectionRadius)
         {
-            if (++targetWaypointIndex >= WayPoints.Count)
-                targetWaypointIndex = WayPoints.Count - 1;
+            if (++targetWaypointIndex >= Waypoints.Count)
+                targetWaypointIndex = Waypoints.Count - 1;
         }
     }
 }
