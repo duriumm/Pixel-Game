@@ -120,5 +120,10 @@ public class GuiScreenManager : MonoBehaviour
     {
         Open(inventory);
     }
+
+    public void OpenJournal()
+    {
+        Open(journal);
+    }
 }
     

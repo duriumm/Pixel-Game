@@ -15,6 +15,11 @@ public class JournalScreen : GuiScreen
 
     DataToPassBetweenScenes dataToPass;
     private TextMeshProUGUI questPanelText;
+    private TextMeshProUGUI questDescriptionText;
+
+    float questListCanvasStartingYpos;
+
+    //List<ActiveQuestButton> activeQuestButtons = new List<ActiveQuestButton>();
     void Start()
     {
         originalQuestPanel = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
@@ -26,7 +31,9 @@ public class JournalScreen : GuiScreen
 
         originalPanelName = activeQuestPanelPrefab.name;
 
-        
+
+        questListCanvasStartingYpos = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().rect.y;
+
         // After we get all the data needed from The quest panel we destroy it to clear out active quest panel list in the GUI
         // otherwise we will always have one panel there at start of the scene
         Destroy(originalQuestPanel);
@@ -34,8 +41,12 @@ public class JournalScreen : GuiScreen
 
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         activeQuests = dataToPass.ActiveQuests;
+
+        questDescriptionText = gameObject.transform.Find("QuestDescription").gameObject.GetComponent<TextMeshProUGUI>();
         Close();
     }
+
+
 
     public override void Open()
     {
@@ -45,6 +56,11 @@ public class JournalScreen : GuiScreen
         {
             CreateActiveQuestPanel(item);
         }
+        questDescriptionText.text = "Press any of your active quests to see the quest description along with attached rewards";
+
+        // TODO: Set Pos Y to starting pos so scrollable active quest window gets pushed back to start pos
+        //questListCanvasStartingYpos = questListCanvasStartingYpos;
+
     }
     public override void Close()
     {
@@ -90,5 +106,8 @@ public class JournalScreen : GuiScreen
 
         questPanelText = questPanelCopy.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         questPanelText.text = quest.QuestName;
+
+        // Send quest data into button gameobject
+        questPanelCopy.GetComponent<ActiveQuestButton>().buttonsActiveQuest = quest;
     }
 }
