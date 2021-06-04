@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ActiveQuests
 {
-    List<Quest> quests = new List<Quest>();
+    // Made this public otherwise cant access all quests // L
+    public List<Quest> quests = new List<Quest>();
     public void Add(Quest quest)
     {
         quests.Add(quest);

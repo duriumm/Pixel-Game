@@ -8,6 +8,7 @@ public enum GuiScreenType
     Inventory,
     Stats,
     Shop,
+    Journal,
 }
 
 public class GuiScreenManager : MonoBehaviour
@@ -15,6 +16,7 @@ public class GuiScreenManager : MonoBehaviour
     StatsScreen stats;
     InventoryScreen inventory;
     ShopScreen shop;
+    JournalScreen journal;
     GuiScreen activeScreen;
     GameObject tabs;
     Attack playerAttack;
@@ -22,12 +24,14 @@ public class GuiScreenManager : MonoBehaviour
     public StatsScreen Stats => stats;
     public InventoryScreen Inventory => inventory;
     public ShopScreen Shop => shop;
+    public JournalScreen Journal => journal;
 
     void Awake()
     {
         stats = gameObject.transform.Find("StatsScreen").gameObject.GetComponent<StatsScreen>();
         inventory = gameObject.transform.Find("InventoryScreen").gameObject.GetComponent<InventoryScreen>();
         shop = gameObject.transform.Find("ShopScreen").gameObject.GetComponent<ShopScreen>();
+        journal = gameObject.transform.Find("JournalScreen").gameObject.GetComponent<JournalScreen>();
         tabs = gameObject.transform.Find("GuiTabsButtons").gameObject;
         tabs.SetActive(false);
         playerAttack = GameObject.Find("MyCharacter").GetComponent<Attack>();
@@ -92,6 +96,8 @@ public class GuiScreenManager : MonoBehaviour
                 return stats;
             case GuiScreenType.Shop:
                 return shop;
+            case GuiScreenType.Journal:
+                return journal;
             default:
                 throw new NotImplementedException();
         }

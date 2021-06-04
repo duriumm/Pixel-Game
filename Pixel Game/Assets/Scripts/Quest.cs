@@ -17,8 +17,12 @@ public class Quest
     [SerializeField]
     private QUESTTYPE questType;
 
+    // Made GET for questName so i can reference it // L
     [SerializeField]
     private string questName;
+    public string QuestName => questName;
+
+
     [TextArea(2,5)]
     [SerializeField]
     private string description;
