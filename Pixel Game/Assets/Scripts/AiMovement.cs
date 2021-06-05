@@ -20,7 +20,7 @@ public class AiMovement : Movement
     [SerializeField] private float followUpperDistance = 4; //Stop following above this distance
     [SerializeField] protected float followLowerDistance = 0; //Stop following belovw this distance
     [SerializeField] private bool alwaysLookAtTarget;
-    [SerializeField] public Transform TargetTransform;
+    [SerializeField] public Transform Target;
     [SerializeField] protected float retreatUpperDistance = 0; //Stop retreating above this distance
     private float roamStartTime;
     private float roamDuration;
@@ -28,8 +28,6 @@ public class AiMovement : Movement
     private const float MaxRoamDuration = 5;
     private AiPath aiPath;
     private TargetingStateEnum targetingState;
-
-    public bool AlwaysLookAtTarget => alwaysLookAtTarget;
 
     public TargetingStateEnum TargetingState 
     { 
@@ -54,33 +52,37 @@ public class AiMovement : Movement
         }
     }
 
-    
-    public Vector2 TargetPosition => TargetTransform.position;
+    public Vector2 TargetPosition => Target.position;
 
     protected override void Start()
     {
-        aiPath = new AiPath(this);
+        aiPath = new AiPath(transform);
         base.Start();
     }
 
     protected override void FixedUpdate()
     {
         aiPath.Update();
-        UpdateTargetingState();
+        MovementDir = aiPath.CurrentDir; //This is Vector2.Zero if we have no calculated path
+        UpdateTargeting();
+        if (aiPath.CurrentDir != Vector2.zero)
+            FaceDir = aiPath.CurrentDir;
+        if (alwaysLookAtTarget && Target != null && TargetingState != TargetingStateEnum.Idle)
+            FaceDir = TargetPosition - Position;
         base.FixedUpdate();
     }
 
-    private void UpdateTargetingState()
+    private void UpdateTargeting()
     {
         float targetDistance = 0;
-        if (TargetTransform != null)
+        if (Target != null)
             targetDistance = Vector3.Distance(TargetPosition, transform.position);
-        if (TargetTransform != null && targetDistance < retreatUpperDistance) //Retreat
+        if (Target != null && targetDistance < retreatUpperDistance) //Retreat
         {
             TargetingState = TargetingStateEnum.Retreat;
-            aiPath.Destination = transform.position + (transform.position - TargetTransform.position).normalized * retreatUpperDistance;
+            aiPath.Destination = transform.position + (transform.position - Target.position).normalized * retreatUpperDistance;
         }
-        else if (TargetTransform != null && targetDistance < followUpperDistance)
+        else if (Target != null && targetDistance < followUpperDistance)
         {
             if (targetDistance < followLowerDistance) //Between retreaiting and following, don't change state
                 aiPath.Destination = null;
@@ -118,13 +120,13 @@ public class AiMovement : Movement
 
     public void SetDestination(Vector2 position)
     {
-        TargetTransform = null;
+        Target = null;
         aiPath.Destination = position;
     }
 
     public void SetTarget(Transform transform)
     {
-        TargetTransform = transform;
+        Target = transform;
     }
 
     private void playSound(AudioClip sound)
@@ -138,8 +140,8 @@ class AiPath
 {
     private int targetWaypointIndex;
     private Path path;
-    private AiMovement movement;
     private Seeker seeker;
+    private Transform transform;
     private bool calculatingPath;
     private Vector2? destination;
     private Vector2? queuedDestination;
@@ -201,15 +203,15 @@ class AiPath
     }
 
     public Vector2 CurrentDir => TargetWaypoint - CurrentPosition;
-    public Vector2 CurrentPosition => movement.transform.position;
+    public Vector2 CurrentPosition => transform.position;
     public List<Vector3> Waypoints => path.vectorPath;
 
-    public AiPath(AiMovement movement)
+    public AiPath(Transform transform)
     {
         WaypointDetectionRadius = 0.5f;
-        this.movement = movement;
-        seeker = movement.GetComponent<Seeker>();
-        
+        this.transform = transform;
+        seeker = transform.GetComponent<Seeker>();
+
         // Called when a path has been calculated
         seeker.pathCallback = (path) =>
         {
@@ -237,14 +239,8 @@ class AiPath
     //Call this from Update or FixedUpdate of Movement class
     public void Update()
     {
-        movement.MovementDir = CurrentDir; //This is Vector2.Zero if we have no path
-
         if (path == null)
             return;
-
-        movement.FaceDir = CurrentDir;
-        if (movement.TargetTransform != null && movement.TargetingState != AiMovement.TargetingStateEnum.Idle && movement.AlwaysLookAtTarget)
-            movement.FaceDir = movement.TargetPosition - CurrentPosition;
 
         //Check if we are close to currently targetetd waypoint and switch to next one
         if (Vector2.SqrMagnitude(CurrentPosition - TargetWaypoint) < sqrWaypointDetectionRadius)

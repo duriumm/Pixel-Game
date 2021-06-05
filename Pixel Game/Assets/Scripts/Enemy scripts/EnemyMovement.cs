@@ -6,7 +6,7 @@ public class EnemyMovement : AiMovement
 {
     protected override void Start()
     {
-        if (TargetTransform == null)
+        if (Target == null)
             SetTarget(GameObject.FindGameObjectWithTag("MyPlayer").transform);
         var aiAttack = gameObject.GetComponent<AiAttack>();
         float attackRange = aiAttack == null ? 0 : aiAttack.AttackRange;

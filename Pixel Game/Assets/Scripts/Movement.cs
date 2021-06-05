@@ -22,6 +22,12 @@ public class Movement : MonoBehaviour
 
     public Vector2 MovementDir { get; set; }
     public Vector2 FaceDir { get; set; }
+    public Vector2 Position
+    {
+        get => rbody.position;
+        set => rbody.position = value;
+    }
+
     public Vector2 Velocity
     {
         get => rbody.velocity;
