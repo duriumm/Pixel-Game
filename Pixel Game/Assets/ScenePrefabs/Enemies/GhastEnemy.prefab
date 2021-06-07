@@ -349,13 +349,14 @@ GameObject:
   - component: {fileID: 2238159970977591418}
   - component: {fileID: 2238159970977591415}
   - component: {fileID: 2238159970977591414}
-  - component: {fileID: 2238159970977591417}
   - component: {fileID: -2862576637602397499}
   - component: {fileID: 1919312349314565125}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 366886232}
   - component: {fileID: 1926192919}
   - component: {fileID: 6107532577424218943}
+  - component: {fileID: 5897036497435229798}
+  - component: {fileID: 861801781906369205}
   m_Layer: 0
   m_Name: GhastEnemy
   m_TagString: Untagged
@@ -386,7 +387,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8702507365765926596}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -469,23 +470,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2238159970977591417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HasIdleAnim: 0
-  maxSpeed: 0.5
-  acceleration: 0.1
-  animator: {fileID: 2238159970977591414}
-  ambientSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,3 +585,56 @@ MonoBehaviour:
   canAttack: 0
   owner: {fileID: 8702507365765926596}
   attackCooldown: 1
+--- !u!114 &5897036497435229798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 0
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &861801781906369205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c84cf2a3d3d6c419faea745d462a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HasIdleAnim: 0
+  maxSpeed: 0.5
+  acceleration: 0.1
+  animator: {fileID: 2238159970977591414}
+  idleSound: {fileID: 0}
+  retreatSound: {fileID: 0}
+  followSound: {fileID: 8300000, guid: 5027674412a40c845865ce1ba05dd8ed, type: 3}
+  RoamWhenIdle: 1
+  followUpperDistance: 4
+  followLowerDistance: 0
+  alwaysLookAtTarget: 1
+  TargetTransform: {fileID: 0}
+  retreatUpperDistance: 0

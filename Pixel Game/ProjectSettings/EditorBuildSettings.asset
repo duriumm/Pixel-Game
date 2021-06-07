@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Micke/SampleSceneM.unity
+    guid: 2f35ec18e5ab5684795385a4c820f2b2
+  - enabled: 1
+    path: Assets/Scenes/Micke/IndoorsM.unity
+    guid: 0f1a44b5f4b486241bbf750df6bfd083
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1

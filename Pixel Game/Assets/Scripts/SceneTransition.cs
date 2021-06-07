@@ -77,7 +77,7 @@ public class SceneTransition : MonoBehaviour
         // TO-DO - Disable player movement, Make player invincible
 
         yield return new WaitForSeconds(0.5f);
-
+        Debug.Log("Scene to load: " + sceneToLoad);
         SceneManager.LoadScene(sceneToLoad);
         
     }

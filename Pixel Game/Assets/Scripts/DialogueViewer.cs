@@ -139,12 +139,14 @@ public class DialogueViewer : MonoBehaviour
 
     void OnDisable()
     {
+        Time.timeScale = 1;
         if (playerInput != null)
             playerInput.enabled = true;
     }
 
     void OnEnable()
     {
+        Time.timeScale = 0;
         if (playerInput != null)
             playerInput.enabled = false;
     }

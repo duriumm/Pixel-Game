@@ -8,10 +8,12 @@ public class PlayerMovement : Movement
     protected override void Update()
     {
         // Input for movement on both axis
-        movementDir.x = Input.GetAxisRaw("Horizontal");
-        movementDir.y = Input.GetAxisRaw("Vertical");
-        if (movementDir != Vector2.zero)
-            faceDir = movementDir;
+        MovementDir = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+            );
+        if (MovementDir != Vector2.zero)
+            FaceDir = MovementDir;
         base.Update();
     }
 }

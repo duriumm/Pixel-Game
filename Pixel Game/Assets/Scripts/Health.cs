@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    private const float KnockbackDuration = 0.5f;
-    private const float KnockbackSpeed = 7;
-    public int Defense { get; set; } 
-    private Rigidbody2D rbody;
-    [SerializeField]
-    private int maxHp = 100;
+    [SerializeField] private int maxHp = 100;
+    [SerializeField] protected Slider slider;
+    private Vector2 spawnPoint;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip hurtSound;
+
+    Movement movement;
+
     public int MaxHp
     {
         get => maxHp;
@@ -28,22 +30,13 @@ public class Health : MonoBehaviour
         get => hp;
     }
     public bool HasFullHp => hp == maxHp; // If hp == maxHp, bool is true :)
-
-    [SerializeField]
-    protected Slider slider;
-    private Vector2 spawnPoint;
-    [SerializeField]
-    private AudioClip deathSound;
-    [SerializeField]
-    private AudioClip hurtSound;
-
-    public bool KnockedBack { get; private set; }
+    public int Defense { get; set; }
 
     public virtual void Start()
     {
         Hp = maxHp;
-        rbody = gameObject.GetComponent<Rigidbody2D>();
         OnSceneChange();
+        movement = GetComponent<Movement>();
     }
 
     public virtual void OnSceneChange()
@@ -53,8 +46,8 @@ public class Health : MonoBehaviour
 
     protected virtual void Kill()
     {
-        if (rbody != null)
-            rbody.velocity = Vector2.zero;
+        if (movement != null)
+            movement.Velocity = Vector2.zero;
         if (deathSound != null)
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
     }
@@ -73,7 +66,7 @@ public class Health : MonoBehaviour
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
         StartCoroutine(HurtEffect());
-        Knockback(sourcePoint);
+        StartCoroutine(movement.KnockBack(sourcePoint));
         Hp -= damage;
         if (hp <= 0)
             Kill();
@@ -81,21 +74,7 @@ public class Health : MonoBehaviour
 
     private IEnumerator HurtEffect()
     {
+        // Maybe do something interesting here
         yield return new WaitForSeconds(0.1f);
-    }
-
-    private void Knockback(Vector3 sourcePoint)
-    {
-        rbody.velocity = (transform.position - sourcePoint).normalized * KnockbackSpeed;
-        StartCoroutine(reduceAcceleration());
-    }
-
-    private IEnumerator reduceAcceleration()
-    {
-        // Setting the KnockedBack property to true lets the Movement script lower acceleration during the knockback
-        // to reduce the ability to counteract the knockback
-        KnockedBack = true;
-        yield return new WaitForSeconds(KnockbackDuration);
-        KnockedBack = false;
     }
 }

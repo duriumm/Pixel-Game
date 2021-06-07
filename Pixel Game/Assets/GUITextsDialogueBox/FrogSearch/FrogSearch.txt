@@ -1,0 +1,15 @@
+:: StoryTitle
+Wheelchair_man
+
+:: UserScript[script]
+
+
+:: UserStylesheet[stylesheet]
+
+
+:: Start of story[START]
+Hi! I'm looking for frogs! Wanna help me?
+Sure, I'll keep my eyes open![[End Conversation]]
+
+:: End Conversation[END]
+

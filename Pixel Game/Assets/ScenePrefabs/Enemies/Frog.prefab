@@ -349,13 +349,14 @@ GameObject:
   - component: {fileID: 2238159970977591418}
   - component: {fileID: 2238159970977591415}
   - component: {fileID: 2238159970977591414}
-  - component: {fileID: 2238159970977591417}
   - component: {fileID: -2862576637602397499}
   - component: {fileID: 1919312349314565125}
   - component: {fileID: 8697375598101216402}
   - component: {fileID: 884672663}
   - component: {fileID: 449024253}
   - component: {fileID: 1516500706}
+  - component: {fileID: 428438901}
+  - component: {fileID: 3342577584446852433}
   m_Layer: 0
   m_Name: Frog
   m_TagString: Untagged
@@ -386,7 +387,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8702507365765926596}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -469,23 +470,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2238159970977591417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8702507365765926596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90bb1105ed50094c9e55c612a958699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HasIdleAnim: 0
-  maxSpeed: 1
-  acceleration: 1
-  animator: {fileID: 0}
-  ambientSound: {fileID: 0}
 --- !u!114 &-2862576637602397499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +486,7 @@ MonoBehaviour:
   slider: {fileID: 6133221291524073454}
   deathSound: {fileID: 8300000, guid: 968ff4550c6cfd2479120b9de62419d6, type: 3}
   hurtSound: {fileID: 8300000, guid: 8127b5e076f0d744c8aadeea97d9ee38, type: 3}
-  respawnTime: 100
+  respawnTime: 5
   enemyType: 2
 --- !u!61 &1919312349314565125
 BoxCollider2D:
@@ -560,8 +544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canBeAttacked: 1
   canAttack: 1
-  attackCooldown: 1
   owner: {fileID: 8702507365765926596}
+  attackCooldown: 1
 --- !u!114 &449024253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +568,6 @@ MonoBehaviour:
     destroyOnHit: 1
   hasMeleeAttack: 0
   hasProjectileAttack: 0
-  Owner: {fileID: 0}
 --- !u!114 &1516500706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,3 +582,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeAnimator: {fileID: 0}
   group: 1
+--- !u!114 &428438901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 0
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &3342577584446852433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8702507365765926596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54c84cf2a3d3d6c419faea745d462a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HasIdleAnim: 0
+  maxSpeed: 5
+  acceleration: 5
+  animator: {fileID: 0}
+  idleSound: {fileID: 0}
+  retreatSound: {fileID: 0}
+  followSound: {fileID: 0}
+  RoamWhenIdle: 1
+  targetTransform: {fileID: 0}
+  followUpperDistance: 4
+  followLowerDistance: 0
+  retreatUpperDistance: 0
