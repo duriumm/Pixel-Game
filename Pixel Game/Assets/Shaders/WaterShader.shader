@@ -6,6 +6,7 @@
 		Sky("Sky", 2D) = "white" {}
 		Ground("Ground", 2D) = "white" {}
 		GroundNormalMap("GroundNormalMap", 2D) = "white" {}
+		Hash2DTex("Hash2DTex", 2D) = "white" {}
 
     }
     SubShader
@@ -20,6 +21,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+			#include "WaterShaderInclude.cginc"
 
             struct VertexInput
             {
@@ -77,34 +79,34 @@
 				//fixed4 tileCol = tex2D(_MainTex, input.tileMapUV);
 				//Todo: check for green-screen kind of color to enable water shading
 
-				float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
-				uvOffset.y /= 4;
+				//float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
+				float4 noise = simplexNoise3(float3(input.worldPos, 0), 0, 1.f, 0) * 100;
+				return noise;
+				//float4 noise = float4(1, 1, 1, 1);
+
+				//uvOffset.y /= 4;
 				float4 skyColor = tex2D(Sky, input.viewPosUV);
-				//return skyColor;
-				//float4 groundColor = tex2D(Ground, input.worldPosUV);
 				float2 groundUV = fmod(abs(input.worldPos - _WorldSpaceCameraPos * 0.9) / 2.3f, 1);
 				float4 groundColor = tex2D(Ground, groundUV);
 				float4 groundNormal = normalize(tex2D(GroundNormalMap, groundUV));
-				//return groundNormal;
 				
-				//float4 groundColor = tex2D(Ground, fmod(abs(input.viewPos) * 2, 1));
-				groundColor *= fixed4(0.1, 0.6, 0.6, 1); //Turbidness
-				groundColor *= 1.3f;
-				groundColor *= dot(lightDir, -groundNormal);
+				float4 waterColor = float4(0.1, 0.6, 0.6, 1);
+				waterColor *= 1.3f;
+				groundColor *= dot(lightDir, -groundNormal); //Normal mapping
+				groundColor *= waterColor; //Completely transparent water
+				//groundColor = lerp(groundColor, waterColor, 0.5);; //Turbidness
 
 				float3 viewDir = normalize(float3(input.viewPos, 0.25f));
-				float3 normal = normalize(float3(uvOffset, 1));
+				float3 normal = normalize(float3(noise.xy, 1));
+				//float3 normal = SimplexNoise3D(float3(uvOffset, 1));
 				float3 lightReflectionDir = reflect(lightDir, normal);
 				float viewDotNormal = dot(normal, viewDir);
 				float fresnel = calcFresnel(viewDotNormal);
 				float4 color = lerp(groundColor, skyColor, fresnel);
 				color += pow(saturate(dot(lightReflectionDir, viewDir)), 100);
 				return color;
-				//rturn float4(0, 0, fmod(input.world.x, 2) / 2, 1); 
-				//return float4(0, 0, fmod(abs(input.view.x), 1), 1);
             }
 
-			
             ENDCG
         }
     }

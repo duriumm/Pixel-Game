@@ -15,6 +15,5 @@ public class PlayerMovement : Movement
         if (MovementDir != Vector2.zero)
             FaceDir = MovementDir;
         base.Update();
-        Debug.Log(transform.position);
     }
 }
