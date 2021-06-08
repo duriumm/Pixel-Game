@@ -6,7 +6,7 @@
 		Sky("Sky", 2D) = "white" {}
 		Ground("Ground", 2D) = "white" {}
 		GroundNormalMap("GroundNormalMap", 2D) = "white" {}
-		Hash2DTex("Hash2DTex", 2D) = "white" {}
+		Hash2DTex("hash2DTex", 2D) = "white" {}
 
     }
     SubShader
@@ -67,9 +67,10 @@
 				output.tileMapUV = TRANSFORM_TEX(input.uv, _MainTex);
 				output.worldPos = mul(unity_ObjectToWorld, input.pos);
 				output.viewPos = UnityObjectToClipPos(input.pos);
-				output.viewPosUV = output.viewPos / float2(3.5, 2) + float2(0.3f, 0.5f);
+				//output.viewPosUV = output.viewPos / float2(2.5, 1) + float2(0.3f, 0.65f);
+				output.viewPosUV = output.viewPos / float2(3.5f, 2) + float2(0.5f, 0.5f);
 				output.worldPosUV = abs((output.worldPos - _WorldSpaceCameraPos * 0.9) / 2.3f);
-
+				
                 return output;
             }
 
@@ -79,14 +80,16 @@
 				//fixed4 tileCol = tex2D(_MainTex, input.tileMapUV);
 				//Todo: check for green-screen kind of color to enable water shading
 
+				float4 noise = simplexNoise3(float3(input.worldPos, _Time.y), 1, 1, 0);
+				//return noise.w;
 				//float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
-				float4 noise = simplexNoise3(float3(input.worldPos, 0), 0, 1.f, 0) * 100;
-				return noise;
-				//float4 noise = float4(1, 1, 1, 1);
-
+				float2 uvOffset = noise.xy / 100;
+								
 				//uvOffset.y /= 4;
-				float4 skyColor = tex2D(Sky, input.viewPosUV);
-				float2 groundUV = fmod(abs(input.worldPos - _WorldSpaceCameraPos * 0.9) / 2.3f, 1);
+				float4 skyColor = tex2D(Sky, input.viewPosUV + uvOffset);
+				//skyColor = float4(0.9, 0.5, 0.5, 1);
+
+				float2 groundUV = fmod(abs(input.worldPos - _WorldSpaceCameraPos * 0.9) / 2.3f, 1) - uvOffset;
 				float4 groundColor = tex2D(Ground, groundUV);
 				float4 groundNormal = normalize(tex2D(GroundNormalMap, groundUV));
 				
@@ -98,7 +101,6 @@
 
 				float3 viewDir = normalize(float3(input.viewPos, 0.25f));
 				float3 normal = normalize(float3(noise.xy, 1));
-				//float3 normal = SimplexNoise3D(float3(uvOffset, 1));
 				float3 lightReflectionDir = reflect(lightDir, normal);
 				float viewDotNormal = dot(normal, viewDir);
 				float fresnel = calcFresnel(viewDotNormal);

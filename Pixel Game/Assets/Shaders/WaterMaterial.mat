@@ -31,6 +31,14 @@ Material:
         m_Texture: {fileID: 2800000, guid: 2eafb79722d34174290e400533b4d0f5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Hash2DTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Hash2DkTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Sky:
         m_Texture: {fileID: 2800000, guid: 2d18fb6aa6ac35f4886599ca6d800033, type: 3}
         m_Scale: {x: 1, y: 1}

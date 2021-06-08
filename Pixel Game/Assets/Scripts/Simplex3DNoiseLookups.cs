@@ -61,6 +61,8 @@ public class Simplex3DNoiseLookups : MonoBehaviour
         //material.SetVectorArray("randomIndices2D", hash2D);
         hash2DTex.Apply();
         material.SetTexture("hash2DTex", hash2DTex);
+        material.mainTexture = hash2DTex;
+
         //Gradients
         var randomGradients = new Vector4[NoisePeriod * 2];
         for (int j = 0; j < NoisePeriod; j++)

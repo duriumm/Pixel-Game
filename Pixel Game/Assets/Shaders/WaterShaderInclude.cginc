@@ -1,118 +1,189 @@
-﻿// Simplex noise reference:
+﻿// Simplex 3D noise, based on Stefan Gustavson's code:
 // http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
-// The w component of the return value contains the noise value at the specified coordinate
-// The xyz compenents contain the derivative
 
 #define NoisePeriod 256
 
-//float4 randomIndices2D[NoisePeriod * NoisePeriod];
-float3 randomGradients[NoisePeriod * 2];
-sampler2D hash2DTex;
+static const uint perm[512] = { 151,160,137,91,90,15,
+	131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+	190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+	88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+	77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+	102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+	135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+	5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+	223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+	129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+	251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+	49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+	138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,
 
-uint4 getHash(uint3 pos, uint seed)
+	151,160,137,91,90,15,
+	131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
+	190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
+	88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
+	77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
+	102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
+	135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
+	5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
+	223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167, 43,172,9,
+	129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
+	251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
+	49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+	138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
+};
+
+static const float3 grad3[12] =
 {
-	//uint4 hash = (int4)randomIndices2D[pos.x + pos.y * NoisePeriod] + pos.z + seed;
-	//return (uint4)hash % NoisePeriod;
-	return (uint4)tex2D(hash2DTex, (float2)pos.xy) + pos.z + seed;
-}
+	float3(1,1,0), float3(-1,1,0), float3(1,-1,0), float3(-1,-1,0),
+	float3(1,0,1), float3(-1,0,1), float3(1,0,-1), float3(-1,0,-1),
+	float3(0,1,1), float3(0,-1,1), float3(0,1,-1), float3(0,-1,-1)
+};
 
-float4 simplex3Corner(float3 f, float3 g)
+float4 simplex3Corner(float3 offset, float3 gradient)
 {
 	float4 result = float4(0, 0, 0, 0);
-	float t = 0.6f - dot(f, f);
+	float t = 0.5f - dot(offset, offset);
+
 	if (t > 0)
 	{
-		float gdotf = dot(g, f);
+		float offsetAlongGradient = dot(gradient, offset);
 		float t2 = t * t;
 		float t4 = t2 * t2;
-		result.w = t4 * gdotf;
-		result.xyz = t4 * g - 8 * t * t2 * gdotf * f;
+		result.w = t4 * offsetAlongGradient;
+		result.xyz = t4 * gradient - 8 * t * t2 * offsetAlongGradient * offset;
 	}
 	return result;
 }
 
-
-float4 simplexNoise3(float3 Pc, float3 Po, float freq, int seed)
+// The w component of the return value contains the noise value at the specified coordinate
+// The xyz compenents contain the derivative
+float4 simplexNoise3(float3 coords, float amp, float freq, int seed)
 {
-	const float F3 = 1 / 3.f;
-	const float G3 = 1 / 6.f;
+	coords *= freq;
 
-	Pc *= freq; Po *= freq;
-
-	float3 PcF3 = Pc * F3;
-	float sc = PcF3.x + PcF3.y + PcF3.z;
-	float so = (Po.x + Po.y + Po.z) * F3;
-	float3 skewedPc = fmod(Pc + sc, NoisePeriod);
-	float3 skewedPo = Po + so;
-	float3 skewedP = fmod(skewedPc + skewedPo, NoisePeriod);
-	if (skewedP.x < 0) skewedP.x = NoisePeriod + skewedP.x; if (skewedP.x == 256) skewedP.x = 0;
-	if (skewedP.y < 0) skewedP.y = NoisePeriod + skewedP.y; if (skewedP.y == 256) skewedP.y = 0;
-	if (skewedP.z < 0) skewedP.z = NoisePeriod + skewedP.z; if (skewedP.z == 256) skewedP.z = 0;
-	//if (skewedP.x<0) skewedP.x *= -1;
-	//if (skewedP.y<0) skewedP.y *= -1;
-	//if (skewedP.z<0) skewedP.z *= -1;
-	int3 skewedPi;
-	float3 Pf0 = modf(skewedP, skewedPi);
-	float t = (Pf0.x + Pf0.y + Pf0.z) * G3;
-	Pf0 = Pf0 - t;
-
-	//Pc = fmod(Pc, 256);
-	//Pc = fmod(Pc+Po,256);
-	/*Pc = Pc+Po;
-	float sc = (Pc.x + Pc.y + Pc.z)*F3;
-	float3 skewedP = floor(Pc + sc);
-	int3 skewedPi = (int3)(skewedP);
-	float t = (skewedP.x + skewedP.y + skewedP.z) * G3;
-	float3 Pf0 = Pc - (skewedP - t);*/
-
+	//The sample point's offsets from the 4 cell corners
+	float3 offsetsFromCorners[4];
 	
-	uint4 hash2d = getHash(skewedPi, seed);
-	return tex2D(hash2DTex, skewedP.xy) / 80;
+	//Position of the corners in skewed space
+	int3 skewedCorners[4];
+	
+	// Skew the input space to determine which simplex cell we're in
+	// Floor it to get the cell origin in skewed space
+	float F3 = 1.0f / 3.0f;
+	skewedCorners[0] = floor(coords + (coords.x + coords.y + coords.z) * F3);
 
-	//hash2d = noisePerm2dTex.Load(int3((hash2d.xx + seed) % NOISE_PERIOD,0)) ;
-	//hash2d = ((uint4)irand(hash2d) % NOISE_PERIOD);
-	int gi1; //Gradient index for second corner
-	int gi2; //Gradient index for third corner
-	float3 PfOffset1 = float3(0, 0, 0); // Offsets for second corner in (i,j,k) coords
-	float3 PfOffset2 = float3(0, 0, 0); // Offsets for third corner in (i,j,k) coords
-
-	if (Pf0.x >= Pf0.y)
+	// Unskew cell origin back to (x,y,z) space
+	float G3 = 1.0f / 6.0f;
+	float3 firstCorner = skewedCorners[0] - (skewedCorners[0].x + skewedCorners[0].y + skewedCorners[0].z) * G3;
+		
+	offsetsFromCorners[0] = coords - firstCorner;
+	
+	// For the 3D case, the simplex shape is a slightly irregular tetrahedron.
+	// Determine which simplex we are in.
+	int3 skewedSecondCornerOffset;
+	int3 skewedThirdCornerOffset;
+	if (offsetsFromCorners[0].x >= offsetsFromCorners[0].y)
 	{
-		if (Pf0.y >= Pf0.z) { gi1 = hash2d.y; gi2 = hash2d.w; PfOffset1 = float3(1, 0, 0); PfOffset2 = float3(1, 1, 0); }      // X Y Z order
-		else if (Pf0.x >= Pf0.z) { gi1 = hash2d.y; gi2 = hash2d.y + 1; PfOffset1 = float3(1, 0, 0); PfOffset2 = float3(1, 0, 1); }    // X Z Y order 
-		else { gi1 = hash2d.x + 1; gi2 = hash2d.y + 1; PfOffset1 = float3(0, 0, 1); PfOffset2 = float3(1, 0, 1); }  // Z X Y order
+		if (offsetsFromCorners[0].y >= offsetsFromCorners[0].z)
+		{ 
+			// X Y Z order
+			skewedSecondCornerOffset = int3(1, 0, 0);
+			skewedThirdCornerOffset = int3(1, 1, 0);
+		} 
+		else if (offsetsFromCorners[0].x >= offsetsFromCorners[0].z)
+		{
+			// X Z Y order
+			skewedSecondCornerOffset = int3(1, 0, 0);
+			skewedThirdCornerOffset = int3(1, 0, 1);
+		}
+		else
+		{
+			// Z X Y order
+			skewedSecondCornerOffset = int3(0, 0, 1);
+			skewedThirdCornerOffset = int3(1, 0, 1);
+		}
 	}
-	else
-	{ // x<y
-		if (Pf0.y < Pf0.z) { gi1 = hash2d.x + 1; gi2 = hash2d.z + 1; PfOffset1 = float3(0, 0, 1); PfOffset2 = float3(0, 1, 1); } // Z Y X order
-		else if (Pf0.x < Pf0.z) { gi1 = hash2d.z; gi2 = hash2d.z + 1; PfOffset1 = float3(0, 1, 0); PfOffset2 = float3(0, 1, 1); }   // Y Z X order
-		else { gi1 = hash2d.z; gi2 = hash2d.w; PfOffset1 = float3(0, 1, 0); PfOffset2 = float3(1, 1, 0); }     // Y X Z order
+	else 
+	{ 
+		if (offsetsFromCorners[0].y < offsetsFromCorners[0].z)
+		{ 
+			// Z Y X order
+			skewedSecondCornerOffset = int3(0, 0, 1);
+			skewedThirdCornerOffset = int3(0, 1, 1);
+		} 
+		else if(offsetsFromCorners[0].x < offsetsFromCorners[0].z)
+		{
+			// Y Z X order
+			skewedSecondCornerOffset = int3(0, 1, 0);
+			skewedThirdCornerOffset = int3(0, 1, 1);
+		} 
+		else
+		{
+			// Y X Z order
+			skewedSecondCornerOffset = int3(0, 1, 0);
+			skewedThirdCornerOffset = int3(1, 1, 0);
+		} 
 	}
+	// A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
+	// a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
+	// a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z),
+	// where c = 1/6.
+	// Sample offsets from three remaining corners in (x,y,z) coords
+	offsetsFromCorners[1] = offsetsFromCorners[0] - skewedSecondCornerOffset + G3; 
+	offsetsFromCorners[2] = offsetsFromCorners[0] - skewedThirdCornerOffset + 2.0f * G3; 
+	offsetsFromCorners[3] = offsetsFromCorners[0] - 1.0 + 3.0f * G3;
 
-	//float n=0;float3 d=float3(0,0,0);
-	float4 result = float4(0, 0, 0, 0);
-	//hash2d=0;
-	//gi1=gi2=0;
+	skewedCorners[0] = skewedCorners[0] & 255;
+	skewedCorners[1] = skewedCorners[0] + skewedSecondCornerOffset;
+	skewedCorners[2] = skewedCorners[0] + skewedThirdCornerOffset;
+	skewedCorners[3] = skewedCorners[0] + 1;
+	
+	// Calculate the contribution from the four corners
+	float4 noise = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		float gradientIndex = perm[skewedCorners[i].x + perm[skewedCorners[i].y + perm[skewedCorners[i].z]]] % 12;
+		float3 gradient = grad3[gradientIndex];
+		noise += simplex3Corner(offsetsFromCorners[i], gradient);
+	}
+	noise.xyz *= freq;
+	noise *= amp;
+	return 32 * noise;
 
-	//// Noise contribution from first corner
-	float3 grad = randomGradients[hash2d.x];
-	result += simplex3Corner(Pf0, grad);
-
-	// Noise contribution from second corner
-	float3 Pf = Pf0 - PfOffset1 + G3;
-	grad = randomGradients[gi1];
-	result += simplex3Corner(Pf, grad);
-
-	// Noise contribution from third corner
-	Pf = Pf0 - PfOffset2 + 2 * G3;
-	grad = randomGradients[gi2];
-	result += simplex3Corner(Pf, grad);
-
-	// Noise contribution from last corner
-	Pf = Pf0 - 1 + 3 * G3;
-	grad = randomGradients[hash2d.w];
-	result += simplex3Corner(Pf, grad);
-	return 32 * result;
+	//float t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
+	//if (t0<0)
+	//	n0 = 0.0f;
+	//else
+	//{
+	//	t0 *= t0;
+	//	n0 = t0 * t0 * dot(grad3[gi0], x0, y0, z0);
+	//}
+	//float t1 = 0.6f - x1 * x1 - y1 * y1 - z1*z1;
+	//if(t1<0)
+	//	n1 = 0.0;
+	//else
+	//{
+	//	t1 *= t1;
+	//	n1 = t1 * t1 * dot(grad3[gi1], x1, y1, z1);
+	//}
+	//float t2 = 0.6f - x2*x2 - y2*y2 - z2*z2;
+	//if(t2<0)
+	//	n2 = 0.0f;
+	//else 
+	//{      
+	//	t2 *= t2;
+	//	n2 = t2 * t2 * dot(grad3[gi2], x2, y2, z2);
+	//}
+	//float t3 = 0.6f - x3*x3 - y3*y3 - z3*z3;
+	//if (t3<0) n3 = 0.0;
+	//else 
+	//{
+	//	t3 *= t3;
+	//	n3 = t3 * t3 * dot(grad3[gi3], x3, y3, z3);
+	//}
+	//// Add contributions from each corner to get the final noise value.
+	//// The result is scaled to stay just inside [-1,1]
+	//return 32.0*(n0 + n1 + n2 + n3);
 }
 
 float calcFbmNumIterFromGrad(float reso, inout float startFreq, int maxIter, float3 coords)
@@ -133,10 +204,8 @@ float calcFbmNumIterFromGrad(float reso, inout float startFreq, int maxIter, flo
 
 float4 fbmLayer(float pos, float amp, float freq,float seed)
 {
-	float4 noise = simplexNoise3(pos, float3(0,0,0), freq, seed);
+	float4 noise = simplexNoise3(pos, amp, freq, seed);
 	///amp *= h2.w + 0.5f;
-	noise.w *= amp;
-	noise.xyz *= freq;
 	return noise;
 }
 
