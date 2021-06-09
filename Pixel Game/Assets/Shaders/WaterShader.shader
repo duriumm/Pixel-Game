@@ -80,10 +80,11 @@
 				//fixed4 tileCol = tex2D(_MainTex, input.tileMapUV);
 				//Todo: check for green-screen kind of color to enable water shading
 
-				float4 noise = simplexNoise3(float3(input.worldPos, _Time.y), 1, 1, 0);
+				//float4 noise = simplexNoise3(float3(input.worldPos, _Time.y), 1, 1, 0);
+				float4 noise = calcWaves(input.worldPos, _Time.y);
 				//return noise.w;
 				//float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
-				float2 uvOffset = noise.xy / 100;
+				float2 uvOffset = noise.xy / 40;
 								
 				//uvOffset.y /= 4;
 				float4 skyColor = tex2D(Sky, input.viewPosUV + uvOffset);
@@ -97,7 +98,7 @@
 				waterColor *= 1.3f;
 				groundColor *= dot(lightDir, -groundNormal); //Normal mapping
 				groundColor *= waterColor; //Completely transparent water
-				//groundColor = lerp(groundColor, waterColor, 0.5);; //Turbidness
+				groundColor = lerp(groundColor, float4(0, 0.1f, 0.35, 1), 0.5);; //Turbidness
 
 				float3 viewDir = normalize(float3(input.viewPos, 0.25f));
 				float3 normal = normalize(float3(noise.xy, 1));

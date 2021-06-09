@@ -202,48 +202,49 @@ float calcFbmNumIterFromGrad(float reso, inout float startFreq, int maxIter, flo
 	return min(numIter, maxIter);
 }
 
-float4 fbmLayer(float pos, float amp, float freq,float seed)
+float4 fbmLayer(float3 coords, float amp, float freq,float seed)
 {
-	float4 noise = simplexNoise3(pos, amp, freq, seed);
-	///amp *= h2.w + 0.5f;
-	return noise;
+	return simplexNoise3(coords, amp, freq, seed);
 }
 
-float4 fbmNoise(float3 pos, float numIter, float amp, float freq, float gain, uint seed)
+float4 fbmNoise(float3 coords, float numIter, float amp, float freq, float gain, uint seed)
 {
-	float4 h = 0;
+	float4 noise = 0;
 	int iNumIter;
 	float iterFrac = modf(numIter, iNumIter);
 	for (int i = 0; i < iNumIter; i++)
 	{
-		h += fbmLayer(pos, amp, freq, seed);
+		noise += fbmLayer(coords, amp, freq, seed);
 		amp *= gain;
 		freq *= 2;
 	}
-	h += iterFrac * fbmLayer(pos, amp, freq, seed);
+	noise += iterFrac * fbmLayer(coords, amp, freq, seed);
 	//h *= amp;
 	
 	//h.w+=200;
 	//h*=startAmp;
 	//h.w+=10;
 	//return numIter/30;
-	return h;
+	return noise;
 }
 
-float4 calcWaves(float2 pos, float time)
+float4 calcWaves(float2 coords, float time)
 {
-	float amp = 0.3f;
-	float freq = 1.f;
-	float gain = 0.5f;
+	float amp = 1;
+	float freq = 1;
+	float gain = 0.3;
 	float speed = 1;
 	uint seed = 0;
+	coords.x /= 2;
 
-	float numIter = calcFbmNumIterFromGrad(1, freq, 15, float3(pos.x, pos.y, 0));
+	float numIter = calcFbmNumIterFromGrad(1, freq, 15, float3(coords.x, coords.y, 0));
+	if (numIter > 1)
+		numIter -= 0.0f;
 	//numIter = 1;
 	
-	float3 pos3D = float3(pos.x, pos.y, 2 * time);
+	float3 coords3D = float3(coords.x, coords.y, time * 0.5f);
 	float4 noiseRet;
-	noiseRet = fbmNoise(pos3D, numIter, amp, freq, gain, seed);
+	noiseRet = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
 	//noiseRet = fbmCellular(float3(vertPos.x, clock*0.2f, vertPos.z), numIter, fbmi);
 	//noiseRet = float4(0,1,0,0);
 	return noiseRet;
