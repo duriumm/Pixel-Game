@@ -149,49 +149,12 @@ float4 simplexNoise3(float3 coords, float amp, float freq, int seed)
 	noise.xyz *= freq;
 	noise *= amp;
 	return 32 * noise;
-
-	//float t0 = 0.6 - x0*x0 - y0*y0 - z0*z0;
-	//if (t0<0)
-	//	n0 = 0.0f;
-	//else
-	//{
-	//	t0 *= t0;
-	//	n0 = t0 * t0 * dot(grad3[gi0], x0, y0, z0);
-	//}
-	//float t1 = 0.6f - x1 * x1 - y1 * y1 - z1*z1;
-	//if(t1<0)
-	//	n1 = 0.0;
-	//else
-	//{
-	//	t1 *= t1;
-	//	n1 = t1 * t1 * dot(grad3[gi1], x1, y1, z1);
-	//}
-	//float t2 = 0.6f - x2*x2 - y2*y2 - z2*z2;
-	//if(t2<0)
-	//	n2 = 0.0f;
-	//else 
-	//{      
-	//	t2 *= t2;
-	//	n2 = t2 * t2 * dot(grad3[gi2], x2, y2, z2);
-	//}
-	//float t3 = 0.6f - x3*x3 - y3*y3 - z3*z3;
-	//if (t3<0) n3 = 0.0;
-	//else 
-	//{
-	//	t3 *= t3;
-	//	n3 = t3 * t3 * dot(grad3[gi3], x3, y3, z3);
-	//}
-	//// Add contributions from each corner to get the final noise value.
-	//// The result is scaled to stay just inside [-1,1]
-	//return 32.0*(n0 + n1 + n2 + n3);
 }
 
 float calcFbmNumIterFromGrad(float reso, inout float startFreq, int maxIter, float3 coords)
 {
 	float dx = length(ddx(coords));
 	float dy = length(ddy(coords));
-
-	//float diff = length(float2(dx,dy));
 	float diff = max(dx, dy);
 
 	if (diff == 0)
@@ -219,18 +182,12 @@ float4 fbmNoise(float3 coords, float numIter, float amp, float freq, float gain,
 		freq *= 2;
 	}
 	noise += iterFrac * fbmLayer(coords, amp, freq, seed);
-	//h *= amp;
-	
-	//h.w+=200;
-	//h*=startAmp;
-	//h.w+=10;
-	//return numIter/30;
 	return noise;
 }
 
 float4 calcWaves(float2 coords, float time)
 {
-	float amp = 1;
+	float amp = 0.5f;
 	float freq = 1;
 	float gain = 0.3;
 	float speed = 1;
@@ -238,21 +195,8 @@ float4 calcWaves(float2 coords, float time)
 	coords.x /= 2;
 
 	float numIter = calcFbmNumIterFromGrad(1, freq, 15, float3(coords.x, coords.y, 0));
-	if (numIter > 1)
-		numIter -= 0.0f;
-	//numIter = 1;
-	
 	float3 coords3D = float3(coords.x, coords.y, time * 0.5f);
-	float4 noiseRet;
-	noiseRet = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
-	//noiseRet = fbmCellular(float3(vertPos.x, clock*0.2f, vertPos.z), numIter, fbmi);
-	//noiseRet = float4(0,1,0,0);
-	return noiseRet;
+	float4 noise = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
+	noise.xyz = normalize(float3(-noise.xy, 1));
+	return noise;
 }
-
-
-static const float waterFbmi_amp = 1.15f;
-static const float waterFbmi_freq = 0.001;
-static const float waterFbmi_gain = 0.634f;
-static const float waterFbmi_scrollSpeed = 0.2f;
-static const float waterFbmi_animSpeed = 2;
