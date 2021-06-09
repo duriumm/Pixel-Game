@@ -258,7 +258,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 895037789053804981}
         m_TargetAssemblyTypeName: ActiveQuestButton, Assembly-CSharp
-        m_MethodName: ShowDescriptionOnClick
+        m_MethodName: ShowQuestDataOnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -311,3 +311,4 @@ MonoBehaviour:
     amountToCollect: 0
     itemToDeliver: {fileID: 0}
     npcDeliveryTarget: {fileID: 0}
+  prefabItemReward: {fileID: 8975366328207534259, guid: 92c1cc23ca7c4884a999518262c40e47, type: 3}

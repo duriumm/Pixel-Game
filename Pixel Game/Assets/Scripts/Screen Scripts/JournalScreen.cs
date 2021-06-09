@@ -6,103 +6,106 @@ using UnityEngine;
 public class JournalScreen : GuiScreen
 {
     public GameObject activeQuestPanelPrefab;
-    private GameObject originalQuestPanel;
-    private GameObject parentOfOriginalQuestPanel;
-    public float distanceToNextQuestPanel = 5.17f;
+    private GameObject startingActiveQuestPanel;
+    private GameObject questListCanvas;
+    private GameObject itemRewardCanvas;
+
+    private GameObject startingItemReward;
+    public GameObject StartingItemReward => startingItemReward;
+    private float activeQuestPanelHeight = 5.17f;
     private Vector3 origQuestPanelPos;
+
+    private Vector3 origItemRewardPos;
+    public Vector3 OrigItemRewardPos => origItemRewardPos;
     string originalPanelName;
     ActiveQuests activeQuests;
 
     DataToPassBetweenScenes dataToPass;
     private TextMeshProUGUI questPanelText;
     private TextMeshProUGUI questDescriptionText;
+    private TextMeshProUGUI goldRewardText;
 
-    float questListCanvasStartingYpos;
-
-    //List<ActiveQuestButton> activeQuestButtons = new List<ActiveQuestButton>();
     void Start()
     {
-        originalQuestPanel = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        Debug.Log(originalQuestPanel.name);
+        // Get the ActiveQuestPanel gameobject that is there at start so we can gather position from it
+        startingActiveQuestPanel = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
+        startingItemReward = gameObject.transform.Find("QuestDescription").transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
+        
+        origQuestPanelPos = startingActiveQuestPanel.transform.position;
+        origItemRewardPos = startingItemReward.transform.position;
 
-        origQuestPanelPos = originalQuestPanel.transform.position;
 
-        parentOfOriginalQuestPanel = originalQuestPanel.transform.parent.gameObject;
+        questListCanvas = startingActiveQuestPanel.transform.parent.gameObject;
+        itemRewardCanvas = startingItemReward.transform.parent.gameObject;
 
         originalPanelName = activeQuestPanelPrefab.name;
 
-
-        questListCanvasStartingYpos = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().rect.y;
-
         // After we get all the data needed from The quest panel we destroy it to clear out active quest panel list in the GUI
         // otherwise we will always have one panel there at start of the scene
-        Destroy(originalQuestPanel);
-
+        Destroy(startingActiveQuestPanel);
+        Destroy(startingItemReward);
 
         dataToPass = GameObject.FindGameObjectWithTag("PassData").GetComponent<DataToPassBetweenScenes>();
         activeQuests = dataToPass.ActiveQuests;
 
+
+
+        // Long way to reset the gold amount when opening questscreen
         questDescriptionText = gameObject.transform.Find("QuestDescription").gameObject.GetComponent<TextMeshProUGUI>();
+        goldRewardText = gameObject.transform.Find("QuestDescription").transform.Find("MoneyRewardBG").
+            transform.Find("MoneyRewardCanvas").transform.Find("AmountOfMoneyText").GetComponent<TextMeshProUGUI>();
+        goldRewardText.text = "";
+
         Close();
     }
 
-
-
+    // For each quest we have in the list we add a height of 5.17f to our QuestListCanvas
+    // So that the scrollable field is dynamic. Longer for more quests, shorter and unscrollable 
+    // when the amount of quests does not reach outside QuestListCanvas field
+    private float calculateQuestListCanvasHeight()
+    {
+        float heightToReturn = 0;
+        for (int i = 0; i < activeQuests.quests.Count; i++)
+        {
+            heightToReturn += activeQuestPanelHeight;
+        }
+        return heightToReturn;
+    }
     public override void Open()
     {
         base.Open();
-        // TODO: Load in quests
         foreach (var item in activeQuests.quests)
         {
             CreateActiveQuestPanel(item);
         }
         questDescriptionText.text = "Press any of your active quests to see the quest description along with attached rewards";
 
-        // TODO: Set Pos Y to starting pos so scrollable active quest window gets pushed back to start pos
-        //questListCanvasStartingYpos = questListCanvasStartingYpos;
+        // Set the Height of QuestListCanvas
+        questListCanvas.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, calculateQuestListCanvasHeight());
 
     }
     public override void Close()
     {
-        foreach (Transform item in parentOfOriginalQuestPanel.transform)
+        foreach (Transform item in questListCanvas.transform)
         {
-            Debug.Log("Name of item gameobj: "+item.gameObject); // TODO: REMOVE QUEST OBJECTS PANELS
+            Destroy(item.gameObject);
+        }
+        foreach (Transform item in itemRewardCanvas.transform)
+        {
             Destroy(item.gameObject);
         }
         base.Close();
-    }
-
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.C))
-        //{
-        //    Debug.Log("hejsan");
-        //    Open();
-        //}
-        //if (Input.GetKeyDown(KeyCode.F))
-        //{
-        //    //ActiveQuests testActiveQuest = dataToPass.ActiveQuests;
-        //    //foreach (var item in testActiveQuest.quests)
-        //    //{
-        //    //    //CreateActiveQuestPanel(item);
-        //    //    Debug.Log(item.QuestName);
-        //    //}
-        //    Debug.Log(dataToPass.ActiveQuests.quests);
-        //}
     }
 
     private void CreateActiveQuestPanel(Quest quest)
     {
         GameObject questPanelCopy = GameObject.Instantiate(activeQuestPanelPrefab) as GameObject;
         questPanelCopy.name = originalPanelName;
-
-        questPanelCopy.transform.SetParent(parentOfOriginalQuestPanel.transform);
-
-        questPanelCopy.transform.position = new Vector3(origQuestPanelPos.x, (origQuestPanelPos.y + distanceToNextQuestPanel), 0);
+        questPanelCopy.transform.SetParent(questListCanvas.transform);
+        questPanelCopy.transform.position = new Vector3(origQuestPanelPos.x, (origQuestPanelPos.y + activeQuestPanelHeight), 0);
 
         // Scale needs to be set otherwise the questpanel gets scaled down to 0.04 instead of the regular 1.00
         questPanelCopy.transform.localScale = new Vector3(1, 1, 1);
-
 
         questPanelText = questPanelCopy.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
         questPanelText.text = quest.QuestName;
