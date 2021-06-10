@@ -7,7 +7,6 @@
 		Ground("Ground", 2D) = "white" {}
 		GroundNormalMap("GroundNormalMap", 2D) = "white" {}
 		Hash2DTex("hash2DTex", 2D) = "white" {}
-
     }
     SubShader
     {

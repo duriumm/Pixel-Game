@@ -3,6 +3,8 @@
 
 #define NoisePeriod 256
 
+// A sequence of 256 random values between 0 and 255, used to look up random gradients
+// The sequence is duplicated to save a modulo operation
 static const uint perm[512] = { 151,160,137,91,90,15,
 	131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
 	190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
@@ -187,6 +189,7 @@ float4 fbmNoise(float3 coords, float numIter, float amp, float freq, float gain,
 
 float4 calcWaves(float2 coords, float time)
 {
+
 	float amp = 0.5f;
 	float freq = 1;
 	float gain = 0.3;
@@ -197,6 +200,9 @@ float4 calcWaves(float2 coords, float time)
 	float numIter = calcFbmNumIterFromGrad(1, freq, 15, float3(coords.x, coords.y, 0));
 	float3 coords3D = float3(coords.x, coords.y, time * 0.5f);
 	float4 noise = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
-	noise.xyz = normalize(float3(-noise.xy, 1));
+	float3 xTangent = float3(1, 0, noise.x);
+	float3 yTangent = float3(0, 1, noise.y);
+	noise.xyz = normalize(cross(xTangent, yTangent));
+	//noise.xyz = normalize(float3(-noise.xy, 1));
 	return noise;
 }
