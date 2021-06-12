@@ -64,19 +64,14 @@ public class JournalScreen : GuiScreen
     // when the amount of quests does not reach outside QuestListCanvas field
     private float calculateQuestListCanvasHeight()
     {
-        float heightToReturn = 0;
-        for (int i = 0; i < activeQuests.quests.Count; i++)
-        {
-            heightToReturn += activeQuestPanelHeight;
-        }
-        return heightToReturn;
+        return activeQuestPanelHeight * activeQuests.Count;
     }
     public override void Open()
     {
         base.Open();
-        foreach (var item in activeQuests.quests)
+        foreach (var quest in activeQuests)
         {
-            CreateActiveQuestPanel(item);
+            CreateActiveQuestPanel(quest);
         }
         questDescriptionText.text = "Press any of your active quests to see the quest description along with attached rewards";
 
