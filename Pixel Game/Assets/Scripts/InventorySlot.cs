@@ -34,7 +34,8 @@ public class InventorySlot : MonoBehaviour
     private Attack playerAttack;
     private DataToPassBetweenScenes dataToPass;
     private PlayerHealth playerHealth;
-    private GuiScreenManager guiScreenManager;
+    private static GuiScreenManager guiScreenManager;
+    private ItemToolTip itemToolTip;
 
     void Awake()
     {
@@ -55,7 +56,9 @@ public class InventorySlot : MonoBehaviour
         playerAttack = playerCharacter.GetComponent<Attack>();
         playerHealth = playerCharacter.GetComponent<PlayerHealth>();
         slotIcon = this.gameObject.GetComponent<Image>();
-        guiScreenManager = GameObject.Find("Canvas/Screens").GetComponent<GuiScreenManager>();
+        if (guiScreenManager == null)
+            guiScreenManager = GameObject.Find("Canvas/Screens").GetComponent<GuiScreenManager>();
+        itemToolTip = transform.Find("ToolTipHoverCanvas").GetComponent<ItemToolTip>();
     }
 
     private void Start()
@@ -108,7 +111,7 @@ public class InventorySlot : MonoBehaviour
         //Add item to equipment slot
         Debug.Log("we came IN HERE EQUIP");
         
-        var equipmentSlot = GetEquipmentSlotForItemType();
+        var equipmentSlot = GetEquipmentSlotForItemType(itemDataInSlot);
         equipmentSlot.UnequipItem();
 
         //Make sure the item has been initialized
@@ -128,17 +131,17 @@ public class InventorySlot : MonoBehaviour
 
     //Returns equipment slot for specified item type.
     //There will be one slot with a unique name for every type, e.g. one slot for swords, one for shields etc.
-    InventorySlot GetEquipmentSlotForItemType()
+    public static InventorySlot GetEquipmentSlotForItemType(ItemData itemData)
     {
-        string equipmentSlotName = GetEquipmentSlotNameForItemType();
+        string equipmentSlotName = GetEquipmentSlotNameForItemType(itemData);
         
         //This is a LINQ extension method that finds the first slot with matching name
         return guiScreenManager.Inventory.EquipmentSlots.First(slot => slot.gameObject.name == equipmentSlotName);
     }
 
-    string GetEquipmentSlotNameForItemType()
+    public static string GetEquipmentSlotNameForItemType(ItemData itemData)
     {
-        return Enum.GetName(typeof(ItemData.ITEMTYPE), itemDataInSlot.itemType) + "_SlotPanel";
+        return Enum.GetName(typeof(ItemData.ITEMTYPE), itemData.itemType) + "_SlotPanel";
     }
 
     public void MoveEquippedItemToInventory()
@@ -276,112 +279,15 @@ public class InventorySlot : MonoBehaviour
 
     public void ShowDataOnHover()
     {
-        if(ItemDataGameObject != null)
+        if (itemDataInSlot != null)
         {
-            // TO-DO - This might need to be optimized for future. Maybe assign the text game objects in the inspector beforehand?
-            TextMeshProUGUI itemNameText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemNameText").gameObject.GetComponent<TextMeshProUGUI>();
-            itemNameText.text = itemDataInSlot.itemName;
-            TextMeshProUGUI itemDescriptionText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemDescriptionText").gameObject.GetComponent<TextMeshProUGUI>();
-            itemDescriptionText.text = itemDataInSlot.description;
-            TextMeshProUGUI itemStatsText = gameObject.transform.GetChild(0).gameObject.transform.Find("ItemStatsText").gameObject.GetComponent<TextMeshProUGUI>();
-            if (itemDataInSlot.itemType == ItemData.ITEMTYPE.WEAPON)
-            {
-                ShowWeaponStats(itemStatsText);
-            }
-            else if (itemDataInSlot.isEquippable)
-            {
-                ShowEquipmentStats(itemStatsText);
-            }
-            else if (itemDataInSlot.itemType == ItemData.ITEMTYPE.EDIBLE)
-            {   // Show the text in green to indicate hp gain on eating item
-                itemStatsText.text = "Effect on eating: " + "<color=green>+" + itemDataInSlot.healingCapability + " hp</color>";
-            }
-            else if(itemDataInSlot.itemType == ItemData.ITEMTYPE.QUEST_ITEM)
-            {
-                itemStatsText.text = null;
-            }
-            if (ItemDataInSlot.value > 0)
-                itemStatsText.text += $"Value: <color=yellow>{itemDataInSlot.value} coins</color> ";
-            this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 1f;
+            itemToolTip.UpdateContent(itemDataInSlot);
+            itemToolTip.Open();
         }
-        else
-        {
-            //Debug.Log("no item in slot :(");
-        }
-
-        // TO-DO - Enable a tooltip box that shows data of the item of THIS current slot
-    }
-
-    private void ShowEquipmentStats(TextMeshProUGUI itemStatsText)
-    {
-        string defenseDiff = "";
-        bool showDefense = itemDataInSlot.defense > 0;
-        //If this is not an equipment slot, show difference with currently equipped item
-        if (gameObject.name != GetEquipmentSlotNameForItemType())
-        {
-            var equipmentSlot = GetEquipmentSlotForItemType();
-            int equippedDefense = equipmentSlot.ItemDataInSlot != null ?
-                equipmentSlot.ItemDataInSlot.defense : 0;
-            if (equippedDefense > 0 || itemDataInSlot.defense > 0)
-            {
-                showDefense = true;
-                defenseDiff = GetHoverDiffText(ItemDataInSlot.defense - equippedDefense);
-            }
-        }
-        itemStatsText.text = $"Defense: {itemDataInSlot.defense} {defenseDiff}\n";
-    }
-
-    private void ShowWeaponStats(TextMeshProUGUI itemStatsText)
-    {
-        var weapon = ItemDataGameObject.GetComponent<Weapon>();
-        string powerDiff = "", cooldownDiff = "", projectileSpeedDiff = "";
-        
-        //If this is not an equipment slot, show difference with currently equipped weapon
-        if (gameObject.name != GetEquipmentSlotNameForItemType())
-        {
-            powerDiff = GetHoverDiffText(weapon.Damage - playerAttack.CurrentWeapon.Damage);
-            cooldownDiff = GetHoverDiffText(weapon.Cooldown - playerAttack.CurrentWeapon.Cooldown, true);
-            if (weapon.HasProjectileAttack && playerAttack.CurrentWeapon.HasProjectileAttack)
-                projectileSpeedDiff = GetHoverDiffText(weapon.ProjectileAttack.Speed - playerAttack.CurrentWeapon.ProjectileAttack.Speed);
-        }
-
-        itemStatsText.text = $"Damage: {weapon.Damage} {powerDiff}\n";
-        itemStatsText.text += $"Cooldown: {weapon.Cooldown}s {cooldownDiff}\n";
-        if (weapon.HasProjectileAttack)
-            itemStatsText.text += $"Projectile speed: {weapon.ProjectileAttack.Speed} {projectileSpeedDiff}\n";
-    }
-
-    // Returns a string describing the difference between the hovered item
-    // and the currently equipped item
-    // For example, if we have equipped a sword with power 10,
-    // and the weapon we are hovering on has power 15, the text will be "+5" in green
-    private string GetHoverDiffText(float diff, bool reverseColor = false)
-    {
-        string positive = "green";
-        string negative = "#ff7070";
-        string neutral = "white";
-        string color;
-        string sign;
-        if (diff > 0)
-        {
-            color = reverseColor ? negative : positive;
-            sign = "+";
-        }
-        else if (diff == 0)
-        {
-            color = neutral;
-            sign = "+/-";
-        }
-        else
-        {
-            color = reverseColor ? positive : negative;
-            sign = "-";
-        }
-        return $"<color={color}> {sign}{Math.Abs(diff)}</color>";
     }
 
     public void RemoveDataShowingOnExit()
     {
-        this.gameObject.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().alpha = 0f;
+        itemToolTip.Close();
     }
 }

@@ -60,18 +60,10 @@ public class ActiveQuestButton : MonoBehaviour
 
             itemRewardCopy.GetComponent<Image>().sprite = buttonsActiveQuest.GameObjectReward.GetComponent<SpriteRenderer>().sprite;
 
-            // Name tooltip
-            itemRewardCopy.transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>().text = 
-                buttonsActiveQuest.GameObjectReward.GetComponent<ItemData>().itemName;
-            // Description tooltip for reward item
-            itemRewardCopy.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = 
-                buttonsActiveQuest.GameObjectReward.GetComponent<ItemData>().description;
-            // Stats tooltip for reward item
+            itemRewardCopy.transform.Find("ToolTipHoverCanvas").GetComponent<ItemToolTip>().UpdateContent(
+                buttonsActiveQuest.GameObjectReward.GetComponent<ItemData>()
+                );
 
-            // TODO: GET STATS FOR item!!!
-
-            //itemRewardCopy.transform.GetChild(0).GetChild(2).GetComponent<TextMeshProUGUI>().text = buttonsActiveQuest.GameObjectReward.GetComponent<ItemData>().
-            
             // Could not set values in inspector of prefab so had to set them in code here. Probably since we instantiate a new
             // object and set its parent etc etc. Im tired
             RectTransform itemRewardCopyRectTransform = itemRewardCopy.transform.GetChild(0).GetComponent<RectTransform>();

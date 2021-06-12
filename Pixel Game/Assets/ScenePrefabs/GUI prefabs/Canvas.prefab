@@ -21569,7 +21569,28 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlotPanel
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4548699540306840435, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4548699540306840439, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4874356794022584051, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 68ff44d11d9ad334fb1e721d9a363f29, type: 3}
 --- !u!224 &1843213772959514315 stripped
 RectTransform:
