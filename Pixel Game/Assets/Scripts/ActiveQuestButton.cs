@@ -19,16 +19,15 @@ public class ActiveQuestButton : MonoBehaviour
 
     void Start()
     {
-        journalScreen = GameObject.Find("Canvas").transform.GetChild(2).transform.GetChild(3).GetComponent<JournalScreen>();
+        journalScreen = GameObject.Find("JournalScreen").GetComponent<JournalScreen>();
 
         questDescriptionObj = journalScreen.transform.Find("QuestDescription").gameObject;
 
         questDescriptionObjText = questDescriptionObj.GetComponent<TextMeshProUGUI>();
 
-        amountOfGoldReward = questDescriptionObj.transform.Find("MoneyRewardBG").
-            gameObject.transform.Find("MoneyRewardCanvas").transform.Find("AmountOfMoneyText").GetComponent<TextMeshProUGUI>();
+        amountOfGoldReward = questDescriptionObj.transform.Find("MoneyRewardBG/MoneyRewardCanvas/AmountOfMoneyText").GetComponent<TextMeshProUGUI>();
 
-        itemRewardCanvasTransform = questDescriptionObj.transform.GetChild(0).transform.GetChild(0);
+        itemRewardCanvasTransform = questDescriptionObj.transform.Find("ItemRewardBG/ItemRewardCanvas");
     }
 
     private void ClearItemRewards()
@@ -51,7 +50,7 @@ public class ActiveQuestButton : MonoBehaviour
         {
             GameObject itemRewardCopy = GameObject.Instantiate(prefabItemReward) as GameObject;
             itemRewardCopy.name = prefabItemReward.name;
-            itemRewardCopy.transform.SetParent(questDescriptionObj.transform.GetChild(0).transform.GetChild(0));
+            itemRewardCopy.transform.SetParent(questDescriptionObj.transform.Find("ItemRewardBG/ItemRewardCanvas"));
             itemRewardCopy.transform.position = new Vector3(journalScreen.OrigItemRewardPos.x, journalScreen.OrigItemRewardPos.y, 0);
 
             // Scale needs to be set otherwise the questpanel gets scaled down to 0.04 instead of the regular 1.00
@@ -66,7 +65,7 @@ public class ActiveQuestButton : MonoBehaviour
 
             // Could not set values in inspector of prefab so had to set them in code here. Probably since we instantiate a new
             // object and set its parent etc etc. Im tired
-            RectTransform itemRewardCopyRectTransform = itemRewardCopy.transform.GetChild(0).GetComponent<RectTransform>();
+            RectTransform itemRewardCopyRectTransform = itemRewardCopy.transform.Find("ToolTipHoverCanvas").GetComponent<RectTransform>();
             itemRewardCopyRectTransform.anchorMin = new Vector2(0, 0);
             itemRewardCopyRectTransform.anchorMax = new Vector2(1, 1);
             itemRewardCopyRectTransform.pivot = new Vector2(0.5f, 0.5f);

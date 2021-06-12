@@ -28,8 +28,8 @@ public class JournalScreen : GuiScreen
     void Start()
     {
         // Get the ActiveQuestPanel gameobject that is there at start so we can gather position from it
-        startingActiveQuestPanel = gameObject.transform.Find("ScrollRectImage").gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).gameObject;
-        startingItemReward = gameObject.transform.Find("QuestDescription").transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).gameObject;
+        startingActiveQuestPanel = transform.Find("ScrollRectImage/QuestListCanvas/ActiveQuestPanel").gameObject;
+        startingItemReward = transform.Find("QuestDescription/ItemRewardBG/ItemRewardCanvas/ItemRewardSprite").gameObject;
         
         origQuestPanelPos = startingActiveQuestPanel.transform.position;
         origItemRewardPos = startingItemReward.transform.position;
@@ -51,9 +51,8 @@ public class JournalScreen : GuiScreen
 
 
         // Long way to reset the gold amount when opening questscreen
-        questDescriptionText = gameObject.transform.Find("QuestDescription").gameObject.GetComponent<TextMeshProUGUI>();
-        goldRewardText = gameObject.transform.Find("QuestDescription").transform.Find("MoneyRewardBG").
-            transform.Find("MoneyRewardCanvas").transform.Find("AmountOfMoneyText").GetComponent<TextMeshProUGUI>();
+        questDescriptionText = transform.Find("QuestDescription").gameObject.GetComponent<TextMeshProUGUI>();
+        goldRewardText = transform.Find("QuestDescription/MoneyRewardBG/MoneyRewardCanvas/AmountOfMoneyText").GetComponent<TextMeshProUGUI>();
         goldRewardText.text = "";
 
         Close();
@@ -102,7 +101,7 @@ public class JournalScreen : GuiScreen
         // Scale needs to be set otherwise the questpanel gets scaled down to 0.04 instead of the regular 1.00
         questPanelCopy.transform.localScale = new Vector3(1, 1, 1);
 
-        questPanelText = questPanelCopy.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        questPanelText = questPanelCopy.transform.Find("QuestPanelText").GetComponent<TextMeshProUGUI>();
         questPanelText.text = quest.QuestName;
 
         // Send quest data into button gameobject
