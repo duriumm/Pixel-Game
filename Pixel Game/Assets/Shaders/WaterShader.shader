@@ -20,7 +20,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-			#include "WaterShaderInclude.cginc"
+			#include "Waves.cginc"
 
             struct VertexInput
             {
@@ -82,6 +82,7 @@
 				//float4 noise = simplexNoise3(float3(input.worldPos, _Time.y), 1, 1, 0);
 				float4 noise = calcWaves(input.worldPos, _Time.y);
 				//return noise.w;
+				return float4(noise.xyz, 1);
 				//float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
 				float2 uvOffset = noise.xy / 20;
 								
@@ -98,7 +99,7 @@
 				groundColor *= dot(lightDir, -groundNormal); //Normal mapping
 				groundColor *= waterColor; //Completely transparent water
 				groundColor = lerp(groundColor, float4(0, 0.1f, 0.35f, 1), 0.5f);; //Turbidness
-
+				
 				float3 viewDir = normalize(float3(input.viewPos, 0.25f));
 				float3 normal = noise.xyz;
 				float3 lightReflectionDir = reflect(lightDir, normal);
