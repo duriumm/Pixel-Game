@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveQuests
+public class ActiveQuests : IEnumerable<Quest>
 {
-    List<Quest> quests = new List<Quest>();
+    private List<Quest> quests = new List<Quest>();
+
+    public float Count => quests.Count;
+
     public void Add(Quest quest)
     {
         quests.Add(quest);
@@ -45,4 +48,19 @@ public class ActiveQuests
         foreach (var quest in quests)
             quest.TryIncrementKilledEnemies(name);
     }
+
+    //Lets you use ActiveQuests objects in foreach loops
+    public IEnumerator<Quest> GetEnumerator()
+    {
+        return quests.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return this.GetEnumerator();
+    }
+
+    // Provides access to individual quests, just in case it will be needed
+    // Example: var quest = activeQuests[0];
+    public Quest this[int index] => quests[index];
 }

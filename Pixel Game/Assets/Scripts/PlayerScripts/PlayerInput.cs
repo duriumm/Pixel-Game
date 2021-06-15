@@ -42,5 +42,9 @@ public class PlayerInput : MonoBehaviour
         {
             guiScreenManager.Toggle(GuiScreenType.Stats);
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            guiScreenManager.Toggle(GuiScreenType.Journal);
+        }
     }
 }
