@@ -82,7 +82,7 @@
 				//float4 noise = simplexNoise3(float3(input.worldPos, _Time.y), 1, 1, 0);
 				float4 noise = calcWaves(input.worldPos, _Time.y);
 				//return noise.w;
-				return float4(noise.xyz, 1);
+				//return float4(noise.xyz, 1);
 				//float2 uvOffset = sin(input.worldPos * 10 + _Time.y * 4) / 3.f;
 				float2 uvOffset = noise.xy / 20;
 								

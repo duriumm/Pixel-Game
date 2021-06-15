@@ -55,20 +55,26 @@ float4 calcWaves(float2 coords, float time)
 	float speed = 1;
 	uint seed = 0;
 	coords.x /= 2;
-	//amp = freq = 1;
 
 	float numIter = calcFbmNumIterFromGrad(1, freq, 15, float3(coords.x, coords.y, 0));
-	float3 coords3D = float3(coords.x, coords.y, time * 0.4f);
-	//numIter = 1;
-	float4 noise = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
-	
-	noise.xyz = normalize(noise.xyz);
-	noise = noise * 0.5f + 0.5f;
 
+	float3 scroll = float3(0, time * 0.4f, time * 0.1f);
+	float3 coords3D = float3(coords + scroll.xy, scroll.z);
+	float4 noise = fbmNoise(coords3D, numIter, amp, freq, gain, seed);
+	coords3D = float3(coords.xy - scroll, time * 0.4f);
+	noise += fbmNoise(coords3D, numIter, amp, freq, gain, seed);
+	
+	//Uncomment to visualize the derivative:
+	//noise.xyz = normalize(noise.xyz) * 0.5f + 0.5f;
+	//return noise;
+
+	//Project derivative to xy-plane (simply ignore z)
+	//and calculate normal
+	noise.xyz = normalize(float3(-noise.xy, 1));
+	//The above line should be identical to crossing the tangents:
 	/*float3 xTangent = float3(1, 0, noise.x);
 	float3 yTangent = float3(0, 1, noise.y);
 	noise.xyz = normalize(cross(xTangent, yTangent));*/
-	//noise.xyz = normalize(float3(-noise.xy, 1));
 
 	return noise;
 }
