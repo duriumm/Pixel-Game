@@ -9,6 +9,7 @@ public enum GuiScreenType
     Stats,
     Shop,
     Journal,
+    Map,
 }
 
 public class GuiScreenManager : MonoBehaviour
@@ -17,6 +18,7 @@ public class GuiScreenManager : MonoBehaviour
     InventoryScreen inventory;
     ShopScreen shop;
     JournalScreen journal;
+    MapScreen map;
     GuiScreen activeScreen;
     GameObject tabs;
     Attack playerAttack;
@@ -25,6 +27,7 @@ public class GuiScreenManager : MonoBehaviour
     public InventoryScreen Inventory => inventory;
     public ShopScreen Shop => shop;
     public JournalScreen Journal => journal;
+    public MapScreen Map => map;
 
     void Awake()
     {
@@ -32,6 +35,7 @@ public class GuiScreenManager : MonoBehaviour
         inventory = gameObject.transform.Find("InventoryScreen").gameObject.GetComponent<InventoryScreen>();
         shop = gameObject.transform.Find("ShopScreen").gameObject.GetComponent<ShopScreen>();
         journal = gameObject.transform.Find("JournalScreen").gameObject.GetComponent<JournalScreen>();
+        map = gameObject.transform.Find("MapScreen").gameObject.GetComponent<MapScreen>();
         tabs = gameObject.transform.Find("GuiTabsButtons").gameObject;
         tabs.SetActive(false);
         playerAttack = GameObject.Find("MyCharacter").GetComponent<Attack>();
@@ -98,6 +102,8 @@ public class GuiScreenManager : MonoBehaviour
                 return shop;
             case GuiScreenType.Journal:
                 return journal;
+            case GuiScreenType.Map:
+                return map;
             default:
                 throw new NotImplementedException();
         }
@@ -124,6 +130,10 @@ public class GuiScreenManager : MonoBehaviour
     public void OpenJournal()
     {
         Open(journal);
+    }
+    public void OpenMap()
+    {
+        Open(map);
     }
 }
     
