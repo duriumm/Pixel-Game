@@ -36,28 +36,33 @@
 		_CameraHeight("Camera height", float) = 0.25
 		_SpecPow("Specular power", float) = 100
 		[Color]_SpecCol("Specular color", color) = (1, 1, 1, 1)
-		_SunlightDir("Sunlight direction", vector) = (-1, -1, -0.6)
+		_DirToSun("Direction to sun", vector) = (1, 1, 0.6)
 
-		[Enum(Standard, 0, Normals, 1, NoiseDerivatives, 2, DiffuseLighting, 3, HeightMap, 4)]
+		[Enum(Standard, 0, Normals, 1, NoiseDerivatives, 2, DiffuseLighting, 3, Heightmap, 4)]
 		_RenderMode("Render mode", float) = 0
 	}
-    SubShader
-    {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
+		SubShader
+		{
+			Tags { "RenderType" = "Opaque" }
+			LOD 100
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+			Pass
+			{
+				CGPROGRAM
+				#pragma vertex vert
+				#pragma fragment frag
 
-            #include "UnityCG.cginc"
-			#include "Waves.cginc"
+				#include "UnityCG.cginc"
+				#include "Waves.cginc"
 
-            struct VertexInput
-            {
-                float4 pos : POSITION;
+			static const float RenderMode_Normals = 1;
+			static const float RenderMode_Deriv = 2;
+			static const float RenderMode_Diffuse = 3;
+			static const float RenderMode_Heightmap = 4;
+
+			struct VertexInput
+			{
+				float4 pos : POSITION;
 				float2 uv : TEXCOORD0;
 			};
 
@@ -102,26 +107,27 @@
 			float _CameraHeight;
 			float _SpecPow;
 			float4 _SpecCol;
-			float3 _SunlightDir;
+			float3 _DirToSun;
 
 			float _RenderMode;
 
-
+			//Calculates factor to blend between ground and sky depending on difference between viewing angle and water surface angle
 			float calcFresnel(float cosAngle, bool underWater = false)
 			{
 				float fresnel = 1 - cosAngle;
 
 				// We probably won't need to render the water surface from below
-				// but I'll leave the code here just in case
+				// but I'll leave it here just in case
 				if (underWater)
 					fresnel *= 2.5f;
 
 				fresnel = pow(fresnel, 4);
 
-				// scale and bias to fit to real fresnel curve
+				// scale and bias to fit real fresnel curve
 				return min((fresnel * 0.95f) + 0.05f, 1);
 			}
 
+			//Used to mirror sky when texture coords are out of bounds
 			float2 mirrorUV(float2 uv)
 			{
 				if (uv.x > 1)
@@ -135,66 +141,98 @@
 				return uv;
 			}
 
+			//Vertex shader
             VertexOutput vert(VertexInput input)
             {
 				VertexOutput output;
+				//Transform to clip space
 				output.pos = UnityObjectToClipPos(input.pos);
-				output.tileMapUV = TRANSFORM_TEX(input.uv, _MainTex);
+				//Get coords for tile texture (will probably not be needed)
+				//output.tileMapUV = TRANSFORM_TEX(input.uv, _MainTex);
+				
+				//Get position in world space
+				//This can be used together with fmod to create custom sized tiling
 				output.worldPos = mul(unity_ObjectToWorld, input.pos);
+				//Get position in view space (relative to camera)
 				output.viewPos = UnityObjectToClipPos(input.pos);
 				
+				//Stretch sky texture from top-left to bottom-right of screen
+				output.skyUV = output.viewPos * 0.5f + 0.5f; 
+				
 				float2 skyScale = float2(_SkyScaleX, _SkyScaleY);
-				output.skyUV = output.viewPos * 0.5f + 0.5f; //Stretch texture from top-left to bottom-right of screen
 				output.skyUV /= skyScale; //User-specified scale
-				output.skyUV += (skyScale - 1) * 0.5f / skyScale; //Center texture
-				output.skyUV -= +float2(_SkyOffsetX, _SkyOffsetY); //User-specified offset
+				output.skyUV += (skyScale - 1) * 0.5f / skyScale; //Center texture after scale
+				output.skyUV -= float2(_SkyOffsetX, _SkyOffsetY); //User-specified offset
 				
 				return output;
             }
 
+			//Fragment shader
 			fixed4 frag(VertexOutput input) : SV_Target
 			{
-				float3 sunlightDir = normalize(_SunlightDir);
+				float3 dirToSun = normalize(_DirToSun);
+				//Sample tile texture
 				//fixed4 tileCol = tex2D(_MainTex, input.tileMapUV);
 				
-				float4 waves = calcWaves(input.worldPos, _Time.y, _WaveScroll.xyz * _WaveScroll.w, _WaveAmplitude, _WaveFrequency, _WaveStretch, _WaveFbmGain, _WaveFbmIterations);
-				float3 normal = normalize(float3(-waves.xy, 1));
+				float4 waves = calcWaves(
+					input.worldPos,
+					_Time.y,
+					_WaveScroll.xyz * _WaveScroll.w,
+					_WaveAmplitude,
+					_WaveFrequency,
+					_WaveStretch,
+					_WaveFbmGain,
+					_WaveFbmIterations
+				);
+				//Convert noise derivative to normal vector
+				float3 waterNormal = normalize(float3(-waves.xy, 1));
+				
+				//Various render modes which can help when tweaking parameters and debugging
 				switch (_RenderMode)
 				{
-				case 1: return float4(saturate(normal), 1);
-				case 2: return saturate(float4(waves.xyz, 1));
-				case 3: return saturate(_WaterCol * dot(normal, -sunlightDir) + _WaterCol * 1);
-				case 4: return waves.w * 0.5f + 0.5f;
+				case RenderMode_Normals:
+					return float4(saturate(waterNormal), 1);
+				case RenderMode_Deriv:
+					return saturate(float4(waves.xyz, 1));
+				case RenderMode_Diffuse:
+					return saturate(_WaterCol * dot(waterNormal, dirToSun) + _WaterCol * 1);
+				case RenderMode_Heightmap:
+					return waves.w * 0.5f + 0.5f;
 				}
-				float2 uvOffset = normal.xy * _LightDistortionFromWaves;
-								
+
+				float2 uvOffset = waterNormal.xy * _LightDistortionFromWaves;
 				float4 result;
 
-				if (_EnableGround == 1)
+				if (_EnableGround == 1) //"Enable ground" box is checked in inspector
 				{
+					//Calculate tiled tex coords for ground
 					float2 groundUV = fmod(abs(input.worldPos - _WorldSpaceCameraPos * _GroundParallax) / float2(_GroundScaleX, _GroundScaleY), 1) - uvOffset;
 					float4 groundCol = tex2D(_Ground, groundUV);
 					float3 groundNormal = tex2D(_GroundNormalMap, groundUV).xyz;
-					if (any(groundNormal))
-						groundCol *= dot(sunlightDir, -normalize(groundNormal)); //Normal mapping
-					groundCol *= _GroundTint;
-					result = lerp(groundCol, _WaterCol, _WaterOpacity);
+					if (any(groundNormal)) //If there is a normalmap
+						groundNormal = groundNormal * 2 - 1;
+					else
+						groundNormal = float3(0, 0, 1); //Use default normal pointing upwards
+					float sunlight = saturate(dot(dirToSun, normalize(groundNormal)) + 0.3f); //Diffuse + ambient lighting
+					groundCol *= sunlight * _GroundTint;
+					//Blend between ground and water color
+					result = lerp(groundCol, _WaterCol, _WaterOpacity); 
 				}
 				else
 					result = _WaterCol;
 						
 				float3 viewDir = normalize(float3(input.viewPos, _CameraHeight));
-				float3 lightReflectionDir = reflect(sunlightDir, normal);
-				float viewDotNormal = dot(normal, viewDir);
-				if (_EnableSky == 1)
+				float viewDotNormal = dot(waterNormal, viewDir); //Angle between water surface and viewer
+				if (_EnableSky == 1) //"Enable sky" box is checked in inspector
 				{
-					float fresnel = calcFresnel(viewDotNormal);
 					float2 skyUV = mirrorUV(input.skyUV);
 					float4 skyCol = tex2D(_Sky, skyUV + uvOffset) * _SkyTint;
 					skyCol = lerp(skyCol, _FogCol, _FogDensity);
+					float fresnel = calcFresnel(viewDotNormal);
 					result = lerp(result, skyCol, fresnel);
 				}
-
+				float3 lightReflectionDir = reflect(-dirToSun, waterNormal);
+				//Specular lighting
 				result += pow(saturate(dot(lightReflectionDir, viewDir)), _SpecPow) * _SpecCol;
 				return result;
             }

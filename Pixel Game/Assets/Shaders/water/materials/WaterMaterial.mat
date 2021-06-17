@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GroundNormalMap:
-        m_Texture: {fileID: 2800000, guid: cbafb5bce83ab5b47975108c25083ed9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -168,6 +168,7 @@ Material:
     - _blabla: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DirToSun: {r: 1, g: 1, b: 0.6, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _FogCol: {r: 1, g: 1, b: 1, a: 1}
@@ -178,7 +179,7 @@ Material:
     - _Scroll: {r: 0.05, g: 0.4, b: 0.1, a: 1}
     - _SkyTint: {r: 1, g: 1, b: 1, a: 1}
     - _SpecCol: {r: 1, g: 1, b: 1, a: 1}
-    - _SunlightDir: {r: -1, g: -1, b: -0.6, a: 1}
+    - _SunlightDir: {r: 1, g: -2, b: 1000.6, a: 1}
     - _WaterCol: {r: 0, g: 0.101960786, b: 0.3882353, a: 1}
     - _WaveFrequency: {r: 0.5, g: 1, b: 1, a: 1}
     - _WaveScroll: {r: 0, g: 0.4, b: 0.1, a: 1}
