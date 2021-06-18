@@ -7,11 +7,12 @@ public class MapScreen : GuiScreen
     // CanvasGroups for the different cloud objects. CG = CanvasGroup
     private CanvasGroup woodAreaCG;
     public AudioClip openMapSound;
+    public AudioClip closeMapSound;
     private GameObject mainCamera;
     void Start()
     {
         woodAreaCG = transform.Find("CloudsWoodArea").GetComponent<CanvasGroup>();
-        Close();
+        base.Close();
         mainCamera = GameObject.FindWithTag("MainCamera");
     }
 
@@ -21,6 +22,11 @@ public class MapScreen : GuiScreen
     {
         base.Open();
         AudioSource.PlayClipAtPoint(openMapSound,mainCamera.transform.localPosition);
+    }
+    public override void Close()
+    {
+        AudioSource.PlayClipAtPoint(closeMapSound, mainCamera.transform.localPosition);
+        base.Close();
     }
 
     public IEnumerator RemoveCloudsOnDiscoveredArea()

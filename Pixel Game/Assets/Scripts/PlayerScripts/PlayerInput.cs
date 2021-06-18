@@ -46,6 +46,10 @@ public class PlayerInput : MonoBehaviour
         {
             guiScreenManager.Toggle(GuiScreenType.Journal);
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            guiScreenManager.Toggle(GuiScreenType.Map);
+        }
         if (Input.GetKeyDown(KeyCode.F))
         {
             MapScreen mapScreen = guiScreenManager.gameObject.transform.Find("MapScreen").GetComponent<MapScreen>();

@@ -22,6 +22,8 @@ public class GuiScreenManager : MonoBehaviour
     GuiScreen activeScreen;
     GameObject tabs;
     Attack playerAttack;
+    Movement playerMovement;
+    Rigidbody2D playerRigidBody;
 
     public StatsScreen Stats => stats;
     public InventoryScreen Inventory => inventory;
@@ -39,6 +41,9 @@ public class GuiScreenManager : MonoBehaviour
         tabs = gameObject.transform.Find("GuiTabsButtons").gameObject;
         tabs.SetActive(false);
         playerAttack = GameObject.Find("MyCharacter").GetComponent<Attack>();
+        playerMovement = GameObject.Find("MyCharacter").GetComponent<Movement>();
+        playerRigidBody = GameObject.Find("MyCharacter").GetComponent<Rigidbody2D>();
+
     }
 
     //Return false if already open
@@ -61,6 +66,8 @@ public class GuiScreenManager : MonoBehaviour
                 tabs.SetActive(true);
             }
             playerAttack.enabled = false;
+            playerMovement.enabled = false;
+            playerRigidBody.simulated = false;
             return true;
         }
         return false;
@@ -83,6 +90,8 @@ public class GuiScreenManager : MonoBehaviour
             inventory.Close();
         activeScreen = null;
         playerAttack.enabled = true;
+        playerMovement.enabled = true;
+        playerRigidBody.simulated = true;
     }
 
     public bool Open(GuiScreenType type)
