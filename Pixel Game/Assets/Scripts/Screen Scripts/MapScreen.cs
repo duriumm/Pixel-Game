@@ -9,6 +9,7 @@ public class MapScreen : GuiScreen
     public AudioClip openMapSound;
     public AudioClip closeMapSound;
     private GameObject mainCamera;
+
     void Start()
     {
         woodAreaCG = transform.Find("CloudsWoodArea").GetComponent<CanvasGroup>();
