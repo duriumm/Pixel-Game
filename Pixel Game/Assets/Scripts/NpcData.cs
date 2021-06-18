@@ -37,7 +37,8 @@ public class NpcData : MonoBehaviour
             // Some npcs might not have a sound attached which is fine. Therefor we check if its null
             if(npcTalkSound != null)
             {
-                AudioSource.PlayClipAtPoint(npcTalkSound, mainCamera.transform.position);
+
+                AudioSource.PlayClipAtPoint(npcTalkSound, mainCamera.transform.localPosition);
             }
 
             // Set this NPCs dialogue to be active in dialogueController
