@@ -12,13 +12,23 @@ public class MainMenu : MonoBehaviour
     private bool isSomethingEnabled = false;
     public GameObject easyModeRedCross;
     public GameObject autoSaveRedCross;
-    public GameObject somethingRedCross;
+    public GameObject somethingRedCross; 
     public AudioClip frogCatPigSound;
+    public AudioClip hoverOverButtonSound;
+    public AudioClip clickButtonSound;
     private GameObject mainCamera;
 
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
+    }
+    public void PlayClickButtonSound()
+    {
+        AudioSource.PlayClipAtPoint(clickButtonSound, mainCamera.transform.localPosition);
+    }
+    public void PlayHoverButtonSound()
+    {
+        AudioSource.PlayClipAtPoint(hoverOverButtonSound, mainCamera.transform.localPosition);
     }
     public void PlayFrogCatPigSound()
     {
