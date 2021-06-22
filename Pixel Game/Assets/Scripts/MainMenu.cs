@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -17,10 +18,32 @@ public class MainMenu : MonoBehaviour
     public AudioClip hoverOverButtonSound;
     public AudioClip clickButtonSound;
     private GameObject mainCamera;
+    public GameObject spriteGameObject;
+    private Image movingSpriteImage;
+    public Sprite ghastSprite;
+    public Sprite frogSprite;
+    private bool isSpriteFrog = true;
+    public GameObject fatNpc;
 
     void Start()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
+
+        movingSpriteImage = spriteGameObject.GetComponent<Image>();
+        movingSpriteImage.sprite = frogSprite;
+        
+    }
+    public void ToggleFatNpc()
+    {
+        fatNpc.SetActive(!fatNpc.activeSelf);
+    }
+
+    public void ToggleImageSprite()
+    {
+        isSpriteFrog = !isSpriteFrog;
+        Sprite spriteToUse = isSpriteFrog ? frogSprite : ghastSprite;
+        movingSpriteImage.sprite = spriteToUse;
+        Debug.Log("we toggled, sprite to use is: " + spriteToUse.name);
     }
     public void PlayClickButtonSound()
     {
@@ -36,7 +59,7 @@ public class MainMenu : MonoBehaviour
     }
     // These 3 functions below can be made into one function. But for now it will be like this.
     // For now the functions only enable a red cross showing up but for future implementation
-    // these functions will enable or disable certain settings
+    // these functions will enable or disable certain settings in the settings menu
     public void ToggleEasyMode()
     {
         isEasyMode = !isEasyMode;
@@ -70,10 +93,11 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Game quit :), just not in the editor");
     }
 
+    // Starting the fading when loading new scene
     IEnumerator LoadLevel(string sceneToLoad)
     {
         transition.SetTrigger("Start");
-        // TO-DO - Disable player movement, Make player invincible
+
 
         yield return new WaitForSeconds(0.5f);
         Debug.Log("Scene to load: " + sceneToLoad);
