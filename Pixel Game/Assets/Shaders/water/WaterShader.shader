@@ -4,6 +4,7 @@
     {
 		//[NoScaleOffset]_MainTex("TileMap", 2D) = "white" {}
 		_Sky("Sky", 2D) = "white" {}
+		[Toggle]_UseSkyPlane("Use sky plane", float) = 1
 		_SkyCube("Sky cube", Cube) = "" {}
 		[Color]_SkyTint("Sky tint", color) = (1, 1, 1, 1)
 		_FogDensity("Fog density", range(0, 1)) = 0
@@ -22,40 +23,41 @@
 		_WaveFrequency("Wave frequency", float) = 1
 		_WaveStretch("Wave stretch", float) = 2
 		_WaveFbmGain("Wave fBm gain", float) = 0.3
-		_WaveFbmIterations("Wave fBm iterations", range(-1, 15)) = -1
+		_WaveFbmReso("Wave fBm resolution", range(0, 1)) = 1
 		_WaveScroll("Wave Scroll", vector) = (0, 0.4, 0.1, 1)
 		_LightDistortionFromWaves("Light distortion from waves", float) = 0.05
 		[Space]
-		_WaterOpacity("Water opacity", float) = 0.5
-		[Color]_WaterCol("Water color", color) = (0, 0.1, 0.35, 1)
-		_SpecPow("Specular power", float) = 100
+		_WaterOpacity("Water opacity", Range(0, 1)) = 0.5
+		[Color]_ShallowWaterCol("Shallow water color", color) = (0, 0.1, 0.35, 1)
+		[Color]_DeepWaterCol("Deep water color", color) = (0, 0.2, 0.13, 1)
+		[Toggle]_SwapColors("Swap colors", float) = 0
+		_SpecExp("Specular exponent", float) = 100
 		[Color]_SpecCol("Specular color", color) = (1, 1, 1, 1)
 		_DirToSun("Direction to sun", vector) = (1, 1, 0.6)
 		[Toggle]_EnableSky("Enable sky", float) = 1
 		[Toggle]_EnableGround("Enable ground", float) = 1
-
-		[Header(Advanced)]
 		[Space]
+		_FresnelExp("Fresnel exponent", float) = 5
 		_FresnelScale("Fresnel scale", float) = 1
 		_FresnelOffset("Fresnel offset", float) = 0
 		_CameraHeightScale("Camera height scale", float ) = 1
 		[Enum(Standard, 0, Normals, 1, NoiseDerivatives, 2, DiffuseLighting, 3, Heightmap, 4)]
 		_RenderMode("Render mode", float) = 0
 	}
-		SubShader
+	SubShader
+	{
+		Tags { "RenderType" = "Opaque" }
+		LOD 100
+
+		Pass
 		{
-			Tags { "RenderType" = "Opaque" }
-			LOD 100
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma require 2darray
 
-			Pass
-			{
-				CGPROGRAM
-				#pragma vertex vert
-				#pragma fragment frag
-				#pragma require 2darray
-
-				#include "UnityCG.cginc"
-				#include "Waves.cginc"
+			#include "UnityCG.cginc"
+			#include "Waves.cginc"
 
 			static const float RenderMode_Normals = 1;
 			static const float RenderMode_Deriv = 2;
@@ -82,6 +84,7 @@
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			sampler2D _Sky;
+			float _UseSkyPlane;
 			samplerCUBE _SkyCube;
 			float4 _Sky_ST;
 			float4 _SkyTint;
@@ -102,14 +105,17 @@
 			float _WaveFrequency;
 			float _WaveStretch;
 			float _WaveFbmGain;
-			float _WaveFbmIterations;
+			float _WaveFbmReso;
 			float _LightDistortionFromWaves;
 
-			float4 _WaterCol;
+			float4 _ShallowWaterCol;
+			float4 _DeepWaterCol;
+			float _SwapColors;
 			float _WaterOpacity;
-			float _SpecPow;
+			float _SpecExp;
 			float4 _SpecCol;
 			float3 _DirToSun;
+			float _FresnelExp;
 			float _FresnelScale;
 			float _FresnelOffset;
 			float _CameraHeightScale;
@@ -130,7 +136,7 @@
 				if (underWater)
 					fresnel *= 2.5f;
 
-				fresnel = pow(fresnel, 5);
+				fresnel = pow(fresnel, _FresnelExp);
 				return min((fresnel * 0.97963f * _FresnelScale) + 0.02037f + _FresnelOffset, 1);
 			}
 
@@ -177,10 +183,20 @@
 					_WaveFrequency,
 					_WaveStretch,
 					_WaveFbmGain,
-					_WaveFbmIterations
+					_WaveFbmReso
 				);
 				//Convert noise derivative to normal vector
 				float3 waterNormal = normalize(float3(-waves.xy, 1));
+				
+				float3 viewDir = normalize(-input.viewPos);
+				float viewDotNormal = dot(waterNormal, viewDir); //Angle between water surface and viewer
+
+				//Blend between two water colors to simulate subsurface scattering as suggested by Inigo Quilez
+				float waterColBlend = _SwapColors ? 1 - viewDotNormal : viewDotNormal;
+				float4 waterCol = lerp(_ShallowWaterCol, _DeepWaterCol, waterColBlend);
+				
+				//Modulate water color with Diffuse + ambient lighting
+				waterCol *= min(dot(waterNormal, dirToSun) + 0.4f, 1);
 				
 				//Various render modes which can help when tweaking parameters and debugging
 				switch (_RenderMode)
@@ -190,7 +206,7 @@
 				case RenderMode_Deriv:
 					return saturate(float4(waves.xyz, 1));
 				case RenderMode_Diffuse:
-					return saturate(_WaterCol * min((dot(waterNormal, dirToSun) + 0.4f), 1));
+					return waterCol;
 				case RenderMode_Heightmap:
 					return waves.w * 0.5f + 0.5f;
 				}
@@ -222,28 +238,28 @@
 						groundCol = saturate(groundCol + causticsCol);
 					}
 					//Blend between ground and water color
-					result = lerp(groundCol, _WaterCol, _WaterOpacity); 
+					result = lerp(groundCol, waterCol, _WaterOpacity);
 				}
 				else
-					result = _WaterCol;
+					result = waterCol;
 						
-				float3 viewDir = -input.viewPos;
-				viewDir = normalize(viewDir);
-				float viewDotNormal = dot(waterNormal, viewDir); //Angle between water surface and viewer
 				if (_EnableSky == 1) //"Enable sky" checkbox is checked in inspector
 				{
 					//waterNormal = float3(0, 0, 1);
-					float3 envMapReflection = reflect(viewDir.xzy, waterNormal);
-					//float4 skyCol = texCUBE(_SkyCube, envMapReflection);
-					float4 skyCol = tex2D(_Sky, input.skyUV + uvOffset) * _SkyTint;
-					//return skyCol;
+					float3 envMapReflectionVector = reflect(viewDir.xzy, waterNormal);
+					float4 skyCol;
+					if (_UseSkyPlane == 0)
+						skyCol = texCUBE(_SkyCube, envMapReflectionVector);
+					else
+						skyCol = tex2D(_Sky, input.skyUV + uvOffset);
+					skyCol *= _SkyTint;
 					skyCol = lerp(skyCol, _FogCol, _FogDensity);
 					float fresnel = calcFresnel(viewDotNormal);
 					result = lerp(result, skyCol, fresnel);
 				}
 				float3 lightReflectionDir = reflect(-dirToSun, waterNormal);
 				//Specular lighting
-				result += pow(saturate(dot(lightReflectionDir, viewDir)), _SpecPow) * _SpecCol;
+				result += pow(saturate(dot(lightReflectionDir, viewDir)), _SpecExp) * _SpecCol;
 				return result;
             }
             ENDCG

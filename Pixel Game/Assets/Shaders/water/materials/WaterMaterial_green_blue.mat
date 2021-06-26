@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WaterMaterial
+  m_Name: WaterMaterial_green_blue
   m_Shader: {fileID: 4800000, guid: f486be8620d9af0479b78450c8c33e94, type: 3}
   m_ShaderKeywords: _ENABLECAUSTICS_ON _ENABLEGROUND_ON _ENABLESKY_ON _SKYREFLECTION_ON
     _SWAPCOLORS_ON
@@ -144,7 +144,6 @@ Material:
     - _FbmGain: 0.3
     - _FbmIterations: -1
     - _FogDensity: 0
-    - _FresnelExp: 5
     - _FresnelOffset: 0
     - _FresnelScale: 1
     - _GlossMapScale: 1
@@ -168,19 +167,17 @@ Material:
     - _SkyScaleX: 2.3
     - _SkyScaleY: 1.5
     - _SmoothnessTextureChannel: 0
-    - _SpecExp: 100
     - _SpecPow: 100
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SwapColors: 1
     - _UVSec: 0
-    - _UseSkyPlane: 0
     - _WaterOpacity: 0.5
     - _WaterTransparency: 0.5
     - _WaveAmplitude: 0.3
     - _WaveFbmGain: 0.3
     - _WaveFbmIterations: 1
-    - _WaveFbmReso: 1
+    - _WaveFbmReso: 0.529
     - _WaveFrequency: 1
     - _WaveStretch: 2
     - _Waverotation: 0
@@ -188,7 +185,7 @@ Material:
     - _blabla: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepWaterCol: {r: 0, g: 0.3329764, b: 0.6509804, a: 1}
+    - _DeepWaterCol: {r: 0, g: 0.09803922, b: 0.34901962, a: 1}
     - _DirToSun: {r: 0.2, g: -1, b: 0.6, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
@@ -198,8 +195,8 @@ Material:
     - _LightDir: {r: -1, g: -1, b: -0.6, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Scroll: {r: 0.05, g: 0.4, b: 0.1, a: 1}
-    - _ShallowWaterCol: {r: 0, g: 0.24528301, b: 0.19325326, a: 1}
-    - _SkyTint: {r: 0.75, g: 0.96875, b: 1, a: 1}
+    - _ShallowWaterCol: {r: 0, g: 0.3882353, b: 0.30595964, a: 1}
+    - _SkyTint: {r: 1, g: 1, b: 1, a: 1}
     - _SpecCol: {r: 1, g: 1, b: 1, a: 1}
     - _SunlightDir: {r: 1, g: -2, b: 1000.6, a: 1}
     - _WaterCol: {r: 0, g: 0.2, b: 0.12941177, a: 1}
