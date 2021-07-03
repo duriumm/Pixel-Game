@@ -2,10 +2,11 @@
 {
     Properties
     {
-		//[NoScaleOffset]_MainTex("TileMap", 2D) = "white" {}
+		[Toggle] _UseTileMap("Ue tilemap", float) = 0
+		[NoScaleOffset]_MainTex("TileMap", 2D) = "white" {}
 		_Sky("Sky", 2D) = "white" {}
 		[Toggle]_UseSkyPlane("Use sky plane", float) = 1
-		_SkyCube("Sky cube", Cube) = "" {}
+		[NoScaleOffset]_SkyCube("Sky cube", Cube) = "" {}
 		[Color]_SkyTint("Sky tint", color) = (1, 1, 1, 1)
 		_FogDensity("Fog density", range(0, 1)) = 0
 		[Color]_FogCol("Fog color", color) = (1, 1, 1, 1)
@@ -32,7 +33,9 @@
 		[Color]_DeepWaterCol("Deep water color", color) = (0, 0.2, 0.13, 1)
 		[Toggle]_SwapColors("Swap colors", float) = 0
 		_SpecExp("Specular exponent", float) = 100
+		_SpecScale("Speculare scale", float) = 1
 		[Color]_SpecCol("Specular color", color) = (1, 1, 1, 1)
+		_AmbientAmount("Ambient amount", float) = 0.4
 		_DirToSun("Direction to sun", vector) = (1, 1, 0.6)
 		[Toggle]_EnableSky("Enable sky", float) = 1
 		[Toggle]_EnableGround("Enable ground", float) = 1
@@ -81,6 +84,7 @@
 				float2 causticsUV : TEXCOORD5;
             };
 
+			float _UseTileMap;
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
 			sampler2D _Sky;
@@ -113,7 +117,9 @@
 			float _SwapColors;
 			float _WaterOpacity;
 			float _SpecExp;
+			float _SpecScale;
 			float4 _SpecCol;
+			float _AmbientAmount;
 			float3 _DirToSun;
 			float _FresnelExp;
 			float _FresnelScale;
@@ -146,7 +152,6 @@
 				VertexOutput output;
 				//Transform to clip space
 				output.pos = UnityObjectToClipPos(input.pos);
-				//Get coords for tile texture (will probably not be needed)
 				output.tileMapUV = TRANSFORM_TEX(input.uv, _MainTex);
 				
 				//Get position in world space
@@ -172,8 +177,6 @@
 			fixed4 frag(VertexOutput input) : SV_Target
 			{
 				float3 dirToSun = normalize(_DirToSun);
-				//Sample tile texture
-				//fixed4 tileCol = tex2D(_MainTex, input.tileMapUV);
 				
 				float4 waves = calcWaves(
 					input.worldPos,
@@ -188,16 +191,29 @@
 				//Convert noise derivative to normal vector
 				float3 waterNormal = normalize(float3(-waves.xy, 1));
 				
-				float3 viewDir = normalize(-input.viewPos);
+				float2 uvOffset = waterNormal.xy * _LightDistortionFromWaves;
+								
+				input.viewPos *= -1;
+				input.viewPos.z += waves.w;
+				float3 viewDir = normalize(input.viewPos);
 				float viewDotNormal = dot(waterNormal, viewDir); //Angle between water surface and viewer
 
 				//Blend between two water colors to simulate subsurface scattering as suggested by Inigo Quilez
 				float waterColBlend = _SwapColors ? 1 - viewDotNormal : viewDotNormal;
 				float4 waterCol = lerp(_ShallowWaterCol, _DeepWaterCol, waterColBlend);
 				
-				//Modulate water color with Diffuse + ambient lighting
-				waterCol *= min(dot(waterNormal, dirToSun) + 0.4f, 1);
-				
+				float diffuseLight = dot(waterNormal, dirToSun);
+				float diffuseAmbientLight = min(diffuseLight + _AmbientAmount, 1);
+				diffuseAmbientLight = max(diffuseAmbientLight, _AmbientAmount);
+				//Modulate water color with diffuse + ambient lighting
+				waterCol *= diffuseAmbientLight;
+
+				//Sample tile texture
+				if (_UseTileMap == 1)
+				{
+					fixed4 tileCol = tex2D(_MainTex, input.tileMapUV + uvOffset);
+					waterCol *= tileCol;
+				}
 				//Various render modes which can help when tweaking parameters and debugging
 				switch (_RenderMode)
 				{
@@ -211,7 +227,6 @@
 					return waves.w * 0.5f + 0.5f;
 				}
 
-				float2 uvOffset = waterNormal.xy * _LightDistortionFromWaves;
 				float4 result;
 
 				if (_EnableGround == 1) //"Enable ground" checkbox is checked in inspector
@@ -259,7 +274,7 @@
 				}
 				float3 lightReflectionDir = reflect(-dirToSun, waterNormal);
 				//Specular lighting
-				result += pow(saturate(dot(lightReflectionDir, viewDir)), _SpecExp) * _SpecCol;
+				result += pow(max(dot(lightReflectionDir, viewDir), 0), _SpecExp) * _SpecCol * _SpecScale;
 				return result;
             }
             ENDCG
