@@ -11,12 +11,12 @@ public class MainMenu : MonoBehaviour
     private bool isEasyMode = false;
     private bool isAutoSaving = false;
     private bool isSomethingEnabled = false;
-    public GameObject easyModeRedCross;
-    public GameObject autoSaveRedCross;
-    public GameObject somethingRedCross; 
-    public AudioClip frogCatPigSound;
-    public AudioClip hoverOverButtonSound;
-    public AudioClip clickButtonSound;
+    public GameObject easyModeRedCross, autoSaveRedCross, somethingRedCross;
+    //public GameObject autoSaveRedCross;
+    //public GameObject somethingRedCross; 
+    public AudioClip frogCatPigSound, hoverOverButtonSound, clickButtonSound;
+    //public AudioClip hoverOverButtonSound;
+    //public AudioClip clickButtonSound;
     private GameObject mainCamera;
     public GameObject spriteGameObject;
     private Image movingSpriteImage;

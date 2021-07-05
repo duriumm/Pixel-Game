@@ -16,20 +16,13 @@ public class CMvcam1DontDestroy : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("MyPlayer");
             cinemachineVirtualCamera = GameObject.FindGameObjectWithTag("VCam").GetComponent<CinemachineVirtualCamera>();
-
             cinemachineVirtualCamera.Follow = player.transform;
-
         }
 
         if (!cMvcam1Exists)
         {
             cMvcam1Exists = true;
             DontDestroyOnLoad(transform.gameObject);
-
-
-
-
-
         }
         else
         {

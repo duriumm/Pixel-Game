@@ -12,6 +12,8 @@ public class Health : MonoBehaviour
     [SerializeField] private AudioClip deathSound;
     [SerializeField] private AudioClip hurtSound;
 
+    private ScreenShake screenShake;
+
     Movement movement;
 
     public int MaxHp
@@ -37,6 +39,7 @@ public class Health : MonoBehaviour
         Hp = maxHp;
         OnSceneChange();
         movement = GetComponent<Movement>();
+        screenShake = GameObject.FindGameObjectWithTag("VCam").GetComponent<ScreenShake>();
     }
 
     public virtual void OnSceneChange()
@@ -64,6 +67,9 @@ public class Health : MonoBehaviour
 
         if (hurtSound != null)
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
+
+        screenShake.StartScreenShake();
+        Debug.Log("We shake screena");
 
         StartCoroutine(HurtEffect());
         StartCoroutine(movement.KnockBack(sourcePoint));
