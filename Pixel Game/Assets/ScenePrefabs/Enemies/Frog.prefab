@@ -157,6 +157,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7140383107763174007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -440,7 +442,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 37b6d25cfda14204a94bcfd17cc7fb23, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 722f68659ebffab448bcdeb8f7dea6de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -505,7 +507,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.21}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1.28, y: 1.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -630,7 +632,8 @@ MonoBehaviour:
   retreatSound: {fileID: 0}
   followSound: {fileID: 0}
   RoamWhenIdle: 1
-  targetTransform: {fileID: 0}
   followUpperDistance: 4
   followLowerDistance: 0
+  alwaysLookAtTarget: 0
+  Target: {fileID: 0}
   retreatUpperDistance: 0
