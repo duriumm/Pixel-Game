@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WaterMaterial_tilemap
+  m_Shader: {fileID: 4800000, guid: f486be8620d9af0479b78450c8c33e94, type: 3}
+  m_ShaderKeywords: _ENABLECAUSTICS_ON _ENABLEGROUND_ON _SKYREFLECTION_ON _USETILEMAP_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Ground:
+        m_Texture: {fileID: 2800000, guid: 2eafb79722d34174290e400533b4d0f5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - GroundNormalMap:
+        m_Texture: {fileID: 2800000, guid: 05d8e07e2e1a2004fafa063003081926, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - GroundTex:
+        m_Texture: {fileID: 2800000, guid: 2eafb79722d34174290e400533b4d0f5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Hash2DTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Hash2DkTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Sky:
+        m_Texture: {fileID: 2800000, guid: 2d18fb6aa6ac35f4886599ca6d800033, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - SkyTex:
+        m_Texture: {fileID: 2800000, guid: c71a0eedf941b2d4c8a48a23af60a8ca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Caustics:
+        m_Texture: {fileID: 18700000, guid: 7a2ce15028bcfbc47931a07ac47bfce6, type: 3}
+        m_Scale: {x: 0.43, y: 0.43}
+        m_Offset: {x: 0, y: 0}
+    - _Coustics:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Ground:
+        m_Texture: {fileID: 2800000, guid: c1fe3dc057d13c84ca4ac5ebb0a4ee65, type: 3}
+        m_Scale: {x: 0.43, y: 0.43}
+        m_Offset: {x: 0, y: 0}
+    - _GroundNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Sky:
+        m_Texture: {fileID: 2800000, guid: 7f62f2618a037ea49b216ae4d9c0e129, type: 3}
+        m_Scale: {x: 0.35, y: 0.7}
+        m_Offset: {x: 0.2, y: 0.1}
+    - _SkyCube:
+        m_Texture: {fileID: 8900000, guid: 071a1811e584e624db7010cb147a3a63, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SkyTex:
+        m_Texture: {fileID: 2800000, guid: c71a0eedf941b2d4c8a48a23af60a8ca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _blabla:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpScale: 1
+    - _CameraHeight: 0.5
+    - _CameraHeightScale: 1
+    - _CausticsBrightness: 0.6
+    - _CausticsContrast: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EnableCaustics: 1
+    - _EnableExternalAlpha: 0
+    - _EnableGround: 1
+    - _EnableSky: 0
+    - _FbmGain: 0.3
+    - _FbmIterations: -1
+    - _FogDensity: 0
+    - _FresnelExp: 5
+    - _FresnelOffset: 0
+    - _FresnelScale: 1
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _GroundParallax: 0.6
+    - _GroundScaleX: 2.3
+    - _GroundScaleY: 2.3
+    - _LightDistortionFromWaves: 0.05
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RenderMode: 0
+    - _ScrollX: 0
+    - _ScrollY: 0.4
+    - _ScrollZ: 0.1
+    - _SkyOffsetX: -0.2
+    - _SkyOffsetY: -0.1
+    - _SkyReflection: 1
+    - _SkyScaleX: 2.3
+    - _SkyScaleY: 1.5
+    - _SmoothnessTextureChannel: 0
+    - _SpecExp: 100
+    - _SpecPow: 100
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _SwapColors: 0
+    - _UVSec: 0
+    - _UseSkyPlane: 0
+    - _UseTileMap: 1
+    - _WaterOpacity: 1
+    - _WaterTransparency: 0.5
+    - _WaveAmplitude: 0.3
+    - _WaveFbmGain: 0.3
+    - _WaveFbmIterations: 1
+    - _WaveFbmReso: 1
+    - _WaveFrequency: 1
+    - _WaveStretch: 2
+    - _Waverotation: 0
+    - _ZWrite: 1
+    - _blabla: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DeepWaterCol: {r: 0, g: 0.5783745, b: 0.5849056, a: 1}
+    - _DirToSun: {r: 0.2, g: -1, b: 0.6, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _FogCol: {r: 1, g: 1, b: 1, a: 1}
+    - _FogColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GroundTint: {r: 0.12941177, g: 0.78039217, b: 0.78039217, a: 1}
+    - _LightDir: {r: -1, g: -1, b: -0.6, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Scroll: {r: 0.05, g: 0.4, b: 0.1, a: 1}
+    - _ShallowWaterCol: {r: 0, g: 0.8666668, b: 1, a: 1}
+    - _SkyTint: {r: 0.75, g: 0.96875, b: 1, a: 1}
+    - _SpecCol: {r: 1, g: 1, b: 1, a: 1}
+    - _SunlightDir: {r: 1, g: -2, b: 1000.6, a: 1}
+    - _WaterCol: {r: 0, g: 0.2, b: 0.12941177, a: 1}
+    - _WaterCol2: {r: 0, g: 0.09803922, b: 0.34901962, a: 1}
+    - _WaveFrequency: {r: 0.5, g: 1, b: 1, a: 1}
+    - _WaveScroll: {r: 0, g: 0.4, b: 0.1, a: 1}
+  m_BuildTextureStacks: []
