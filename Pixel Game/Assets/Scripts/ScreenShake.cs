@@ -10,6 +10,9 @@ public class ScreenShake : MonoBehaviour
     private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
     [SerializeField]
     private float secondsToShake = 0.2f;
+    [SerializeField]
+    [Tooltip("Shaking amount, set to 2 as standard highest")]
+    private float shakeAmountInAmplitudeGain = 2f;
 
     void Start()
     {
@@ -28,7 +31,7 @@ public class ScreenShake : MonoBehaviour
     }
     private IEnumerator ShakeScreen()
     {
-        virtualCameraNoise.m_AmplitudeGain = 3f;
+        virtualCameraNoise.m_AmplitudeGain = shakeAmountInAmplitudeGain;
         yield return new WaitForSeconds(secondsToShake);
         virtualCameraNoise.m_AmplitudeGain = 0f;
 
