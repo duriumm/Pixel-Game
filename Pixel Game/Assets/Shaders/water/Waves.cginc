@@ -48,13 +48,12 @@ float4 fbmNoise(float3 pos, float numIter, float amp, float freq, float gain, ui
 	return noise;
 }
 
-float4 calcWaves(float2 pos, float time, float3 scroll, float amp, float freq, float stretch, float gain, float numIter)
+float4 calcWaves(float2 pos, float time, float3 scroll, float amp, float freq, float stretch, float gain, float resolutionFactor)
 {
 	uint seed = 0;
 	pos.x /= stretch;
 	
-	if (numIter < 0)
-		numIter = calcFbmNumIterFromGrad(1, freq, 15, pos);
+	float numIter = calcFbmNumIterFromGrad(resolutionFactor, freq, 15, pos);
 	
 	float3 pos3D = float3(pos, 0);
 	float3 posOffset = scroll * time;
