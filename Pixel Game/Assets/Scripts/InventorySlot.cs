@@ -109,7 +109,6 @@ public class InventorySlot : MonoBehaviour
     public IEnumerator EquipItem()
     {
         //Add item to equipment slot
-        Debug.Log("we came IN HERE EQUIP");
         
         var equipmentSlot = GetEquipmentSlotForItemType(itemDataInSlot);
         equipmentSlot.UnequipItem();

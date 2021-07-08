@@ -21,7 +21,7 @@ public class ItemToolTip : MonoBehaviour
         if (itemData == null)
             return;
 
-        Debug.Log(transform.parent.name);
+        //Debug.Log(transform.parent.name);
         TextMeshProUGUI itemNameText = transform.Find("ItemNameText").GetComponent<TextMeshProUGUI>();
         itemNameText.text = itemData.itemName;
         TextMeshProUGUI itemDescriptionText = transform.Find("ItemDescriptionText").GetComponent<TextMeshProUGUI>();

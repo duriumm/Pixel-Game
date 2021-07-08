@@ -16,6 +16,9 @@ TagManager:
   - damageCollider
   - Npc
   - VCam
+  - AudioManager
+  - GrassTile
+  - Tile
   layers:
   - Default
   - TransparentFX
