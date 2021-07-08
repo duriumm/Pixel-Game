@@ -26,13 +26,6 @@ public class PlayerMovement : Movement
     // for the sound to be able to play in animation keyframe
     public void PlayerFootstepSound()
     {
-        //Tilemap tileMap = collider.GetComponent<Tilemap>();
-        //GroundTile currentTile = tileMap.GetTile(tileMap.WorldToCell(collisionPos)) as GroundTile;
-
-        //if (currentTile is GroundTile)
-        //{
-        //    print(currentTile.groundType);
-        //}
         audioManager.PlaySound();
     }
 

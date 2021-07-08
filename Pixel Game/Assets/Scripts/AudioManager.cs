@@ -28,10 +28,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound()
     {
-        //Debug.Log("PLAYED");
         audioSource.pitch = Random.Range(0.90f, 1.10f);
         audioSource.PlayOneShot(currentActiveFootstepSound);
     }
+
+    // Not great using magic strings here so preferably an enum for future use in audioManager
     public void SwitchSoundType(string typeOfGround)
     {
         switch (typeOfGround)

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 8538559603111980554}
   - component: {fileID: 8538559603111980563}
   - component: {fileID: 6336070729507474656}
+  - component: {fileID: 1209590445283654639}
   m_Layer: 0
   m_Name: MyCharacter
   m_TagString: MyPlayer
@@ -174,9 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HasIdleAnim: 1
-  maxSpeed: 7
+  maxSpeed: 4
   acceleration: 2
   animator: {fileID: 638322088875909781}
+  audioManager: {fileID: 0}
 --- !u!114 &8620282104999495127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +255,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 537abda95b2e03148849094fab27ab80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1209590445283654639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4697616969040342004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a8874447a879e84f936f396ce014898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1500631625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014662805293839180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8758d705e8883ae4c94a751ed0a013ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &847269477195754249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -535,6 +561,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2258667349212689472}
     m_Modifications:
+    - target: {fileID: 1908894897, guid: e32eff45cc9efdd409bdae1cb40779a8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 67552965671519409, guid: e32eff45cc9efdd409bdae1cb40779a8, type: 3}
       propertyPath: m_RootOrder
       value: 2
