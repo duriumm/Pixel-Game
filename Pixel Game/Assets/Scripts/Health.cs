@@ -69,7 +69,6 @@ public class Health : MonoBehaviour
             AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
         screenShake.StartScreenShake();
-        Debug.Log("We shake screena");
 
         StartCoroutine(HurtEffect());
         StartCoroutine(movement.KnockBack(sourcePoint));

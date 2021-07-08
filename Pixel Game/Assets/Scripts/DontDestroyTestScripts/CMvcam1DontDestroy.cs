@@ -7,14 +7,13 @@ using UnityEngine.SceneManagement;
 public class CMvcam1DontDestroy : MonoBehaviour
 {
     private static bool cMvcam1Exists;
-    private GameObject player;
     private CinemachineVirtualCamera cinemachineVirtualCamera;
-    private string nameOfMainMenu = "Main_Menu_Lasse";
+    private const string NameOfMainMenu = "Main_Menu_Lasse";
     void Start()
     {
-        if(SceneManager.GetActiveScene().name != nameOfMainMenu)
+        if(SceneManager.GetActiveScene().name != NameOfMainMenu)
         {
-            player = GameObject.FindGameObjectWithTag("MyPlayer");
+            var player = GameObject.FindGameObjectWithTag("MyPlayer");
             cinemachineVirtualCamera = GameObject.FindGameObjectWithTag("VCam").GetComponent<CinemachineVirtualCamera>();
             cinemachineVirtualCamera.Follow = player.transform;
         }
