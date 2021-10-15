@@ -27,6 +27,14 @@ public class PlayerMovement : Movement
     public void PlayerFootstepSound()
     {
         audioManager.PlaySound();
+        
+    }
+
+    // Triggering of the footstep collider is done 2 times per player step
+    // twice is because we want to check groundtype more often
+    public void TriggerFootstepCollider()
+    {
+        audioManager.TurnOnThenOffAudioFootstepCollider();
     }
 
 

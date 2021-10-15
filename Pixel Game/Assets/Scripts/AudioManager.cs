@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     private AudioClip dirt_footstep;
     static AudioSource audioSource;
     private AudioClip currentActiveFootstepSound;
+    private GameObject footStepColliderObject;
 
 
     void Start()
@@ -18,6 +19,7 @@ public class AudioManager : MonoBehaviour
         dirt_footstep = Resources.Load<AudioClip>("dirt_footstep");
         audioSource = GetComponent<AudioSource>();
         currentActiveFootstepSound = grass_footstep_1;
+        footStepColliderObject = GameObject.FindGameObjectWithTag("MyPlayer").transform.Find("FootStepAudioCollider").gameObject;
     }
 
     // Update is called once per frame
@@ -32,6 +34,11 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(currentActiveFootstepSound);
     }
 
+    public void TurnOnThenOffAudioFootstepCollider()
+    {
+        footStepColliderObject.SetActive(false);
+        footStepColliderObject.SetActive(true);
+    }
     // Not great using magic strings here so preferably an enum for future use in audioManager
     public void SwitchSoundType(string typeOfGround)
     {
