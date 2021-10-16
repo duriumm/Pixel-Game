@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(currentActiveFootstepSound);
     }
 
-    public void TurnOnThenOffAudioFootstepCollider()
+    public void TurnOffThenOnAudioFootstepCollider()
     {
         footStepColliderObject.SetActive(false);
         footStepColliderObject.SetActive(true);
@@ -44,12 +44,11 @@ public class AudioManager : MonoBehaviour
     {
         switch (typeOfGround)
         {
+            // Add more cases here which should be the name of the Tile gameobject stepped on
             case "Dirt":
-                Debug.Log("it was dirt");
                 currentActiveFootstepSound = dirt_footstep;
                 break;
             case "Grass":
-                Debug.Log("it was grass in my ass");
                 currentActiveFootstepSound = grass_footstep_1;
                 break;
             default:

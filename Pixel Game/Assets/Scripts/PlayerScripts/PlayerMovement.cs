@@ -34,7 +34,7 @@ public class PlayerMovement : Movement
     // twice is because we want to check groundtype more often
     public void TriggerFootstepCollider()
     {
-        audioManager.TurnOnThenOffAudioFootstepCollider();
+        audioManager.TurnOffThenOnAudioFootstepCollider();
     }
 
 
