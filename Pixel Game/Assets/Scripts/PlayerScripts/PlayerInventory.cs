@@ -205,7 +205,7 @@ public class PlayerInventory : MonoBehaviour
    
         foreach (string savedItemStringName in dataToPass.mySavedStringListDatabase)
         {
-            Debug.Log(savedItemStringName);
+            //Debug.Log(savedItemStringName);
             for (int i = 0; i < dataToPass.lootDatabase.Length; i++)
             {
                 if(savedItemStringName == dataToPass.lootDatabase[i].name)
