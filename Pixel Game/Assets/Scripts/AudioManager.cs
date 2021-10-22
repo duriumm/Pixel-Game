@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioClip grass_footstep_1;
     private AudioClip dirt_footstep;
+    private AudioClip sand_footstep;
     static AudioSource audioSource;
     private AudioClip currentActiveFootstepSound;
     private GameObject footStepColliderObject;
@@ -17,6 +18,7 @@ public class AudioManager : MonoBehaviour
 
         grass_footstep_1 = Resources.Load<AudioClip>("grass_footstep_1");
         dirt_footstep = Resources.Load<AudioClip>("dirt_footstep");
+        sand_footstep = Resources.Load<AudioClip>("sand_footstep");
         audioSource = GetComponent<AudioSource>();
         currentActiveFootstepSound = grass_footstep_1;
         footStepColliderObject = GameObject.FindGameObjectWithTag("MyPlayer").transform.Find("FootStepAudioCollider").gameObject;
@@ -50,6 +52,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case "Grass":
                 currentActiveFootstepSound = grass_footstep_1;
+                break;
+            case "Sand":
+                currentActiveFootstepSound = sand_footstep;
                 break;
             default:
                 break;
