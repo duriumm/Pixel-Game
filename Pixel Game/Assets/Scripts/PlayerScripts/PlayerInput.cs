@@ -6,12 +6,18 @@ public class PlayerInput : MonoBehaviour
 {
     private GuiScreenManager guiScreenManager;
     private Attack playerAttack;
+    private PlayerMovement playerMovement;
+    private Animator playerAnimator;
     private Torch torch;
+    private Rigidbody2D rb;
 
     public void Start()
     {
         OnSceneChange();
         playerAttack = GetComponent<Attack>();
+        playerMovement = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
         torch = gameObject.transform.Find("Torch").gameObject.GetComponent<Torch>();
     }
 
@@ -22,7 +28,8 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)){
+        if (Input.GetKeyDown(KeyCode.R))
+        {
 
             torch.toggleTorch();
         }
@@ -30,7 +37,10 @@ public class PlayerInput : MonoBehaviour
         // checks if mousbuttonLEFT is pressed
         if (Input.GetMouseButtonDown(0) && playerAttack.enabled)
         {
+
             playerAttack.Execute();
+            StartCoroutine(DisableMovementDuringAttack());
+
         }
 
         if (Input.GetKeyDown(KeyCode.I))
@@ -55,5 +65,18 @@ public class PlayerInput : MonoBehaviour
             MapScreen mapScreen = guiScreenManager.gameObject.transform.Find("MapScreen").GetComponent<MapScreen>();
             mapScreen.StartCoroutine("RemoveCloudsOnDiscoveredArea");
         }
+    }
+
+    private IEnumerator DisableMovementDuringAttack()
+    {
+        //wplayerMovement.MaxSpeed = 0;
+        playerMovement.enabled = false;
+        rb.simulated = false;
+        
+        yield return new WaitForSeconds(0.5f);
+        playerMovement.enabled = true;
+        rb.simulated = true;
+        
+
     }
 }
