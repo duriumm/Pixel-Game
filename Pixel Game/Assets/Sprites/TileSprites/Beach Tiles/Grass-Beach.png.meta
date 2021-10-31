@@ -41,6 +41,12 @@ TextureImporter:
   - first:
       213: 4111112847140619463
     second: Grass-Beach_12
+  - first:
+      213: 8753442502226208103
+    second: Grass-Beach_13
+  - first:
+      213: 3802679450706398916
+    second: Grass-Beach_14
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -398,6 +404,48 @@ TextureImporter:
       bones: []
       spriteID: 7c48c555a5b9d0930800000000000000
       internalID: 4111112847140619463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grass-Beach_13
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 765effaf3997a7970800000000000000
+      internalID: 8753442502226208103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grass-Beach_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ce480e10d4d5c430800000000000000
+      internalID: 3802679450706398916
       vertices: []
       indices: 
       edges: []
