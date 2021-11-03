@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip grass_footstep_1;
     private AudioClip dirt_footstep;
     private AudioClip sand_footstep;
+    private AudioClip woodplank_footstep;
+
     static AudioSource audioSource;
     private AudioClip currentActiveFootstepSound;
     private GameObject footStepColliderObject;
@@ -19,8 +21,10 @@ public class AudioManager : MonoBehaviour
         grass_footstep_1 = Resources.Load<AudioClip>("grass_footstep_1");
         dirt_footstep = Resources.Load<AudioClip>("dirt_footstep");
         sand_footstep = Resources.Load<AudioClip>("sand_footstep");
+        woodplank_footstep = Resources.Load<AudioClip>("woodplanks_footstep");
+        
         audioSource = GetComponent<AudioSource>();
-        currentActiveFootstepSound = grass_footstep_1;
+        currentActiveFootstepSound = grass_footstep_1; // Starting footstep is always grass on sceneload, switch this later on
         footStepColliderObject = GameObject.FindGameObjectWithTag("MyPlayer").transform.Find("FootStepAudioCollider").gameObject;
     }
 
@@ -55,6 +59,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case "Sand":
                 currentActiveFootstepSound = sand_footstep;
+                break;
+            case "WoodFloor":
+                currentActiveFootstepSound = woodplank_footstep;
                 break;
             default:
                 break;
