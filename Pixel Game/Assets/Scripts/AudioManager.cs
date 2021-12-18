@@ -88,4 +88,11 @@ public class AudioManager : MonoBehaviour
         backgroundSoundSource.clip = backgroundMusicClip;
         backgroundSoundSource.Play();
     }
+
+    // This will pitch just like the walking sounds but i think its fine since thats interesting :)
+    public void PlayTriggerSound(AudioClip audioClipToPlay)
+    {
+        audioSource.PlayOneShot(audioClipToPlay);
+        Debug.Log("We shud play old man");
+    }
 }
